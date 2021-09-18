@@ -6,7 +6,7 @@
   <link href="https://heyonggs.github.io/atom.xml" rel="self"/>
   
   <link href="https://heyonggs.github.io/"/>
-  <updated>2021-09-18T07:07:29.524Z</updated>
+  <updated>2021-09-18T09:40:04.811Z</updated>
   <id>https://heyonggs.github.io/</id>
   
   <author>
@@ -15,6 +15,19 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Nginx更换SSL证书</title>
+    <link href="https://heyonggs.github.io/2021/09/18/Nginx%E6%9B%B4%E6%8D%A2SSL%E8%AF%81%E4%B9%A6/"/>
+    <id>https://heyonggs.github.io/2021/09/18/Nginx%E6%9B%B4%E6%8D%A2SSL%E8%AF%81%E4%B9%A6/</id>
+    <published>2021-09-18T09:40:04.000Z</published>
+    <updated>2021-09-18T09:40:04.811Z</updated>
+    
+    
+    
+    
+    
+  </entry>
   
   <entry>
     <title>Centos查看系统 CPU 个数、核心数、线程数</title>
