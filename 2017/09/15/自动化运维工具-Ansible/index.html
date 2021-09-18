@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+<meta name="google-site-verification" content="9txmeVmeJ6bMHjmAuOJ4jIB5_Oxio9bwz8neOVbFbe4" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"heyonggs.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"onmobile":false,"b2t":true,"scrollpercent":true},"copycode":{"enable":true,"show_result":true,"style":"default"},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta property="og:type" content="article">
+<meta property="og:title" content="自动化运维工具-Ansible">
+<meta property="og:url" content="https://heyonggs.github.io/2017/09/15/%E8%87%AA%E5%8A%A8%E5%8C%96%E8%BF%90%E7%BB%B4%E5%B7%A5%E5%85%B7-Ansible/index.html">
+<meta property="og:site_name" content="何宇泽">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2017-09-15T03:04:34.000Z">
+<meta property="article:modified_time" content="2021-09-18T07:07:29.527Z">
+<meta property="article:author" content="何宇泽">
+<meta property="article:tag" content="ansible">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://heyonggs.github.io/2017/09/15/%E8%87%AA%E5%8A%A8%E5%8C%96%E8%BF%90%E7%BB%B4%E5%B7%A5%E5%85%B7-Ansible/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>自动化运维工具-Ansible | 何宇泽</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="何宇泽" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">何宇泽</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-主页">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>主页</a>
+
+  </li>
+        <li class="menu-item menu-item-归档">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-分类">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-标签">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-关于">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-站点地图">
+
+    <a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>站点地图</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://heyonggs.github.io/2017/09/15/%E8%87%AA%E5%8A%A8%E5%8C%96%E8%BF%90%E7%BB%B4%E5%B7%A5%E5%85%B7-Ansible/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="何宇泽">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="何宇泽">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          自动化运维工具-Ansible
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2017-09-15 11:04:34" itemprop="dateCreated datePublished" datetime="2017-09-15T11:04:34+08:00">2017-09-15</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-09-18 15:07:29" itemprop="dateModified" datetime="2021-09-18T15:07:29+08:00">2021-09-18</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/ansible/" itemprop="url" rel="index"><span itemprop="name">ansible</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span><br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>16k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>15 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p><escape><span id="more"></span></escape></p>
+<h1 id="Ansible详解"><a href="#Ansible详解" class="headerlink" title="Ansible详解"></a>Ansible详解</h1><p>ansible是新出现的自动化运维工具，基于Python开发，集合了众多运维工具（puppet、chef、func、fabric）的优点，实现了批量系统配置、批量程序部署、批量运行命令等功能。<br>　　ansible是基于 paramiko 开发的,并且基于模块化工作，本身没有批量部署的能力。真正具有批量部署的是ansible所运行的模块，ansible只是提供一种框架。ansible不需要在远程主机上安装client/agents，因为它们是基于ssh来和远<br>程主机通讯的。ansible目前已经已经被红帽官方收购，是自动化运维工具中大家认可度最高的，并且上手容易，学习简单。是每位运维工程师必须掌握的技能之一。</p>
+<p>ansible特点</p>
+<ol>
+<li>部署简单，只需在主控端部署Ansible环境，被控端无需做任何操作；</li>
+<li>默认使用SSH协议对设备进行管理；</li>
+<li>有大量常规运维操作模块，可实现日常绝大部分操作；</li>
+<li>配置简单、功能强大、扩展性强；</li>
+<li>支持API及自定义模块，可通过Python轻松扩展；</li>
+<li>通过Playbooks来定制强大的配置、状态管理；</li>
+<li>轻量级，无需在客户端安装agent，更新时，只需在操作机上进行一次更新即可；</li>
+<li>提供一个功能强大、操作性强的Web管理界面和REST API接口——AWX平台。</li>
+</ol>
+<h2 id="ansible-配置公私钥"><a href="#ansible-配置公私钥" class="headerlink" title="ansible 配置公私钥"></a>ansible 配置公私钥</h2><p>上面我们已经提到过 ansible 是基于 ssh 协议实现的，所以其配置公私钥的方式与 ssh 协议的方式相同，具体操作步骤如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">#1.生成私钥</span><br><span class="line">[root@server ~]# ssh-keygen </span><br><span class="line"></span><br><span class="line">#2.向主机分发私钥</span><br><span class="line">[root@mgmt2 ~]# ssh-copy-id root@192.168.101.201</span><br><span class="line">[root@mgmt2 ~]# ssh-copy-id root@192.168.101.202</span><br><span class="line">[root@mgmt2 ~]# ssh-copy-id root@192.168.101.203</span><br></pre></td></tr></table></figure>
+
+<p>这样就实现了无密码登陆</p>
+<p>注意：如果出现如下报错</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-bash: ssh-copy-id: command not found</span><br></pre></td></tr></table></figure>
+
+<p>我们需要安装一个包</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum -y install openssh-clientsansible</span><br></pre></td></tr></table></figure>
+
+<p>再次执行即可</p>
+<h2 id="ansible常用模块"><a href="#ansible常用模块" class="headerlink" title="ansible常用模块"></a>ansible常用模块</h2><h3 id="主机连通性测试"><a href="#主机连通性测试" class="headerlink" title="主机连通性测试"></a>主机连通性测试</h3><p>我们使用<code>ansible k8s -m ping</code>命令来进行主机连通性测试，效果如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">[root@mgmt2 ansible]# ansible k8s -m ping</span><br><span class="line">192.168.101.201 | SUCCESS =&gt; &#123;</span><br><span class="line">    &quot;ansible_facts&quot;: &#123;</span><br><span class="line">        &quot;discovered_interpreter_python&quot;: &quot;/usr/libexec/platform-python&quot;</span><br><span class="line">    &#125;,</span><br><span class="line">    &quot;changed&quot;: false,</span><br><span class="line">    &quot;ping&quot;: &quot;pong&quot;</span><br><span class="line">&#125;</span><br><span class="line">192.168.101.203 | SUCCESS =&gt; &#123;</span><br><span class="line">    &quot;ansible_facts&quot;: &#123;</span><br><span class="line">        &quot;discovered_interpreter_python&quot;: &quot;/usr/libexec/platform-python&quot;</span><br><span class="line">    &#125;,</span><br><span class="line">    &quot;changed&quot;: false,</span><br><span class="line">    &quot;ping&quot;: &quot;pong&quot;</span><br><span class="line">&#125;</span><br><span class="line">192.168.101.202 | SUCCESS =&gt; &#123;</span><br><span class="line">    &quot;ansible_facts&quot;: &#123;</span><br><span class="line">        &quot;discovered_interpreter_python&quot;: &quot;/usr/libexec/platform-python&quot;</span><br><span class="line">    &#125;,</span><br><span class="line">    &quot;changed&quot;: false,</span><br><span class="line">    &quot;ping&quot;: &quot;pong&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="command-模块"><a href="#command-模块" class="headerlink" title="command 模块"></a>command 模块</h3><p>这个模块可以直接在远程主机上执行命令，并将结果返回本主机。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">[root@mgmt2 ansible]# ansible k8s -m command -a &#x27;free -h&#x27;</span><br><span class="line">192.168.101.202 | CHANGED | rc=0 &gt;&gt;</span><br><span class="line">              total        used        free      shared  buff/cache   available</span><br><span class="line">Mem:          7.6Gi       2.1Gi       2.2Gi        33Mi       3.4Gi       5.3Gi</span><br><span class="line">Swap:            0B          0B          0B</span><br><span class="line"></span><br><span class="line">192.168.101.203 | CHANGED | rc=0 &gt;&gt;</span><br><span class="line">              total        used        free      shared  buff/cache   available</span><br><span class="line">Mem:          7.6Gi       2.4Gi       1.8Gi        25Mi       3.4Gi       5.3Gi</span><br><span class="line">Swap:            0B          0B          0B</span><br><span class="line"></span><br><span class="line">192.168.101.201 | CHANGED | rc=0 &gt;&gt;</span><br><span class="line">              total        used        free      shared  buff/cache   available</span><br><span class="line">Mem:          3.7Gi       2.3Gi       121Mi        25Mi       1.3Gi       1.3Gi</span><br><span class="line">Swap:            0B          0B          0B</span><br></pre></td></tr></table></figure>
+
+<p>命令模块接受命令名称，后面是空格分隔的列表参数。给定的命令将在所有选定的节点上执行。它不会通过shell进行处理，比如$HOME和操作如”&lt;”，”&gt;”，”|”，”;”，”&amp;” 工作（需要使用（shell）模块实现这些功能）。注意，该命令不支持<code>| 管道命令</code>。<br>下面来看一看该模块下常用的几个命令：</p>
+<blockquote>
+<p>chdir　　　　　　 # 在执行命令之前，先切换到该目录<br>executable # 切换shell来执行命令，需要使用命令的绝对路径<br>free_form 　 # 要执行的Linux指令，一般使用Ansible的-a参数代替。<br>creates 　# 一个文件名，当这个文件存在，则该命令不执行,可以<br>用来做判断<br>removes # 一个文件名，这个文件不存在，则该命令不执行</p>
+</blockquote>
+<p>下面我们来看看这些命令的执行效果：</p>
+<ul>
+<li>chdir</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">[root@mgmt2 ansible]# ansible k8s -m command -a &#x27;chdir=/opt/ ls&#x27;  #先切换到/data/ 目录，再执行“ls”命令</span><br><span class="line">192.168.101.201 | CHANGED | rc=0 &gt;&gt;</span><br><span class="line">cni</span><br><span class="line">containerd</span><br><span class="line"></span><br><span class="line">192.168.101.202 | CHANGED | rc=0 &gt;&gt;</span><br><span class="line">cni</span><br><span class="line">containerd</span><br><span class="line"></span><br><span class="line">192.168.101.203 | CHANGED | rc=0 &gt;&gt;</span><br><span class="line">cni</span><br><span class="line">containerd</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>creates</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">[root@mgmt2 ansible]# ansible k8s -m command -a &#x27;creates=/data/Dockerfile ls&#x27;  #如果/data/Dockerfile存在，则不执行“ls”命令</span><br><span class="line">192.168.101.202 | CHANGED | rc=0 &gt;&gt;</span><br><span class="line">anaconda-ks.cfg</span><br><span class="line">docker</span><br><span class="line">docker-19.03.9.tgz</span><br><span class="line">yq</span><br><span class="line"></span><br><span class="line">192.168.101.201 | SUCCESS | rc=0 &gt;&gt;</span><br><span class="line">skipped, since /data/Dockerfile exists</span><br><span class="line"></span><br><span class="line">192.168.101.203 | CHANGED | rc=0 &gt;&gt;</span><br><span class="line">anaconda-ks.cfg</span><br><span class="line">docker</span><br><span class="line">docker-19.03.9.tgz</span><br><span class="line">yq</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>removes</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">[root@mgmt2 ansible]# ansible k8s -m command -a &#x27;removes=/data/Dockerfile free -h&#x27;  #如果/data/Dockerfile存在，则执行“free -h”命令</span><br><span class="line">192.168.101.202 | SUCCESS | rc=0 &gt;&gt;</span><br><span class="line">skipped, since /data/Dockerfile does not exist</span><br><span class="line"></span><br><span class="line">192.168.101.203 | SUCCESS | rc=0 &gt;&gt;</span><br><span class="line">skipped, since /data/Dockerfile does not exist</span><br><span class="line"></span><br><span class="line">192.168.101.201 | CHANGED | rc=0 &gt;&gt;</span><br><span class="line">              total        used        free      shared  buff/cache   available</span><br><span class="line">Mem:          3.7Gi       2.3Gi       116Mi        25Mi       1.3Gi       1.3Gi</span><br><span class="line">Swap:            0B          0B          0B</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="shell-模块"><a href="#shell-模块" class="headerlink" title="shell 模块"></a>shell 模块</h3><p>shell模块可以在远程主机上调用shell解释器运行命令，支持shell的各种功能，例如管道等。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">[root@mgmt2 ansible]# ansible k8s -m shell -a &#x27;cat /etc/passwd |grep &quot;root&quot;&#x27;</span><br><span class="line">192.168.101.201 | CHANGED | rc=0 &gt;&gt;</span><br><span class="line">root:x:0:0:root:/root:/bin/bash</span><br><span class="line">operator:x:11:0:operator:/root:/sbin/nologin</span><br><span class="line"></span><br><span class="line">192.168.101.202 | CHANGED | rc=0 &gt;&gt;</span><br><span class="line">root:x:0:0:root:/root:/bin/bash</span><br><span class="line">operator:x:11:0:operator:/root:/sbin/nologin</span><br><span class="line"></span><br><span class="line">192.168.101.203 | CHANGED | rc=0 &gt;&gt;</span><br><span class="line">root:x:0:0:root:/root:/bin/bash</span><br><span class="line">operator:x:11:0:operator:/root:/sbin/nologin</span><br></pre></td></tr></table></figure>
+
+<p>只要是我们的shell命令，都可以通过这个模块在远程主机上运行</p>
+<h3 id="copy模块"><a href="#copy模块" class="headerlink" title="copy模块"></a>copy模块</h3><p>这个模块用于将文件复制到远程主机，同时支持给定内容生成文件和修改权限等。<br>其相关选项如下：</p>
+<blockquote>
+<p><code>src</code>　　　　#被复制到远程主机的本地文件。可以是绝对路径，也可以是相对路径。如果路径是一个目录，则会递归复制，用法类似于”rsync”<br><code>content</code>　　　#用于替换”src”，可以直接指定文件的值<br><code>dest</code>　　　　#必选项，将源文件复制到的远程主机的<strong>绝对路径</strong><br><code>backup</code>　　　#当文件内容发生改变后，在覆盖之前把源文件备份，备份文件包含时间信息<br><code>directory_mode</code>　　　　#递归设定目录的权限，默认为系统默认权限<br><code>force</code>　　　　#当目标主机包含该文件，但内容不同时，设为yes，表示强制覆盖；设为no，表示目标主机的目标位置不存在该文件才复制。默认为yes<br><code>others</code>　　　　#所有的 file 模块中的选项可以在这里使用</p>
+</blockquote>
+<p>用法举例如下：</p>
+<ul>
+<li>复制文件：</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">[root@mgmt2 ansible]# ansible web -m copy -a &#x27;src=./ansible.cfg dest=/data/&#x27;</span><br><span class="line">192.168.101.202 | SUCCESS =&gt; &#123;</span><br><span class="line">    &quot;ansible_facts&quot;: &#123;</span><br><span class="line">        &quot;discovered_interpreter_python&quot;: &quot;/usr/libexec/platform-python&quot;</span><br><span class="line">    &#125;,</span><br><span class="line">    &quot;changed&quot;: false,</span><br><span class="line">    &quot;checksum&quot;: &quot;a2a782df5d7bd49afb0971fc6be21cd825daaaa3&quot;,</span><br><span class="line">    &quot;dest&quot;: &quot;/data/ansible.cfg&quot;,</span><br><span class="line">    &quot;gid&quot;: 0,</span><br><span class="line">    &quot;group&quot;: &quot;root&quot;,</span><br><span class="line">    &quot;mode&quot;: &quot;0644&quot;,</span><br><span class="line">    &quot;owner&quot;: &quot;root&quot;,</span><br><span class="line">    &quot;path&quot;: &quot;/data/ansible.cfg&quot;,</span><br><span class="line">    &quot;size&quot;: 20012,</span><br><span class="line">    &quot;state&quot;: &quot;file&quot;,</span><br><span class="line">    &quot;uid&quot;: 0</span><br><span class="line">&#125;</span><br><span class="line">192.168.101.201 | SUCCESS =&gt; &#123;</span><br><span class="line">    &quot;ansible_facts&quot;: &#123;</span><br><span class="line">        &quot;discovered_interpreter_python&quot;: &quot;/usr/libexec/platform-python&quot;</span><br><span class="line">    &#125;,</span><br><span class="line">    &quot;changed&quot;: false,</span><br><span class="line">    &quot;checksum&quot;: &quot;a2a782df5d7bd49afb0971fc6be21cd825daaaa3&quot;,</span><br><span class="line">    &quot;dest&quot;: &quot;/data/ansible.cfg&quot;,</span><br><span class="line">    &quot;gid&quot;: 0,</span><br><span class="line">    &quot;group&quot;: &quot;root&quot;,</span><br><span class="line">    &quot;mode&quot;: &quot;0644&quot;,</span><br><span class="line">    &quot;owner&quot;: &quot;root&quot;,</span><br><span class="line">    &quot;path&quot;: &quot;/data/ansible.cfg&quot;,</span><br><span class="line">    &quot;size&quot;: 20012,</span><br><span class="line">    &quot;state&quot;: &quot;file&quot;,</span><br><span class="line">    &quot;uid&quot;: 0</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>给定内容生成文件，并制定权限</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">[root@mgmt2 ansible]# ansible web -m copy -a &#x27;content=&quot;I love you&quot; dest=/data/love mode=666&#x27;</span><br><span class="line">192.168.101.202 | CHANGED =&gt; &#123;</span><br><span class="line">    &quot;ansible_facts&quot;: &#123;</span><br><span class="line">        &quot;discovered_interpreter_python&quot;: &quot;/usr/libexec/platform-python&quot;</span><br><span class="line">    &#125;,</span><br><span class="line">    &quot;changed&quot;: true,</span><br><span class="line">    &quot;checksum&quot;: &quot;ce48c9870c7ae19796438aed65458c8bdc335157&quot;,</span><br><span class="line">    &quot;dest&quot;: &quot;/data/love&quot;,</span><br><span class="line">    &quot;gid&quot;: 0,</span><br><span class="line">    &quot;group&quot;: &quot;root&quot;,</span><br><span class="line">    &quot;md5sum&quot;: &quot;e4f58a805a6e1fd0f6bef58c86f9ceb3&quot;,</span><br><span class="line">    &quot;mode&quot;: &quot;0666&quot;,</span><br><span class="line">    &quot;owner&quot;: &quot;root&quot;,</span><br><span class="line">    &quot;size&quot;: 10,</span><br><span class="line">    &quot;src&quot;: &quot;/root/.ansible/tmp/ansible-tmp-1631174440.548185-142417634763846/source&quot;,</span><br><span class="line">    &quot;state&quot;: &quot;file&quot;,</span><br><span class="line">    &quot;uid&quot;: 0</span><br><span class="line">&#125;</span><br><span class="line">192.168.101.201 | CHANGED =&gt; &#123;</span><br><span class="line">    &quot;ansible_facts&quot;: &#123;</span><br><span class="line">        &quot;discovered_interpreter_python&quot;: &quot;/usr/libexec/platform-python&quot;</span><br><span class="line">    &#125;,</span><br><span class="line">    &quot;changed&quot;: true,</span><br><span class="line">    &quot;checksum&quot;: &quot;ce48c9870c7ae19796438aed65458c8bdc335157&quot;,</span><br><span class="line">    &quot;dest&quot;: &quot;/data/love&quot;,</span><br><span class="line">    &quot;gid&quot;: 0,</span><br><span class="line">    &quot;group&quot;: &quot;root&quot;,</span><br><span class="line">    &quot;md5sum&quot;: &quot;e4f58a805a6e1fd0f6bef58c86f9ceb3&quot;,</span><br><span class="line">    &quot;mode&quot;: &quot;0666&quot;,</span><br><span class="line">    &quot;owner&quot;: &quot;root&quot;,</span><br><span class="line">    &quot;size&quot;: 10,</span><br><span class="line">    &quot;src&quot;: &quot;/root/.ansible/tmp/ansible-tmp-1631174440.5443904-137441252807840/source&quot;,</span><br><span class="line">    &quot;state&quot;: &quot;file&quot;,</span><br><span class="line">    &quot;uid&quot;: 0</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>我们现在去查看一下我们生成的文件及其权限：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[root@mgmt2 ansible]# ansible web -m shell -a &#x27;ls -la /data/&#x27;</span><br><span class="line">192.168.101.202 | CHANGED | rc=0 &gt;&gt;</span><br><span class="line">total 24</span><br><span class="line">-rw-r--r--   1 root root 20012 Sep  9 15:54 ansible.cfg</span><br><span class="line">-rw-rw-rw-   1 root root    10 Sep  9 16:00 love</span><br><span class="line"></span><br><span class="line">192.168.101.201 | CHANGED | rc=0 &gt;&gt;</span><br><span class="line">total 230280</span><br><span class="line">-rw-r--r--   1 root root     20012 Sep  9 15:54 ansible.cfg</span><br><span class="line">-rw-rw-rw-   1 root root        10 Sep  9 16:00 love</span><br></pre></td></tr></table></figure>
+
+<p>可以看出我们的love文件已经生成，并且权限为666</p>
+<ul>
+<li>关于覆盖</li>
+</ul>
+<p>我们把文件的内容修改一下，然后选择覆盖备份：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">[root@mgmt2 ansible]# ansible web -m copy -a &#x27;content=&quot;I love you today&quot; backup=yes dest=/data/love mode=666&#x27;</span><br><span class="line">192.168.101.201 | CHANGED =&gt; &#123;</span><br><span class="line">    &quot;ansible_facts&quot;: &#123;</span><br><span class="line">        &quot;discovered_interpreter_python&quot;: &quot;/usr/libexec/platform-python&quot;</span><br><span class="line">    &#125;,</span><br><span class="line">    &quot;backup_file&quot;: &quot;/data/love.1710731.2021-09-09@16:08:11~&quot;,</span><br><span class="line">    &quot;changed&quot;: true,</span><br><span class="line">    &quot;checksum&quot;: &quot;aae6d5443c11825389059f97953a5596f52472d0&quot;,</span><br><span class="line">    &quot;dest&quot;: &quot;/data/love&quot;,</span><br><span class="line">    &quot;gid&quot;: 0,</span><br><span class="line">    &quot;group&quot;: &quot;root&quot;,</span><br><span class="line">    &quot;md5sum&quot;: &quot;ca125268f92d23fbb2ba11b5033d97a6&quot;,</span><br><span class="line">    &quot;mode&quot;: &quot;0666&quot;,</span><br><span class="line">    &quot;owner&quot;: &quot;root&quot;,</span><br><span class="line">    &quot;size&quot;: 16,</span><br><span class="line">    &quot;src&quot;: &quot;/root/.ansible/tmp/ansible-tmp-1631174889.8834162-86186609378458/source&quot;,</span><br><span class="line">    &quot;state&quot;: &quot;file&quot;,</span><br><span class="line">    &quot;uid&quot;: 0</span><br><span class="line">&#125;</span><br><span class="line">192.168.101.202 | CHANGED =&gt; &#123;</span><br><span class="line">    &quot;ansible_facts&quot;: &#123;</span><br><span class="line">        &quot;discovered_interpreter_python&quot;: &quot;/usr/libexec/platform-python&quot;</span><br><span class="line">    &#125;,</span><br><span class="line">    &quot;backup_file&quot;: &quot;/data/love.2458311.2021-09-09@16:08:11~&quot;,</span><br><span class="line">    &quot;changed&quot;: true,</span><br><span class="line">    &quot;checksum&quot;: &quot;aae6d5443c11825389059f97953a5596f52472d0&quot;,</span><br><span class="line">    &quot;dest&quot;: &quot;/data/love&quot;,</span><br><span class="line">    &quot;gid&quot;: 0,</span><br><span class="line">    &quot;group&quot;: &quot;root&quot;,</span><br><span class="line">    &quot;md5sum&quot;: &quot;ca125268f92d23fbb2ba11b5033d97a6&quot;,</span><br><span class="line">    &quot;mode&quot;: &quot;0666&quot;,</span><br><span class="line">    &quot;owner&quot;: &quot;root&quot;,</span><br><span class="line">    &quot;size&quot;: 16,</span><br><span class="line">    &quot;src&quot;: &quot;/root/.ansible/tmp/ansible-tmp-1631174889.8911483-24337496953154/source&quot;,</span><br><span class="line">    &quot;state&quot;: &quot;file&quot;,</span><br><span class="line">    &quot;uid&quot;: 0</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>现在我们可以去查看一下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">[root@mgmt2 ansible]# ansible web -m shell -a &#x27;ls -la /data&#x27;</span><br><span class="line">192.168.101.201 | CHANGED | rc=0 &gt;&gt;</span><br><span class="line">total 230288</span><br><span class="line">-rw-r--r--   1 root root     20012 Sep  9 15:54 ansible.cfg</span><br><span class="line">-rw-rw-rw-   1 root root        16 Sep  9 16:08 love</span><br><span class="line">-rw-rw-rw-   1 root root        10 Sep  9 16:00 love.1710731.2021-09-09@16:08:11~</span><br><span class="line"></span><br><span class="line">192.168.101.202 | CHANGED | rc=0 &gt;&gt;</span><br><span class="line">total 32</span><br><span class="line">-rw-r--r--   1 root root 20012 Sep  9 15:54 ansible.cfg</span><br><span class="line">-rw-rw-rw-   1 root root    16 Sep  9 16:08 love</span><br><span class="line">-rw-rw-rw-   1 root root    10 Sep  9 16:00 love.2458311.2021-09-09@16:08:11~</span><br></pre></td></tr></table></figure>
+
+<p>可以看出，我们的源文件已经被备份，我们还可以查看一下<code>love</code>文件的内容：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[root@mgmt2 ansible]# ansible web -m shell -a &#x27;cat /data/love&#x27;</span><br><span class="line">192.168.101.201 | CHANGED | rc=0 &gt;&gt;</span><br><span class="line">I love you today</span><br><span class="line"></span><br><span class="line">192.168.101.202 | CHANGED | rc=0 &gt;&gt;</span><br><span class="line">I love you today</span><br></pre></td></tr></table></figure>
+
+<p>证明，这正是我们新导入的文件的内容。</p>
+<h3 id="file模块"><a href="#file模块" class="headerlink" title="file模块"></a>file模块</h3><blockquote>
+<p>该模块主要用于设置文件的属性，比如创建文件、创建链接文件、删除文件等。<br>下面是一些常见的命令：</p>
+<p><code>force</code>　　#需要在两种情况下强制创建软链接，一种是源文件不存在，但之后会建立的情况下；另一种是目标软链接已存在，需要先取消之前的软链，然后创建新的软链，有两个选项：yes|no<br><code>group</code>　　#定义文件/目录的属组。后面可以加上<code>mode</code>：定义文件/目录的权限<br><code>owner</code>　　#定义文件/目录的属主。后面必须跟上<code>path</code>：定义文件/目录的路径<br><code>recurse</code>　　#递归设置文件的属性，只对目录有效，后面跟上<code>src</code>：被链接的源文件路径，只应用于<code>state=link</code>的情况<br><code>dest</code>　　#被链接到的路径，只应用于<code>state=link</code>的情况<br><code>state</code>　　#状态，有以下选项：</p>
+<blockquote>
+<p><code>directory</code>：如果目录不存在，就创建目录<br><code>file</code>：即使文件不存在，也不会被创建<br><code>link</code>：创建软链接<br><code>hard</code>：创建硬链接<br><code>touch</code>：如果文件不存在，则会创建一个新的文件，如果文件或目录已存在，则更新其最后修改时间<br><code>absent</code>：删除目录、文件或者取消链接文件</p>
+</blockquote>
+</blockquote>
+<p>用法举例如下：</p>
+<ul>
+<li>创建目录</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">[root@mgmt2 ansible]# ansible web -m file -a &#x27;path=/data/app state=directory&#x27;</span><br><span class="line">192.168.101.202 | CHANGED =&gt; &#123;</span><br><span class="line">    &quot;ansible_facts&quot;: &#123;</span><br><span class="line">        &quot;discovered_interpreter_python&quot;: &quot;/usr/libexec/platform-python&quot;</span><br><span class="line">    &#125;,</span><br><span class="line">    &quot;changed&quot;: true,</span><br><span class="line">    &quot;gid&quot;: 0,</span><br><span class="line">    &quot;group&quot;: &quot;root&quot;,</span><br><span class="line">    &quot;mode&quot;: &quot;0755&quot;,</span><br><span class="line">    &quot;owner&quot;: &quot;root&quot;,</span><br><span class="line">    &quot;path&quot;: &quot;/data/app&quot;,</span><br><span class="line">    &quot;size&quot;: 6,</span><br><span class="line">    &quot;state&quot;: &quot;directory&quot;,</span><br><span class="line">    &quot;uid&quot;: 0</span><br><span class="line">&#125;</span><br><span class="line">192.168.101.201 | CHANGED =&gt; &#123;</span><br><span class="line">    &quot;ansible_facts&quot;: &#123;</span><br><span class="line">        &quot;discovered_interpreter_python&quot;: &quot;/usr/libexec/platform-python&quot;</span><br><span class="line">    &#125;,</span><br><span class="line">    &quot;changed&quot;: true,</span><br><span class="line">    &quot;gid&quot;: 0,</span><br><span class="line">    &quot;group&quot;: &quot;root&quot;,</span><br><span class="line">    &quot;mode&quot;: &quot;0755&quot;,</span><br><span class="line">    &quot;owner&quot;: &quot;root&quot;,</span><br><span class="line">    &quot;path&quot;: &quot;/data/app&quot;,</span><br><span class="line">    &quot;size&quot;: 6,</span><br><span class="line">    &quot;state&quot;: &quot;directory&quot;,</span><br><span class="line">    &quot;uid&quot;: 0</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>我们可以查看一下</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[root@mgmt2 ansible]# ansible web -m shell -a &#x27;ls -l /data&#x27;</span><br><span class="line">192.168.101.202 | CHANGED | rc=0 &gt;&gt;</span><br><span class="line">total 32</span><br><span class="line">drwxr-xr-x 2 root root     6 Sep  9 16:13 app</span><br><span class="line"></span><br><span class="line">192.168.101.201 | CHANGED | rc=0 &gt;&gt;</span><br><span class="line">total 230288</span><br><span class="line">drwxr-xr-x 2 root root         6 Sep  9 16:13 app</span><br></pre></td></tr></table></figure>
+
+<p>可以看出，我们的目录已经创建完成</p>
+<ul>
+<li>创建链接文件</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">[root@mgmt2 ansible]# ansible web -m file -a &#x27;path=/data/hhh.cfg src=ansible.cfg state=link&#x27;</span><br><span class="line">192.168.101.202 | CHANGED =&gt; &#123;</span><br><span class="line">    &quot;ansible_facts&quot;: &#123;</span><br><span class="line">        &quot;discovered_interpreter_python&quot;: &quot;/usr/libexec/platform-python&quot;</span><br><span class="line">    &#125;,</span><br><span class="line">    &quot;changed&quot;: true,</span><br><span class="line">    &quot;dest&quot;: &quot;/data/hhh.cfg&quot;,</span><br><span class="line">    &quot;gid&quot;: 0,</span><br><span class="line">    &quot;group&quot;: &quot;root&quot;,</span><br><span class="line">    &quot;mode&quot;: &quot;0777&quot;,</span><br><span class="line">    &quot;owner&quot;: &quot;root&quot;,</span><br><span class="line">    &quot;size&quot;: 11,</span><br><span class="line">    &quot;src&quot;: &quot;ansible.cfg&quot;,</span><br><span class="line">    &quot;state&quot;: &quot;link&quot;,</span><br><span class="line">    &quot;uid&quot;: 0</span><br><span class="line">&#125;</span><br><span class="line">192.168.101.201 | CHANGED =&gt; &#123;</span><br><span class="line">    &quot;ansible_facts&quot;: &#123;</span><br><span class="line">        &quot;discovered_interpreter_python&quot;: &quot;/usr/libexec/platform-python&quot;</span><br><span class="line">    &#125;,</span><br><span class="line">    &quot;changed&quot;: true,</span><br><span class="line">    &quot;dest&quot;: &quot;/data/hhh.cfg&quot;,</span><br><span class="line">    &quot;gid&quot;: 0,</span><br><span class="line">    &quot;group&quot;: &quot;root&quot;,</span><br><span class="line">    &quot;mode&quot;: &quot;0777&quot;,</span><br><span class="line">    &quot;owner&quot;: &quot;root&quot;,</span><br><span class="line">    &quot;size&quot;: 11,</span><br><span class="line">    &quot;src&quot;: &quot;ansible.cfg&quot;,</span><br><span class="line">    &quot;state&quot;: &quot;link&quot;,</span><br><span class="line">    &quot;uid&quot;: 0</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>我们可以去查看一下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[root@mgmt2 ansible]# ansible web -m shell -a &#x27;ls -l /data&#x27;</span><br><span class="line">192.168.101.202 | CHANGED | rc=0 &gt;&gt;</span><br><span class="line">total 32</span><br><span class="line">-rw-r--r-- 1 root root 20012 Sep  9 15:54 ansible.cfg</span><br><span class="line">lrwxrwxrwx 1 root root    11 Sep  9 16:19 hhh.cfg -&gt; ansible.cfg</span><br><span class="line"></span><br><span class="line">192.168.101.201 | CHANGED | rc=0 &gt;&gt;</span><br><span class="line">total 230288</span><br><span class="line">-rw-r--r-- 1 root root     20012 Sep  9 15:54 ansible.cfg</span><br><span class="line">lrwxrwxrwx 1 root root        11 Sep  9 16:19 hhh.cfg -&gt; ansible.cfg</span><br></pre></td></tr></table></figure>
+
+<p>我们的链接文件已经创建成功</p>
+<ul>
+<li>删除文件</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">[root@mgmt2 ansible]# ansible web -m file -a &#x27;path=/data/ansible.cfg state=absent&#x27;</span><br><span class="line">192.168.101.201 | CHANGED =&gt; &#123;</span><br><span class="line">    &quot;ansible_facts&quot;: &#123;</span><br><span class="line">        &quot;discovered_interpreter_python&quot;: &quot;/usr/libexec/platform-python&quot;</span><br><span class="line">    &#125;,</span><br><span class="line">    &quot;changed&quot;: true,</span><br><span class="line">    &quot;path&quot;: &quot;/data/ansible.cfg&quot;,</span><br><span class="line">    &quot;state&quot;: &quot;absent&quot;</span><br><span class="line">&#125;</span><br><span class="line">192.168.101.202 | CHANGED =&gt; &#123;</span><br><span class="line">    &quot;ansible_facts&quot;: &#123;</span><br><span class="line">        &quot;discovered_interpreter_python&quot;: &quot;/usr/libexec/platform-python&quot;</span><br><span class="line">    &#125;,</span><br><span class="line">    &quot;changed&quot;: true,</span><br><span class="line">    &quot;path&quot;: &quot;/data/ansible.cfg&quot;,</span><br><span class="line">    &quot;state&quot;: &quot;absent&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>我们可以查看一下</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[root@mgmt2 ansible]# ansible web -m shell -a &#x27;ls /data/ansible.cfg&#x27;</span><br><span class="line">192.168.101.201 | FAILED | rc=2 &gt;&gt;</span><br><span class="line">ls: cannot access &#x27;/data/ansible.cfg&#x27;: No such file or directorynon-zero return code</span><br><span class="line"></span><br><span class="line">192.168.101.202 | FAILED | rc=2 &gt;&gt;</span><br><span class="line">ls: cannot access &#x27;/data/ansible.cfg&#x27;: No such file or directorynon-zero return code</span><br></pre></td></tr></table></figure>
+
+<p>已经没有这个文件</p>
+<h3 id="fetch"><a href="#fetch" class="headerlink" title="fetch"></a>fetch</h3><p>该模块用于从远程某主机获取（复制）文件到本地。<br>有两个选项：</p>
+<blockquote>
+<p><code>dest</code>：用来存放文件的目录<br><code>src</code>：在远程拉取的文件，并且必须是一个<strong>file</strong>，不能是<strong>目录</strong></p>
+</blockquote>
+<p>具体举例如下</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">root@mgmt2 ansible]# ansible web -m fetch -a &#x27;src=/data/love dest=/data&#x27;</span><br><span class="line">192.168.101.202 | CHANGED =&gt; &#123;</span><br><span class="line">    &quot;changed&quot;: true,</span><br><span class="line">    &quot;checksum&quot;: &quot;aae6d5443c11825389059f97953a5596f52472d0&quot;,</span><br><span class="line">    &quot;dest&quot;: &quot;/data/192.168.101.202/data/love&quot;,</span><br><span class="line">    &quot;md5sum&quot;: &quot;ca125268f92d23fbb2ba11b5033d97a6&quot;,</span><br><span class="line">    &quot;remote_checksum&quot;: &quot;aae6d5443c11825389059f97953a5596f52472d0&quot;,</span><br><span class="line">    &quot;remote_md5sum&quot;: null</span><br><span class="line">&#125;</span><br><span class="line">192.168.101.201 | CHANGED =&gt; &#123;</span><br><span class="line">    &quot;changed&quot;: true,</span><br><span class="line">    &quot;checksum&quot;: &quot;aae6d5443c11825389059f97953a5596f52472d0&quot;,</span><br><span class="line">    &quot;dest&quot;: &quot;/data/192.168.101.201/data/love&quot;,</span><br><span class="line">    &quot;md5sum&quot;: &quot;ca125268f92d23fbb2ba11b5033d97a6&quot;,</span><br><span class="line">    &quot;remote_checksum&quot;: &quot;aae6d5443c11825389059f97953a5596f52472d0&quot;,</span><br><span class="line">    &quot;remote_md5sum&quot;: null</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>我们可以在本机上查看一下文件是否复制成功。要注意，文件保存的路径是我们设置的接收目录下的<code>被管制主机ip</code>目录下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">[root@mgmt2 ansible]# cd /data/</span><br><span class="line">[root@mgmt2 data]# ls</span><br><span class="line">192.168.101.201  192.168.101.202</span><br><span class="line">[root@mgmt2 data]# cd 192.168.101.201</span><br><span class="line">[root@mgmt2 192.168.101.201]# ls</span><br><span class="line">data</span><br><span class="line">[root@mgmt2 192.168.101.201]# cd data/</span><br><span class="line">[root@mgmt2 data]# ls</span><br><span class="line">love</span><br><span class="line">[root@mgmt2 data]# pwd</span><br><span class="line">/data/192.168.101.201/data</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="cron模块"><a href="#cron模块" class="headerlink" title="cron模块"></a>cron模块</h3><p>该模块适用于管理<code>cron</code>计划任务的。<br>其使用的语法跟我们的<code>crontab</code>文件中的语法一致，同时，可以指定以下选项：</p>
+<blockquote>
+<p><code>day=</code> #日应该运行的工作( 1-31, *, */2, )<br><code>hour=</code> # 小时 ( 0-23, *, */2, )<br><code>minute=</code> #分钟( 0-59, *, */2, )<br><code>month=</code> # 月( 1-12, *, /2, )<br><code>weekday=</code> # 周 ( 0-6 for Sunday-Saturday,, )<br><code>job=</code> #指明运行的命令是什么<br><code>name=</code> #定时任务描述<br><code>reboot</code> # 任务在重启时运行，不建议使用，建议使用special_time<br><code>special_time</code> #特殊的时间范围，参数：reboot（重启时），annually（每年），monthly（每月），weekly（每周），daily（每天），hourly（每小时）<br><code>state</code> #指定状态，present表示添加定时任务，也是默认设置，absent表示删除定时任务<br><code>user</code> # 以哪个用户的身份执行</p>
+</blockquote>
+<p>举例如下</p>
+<ul>
+<li>添加计划任务</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">[root@mgmt2 ~]# ansible web -m cron -a &#x27;name=&quot;ntp update every 5 min&quot; minute=*/5 job=&quot;/sbin/ntpdate 172.17.0.1 &amp;&gt; /dev/null&quot;&#x27;</span><br><span class="line">192.168.101.202 | SUCCESS =&gt; &#123;</span><br><span class="line">    &quot;changed&quot;: true, </span><br><span class="line">    &quot;envs&quot;: [], </span><br><span class="line">    &quot;jobs&quot;: [</span><br><span class="line">        &quot;ntp update every 5 min&quot;</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br><span class="line">192.168.101.201 | SUCCESS =&gt; &#123;</span><br><span class="line">    &quot;changed&quot;: true, </span><br><span class="line">    &quot;envs&quot;: [], </span><br><span class="line">    &quot;jobs&quot;: [</span><br><span class="line">        &quot;ntp update every 5 min&quot;</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>我们可以去查看一下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[root@server ~]# ansible web -m shell -a &#x27;crontab -l&#x27;</span><br><span class="line">192.168.37.122 | SUCCESS | rc=0 &gt;&gt;</span><br><span class="line">#Ansible: ntp update every 5 min</span><br><span class="line">*/5 * * * * /sbin/ntpdate 172.17.0.1 &amp;&gt; /dev/null</span><br><span class="line"></span><br><span class="line">192.168.37.133 | SUCCESS | rc=0 &gt;&gt;</span><br><span class="line">#Ansible: ntp update every 5 min</span><br><span class="line">*/5 * * * * /sbin/ntpdate 172.17.0.1 &amp;&gt; /dev/null</span><br></pre></td></tr></table></figure>
+
+<p>可以看出，我们的计划任务已经设置成功了。</p>
+
+    </div>
+
+    
+    
+    
+        
+
+  <div class="followme">
+    <p>欢迎关注我的其它发布渠道</p>
+
+    <div class="social-list">
+
+        <div class="social-item">
+          <a target="_blank" class="social-link" href="/atom.xml">
+            <span class="icon">
+              <i class="fa fa-rss"></i>
+            </span>
+
+            <span class="label">RSS</span>
+          </a>
+        </div>
+
+        <div class="social-item">
+          <a target="_blank" class="social-link" href="/images/wechat_channel.jpg">
+            <span class="icon">
+              <i class="fab fa-weixin"></i>
+            </span>
+
+            <span class="label">WeChat</span>
+          </a>
+        </div>
+
+        <div class="social-item">
+          <a target="_blank" class="social-link" href="https://t.me/channel_name">
+            <span class="icon">
+              <i class="fab fa-telegram"></i>
+            </span>
+
+            <span class="label">Telegram</span>
+          </a>
+        </div>
+
+        <div class="social-item">
+          <a target="_blank" class="social-link" href="https://twitter.com/username">
+            <span class="icon">
+              <i class="fab fa-twitter"></i>
+            </span>
+
+            <span class="label">Twitter</span>
+          </a>
+        </div>
+    </div>
+  </div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/ansible/" rel="tag"># ansible</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/2018/03/15/Ansible%20Tower-%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE%E5%8F%8A%E7%A0%B4%E8%A7%A3/" rel="next" title="Ansible Tower-安装配置及破解">
+      Ansible Tower-安装配置及破解 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+<script type="text/javascript" id="clustrmaps" src="//clustrmaps.com/map_v2.js?d=PGYncUiSTnkUS8Nkg3hKuBb67df9OnAR0ugkllogplA&cl=ffffff&w=a"></script>
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Ansible%E8%AF%A6%E8%A7%A3"><span class="nav-number">1.</span> <span class="nav-text">Ansible详解</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#ansible-%E9%85%8D%E7%BD%AE%E5%85%AC%E7%A7%81%E9%92%A5"><span class="nav-number">1.1.</span> <span class="nav-text">ansible 配置公私钥</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ansible%E5%B8%B8%E7%94%A8%E6%A8%A1%E5%9D%97"><span class="nav-number">1.2.</span> <span class="nav-text">ansible常用模块</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%BB%E6%9C%BA%E8%BF%9E%E9%80%9A%E6%80%A7%E6%B5%8B%E8%AF%95"><span class="nav-number">1.2.1.</span> <span class="nav-text">主机连通性测试</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#command-%E6%A8%A1%E5%9D%97"><span class="nav-number">1.2.2.</span> <span class="nav-text">command 模块</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#shell-%E6%A8%A1%E5%9D%97"><span class="nav-number">1.2.3.</span> <span class="nav-text">shell 模块</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#copy%E6%A8%A1%E5%9D%97"><span class="nav-number">1.2.4.</span> <span class="nav-text">copy模块</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#file%E6%A8%A1%E5%9D%97"><span class="nav-number">1.2.5.</span> <span class="nav-text">file模块</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#fetch"><span class="nav-number">1.2.6.</span> <span class="nav-text">fetch</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#cron%E6%A8%A1%E5%9D%97"><span class="nav-number">1.2.7.</span> <span class="nav-text">cron模块</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="何宇泽"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">何宇泽</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">7</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/heyonggs" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;heyonggs" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:heyonggs@gmail.com" title="E-Mail → mailto:heyonggs@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/heyong" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;heyong" rel="noopener" target="_blank"><i class="fab fa-weibo fa-fw"></i>Weibo</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://twitter.com/heyong" title="Twitter → https:&#x2F;&#x2F;twitter.com&#x2F;heyong" rel="noopener" target="_blank"><i class="fab fa-twitter fa-fw"></i>Twitter</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.facebook.com/heyonggs" title="FB Page → https:&#x2F;&#x2F;www.facebook.com&#x2F;heyonggs" rel="noopener" target="_blank"><i class="fab fa-facebook fa-fw"></i>FB Page</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://youtube.com/heyonggs" title="YouTube → https:&#x2F;&#x2F;youtube.com&#x2F;heyonggs" rel="noopener" target="_blank"><i class="fab fa-youtube fa-fw"></i>YouTube</a>
+      </span>
+  </div>
+
+
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2015 – 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">何宇泽</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">48k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">44 分钟</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+<script>
+    var now = new Date();
+    function createtime() {
+        var grt= new Date("12/03/2018 00:00:00");//此处修改你的建站时间或者网站上线时间
+        now.setTime(now.getTime()+250);
+        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
+        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
+        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
+        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
+        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
+        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;}
+        document.getElementById("timeDate").innerHTML = "Running for "+dnum+" Days ";
+        document.getElementById("times").innerHTML = hnum + " Hours " + mnum + " m " + snum + " s";
+    }
+    setInterval("createtime()",250);
+</script>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+  <script defer src="/lib/three/three.min.js"></script>
+    <script defer src="/lib/three/three-waves.min.js"></script>
+    <script defer src="/lib/three/canvas_lines.min.js"></script>
+    <script defer src="/lib/three/canvas_sphere.min.js"></script>
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/disqusjs@1/dist/disqusjs.css">
+
+<script>
+NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/disqusjs@1/dist/disqus.js', () => {
+    window.dsqjs = new DisqusJS({
+      api       : 'https://disqus.skk.moe/disqus/' || 'https://disqus.com/api/',
+      apikey    : '7x1LY2rKpX3VKuZ3jBy28orAk18BxmejbRKN8KCGIfIHD4LaoDq5aqu3VdrPl4ef',
+      shortname : 'heyuze',
+      url       : "https://heyonggs.github.io/2017/09/15/%E8%87%AA%E5%8A%A8%E5%8C%96%E8%BF%90%E7%BB%B4%E5%B7%A5%E5%85%B7-Ansible/",
+      identifier: "2017/09/15/自动化运维工具-Ansible/",
+      title     : "自动化运维工具-Ansible",
+    });
+  }, window.DisqusJS);
+});
+</script>
+
+</body>
+</html>
