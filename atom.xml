@@ -6,7 +6,7 @@
   <link href="https://heyonggs.github.io/atom.xml" rel="self"/>
   
   <link href="https://heyonggs.github.io/"/>
-  <updated>2021-09-22T09:00:20.401Z</updated>
+  <updated>2021-09-22T03:42:23.322Z</updated>
   <id>https://heyonggs.github.io/</id>
   
   <author>
@@ -15,25 +15,6 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
-  
-  <entry>
-    <title>k8s部署nacos集群</title>
-    <link href="https://heyonggs.github.io/2021/09/22/k8s%E9%83%A8%E7%BD%B2nacos%E9%9B%86%E7%BE%A4/"/>
-    <id>https://heyonggs.github.io/2021/09/22/k8s%E9%83%A8%E7%BD%B2nacos%E9%9B%86%E7%BE%A4/</id>
-    <published>2021-09-22T08:59:21.000Z</published>
-    <updated>2021-09-22T09:00:20.401Z</updated>
-    
-    
-    <summary type="html">&lt;p&gt;&lt;escape&gt;</summary>
-    
-    
-    
-    <category term="k8s" scheme="https://heyonggs.github.io/categories/k8s/"/>
-    
-    
-    <category term="k8s" scheme="https://heyonggs.github.io/tags/k8s/"/>
-    
-  </entry>
   
   <entry>
     <title>Nginx更换SSL证书</title>
@@ -70,6 +51,44 @@
     
     
     <category term="System,cpu" scheme="https://heyonggs.github.io/tags/System-cpu/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>k8s部署nacos集群</title>
+    <link href="https://heyonggs.github.io/2021/03/10/k8s%E9%83%A8%E7%BD%B2nacos%E9%9B%86%E7%BE%A4/"/>
+    <id>https://heyonggs.github.io/2021/03/10/k8s%E9%83%A8%E7%BD%B2nacos%E9%9B%86%E7%BE%A4/</id>
+    <published>2021-03-10T08:59:21.000Z</published>
+    <updated>2021-09-22T09:06:39.866Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;&lt;escape&gt;</summary>
+    
+    
+    
+    <category term="k8s" scheme="https://heyonggs.github.io/categories/k8s/"/>
+    
+    
+    <category term="k8s" scheme="https://heyonggs.github.io/tags/k8s/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>k8s部署treafik2.x</title>
+    <link href="https://heyonggs.github.io/2021/02/22/k8s%E9%83%A8%E7%BD%B2treafik2.x/"/>
+    <id>https://heyonggs.github.io/2021/02/22/k8s%E9%83%A8%E7%BD%B2treafik2.x/</id>
+    <published>2021-02-22T09:03:45.000Z</published>
+    <updated>2021-09-22T09:06:17.948Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;&lt;escape&gt;</summary>
+    
+    
+    
+    <category term="k8s" scheme="https://heyonggs.github.io/categories/k8s/"/>
+    
+    
+    <category term="k8s" scheme="https://heyonggs.github.io/tags/k8s/"/>
     
   </entry>
   
