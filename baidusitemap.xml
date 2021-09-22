@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://heyonggs.github.io/2021/09/22/k8s%E9%83%A8%E7%BD%B2nacos%E9%9B%86%E7%BE%A4/</loc>
+    <lastmod>2021-09-22</lastmod>
+  </url>
+  <url>
     <loc>https://heyonggs.github.io/2018/07/20/SaltStack%E5%AE%89%E8%A3%85%E5%8F%8A%E4%BD%BF%E7%94%A8/</loc>
     <lastmod>2021-09-22</lastmod>
   </url>

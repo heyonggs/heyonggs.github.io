@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+<meta name="google-site-verification" content="9txmeVmeJ6bMHjmAuOJ4jIB5_Oxio9bwz8neOVbFbe4" />
+<meta name="baidu-site-verification" content="code-mn6sfA1sqp" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"heyonggs.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"onmobile":false,"b2t":true,"scrollpercent":true},"copycode":{"enable":true,"show_result":true,"style":"default"},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta property="og:type" content="article">
+<meta property="og:title" content="k8s部署nacos集群">
+<meta property="og:url" content="https://heyonggs.github.io/2021/09/22/k8s%E9%83%A8%E7%BD%B2nacos%E9%9B%86%E7%BE%A4/index.html">
+<meta property="og:site_name" content="何宇泽">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/heyonggs/images@master/wp/2021/nacos/1.jpg">
+<meta property="article:published_time" content="2021-09-22T08:59:21.000Z">
+<meta property="article:modified_time" content="2021-09-22T09:00:20.401Z">
+<meta property="article:author" content="何宇泽">
+<meta property="article:tag" content="k8s">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/heyonggs/images@master/wp/2021/nacos/1.jpg">
+
+<link rel="canonical" href="https://heyonggs.github.io/2021/09/22/k8s%E9%83%A8%E7%BD%B2nacos%E9%9B%86%E7%BE%A4/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>k8s部署nacos集群 | 何宇泽</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="何宇泽" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">何宇泽</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-主页">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>主页</a>
+
+  </li>
+        <li class="menu-item menu-item-归档">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-分类">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-标签">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-关于">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-站点地图">
+
+    <a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>站点地图</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://heyonggs.github.io/2021/09/22/k8s%E9%83%A8%E7%BD%B2nacos%E9%9B%86%E7%BE%A4/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="何宇泽">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="何宇泽">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          k8s部署nacos集群
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-09-22 16:59:21 / 修改时间：17:00:20" itemprop="dateCreated datePublished" datetime="2021-09-22T16:59:21+08:00">2021-09-22</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/k8s/" itemprop="url" rel="index"><span itemprop="name">k8s</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span><br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>13k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>12 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p><escape><span id="more"></span></escape></p>
+<h1 id="k8s部署nacos集群"><a href="#k8s部署nacos集群" class="headerlink" title="k8s部署nacos集群"></a>k8s部署nacos集群</h1><h2 id="Nacos集群部署的安装包准备"><a href="#Nacos集群部署的安装包准备" class="headerlink" title="Nacos集群部署的安装包准备"></a>Nacos集群部署的安装包准备</h2><p>下载nacos安装包</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">[root@k8s-master data]# pwd</span><br><span class="line">/data/nacos-server-2.0.2</span><br><span class="line"></span><br><span class="line"># 下载安装包</span><br><span class="line">[root@k8s-master data]# wget https://github.com/alibaba/nacos/releases/download/2.0.2/nacos-server-2.0.2.zip</span><br><span class="line"></span><br><span class="line"># 解压</span><br><span class="line">[root@k8s-master data]# unzip nacos-server-2.0.2.zip</span><br><span class="line">[root@k8s-master data]# mv nacos nacos-server-2.0.2</span><br><span class="line"></span><br><span class="line"># 进入配置文件目录</span><br><span class="line">[root@k8s-master conf]# cd nacos-server-2.0.2/nacos/conf</span><br><span class="line"></span><br><span class="line"># 备份配置文件</span><br><span class="line">[root@k8s-master conf]# mv application.properties application.properties.bak</span><br></pre></td></tr></table></figure>
+
+<p>修改配置文件</p>
+<p>[root@k8s-master conf]# cat application.properties</p>
+<figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># spring</span></span><br><span class="line"><span class="meta">server.servlet.contextPath</span>=<span class="string">$&#123;SERVER_SERVLET_CONTEXTPATH:/nacos&#125;</span></span><br><span class="line"><span class="meta">server.contextPath</span>=<span class="string">/nacos</span></span><br><span class="line"><span class="meta">server.port</span>=<span class="string">$&#123;NACOS_SERVER_PORT:8848&#125;</span></span><br><span class="line"><span class="meta">spring.datasource.platform</span>=<span class="string">$&#123;SPRING_DATASOURCE_PLATFORM:&quot;&quot;&#125;</span></span><br><span class="line"><span class="meta">nacos.cmdb.dumpTaskInterval</span>=<span class="string">3600</span></span><br><span class="line"><span class="meta">nacos.cmdb.eventTaskInterval</span>=<span class="string">10</span></span><br><span class="line"><span class="meta">nacos.cmdb.labelTaskInterval</span>=<span class="string">300</span></span><br><span class="line"><span class="meta">nacos.cmdb.loadDataAtStart</span>=<span class="string">false</span></span><br><span class="line"><span class="meta">db.num</span>=<span class="string">$&#123;MYSQL_DATABASE_NUM:1&#125;</span></span><br><span class="line"><span class="meta">db.url.0</span>=<span class="string">jdbc:mysql://$&#123;MYSQL_SERVICE_HOST&#125;:$&#123;MYSQL_SERVICE_PORT:3306&#125;/$&#123;MYSQL_SERVICE_DB_NAME&#125;?characterEncoding=utf8&amp;connectTimeout=1000&amp;socketTimeout=3000&amp;autoReconnect=true</span></span><br><span class="line"><span class="meta">db.user</span>=<span class="string">$&#123;MYSQL_SERVICE_USER&#125;</span></span><br><span class="line"><span class="meta">db.password</span>=<span class="string">$&#123;MYSQL_SERVICE_PASSWORD&#125;</span></span><br><span class="line"><span class="comment">### The auth system to use, currently only &#x27;nacos&#x27; is supported:</span></span><br><span class="line"><span class="meta">nacos.core.auth.system.type</span>=<span class="string">$&#123;NACOS_AUTH_SYSTEM_TYPE:nacos&#125;</span></span><br><span class="line"><span class="comment"> </span></span><br><span class="line"><span class="comment"> </span></span><br><span class="line"><span class="comment">### The token expiration in seconds:</span></span><br><span class="line"><span class="meta">nacos.core.auth.default.token.expire.seconds</span>=<span class="string">$&#123;NACOS_AUTH_TOKEN_EXPIRE_SECONDS:18000&#125;</span></span><br><span class="line"><span class="comment"> </span></span><br><span class="line"><span class="comment">### The default token:</span></span><br><span class="line"><span class="meta">nacos.core.auth.default.token.secret.key</span>=<span class="string">$&#123;NACOS_AUTH_TOKEN:SecretKey012345678901234567890123456789012345678901234567890123456789&#125;</span></span><br><span class="line"><span class="comment"> </span></span><br><span class="line"><span class="comment">### Turn on/off caching of auth information. By turning on this switch, the update of auth information would have a 15 seconds delay.</span></span><br><span class="line"><span class="meta">nacos.core.auth.caching.enabled</span>=<span class="string">$&#123;NACOS_AUTH_CACHE_ENABLE:false&#125;</span></span><br><span class="line"> </span><br><span class="line"><span class="meta">server.tomcat.accesslog.enabled</span>=<span class="string">$&#123;TOMCAT_ACCESSLOG_ENABLED:false&#125;</span></span><br><span class="line"><span class="meta">server.tomcat.accesslog.pattern</span>=<span class="string">%h %l %u %t &quot;%r&quot; %s %b %D</span></span><br><span class="line"><span class="comment"># default current work dir</span></span><br><span class="line"><span class="meta">server.tomcat.basedir</span>=<span class="string"></span></span><br><span class="line"><span class="comment">## spring security config</span></span><br><span class="line"><span class="comment">### turn off security</span></span><br><span class="line"><span class="meta">nacos.security.ignore.urls</span>=<span class="string">/,/error,/**/*.css,/**/*.js,/**/*.html,/**/*.map,/**/*.svg,/**/*.png,/**/*.ico,/console-fe/public/**,/v1/auth/**,/v1/console/health/**,/actuator/**,/v1/console/server/**</span></span><br><span class="line"><span class="comment"># metrics for elastic search</span></span><br><span class="line"><span class="meta">management.metrics.export.elastic.enabled</span>=<span class="string">false</span></span><br><span class="line"><span class="meta">management.metrics.export.influx.enabled</span>=<span class="string">false</span></span><br><span class="line"> </span><br><span class="line"><span class="meta">nacos.naming.distro.taskDispatchThreadCount</span>=<span class="string">10</span></span><br><span class="line"><span class="meta">nacos.naming.distro.taskDispatchPeriod</span>=<span class="string">200</span></span><br><span class="line"><span class="meta">nacos.naming.distro.batchSyncKeyCount</span>=<span class="string">1000</span></span><br><span class="line"><span class="meta">nacos.naming.distro.initDataRatio</span>=<span class="string">0.9</span></span><br><span class="line"><span class="meta">nacos.naming.distro.syncRetryDelay</span>=<span class="string">5000</span></span><br><span class="line"><span class="meta">nacos.naming.data.warmup</span>=<span class="string">true</span></span><br></pre></td></tr></table></figure>
+
+<p>添加docker-startup.sh脚本</p>
+<p>容器里nacos集群模式的启动脚本必须使用docker-startup.sh，不能使用startup.sh启动脚本</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br></pre></td><td class="code"><pre><span class="line">[root@k8s-master conf]# cd ../bin/</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">[root@k8s-master bin]# cat docker-startup.sh</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash">!/bin/bash</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> Copyright 1999-2018 Alibaba Group Holding Ltd.</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> Licensed under the Apache License, Version 2.0 (the <span class="string">&quot;License&quot;</span>);</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> you may not use this file except <span class="keyword">in</span> compliance with the License.</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> You may obtain a copy of the License at</span></span><br><span class="line"><span class="meta"> </span></span><br><span class="line"><span class="meta">#</span><span class="bash">      http://www.apache.org/licenses/LICENSE-2.0</span></span><br><span class="line"><span class="meta">#</span><span class="bash"></span></span><br><span class="line"><span class="bash"><span class="comment"># Unless required by applicable law or agreed to in writing, software</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> distributed under the License is distributed on an <span class="string">&quot;AS IS&quot;</span> BASIS,</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> See the License <span class="keyword">for</span> the specific language governing permissions and</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> limitations under the License.</span></span><br><span class="line">set -x</span><br><span class="line">export DEFAULT_SEARCH_LOCATIONS=&quot;classpath:/,classpath:/config/,file:./,file:./config/&quot;</span><br><span class="line">export CUSTOM_SEARCH_LOCATIONS=$&#123;DEFAULT_SEARCH_LOCATIONS&#125;,file:$&#123;BASE_DIR&#125;/conf/,$&#123;BASE_DIR&#125;/init.d/</span><br><span class="line">export CUSTOM_SEARCH_NAMES=&quot;application,custom&quot;</span><br><span class="line">PLUGINS_DIR=&quot;/home/nacos/plugins/peer-finder&quot;</span><br><span class="line">function print_servers()&#123;</span><br><span class="line">   if [[ ! -d &quot;$&#123;PLUGINS_DIR&#125;&quot; ]]; then</span><br><span class="line">    echo &quot;&quot; &gt; &quot;$CLUSTER_CONF&quot;</span><br><span class="line">    for server in $&#123;NACOS_SERVERS&#125;; do</span><br><span class="line">            echo &quot;$server&quot; &gt;&gt; &quot;$CLUSTER_CONF&quot;</span><br><span class="line">    done</span><br><span class="line">   else</span><br><span class="line">    bash $PLUGINS_DIR/plugin.sh</span><br><span class="line">   sleep 30</span><br><span class="line">        fi</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">#</span><span class="bash">===========================================================================================</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> JVM Configuration</span></span><br><span class="line"><span class="meta">#</span><span class="bash">===========================================================================================</span></span><br><span class="line">if [[ &quot;$&#123;MODE&#125;&quot; == &quot;standalone&quot; ]]; then</span><br><span class="line"> </span><br><span class="line">    JAVA_OPT=&quot;$&#123;JAVA_OPT&#125; -Xms512m -Xmx512m -Xmn256m&quot;</span><br><span class="line">    JAVA_OPT=&quot;$&#123;JAVA_OPT&#125; -Dnacos.standalone=true&quot;</span><br><span class="line">else</span><br><span class="line"> </span><br><span class="line">  JAVA_OPT=&quot;$&#123;JAVA_OPT&#125; -server -Xms$&#123;JVM_XMS&#125; -Xmx$&#123;JVM_XMX&#125; -Xmn$&#123;JVM_XMN&#125; -XX:MetaspaceSize=$&#123;JVM_MS&#125; -XX:MaxMetaspaceSize=$&#123;JVM_MMS&#125;&quot;</span><br><span class="line">  if [[ &quot;$&#123;NACOS_DEBUG&#125;&quot; == &quot;y&quot; ]]; then</span><br><span class="line">    JAVA_OPT=&quot;$&#123;JAVA_OPT&#125; -Xdebug -Xrunjdwp:transport=dt_socket,address=9555,server=y,suspend=n&quot;</span><br><span class="line">  fi</span><br><span class="line">  JAVA_OPT=&quot;$&#123;JAVA_OPT&#125; -XX:-OmitStackTraceInFastThrow -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=$&#123;BASE_DIR&#125;/logs/java_heapdump.hprof&quot;</span><br><span class="line">  JAVA_OPT=&quot;$&#123;JAVA_OPT&#125; -XX:-UseLargePages&quot;</span><br><span class="line">  print_servers</span><br><span class="line">fi</span><br><span class="line"><span class="meta"> </span></span><br><span class="line"><span class="meta">#</span><span class="bash">===========================================================================================</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> Setting system properties</span></span><br><span class="line"><span class="meta">#</span><span class="bash">===========================================================================================</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> <span class="built_in">set</span>  mode that Nacos Server <span class="keyword">function</span> of split</span></span><br><span class="line">if [[ &quot;$&#123;FUNCTION_MODE&#125;&quot; == &quot;config&quot; ]]; then</span><br><span class="line">    JAVA_OPT=&quot;$&#123;JAVA_OPT&#125; -Dnacos.functionMode=config&quot;</span><br><span class="line">elif [[ &quot;$&#123;FUNCTION_MODE&#125;&quot; == &quot;naming&quot; ]]; then</span><br><span class="line">    JAVA_OPT=&quot;$&#123;JAVA_OPT&#125; -Dnacos.functionMode=naming&quot;</span><br><span class="line">fi</span><br><span class="line"><span class="meta">#</span><span class="bash"> <span class="built_in">set</span> nacos server ip</span></span><br><span class="line">if [[ ! -z &quot;$&#123;NACOS_SERVER_IP&#125;&quot; ]]; then</span><br><span class="line">    JAVA_OPT=&quot;$&#123;JAVA_OPT&#125; -Dnacos.server.ip=$&#123;NACOS_SERVER_IP&#125;&quot;</span><br><span class="line">fi</span><br><span class="line"> </span><br><span class="line">if [[ ! -z &quot;$&#123;USE_ONLY_SITE_INTERFACES&#125;&quot; ]]; then</span><br><span class="line">    JAVA_OPT=&quot;$&#123;JAVA_OPT&#125; -Dnacos.inetutils.use-only-site-local-interfaces=$&#123;USE_ONLY_SITE_INTERFACES&#125;&quot;</span><br><span class="line">fi</span><br><span class="line"> </span><br><span class="line">if [[ ! -z &quot;$&#123;PREFERRED_NETWORKS&#125;&quot; ]]; then</span><br><span class="line">    JAVA_OPT=&quot;$&#123;JAVA_OPT&#125; -Dnacos.inetutils.preferred-networks=$&#123;PREFERRED_NETWORKS&#125;&quot;</span><br><span class="line">fi</span><br><span class="line"> </span><br><span class="line">if [[ ! -z &quot;$&#123;IGNORED_INTERFACES&#125;&quot; ]]; then</span><br><span class="line">    JAVA_OPT=&quot;$&#123;JAVA_OPT&#125; -Dnacos.inetutils.ignored-interfaces=$&#123;IGNORED_INTERFACES&#125;&quot;</span><br><span class="line">fi</span><br><span class="line"><span class="meta"> </span></span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="comment">## If turn on auth system:</span></span></span><br><span class="line">if [[ ! -z &quot;$&#123;NACOS_AUTH_ENABLE&#125;&quot; ]]; then</span><br><span class="line">    JAVA_OPT=&quot;$&#123;JAVA_OPT&#125; -Dnacos.core.auth.enabled=$&#123;NACOS_AUTH_ENABLE&#125;&quot;</span><br><span class="line">fi</span><br><span class="line"> </span><br><span class="line">if [[ &quot;$&#123;PREFER_HOST_MODE&#125;&quot; == &quot;hostname&quot; ]]; then</span><br><span class="line">    JAVA_OPT=&quot;$&#123;JAVA_OPT&#125; -Dnacos.preferHostnameOverIp=true&quot;</span><br><span class="line">fi</span><br><span class="line"> </span><br><span class="line">JAVA_MAJOR_VERSION=$($JAVA -version 2&gt;&amp;1 | sed -E -n &#x27;s/.* version &quot;([0-9]*).*$/\1/p&#x27;)</span><br><span class="line">if [[ &quot;$JAVA_MAJOR_VERSION&quot; -ge &quot;9&quot; ]] ; then</span><br><span class="line">  JAVA_OPT=&quot;$&#123;JAVA_OPT&#125; -cp .:$&#123;BASE_DIR&#125;/plugins/cmdb/*.jar:$&#123;BASE_DIR&#125;/plugins/mysql/*.jar&quot;</span><br><span class="line">  JAVA_OPT=&quot;$&#123;JAVA_OPT&#125; -Xlog:gc*:file=$&#123;BASE_DIR&#125;/logs/nacos_gc.log:time,tags:filecount=10,filesize=102400&quot;</span><br><span class="line">else</span><br><span class="line">  JAVA_OPT=&quot;$&#123;JAVA_OPT&#125; -Djava.ext.dirs=$&#123;JAVA_HOME&#125;/jre/lib/ext:$&#123;JAVA_HOME&#125;/lib/ext:$&#123;BASE_DIR&#125;/plugins/health:$&#123;BASE_DIR&#125;/plugins/cmdb:$&#123;BASE_DIR&#125;/plugins/mysql&quot;</span><br><span class="line">  JAVA_OPT=&quot;$&#123;JAVA_OPT&#125; -Xloggc:$&#123;BASE_DIR&#125;/logs/nacos_gc.log -verbose:gc -XX:+PrintGCDetails -XX:+PrintGCDateStamps -XX:+PrintGCTimeStamps -XX:+UseGCLogFileRotation -XX:NumberOfGCLogFiles=10 -XX:GCLogFileSize=100M&quot;</span><br><span class="line">fi</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">JAVA_OPT=&quot;$&#123;JAVA_OPT&#125; -Dnacos.home=$&#123;BASE_DIR&#125;&quot;</span><br><span class="line">JAVA_OPT=&quot;$&#123;JAVA_OPT&#125; -jar $&#123;BASE_DIR&#125;/target/nacos-server.jar&quot;</span><br><span class="line">JAVA_OPT=&quot;$&#123;JAVA_OPT&#125; $&#123;JAVA_OPT_EXT&#125;&quot;</span><br><span class="line">JAVA_OPT=&quot;$&#123;JAVA_OPT&#125; --spring.config.location=$&#123;CUSTOM_SEARCH_LOCATIONS&#125;&quot;</span><br><span class="line">JAVA_OPT=&quot;$&#123;JAVA_OPT&#125; --spring.config.name=$&#123;CUSTOM_SEARCH_NAMES&#125;&quot;</span><br><span class="line">JAVA_OPT=&quot;$&#123;JAVA_OPT&#125; --logging.config=$&#123;BASE_DIR&#125;/conf/nacos-logback.xml&quot;</span><br><span class="line">JAVA_OPT=&quot;$&#123;JAVA_OPT&#125; --server.max-http-header-size=524288&quot;</span><br><span class="line"> </span><br><span class="line">echo &quot;nacos is starting,you can check the $&#123;BASE_DIR&#125;/logs/start.out&quot;</span><br><span class="line">echo &quot;$JAVA $&#123;JAVA_OPT&#125;&quot; &gt; $&#123;BASE_DIR&#125;/logs/start.out 2&gt;&amp;1 &amp;</span><br><span class="line">nohup $JAVA $&#123;JAVA_OPT&#125; &gt; $&#123;BASE_DIR&#125;/logs/start.out 2&gt;&amp;1 &lt; /dev/null</span><br></pre></td></tr></table></figure>
+
+<p>打包</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@k8s-master bin]# cd /data</span><br><span class="line">[root@k8s-master data]# tar -zvcf nacos-server-2.0.2.tar.gz nacos-server-2.0.2</span><br><span class="line">[root@k8s-master data]# ls</span><br><span class="line">nacos-server-2.0.2  nacos-server-2.0.2.tar.gz  nacos-server-2.0.2.zip</span><br></pre></td></tr></table></figure>
+
+<h2 id="Nacos镜像制作"><a href="#Nacos镜像制作" class="headerlink" title="Nacos镜像制作"></a>Nacos镜像制作</h2><p>编写dockerfile</p>
+<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">[root@k8s-master data]<span class="comment"># cat Dockerfile</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">FROM</span> heyuze/jdk1.<span class="number">8.0</span>_301:latest</span><br><span class="line"><span class="keyword">RUN</span><span class="bash"> rm -f /etc/localtime \</span></span><br><span class="line"><span class="bash">&amp;&amp; ln -sv /usr/share/zoneinfo/Asia/Shanghai /etc/localtime \</span></span><br><span class="line"><span class="bash">&amp;&amp; <span class="built_in">echo</span> <span class="string">&quot;Asia/Shanghai&quot;</span> &gt; /etc/timezone</span></span><br><span class="line"> </span><br><span class="line"><span class="keyword">ENV</span> LANG en_US.UTF-<span class="number">8</span></span><br><span class="line"> </span><br><span class="line"><span class="keyword">ENV</span> MODE cluster</span><br><span class="line"><span class="keyword">ENV</span> PREFER_HOST_MODE ip</span><br><span class="line"><span class="keyword">ENV</span> BASE_DIR /home/nacos</span><br><span class="line"><span class="keyword">ENV</span> CLASSPATH .:/home/nacos/conf:</span><br><span class="line"><span class="keyword">ENV</span> CLUSTER_CONF /home/nacos/conf/cluster.conf</span><br><span class="line"><span class="keyword">ENV</span> FUNCTION_MODE all</span><br><span class="line"><span class="keyword">ENV</span> JAVA_HOME /usr/local/jdk/jdk1.<span class="number">8.0</span>_301</span><br><span class="line"><span class="keyword">ENV</span> NACOS_USER nacos</span><br><span class="line"><span class="keyword">ENV</span> JAVA /usr/local/jdk/jdk1.<span class="number">8.0</span>_301/bin/java</span><br><span class="line"><span class="keyword">ENV</span> JVM_XMS <span class="number">2</span>g</span><br><span class="line"><span class="keyword">ENV</span> JVM_XMX <span class="number">2</span>g</span><br><span class="line"><span class="keyword">ENV</span> JVM_XMN <span class="number">1</span>g</span><br><span class="line"><span class="keyword">ENV</span> JVM_MS <span class="number">128</span>m</span><br><span class="line"><span class="keyword">ENV</span> JVM_MMS <span class="number">320</span>m</span><br><span class="line"><span class="keyword">ENV</span> NACOS_DEBUG n</span><br><span class="line"><span class="keyword">ENV</span> TOMCAT_ACCESSLOG_ENABLED false</span><br><span class="line"> </span><br><span class="line"><span class="keyword">WORKDIR</span><span class="bash"> /home/nacos</span></span><br><span class="line"><span class="keyword">ADD</span><span class="bash"> nacos-server-2.0.2.tar.gz /home</span></span><br><span class="line"><span class="keyword">RUN</span><span class="bash"> <span class="built_in">set</span> -x &amp;&amp; mv /home/nacos-server-2.0.2/nacos/* /home/nacos/ &amp;&amp; rm -rf /home/nacos-server-2.0.2</span></span><br><span class="line"> </span><br><span class="line"><span class="keyword">RUN</span><span class="bash"> mkdir -p logs &amp;&amp; <span class="built_in">cd</span> logs &amp;&amp; touch start.out &amp;&amp; ln -sf /dev/stdout start.out &amp;&amp; ln -sf /dev/stderr start.out</span></span><br><span class="line"><span class="keyword">RUN</span><span class="bash"> chmod 755 bin/docker-startup.sh</span></span><br><span class="line"> </span><br><span class="line"><span class="keyword">EXPOSE</span> <span class="number">8848</span></span><br><span class="line"><span class="keyword">ENTRYPOINT</span><span class="bash"> [<span class="string">&quot;bin/docker-startup.sh&quot;</span>]</span></span><br></pre></td></tr></table></figure>
+
+<p>制作镜像并上传</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@k8s-master data]# docker build -t heyuze/nacos-cluster:v2.0.2 .</span><br><span class="line">[root@k8s-master data]# docker push heyuze/nacos-cluster:v2.0.2</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="部署Nacos集群"><a href="#部署Nacos集群" class="headerlink" title="部署Nacos集群"></a>部署Nacos集群</h2><p>这里采用了configmap存储卷，将mysql配置信息存到了configmap中</p>
+<blockquote>
+<p>注意：需要提前在mysql数据库中创建一个nacos库名！然后将上面nacos-server-2.0.2.tar.gz包中的conf/nacos-mysql.sql文件里的sql语句在mysql的nacos库下执行（source nacos-mysql.sql ）导入语句。</p>
+</blockquote>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br></pre></td><td class="code"><pre><span class="line">[<span class="string">root@k8s-master</span> <span class="string">nacos_cluster</span>]<span class="comment"># pwd</span></span><br><span class="line"><span class="string">/data/k8s-yaml/test_yaml/nacos_cluster</span></span><br><span class="line"></span><br><span class="line">[<span class="string">root@k8s-master</span> <span class="string">nacos_cluster</span>]<span class="comment"># cat nacos-cluster.yaml</span></span><br><span class="line"></span><br><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Service</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">namespace:</span> <span class="string">wise</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">nacos-cluster</span></span><br><span class="line">  <span class="attr">labels:</span></span><br><span class="line">    <span class="attr">app:</span> <span class="string">nacos-cluster</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">ports:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">port:</span> <span class="number">8848</span></span><br><span class="line">      <span class="attr">name:</span> <span class="string">server</span></span><br><span class="line">      <span class="attr">targetPort:</span> <span class="number">8848</span></span><br><span class="line">  <span class="attr">clusterIP:</span> <span class="string">None</span></span><br><span class="line">  <span class="attr">selector:</span></span><br><span class="line">    <span class="attr">app:</span> <span class="string">nacos-cluster</span></span><br><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">ConfigMap</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">namespace:</span> <span class="string">wise</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">nacos-cluster-cm</span></span><br><span class="line"><span class="attr">data:</span></span><br><span class="line">  <span class="attr">mysql.host:</span> <span class="string">&quot;192.168.101.221&quot;</span></span><br><span class="line">  <span class="attr">mysql.db.name:</span> <span class="string">&quot;nacos&quot;</span></span><br><span class="line">  <span class="attr">mysql.port:</span> <span class="string">&quot;3306&quot;</span></span><br><span class="line">  <span class="attr">mysql.user:</span> <span class="string">&quot;nacos&quot;</span></span><br><span class="line">  <span class="attr">mysql.password:</span> <span class="string">&quot;nacos@123&quot;</span></span><br><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="attr">apiVersion:</span> <span class="string">apps/v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">StatefulSet</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">namespace:</span> <span class="string">wise</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">nacos-cluster</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">serviceName:</span> <span class="string">nacos-cluster</span></span><br><span class="line">  <span class="attr">replicas:</span> <span class="number">3</span></span><br><span class="line">  <span class="attr">template:</span></span><br><span class="line">    <span class="attr">metadata:</span></span><br><span class="line">      <span class="attr">labels:</span></span><br><span class="line">        <span class="attr">app:</span> <span class="string">nacos-cluster</span></span><br><span class="line">      <span class="attr">annotations:</span></span><br><span class="line">        <span class="attr">pod.alpha.kubernetes.io/initialized:</span> <span class="string">&quot;true&quot;</span></span><br><span class="line">    <span class="attr">spec:</span></span><br><span class="line">      <span class="attr">affinity:</span></span><br><span class="line">        <span class="attr">podAntiAffinity:</span></span><br><span class="line">          <span class="attr">requiredDuringSchedulingIgnoredDuringExecution:</span></span><br><span class="line">            <span class="bullet">-</span> <span class="attr">labelSelector:</span></span><br><span class="line">                <span class="attr">matchExpressions:</span></span><br><span class="line">                  <span class="bullet">-</span> <span class="attr">key:</span> <span class="string">&quot;app&quot;</span></span><br><span class="line">                    <span class="attr">operator:</span> <span class="string">In</span></span><br><span class="line">                    <span class="attr">values:</span></span><br><span class="line">                      <span class="bullet">-</span> <span class="string">nacos-cluster</span></span><br><span class="line">              <span class="attr">topologyKey:</span> <span class="string">&quot;kubernetes.io/hostname&quot;</span></span><br><span class="line">      <span class="attr">containers:</span></span><br><span class="line">        <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">k8snacos</span></span><br><span class="line">          <span class="attr">imagePullPolicy:</span> <span class="string">Always</span></span><br><span class="line">          <span class="attr">image:</span> <span class="string">heyuze/nacos-cluster:v2.0.2</span></span><br><span class="line">          <span class="attr">resources:</span></span><br><span class="line">            <span class="attr">requests:</span></span><br><span class="line">              <span class="attr">memory:</span> <span class="string">2048Mi</span></span><br><span class="line">              <span class="attr">cpu:</span> <span class="string">1000m</span></span><br><span class="line">            <span class="attr">limits:</span></span><br><span class="line">              <span class="attr">memory:</span> <span class="string">2048Mi</span></span><br><span class="line">              <span class="attr">cpu:</span> <span class="string">1000m</span></span><br><span class="line">          <span class="attr">ports:</span></span><br><span class="line">            <span class="bullet">-</span> <span class="attr">containerPort:</span> <span class="number">8848</span></span><br><span class="line">              <span class="attr">name:</span> <span class="string">client</span></span><br><span class="line">          <span class="attr">env:</span></span><br><span class="line">            <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">NACOS_REPLICAS</span></span><br><span class="line">              <span class="attr">value:</span> <span class="string">&quot;3&quot;</span></span><br><span class="line">            <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">MYSQL_SERVICE_HOST</span></span><br><span class="line">              <span class="attr">valueFrom:</span></span><br><span class="line">                <span class="attr">configMapKeyRef:</span></span><br><span class="line">                  <span class="attr">name:</span> <span class="string">nacos-cluster-cm</span></span><br><span class="line">                  <span class="attr">key:</span> <span class="string">mysql.host</span></span><br><span class="line">            <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">MYSQL_SERVICE_DB_NAME</span></span><br><span class="line">              <span class="attr">valueFrom:</span></span><br><span class="line">                <span class="attr">configMapKeyRef:</span></span><br><span class="line">                  <span class="attr">name:</span> <span class="string">nacos-cluster-cm</span></span><br><span class="line">                  <span class="attr">key:</span> <span class="string">mysql.db.name</span></span><br><span class="line">            <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">MYSQL_SERVICE_PORT</span></span><br><span class="line">              <span class="attr">valueFrom:</span></span><br><span class="line">                <span class="attr">configMapKeyRef:</span></span><br><span class="line">                  <span class="attr">name:</span> <span class="string">nacos-cluster-cm</span></span><br><span class="line">                  <span class="attr">key:</span> <span class="string">mysql.port</span></span><br><span class="line">            <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">MYSQL_SERVICE_USER</span></span><br><span class="line">              <span class="attr">valueFrom:</span></span><br><span class="line">                <span class="attr">configMapKeyRef:</span></span><br><span class="line">                  <span class="attr">name:</span> <span class="string">nacos-cluster-cm</span></span><br><span class="line">                  <span class="attr">key:</span> <span class="string">mysql.user</span></span><br><span class="line">            <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">MYSQL_SERVICE_PASSWORD</span></span><br><span class="line">              <span class="attr">valueFrom:</span></span><br><span class="line">                <span class="attr">configMapKeyRef:</span></span><br><span class="line">                  <span class="attr">name:</span> <span class="string">nacos-cluster-cm</span></span><br><span class="line">                  <span class="attr">key:</span> <span class="string">mysql.password</span></span><br><span class="line">            <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">NACOS_SERVER_PORT</span></span><br><span class="line">              <span class="attr">value:</span> <span class="string">&quot;8848&quot;</span></span><br><span class="line">            <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">PREFER_HOST_MODE</span></span><br><span class="line">              <span class="attr">value:</span> <span class="string">&quot;hostname&quot;</span></span><br><span class="line">            <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">NACOS_SERVERS</span></span><br><span class="line">              <span class="attr">value:</span> <span class="string">&quot;nacos-cluster-0.nacos-cluster.wise.svc.cluster.local:8848 nacos-cluster-1.nacos-cluster.wise.svc.cluster.local:8848 nacos-cluster-2.nacos-cluster.wise.svc.cluster.local:8848&quot;</span></span><br><span class="line">  <span class="attr">selector:</span></span><br><span class="line">    <span class="attr">matchLabels:</span></span><br><span class="line">      <span class="attr">app:</span> <span class="string">nacos-cluster</span></span><br></pre></td></tr></table></figure>
+
+<p>创建并查看</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">[root@k8s-master nacos_cluster]# kubectl create -f nacos-cluster.yaml </span><br><span class="line">service/nacos-cluster created</span><br><span class="line">configmap/nacos-cluster-cm created</span><br><span class="line">statefulset.apps/nacos-cluster created</span><br><span class="line"></span><br><span class="line">[root@k8s-master nacos_cluster]# kubectl get pods -n wise|grep nacos-cluster</span><br><span class="line">nacos-cluster-0   1/1     Running   0          12m</span><br><span class="line">nacos-cluster-1   1/1     Running   0          11m</span><br><span class="line">nacos-cluster-2   1/1     Running   0          10m</span><br><span class="line"></span><br><span class="line">[root@k8s-master nacos_cluster]# kubectl get svc -n wise|grep nacos-cluster</span><br><span class="line">nacos-cluster   ClusterIP   None         &lt;none&gt;        8848/TCP   12m</span><br><span class="line"></span><br><span class="line">[root@k8s-master nacos_cluster]# kubectl get statefulset -n wise</span><br><span class="line">NAME            READY   AGE</span><br><span class="line">nacos-cluster   3/3     13m</span><br><span class="line"></span><br><span class="line">[root@k8s-master nacos_cluster]# kubectl get configmap -n wise|grep nacos-cluster</span><br><span class="line">nacos-cluster-cm   5      13m</span><br></pre></td></tr></table></figure>
+
+<p>创建ingress访问</p>
+<p>vim nacos-ingress.yaml</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">---apiVersion:</span> <span class="attr">extensions/v1beta1kind: Ingressmetadata:  annotations:  name: nacos-cluster  namespace: wis  annotations:    kubernetes.io/ingress.class: traefik-v2.3     spec:  rules:  - host: nacos.heyonggs.com    http:      paths:      - backend:          serviceName: nacos-cluster          servicePort:</span> <span class="number">8848</span></span><br></pre></td></tr></table></figure>
+
+<p>应用</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl apply -f nacos-ingress.yaml </span><br></pre></td></tr></table></figure>
+
+<p>先做域名解析在访问查看集群：http://域名/nacos</p>
+<blockquote>
+<p>账号：nacos</p>
+<p>密码：nacos</p>
+</blockquote>
+<p><img src="https://cdn.jsdelivr.net/gh/heyonggs/images@master/wp/2021/nacos/1.jpg" alt="traefik"></p>
+
+    </div>
+
+    
+    
+    
+        
+
+  <div class="followme">
+    <p>欢迎关注我的其它发布渠道</p>
+
+    <div class="social-list">
+
+        <div class="social-item">
+          <a target="_blank" class="social-link" href="/atom.xml">
+            <span class="icon">
+              <i class="fa fa-rss"></i>
+            </span>
+
+            <span class="label">RSS</span>
+          </a>
+        </div>
+
+        <div class="social-item">
+          <a target="_blank" class="social-link" href="/images/wechat_channel.jpg">
+            <span class="icon">
+              <i class="fab fa-weixin"></i>
+            </span>
+
+            <span class="label">WeChat</span>
+          </a>
+        </div>
+
+        <div class="social-item">
+          <a target="_blank" class="social-link" href="https://t.me/channel_name">
+            <span class="icon">
+              <i class="fab fa-telegram"></i>
+            </span>
+
+            <span class="label">Telegram</span>
+          </a>
+        </div>
+
+        <div class="social-item">
+          <a target="_blank" class="social-link" href="https://twitter.com/username">
+            <span class="icon">
+              <i class="fab fa-twitter"></i>
+            </span>
+
+            <span class="label">Twitter</span>
+          </a>
+        </div>
+    </div>
+  </div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/k8s/" rel="tag"># k8s</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/09/18/Nginx%E6%9B%B4%E6%8D%A2SSL%E8%AF%81%E4%B9%A6/" rel="prev" title="Nginx更换SSL证书">
+      <i class="fa fa-chevron-left"></i> Nginx更换SSL证书
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+<script type="text/javascript" id="clustrmaps" src="//clustrmaps.com/map_v2.js?d=PGYncUiSTnkUS8Nkg3hKuBb67df9OnAR0ugkllogplA&cl=ffffff&w=a"></script>
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#k8s%E9%83%A8%E7%BD%B2nacos%E9%9B%86%E7%BE%A4"><span class="nav-number">1.</span> <span class="nav-text">k8s部署nacos集群</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Nacos%E9%9B%86%E7%BE%A4%E9%83%A8%E7%BD%B2%E7%9A%84%E5%AE%89%E8%A3%85%E5%8C%85%E5%87%86%E5%A4%87"><span class="nav-number">1.1.</span> <span class="nav-text">Nacos集群部署的安装包准备</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Nacos%E9%95%9C%E5%83%8F%E5%88%B6%E4%BD%9C"><span class="nav-number">1.2.</span> <span class="nav-text">Nacos镜像制作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%83%A8%E7%BD%B2Nacos%E9%9B%86%E7%BE%A4"><span class="nav-number">1.3.</span> <span class="nav-text">部署Nacos集群</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="何宇泽"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">何宇泽</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">11</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/heyonggs" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;heyonggs" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:heyonggs@gmail.com" title="E-Mail → mailto:heyonggs@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/heyong" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;heyong" rel="noopener" target="_blank"><i class="fab fa-weibo fa-fw"></i>Weibo</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://twitter.com/heyong" title="Twitter → https:&#x2F;&#x2F;twitter.com&#x2F;heyong" rel="noopener" target="_blank"><i class="fab fa-twitter fa-fw"></i>Twitter</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.facebook.com/heyonggs" title="FB Page → https:&#x2F;&#x2F;www.facebook.com&#x2F;heyonggs" rel="noopener" target="_blank"><i class="fab fa-facebook fa-fw"></i>FB Page</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://youtube.com/heyonggs" title="YouTube → https:&#x2F;&#x2F;youtube.com&#x2F;heyonggs" rel="noopener" target="_blank"><i class="fab fa-youtube fa-fw"></i>YouTube</a>
+      </span>
+  </div>
+
+
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2015 – 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">何宇泽</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">67k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">1:01</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+<script>
+    var now = new Date();
+    function createtime() {
+        var grt= new Date("12/03/2018 00:00:00");//此处修改你的建站时间或者网站上线时间
+        now.setTime(now.getTime()+250);
+        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
+        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
+        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
+        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
+        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
+        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;}
+        document.getElementById("timeDate").innerHTML = "Running for "+dnum+" Days ";
+        document.getElementById("times").innerHTML = hnum + " Hours " + mnum + " m " + snum + " s";
+    }
+    setInterval("createtime()",250);
+</script>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+  <script defer src="/lib/three/three.min.js"></script>
+    <script defer src="/lib/three/three-waves.min.js"></script>
+    <script defer src="/lib/three/canvas_lines.min.js"></script>
+    <script defer src="/lib/three/canvas_sphere.min.js"></script>
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/disqusjs@1/dist/disqusjs.css">
+
+<script>
+NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/disqusjs@1/dist/disqus.js', () => {
+    window.dsqjs = new DisqusJS({
+      api       : 'https://disqus.skk.moe/disqus/' || 'https://disqus.com/api/',
+      apikey    : '7x1LY2rKpX3VKuZ3jBy28orAk18BxmejbRKN8KCGIfIHD4LaoDq5aqu3VdrPl4ef',
+      shortname : 'heyuze',
+      url       : "https://heyonggs.github.io/2021/09/22/k8s%E9%83%A8%E7%BD%B2nacos%E9%9B%86%E7%BE%A4/",
+      identifier: "2021/09/22/k8s部署nacos集群/",
+      title     : "k8s部署nacos集群",
+    });
+  }, window.DisqusJS);
+});
+</script>
+
+</body>
+</html>
