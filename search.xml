@@ -1,6 +1,82 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>Linux磁盘满了解决方案</title>
+    <url>/2019/03/10/Linux%E7%A3%81%E7%9B%98%E6%BB%A1%E4%BA%86%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/</url>
+    <content><![CDATA[<p><escape><span id="more"></span></escape></p>
+<p>查看磁盘情况</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[root@iz2zebp5657k0fz0pvgcgnz ~]# df -h</span><br><span class="line">Filesystem      Size  Used Avail Use% Mounted on</span><br><span class="line">devtmpfs        909M     0  909M   0% /dev</span><br><span class="line">tmpfs           919M     0  919M   0% /dev/shm</span><br><span class="line">tmpfs           919M  8.6M  911M   1% /run</span><br><span class="line">tmpfs           919M     0  919M   0% /sys/fs/cgroup</span><br><span class="line">/dev/vda1        40G  8.4G   29G  23% /</span><br><span class="line">overlay          40G  8.4G   29G  23% /var/lib/docker/overlay2/e374b04682a79626e00aca70c896b2a9b5a46ae9730c3311dd774b1bc56bdb9d/merged</span><br><span class="line">overlay          40G  8.4G   29G  23% /var/lib/docker/overlay2/c59338b367886fefb1ff03641e25ad7a3800421f39652d43e08a51b51ac95009/merged</span><br><span class="line">tmpfs           184M     0  184M   0% /run/user/0</span><br></pre></td></tr></table></figure>
+
+<p>df: 用于显示目前在Linux系统上的文件系统的磁盘使用情况统计。</p>
+<p>-h：以K，M，G为单位，提高信息的可读性。</p>
+<p>Size：总内存数</p>
+<p>Used：使用内存数</p>
+<p>Avail：剩余内存数</p>
+<p>Mounted on：挂载点</p>
+<p>查看文件夹下面的磁盘使用情况</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 进入根目录</span><br><span class="line">[root@iz2zebp5657k0fz0pvgcgnz ~]# cd /</span><br><span class="line">[root@iz2zebp5657k0fz0pvgcgnz /]# du --max-depth=1 -h</span><br><span class="line">44K	./home</span><br><span class="line">8.6M	./run</span><br><span class="line">24M	./tmp</span><br><span class="line">16K	./opt</span><br><span class="line">......</span><br><span class="line">0	./dev</span><br><span class="line">0	./sys</span><br><span class="line">101M	./root</span><br><span class="line">4.0K	./media</span><br><span class="line">48M	./etc</span><br><span class="line">4.9G	./var</span><br><span class="line">120M	./data</span><br><span class="line">11G	.</span><br></pre></td></tr></table></figure>
+
+<p>du：会显示指定的目录或文件所占用的磁盘空间。</p>
+<p>–max-depth-1：–max-depth=&lt;目录层数&gt; 超过指定层数的目录后，予以忽略。</p>
+<p>-h：以K，M，G为单位，提高信息的可读性。</p>
+]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>Linux</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Centos查看系统 CPU 个数、核心数、线程数</title>
+    <url>/2021/09/18/Centos%E6%9F%A5%E7%9C%8B%E7%B3%BB%E7%BB%9F%20CPU%20%E4%B8%AA%E6%95%B0%E3%80%81%E6%A0%B8%E5%BF%83%E6%95%B0%E3%80%81%E7%BA%BF%E7%A8%8B%E6%95%B0/</url>
+    <content><![CDATA[<p><escape><span id="more"></span></escape></p>
+<p>CPU的核数表示CPU可以同时执行的任务数量，在支持超线程情况下，同时执行的任务数翻倍。CPU的线程数表示CPU可以同时执行的任务数量。两者的联系分两种：CPU支持超线程技术，那么线程数＝核心数＊2；不支持超线程，线程数＝核心数。</p>
+<p>线程数和超线程技术是两个概念，线程数是实际存在的，而超线程是CPU的技术标准。</p>
+<h3 id="优缺点"><a href="#优缺点" class="headerlink" title="优缺点"></a>优缺点</h3><h4 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h4><p>1、可以同时进行多任务处理工作，软件可以享有由超线程技术带来的性能提升；</p>
+<p>2、用户同时运行两个以上软件的时候，可以充分发挥超线程技术的效率优势。</p>
+<h4 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h4><p>1、运行单线程软件时，超线程技术会降低系统性能；</p>
+<p>2、因为很多工作站软件为Windows2000操作系统进行过优化，所以使用Windows2000的工作站无法完全利用超线程技术的优势；</p>
+<p>3、当两个线程同时需要某个资源时，其中一个线程必须让出资源暂时挂起，直到这些资源空闲以后才能继续。因此，超线程的性能并不等于两个CPU的性能。</p>
+<h3 id="查看-CPU-物理个数"><a href="#查看-CPU-物理个数" class="headerlink" title="查看 CPU 物理个数"></a>查看 CPU 物理个数</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">cat /proc/cpuinfo | grep &quot;physical id&quot; | sort | uniq | wc -l</span><br><span class="line">或者</span><br><span class="line">grep &#x27;physical id&#x27; /proc/cpuinfo | sort -u | wc -l</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="查看-CPU-核心数量"><a href="#查看-CPU-核心数量" class="headerlink" title="查看 CPU 核心数量"></a>查看 CPU 核心数量</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">cat /proc/cpuinfo | grep &quot;core id&quot; | sort | uniq | wc -l</span><br><span class="line">或者</span><br><span class="line">grep &#x27;core id&#x27; /proc/cpuinfo | sort -u | wc -l</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="查看-CPU-线程数"><a href="#查看-CPU-线程数" class="headerlink" title="查看 CPU 线程数"></a>查看 CPU 线程数</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">cat /proc/cpuinfo | grep &quot;processor&quot; | sort | uniq | wc -l</span><br><span class="line">或者</span><br><span class="line">grep &#x27;processor&#x27; /proc/cpuinfo | sort -u | wc -l</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="查看-CPU-型号"><a href="#查看-CPU-型号" class="headerlink" title="查看 CPU 型号"></a>查看 CPU 型号</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">cat /proc/cpuinfo | grep name | sort | uniq</span><br><span class="line">或者</span><br><span class="line">dmidecode -s processor-version</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="查看-CPU-的详细信息："><a href="#查看-CPU-的详细信息：" class="headerlink" title="查看 CPU 的详细信息："></a>查看 CPU 的详细信息：</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">cat /proc/cpuinfo</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+
+
+
+
+
+
+]]></content>
+      <categories>
+        <category>System,cpu</category>
+      </categories>
+      <tags>
+        <tag>System,cpu</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Ansible Tower-安装配置及破解</title>
     <url>/2018/03/15/Ansible%20Tower-%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE%E5%8F%8A%E7%A0%B4%E8%A7%A3/</url>
     <content><![CDATA[<p><escape><span id="more"></span></escape></p>
@@ -189,52 +265,39 @@
       </tags>
   </entry>
   <entry>
-    <title>Centos查看系统 CPU 个数、核心数、线程数</title>
-    <url>/2021/09/18/Centos%E6%9F%A5%E7%9C%8B%E7%B3%BB%E7%BB%9F%20CPU%20%E4%B8%AA%E6%95%B0%E3%80%81%E6%A0%B8%E5%BF%83%E6%95%B0%E3%80%81%E7%BA%BF%E7%A8%8B%E6%95%B0/</url>
+    <title>Nginx更换SSL证书</title>
+    <url>/2021/09/18/Nginx%E6%9B%B4%E6%8D%A2SSL%E8%AF%81%E4%B9%A6/</url>
     <content><![CDATA[<p><escape><span id="more"></span></escape></p>
-<p>CPU的核数表示CPU可以同时执行的任务数量，在支持超线程情况下，同时执行的任务数翻倍。CPU的线程数表示CPU可以同时执行的任务数量。两者的联系分两种：CPU支持超线程技术，那么线程数＝核心数＊2；不支持超线程，线程数＝核心数。</p>
-<p>线程数和超线程技术是两个概念，线程数是实际存在的，而超线程是CPU的技术标准。</p>
-<h3 id="优缺点"><a href="#优缺点" class="headerlink" title="优缺点"></a>优缺点</h3><h4 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h4><p>1、可以同时进行多任务处理工作，软件可以享有由超线程技术带来的性能提升；</p>
-<p>2、用户同时运行两个以上软件的时候，可以充分发挥超线程技术的效率优势。</p>
-<h4 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h4><p>1、运行单线程软件时，超线程技术会降低系统性能；</p>
-<p>2、因为很多工作站软件为Windows2000操作系统进行过优化，所以使用Windows2000的工作站无法完全利用超线程技术的优势；</p>
-<p>3、当两个线程同时需要某个资源时，其中一个线程必须让出资源暂时挂起，直到这些资源空闲以后才能继续。因此，超线程的性能并不等于两个CPU的性能。</p>
-<h3 id="查看-CPU-物理个数"><a href="#查看-CPU-物理个数" class="headerlink" title="查看 CPU 物理个数"></a>查看 CPU 物理个数</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">cat /proc/cpuinfo | grep &quot;physical id&quot; | sort | uniq | wc -l</span><br><span class="line">或者</span><br><span class="line">grep &#x27;physical id&#x27; /proc/cpuinfo | sort -u | wc -l</span><br></pre></td></tr></table></figure>
+<p>申请SSL证书需要的CSR文件</p>
+<blockquote>
+<p><a href="https://www.chinassl.net/ssltools/generator-csr.html">https://www.chinassl.net/ssltools/generator-csr.html</a></p>
+</blockquote>
+<p>填写相关信息生成两个文件</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">*_csr.txt</span><br><span class="line">*_key.txt</span><br></pre></td></tr></table></figure>
 
+<p>csr文件用来申请ssl证书，key文件用于nginx中使用</p>
+<p>申请证书</p>
+<blockquote>
+<p><a href="https://cheapsslsecurity.com/">https://cheapsslsecurity.com/</a></p>
+</blockquote>
+<p>申请的证书目录如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">DigiCertCA.crt</span><br><span class="line">My_CA_Bundle.crt</span><br><span class="line">star_aimmcloud_com.crt</span><br><span class="line">TrustedRoot.crt</span><br></pre></td></tr></table></figure>
 
+<p>将domain_name.crt 和 DigCertCA.crt写入bundle.crt</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">cat your_domain_name.crt DigiCertCA.crt &gt;&gt; bundle.crt</span><br></pre></td></tr></table></figure>
 
-<h3 id="查看-CPU-核心数量"><a href="#查看-CPU-核心数量" class="headerlink" title="查看 CPU 核心数量"></a>查看 CPU 核心数量</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">cat /proc/cpuinfo | grep &quot;core id&quot; | sort | uniq | wc -l</span><br><span class="line">或者</span><br><span class="line">grep &#x27;core id&#x27; /proc/cpuinfo | sort -u | wc -l</span><br></pre></td></tr></table></figure>
+<p>此处应为</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">cat star_aimmcloud_com.crt DigiCertCA.crt &gt;&gt; bundle.crt</span><br></pre></td></tr></table></figure>
 
-
-
-<h3 id="查看-CPU-线程数"><a href="#查看-CPU-线程数" class="headerlink" title="查看 CPU 线程数"></a>查看 CPU 线程数</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">cat /proc/cpuinfo | grep &quot;processor&quot; | sort | uniq | wc -l</span><br><span class="line">或者</span><br><span class="line">grep &#x27;processor&#x27; /proc/cpuinfo | sort -u | wc -l</span><br></pre></td></tr></table></figure>
-
-
-
-<h3 id="查看-CPU-型号"><a href="#查看-CPU-型号" class="headerlink" title="查看 CPU 型号"></a>查看 CPU 型号</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">cat /proc/cpuinfo | grep name | sort | uniq</span><br><span class="line">或者</span><br><span class="line">dmidecode -s processor-version</span><br></pre></td></tr></table></figure>
-
-
-
-<h3 id="查看-CPU-的详细信息："><a href="#查看-CPU-的详细信息：" class="headerlink" title="查看 CPU 的详细信息："></a>查看 CPU 的详细信息：</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">cat /proc/cpuinfo</span><br></pre></td></tr></table></figure>
-
-
-
-
-
-
-
-
-
-
-
-
+<p>nginx的配置</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">server &#123;</span><br><span class="line"></span><br><span class="line">listen   443;</span><br><span class="line"></span><br><span class="line">ssl    on;</span><br><span class="line">ssl_certificate    /etc/ssl/your_domain_name.pem; (or bundle.crt)</span><br><span class="line">ssl_certificate_key    /etc/ssl/your_domain_name.key;</span><br><span class="line"></span><br><span class="line">server_name your.domain.com;</span><br><span class="line">access_log /var/log/nginx/nginx.vhost.access.log;</span><br><span class="line">error_log /var/log/nginx/nginx.vhost.error.log;</span><br><span class="line">location / &#123;</span><br><span class="line">root   /home/www/public_html/your.domain.com/public/;</span><br><span class="line">index  index.html;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 ]]></content>
       <categories>
-        <category>System,cpu</category>
+        <category>Nginx</category>
       </categories>
       <tags>
-        <tag>System,cpu</tag>
+        <tag>Nginx</tag>
       </tags>
   </entry>
   <entry>
@@ -356,69 +419,6 @@
       </categories>
       <tags>
         <tag>SaltStack</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Nginx更换SSL证书</title>
-    <url>/2021/09/18/Nginx%E6%9B%B4%E6%8D%A2SSL%E8%AF%81%E4%B9%A6/</url>
-    <content><![CDATA[<p><escape><span id="more"></span></escape></p>
-<p>申请SSL证书需要的CSR文件</p>
-<blockquote>
-<p><a href="https://www.chinassl.net/ssltools/generator-csr.html">https://www.chinassl.net/ssltools/generator-csr.html</a></p>
-</blockquote>
-<p>填写相关信息生成两个文件</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">*_csr.txt</span><br><span class="line">*_key.txt</span><br></pre></td></tr></table></figure>
-
-<p>csr文件用来申请ssl证书，key文件用于nginx中使用</p>
-<p>申请证书</p>
-<blockquote>
-<p><a href="https://cheapsslsecurity.com/">https://cheapsslsecurity.com/</a></p>
-</blockquote>
-<p>申请的证书目录如下：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">DigiCertCA.crt</span><br><span class="line">My_CA_Bundle.crt</span><br><span class="line">star_aimmcloud_com.crt</span><br><span class="line">TrustedRoot.crt</span><br></pre></td></tr></table></figure>
-
-<p>将domain_name.crt 和 DigCertCA.crt写入bundle.crt</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">cat your_domain_name.crt DigiCertCA.crt &gt;&gt; bundle.crt</span><br></pre></td></tr></table></figure>
-
-<p>此处应为</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">cat star_aimmcloud_com.crt DigiCertCA.crt &gt;&gt; bundle.crt</span><br></pre></td></tr></table></figure>
-
-<p>nginx的配置</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">server &#123;</span><br><span class="line"></span><br><span class="line">listen   443;</span><br><span class="line"></span><br><span class="line">ssl    on;</span><br><span class="line">ssl_certificate    /etc/ssl/your_domain_name.pem; (or bundle.crt)</span><br><span class="line">ssl_certificate_key    /etc/ssl/your_domain_name.key;</span><br><span class="line"></span><br><span class="line">server_name your.domain.com;</span><br><span class="line">access_log /var/log/nginx/nginx.vhost.access.log;</span><br><span class="line">error_log /var/log/nginx/nginx.vhost.error.log;</span><br><span class="line">location / &#123;</span><br><span class="line">root   /home/www/public_html/your.domain.com/public/;</span><br><span class="line">index  index.html;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-]]></content>
-      <categories>
-        <category>Nginx</category>
-      </categories>
-      <tags>
-        <tag>Nginx</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Linux磁盘满了解决方案</title>
-    <url>/2019/03/10/Linux%E7%A3%81%E7%9B%98%E6%BB%A1%E4%BA%86%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/</url>
-    <content><![CDATA[<p><escape><span id="more"></span></escape></p>
-<p>查看磁盘情况</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[root@iz2zebp5657k0fz0pvgcgnz ~]# df -h</span><br><span class="line">Filesystem      Size  Used Avail Use% Mounted on</span><br><span class="line">devtmpfs        909M     0  909M   0% /dev</span><br><span class="line">tmpfs           919M     0  919M   0% /dev/shm</span><br><span class="line">tmpfs           919M  8.6M  911M   1% /run</span><br><span class="line">tmpfs           919M     0  919M   0% /sys/fs/cgroup</span><br><span class="line">/dev/vda1        40G  8.4G   29G  23% /</span><br><span class="line">overlay          40G  8.4G   29G  23% /var/lib/docker/overlay2/e374b04682a79626e00aca70c896b2a9b5a46ae9730c3311dd774b1bc56bdb9d/merged</span><br><span class="line">overlay          40G  8.4G   29G  23% /var/lib/docker/overlay2/c59338b367886fefb1ff03641e25ad7a3800421f39652d43e08a51b51ac95009/merged</span><br><span class="line">tmpfs           184M     0  184M   0% /run/user/0</span><br></pre></td></tr></table></figure>
-
-<p>df: 用于显示目前在Linux系统上的文件系统的磁盘使用情况统计。</p>
-<p>-h：以K，M，G为单位，提高信息的可读性。</p>
-<p>Size：总内存数</p>
-<p>Used：使用内存数</p>
-<p>Avail：剩余内存数</p>
-<p>Mounted on：挂载点</p>
-<p>查看文件夹下面的磁盘使用情况</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 进入根目录</span><br><span class="line">[root@iz2zebp5657k0fz0pvgcgnz ~]# cd /</span><br><span class="line">[root@iz2zebp5657k0fz0pvgcgnz /]# du --max-depth=1 -h</span><br><span class="line">44K	./home</span><br><span class="line">8.6M	./run</span><br><span class="line">24M	./tmp</span><br><span class="line">16K	./opt</span><br><span class="line">......</span><br><span class="line">0	./dev</span><br><span class="line">0	./sys</span><br><span class="line">101M	./root</span><br><span class="line">4.0K	./media</span><br><span class="line">48M	./etc</span><br><span class="line">4.9G	./var</span><br><span class="line">120M	./data</span><br><span class="line">11G	.</span><br></pre></td></tr></table></figure>
-
-<p>du：会显示指定的目录或文件所占用的磁盘空间。</p>
-<p>–max-depth-1：–max-depth=&lt;目录层数&gt; 超过指定层数的目录后，予以忽略。</p>
-<p>-h：以K，M，G为单位，提高信息的可读性。</p>
-]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>Linux</tag>
       </tags>
   </entry>
   <entry>
