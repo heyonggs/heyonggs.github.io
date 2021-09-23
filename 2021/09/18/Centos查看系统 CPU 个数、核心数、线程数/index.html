@@ -269,28 +269,28 @@
         <p><escape><span id="more"></span></escape></p>
 <p>CPU的核数表示CPU可以同时执行的任务数量，在支持超线程情况下，同时执行的任务数翻倍。CPU的线程数表示CPU可以同时执行的任务数量。两者的联系分两种：CPU支持超线程技术，那么线程数＝核心数＊2；不支持超线程，线程数＝核心数。</p>
 <p>线程数和超线程技术是两个概念，线程数是实际存在的，而超线程是CPU的技术标准。</p>
-<h3 id="优缺点"><a href="#优缺点" class="headerlink" title="优缺点"></a>优缺点</h3><h4 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h4><p>1、可以同时进行多任务处理工作，软件可以享有由超线程技术带来的性能提升；</p>
+<h3 id="优缺点">0.0.1. 优缺点</h3><h4 id="优点">0.0.1.1. 优点</h4><p>1、可以同时进行多任务处理工作，软件可以享有由超线程技术带来的性能提升；</p>
 <p>2、用户同时运行两个以上软件的时候，可以充分发挥超线程技术的效率优势。</p>
-<h4 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h4><p>1、运行单线程软件时，超线程技术会降低系统性能；</p>
+<h4 id="缺点">0.0.1.2. 缺点</h4><p>1、运行单线程软件时，超线程技术会降低系统性能；</p>
 <p>2、因为很多工作站软件为Windows2000操作系统进行过优化，所以使用Windows2000的工作站无法完全利用超线程技术的优势；</p>
 <p>3、当两个线程同时需要某个资源时，其中一个线程必须让出资源暂时挂起，直到这些资源空闲以后才能继续。因此，超线程的性能并不等于两个CPU的性能。</p>
-<h3 id="查看-CPU-物理个数"><a href="#查看-CPU-物理个数" class="headerlink" title="查看 CPU 物理个数"></a>查看 CPU 物理个数</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cat /proc/cpuinfo | grep &quot;physical id&quot; | sort | uniq | wc -l</span><br><span class="line">或者</span><br><span class="line">grep &#x27;physical id&#x27; /proc/cpuinfo | sort -u | wc -l</span><br></pre></td></tr></table></figure>
+<h3 id="查看-CPU-物理个数">0.0.2. 查看 CPU 物理个数</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cat /proc/cpuinfo | grep &quot;physical id&quot; | sort | uniq | wc -l</span><br><span class="line">或者</span><br><span class="line">grep &#x27;physical id&#x27; /proc/cpuinfo | sort -u | wc -l</span><br></pre></td></tr></table></figure>
 
 
 
-<h3 id="查看-CPU-核心数量"><a href="#查看-CPU-核心数量" class="headerlink" title="查看 CPU 核心数量"></a>查看 CPU 核心数量</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cat /proc/cpuinfo | grep &quot;core id&quot; | sort | uniq | wc -l</span><br><span class="line">或者</span><br><span class="line">grep &#x27;core id&#x27; /proc/cpuinfo | sort -u | wc -l</span><br></pre></td></tr></table></figure>
+<h3 id="查看-CPU-核心数量">0.0.3. 查看 CPU 核心数量</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cat /proc/cpuinfo | grep &quot;core id&quot; | sort | uniq | wc -l</span><br><span class="line">或者</span><br><span class="line">grep &#x27;core id&#x27; /proc/cpuinfo | sort -u | wc -l</span><br></pre></td></tr></table></figure>
 
 
 
-<h3 id="查看-CPU-线程数"><a href="#查看-CPU-线程数" class="headerlink" title="查看 CPU 线程数"></a>查看 CPU 线程数</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cat /proc/cpuinfo | grep &quot;processor&quot; | sort | uniq | wc -l</span><br><span class="line">或者</span><br><span class="line">grep &#x27;processor&#x27; /proc/cpuinfo | sort -u | wc -l</span><br></pre></td></tr></table></figure>
+<h3 id="查看-CPU-线程数">0.0.4. 查看 CPU 线程数</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cat /proc/cpuinfo | grep &quot;processor&quot; | sort | uniq | wc -l</span><br><span class="line">或者</span><br><span class="line">grep &#x27;processor&#x27; /proc/cpuinfo | sort -u | wc -l</span><br></pre></td></tr></table></figure>
 
 
 
-<h3 id="查看-CPU-型号"><a href="#查看-CPU-型号" class="headerlink" title="查看 CPU 型号"></a>查看 CPU 型号</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cat /proc/cpuinfo | grep name | sort | uniq</span><br><span class="line">或者</span><br><span class="line">dmidecode -s processor-version</span><br></pre></td></tr></table></figure>
+<h3 id="查看-CPU-型号">0.0.5. 查看 CPU 型号</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cat /proc/cpuinfo | grep name | sort | uniq</span><br><span class="line">或者</span><br><span class="line">dmidecode -s processor-version</span><br></pre></td></tr></table></figure>
 
 
 
-<h3 id="查看-CPU-的详细信息："><a href="#查看-CPU-的详细信息：" class="headerlink" title="查看 CPU 的详细信息："></a>查看 CPU 的详细信息：</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat /proc/cpuinfo</span><br></pre></td></tr></table></figure>
+<h3 id="查看-CPU-的详细信息：">0.0.6. 查看 CPU 的详细信息：</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat /proc/cpuinfo</span><br></pre></td></tr></table></figure>
 
 
 
@@ -422,7 +422,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BC%98%E7%BC%BA%E7%82%B9"><span class="nav-number">1.</span> <span class="nav-text">优缺点</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BC%98%E7%82%B9"><span class="nav-number">1.1.</span> <span class="nav-text">优点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BC%BA%E7%82%B9"><span class="nav-number">1.2.</span> <span class="nav-text">缺点</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B-CPU-%E7%89%A9%E7%90%86%E4%B8%AA%E6%95%B0"><span class="nav-number">2.</span> <span class="nav-text">查看 CPU 物理个数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B-CPU-%E6%A0%B8%E5%BF%83%E6%95%B0%E9%87%8F"><span class="nav-number">3.</span> <span class="nav-text">查看 CPU 核心数量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B-CPU-%E7%BA%BF%E7%A8%8B%E6%95%B0"><span class="nav-number">4.</span> <span class="nav-text">查看 CPU 线程数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B-CPU-%E5%9E%8B%E5%8F%B7"><span class="nav-number">5.</span> <span class="nav-text">查看 CPU 型号</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B-CPU-%E7%9A%84%E8%AF%A6%E7%BB%86%E4%BF%A1%E6%81%AF%EF%BC%9A"><span class="nav-number">6.</span> <span class="nav-text">查看 CPU 的详细信息：</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BC%98%E7%BC%BA%E7%82%B9"><span class="nav-text">0.0.1. 优缺点</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BC%98%E7%82%B9"><span class="nav-text">0.0.1.1. 优点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BC%BA%E7%82%B9"><span class="nav-text">0.0.1.2. 缺点</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B-CPU-%E7%89%A9%E7%90%86%E4%B8%AA%E6%95%B0"><span class="nav-text">0.0.2. 查看 CPU 物理个数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B-CPU-%E6%A0%B8%E5%BF%83%E6%95%B0%E9%87%8F"><span class="nav-text">0.0.3. 查看 CPU 核心数量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B-CPU-%E7%BA%BF%E7%A8%8B%E6%95%B0"><span class="nav-text">0.0.4. 查看 CPU 线程数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B-CPU-%E5%9E%8B%E5%8F%B7"><span class="nav-text">0.0.5. 查看 CPU 型号</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B-CPU-%E7%9A%84%E8%AF%A6%E7%BB%86%E4%BF%A1%E6%81%AF%EF%BC%9A"><span class="nav-text">0.0.6. 查看 CPU 的详细信息：</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
