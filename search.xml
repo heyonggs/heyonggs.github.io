@@ -189,55 +189,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Linux磁盘满了解决方案</title>
-    <url>/2019/03/10/Linux%E7%A3%81%E7%9B%98%E6%BB%A1%E4%BA%86%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/</url>
-    <content><![CDATA[<p><escape><span id="more"></span></escape></p>
-<p>查看磁盘情况</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[root@iz2zebp5657k0fz0pvgcgnz ~]# df -h</span><br><span class="line">Filesystem      Size  Used Avail Use% Mounted on</span><br><span class="line">devtmpfs        909M     0  909M   0% /dev</span><br><span class="line">tmpfs           919M     0  919M   0% /dev/shm</span><br><span class="line">tmpfs           919M  8.6M  911M   1% /run</span><br><span class="line">tmpfs           919M     0  919M   0% /sys/fs/cgroup</span><br><span class="line">/dev/vda1        40G  8.4G   29G  23% /</span><br><span class="line">overlay          40G  8.4G   29G  23% /var/lib/docker/overlay2/e374b04682a79626e00aca70c896b2a9b5a46ae9730c3311dd774b1bc56bdb9d/merged</span><br><span class="line">overlay          40G  8.4G   29G  23% /var/lib/docker/overlay2/c59338b367886fefb1ff03641e25ad7a3800421f39652d43e08a51b51ac95009/merged</span><br><span class="line">tmpfs           184M     0  184M   0% /run/user/0</span><br></pre></td></tr></table></figure>
-
-<p>df: 用于显示目前在Linux系统上的文件系统的磁盘使用情况统计。</p>
-<p>-h：以K，M，G为单位，提高信息的可读性。</p>
-<p>Size：总内存数</p>
-<p>Used：使用内存数</p>
-<p>Avail：剩余内存数</p>
-<p>Mounted on：挂载点</p>
-<p>查看文件夹下面的磁盘使用情况</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 进入根目录</span><br><span class="line">[root@iz2zebp5657k0fz0pvgcgnz ~]# cd /</span><br><span class="line">[root@iz2zebp5657k0fz0pvgcgnz /]# du --max-depth=1 -h</span><br><span class="line">44K	./home</span><br><span class="line">8.6M	./run</span><br><span class="line">24M	./tmp</span><br><span class="line">16K	./opt</span><br><span class="line">......</span><br><span class="line">0	./dev</span><br><span class="line">0	./sys</span><br><span class="line">101M	./root</span><br><span class="line">4.0K	./media</span><br><span class="line">48M	./etc</span><br><span class="line">4.9G	./var</span><br><span class="line">120M	./data</span><br><span class="line">11G	.</span><br></pre></td></tr></table></figure>
-
-<p>du：会显示指定的目录或文件所占用的磁盘空间。</p>
-<p>–max-depth-1：–max-depth=&lt;目录层数&gt; 超过指定层数的目录后，予以忽略。</p>
-<p>-h：以K，M，G为单位，提高信息的可读性。</p>
-]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>Linux</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Linux用户登陆服务器微信告警</title>
-    <url>/2020/08/13/Linux%E7%94%A8%E6%88%B7%E7%99%BB%E9%99%86%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%BE%AE%E4%BF%A1%E5%91%8A%E8%AD%A6/</url>
-    <content><![CDATA[<p><escape><span id="more"></span></escape></p>
-<h3 id="告警脚本"><a href="#告警脚本" class="headerlink" title="告警脚本"></a>告警脚本</h3><p>cat /data/aimm/script/wechat.sh</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#!/bin/bash</span><br><span class="line">#</span><br><span class="line"> </span><br><span class="line">#使用方法 sh ./send_message.sh &quot;发送内容&quot;</span><br><span class="line">#如       sh ./send_message.sh &quot;测试环境，正在更新&quot;</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">#保存要发送人员的账号,在通讯录可获取，多个人员之间使用空格分隔，以下为展示数据</span><br><span class="line">user=&quot;HeYong&quot;</span><br><span class="line">#企业微信ID:企业微信管理界面-’我的企业‘页面中获取</span><br><span class="line">corpid=&quot;ww0ba8cfd2924c614c&quot;</span><br><span class="line">#应用秘钥:在‘自建应用’-‘创建应用’-‘应用管理’中获取</span><br><span class="line">corpsecret=&quot;xK-VerRCCCByHPqhe6-_jaFtMTuxDPPVueX9iYmohVs&quot;</span><br><span class="line">#企业应用ID:在&#x27;自建应用&#x27;-&#x27;创建应用&#x27;-&#x27;应用管理&#x27;中获取</span><br><span class="line">agentld=1000003</span><br><span class="line"> </span><br><span class="line">#------------------------以上变量需要自行修改-----------------------------------</span><br><span class="line"> </span><br><span class="line">#保存信息内容变量</span><br><span class="line">msg=&#x27;请检查服务器登录用户:\n主机名: &#x27;`hostname`&#x27;\n主机IP: &#x27;`ifconfig eth0|awk -F &#x27;[ :]+&#x27; &#x27;NR==2 &#123;print $3&#125;&#x27;`&#x27;\n登录用户: &#x27;`whoami`&#x27;\n登录IP: &#x27;`who am i |awk -F &#x27;[()]&#x27; &#x27;&#123;print $2&#125;&#x27;`&#x27;\n登录时间: &#x27;`date &#x27;+%Y-%m-%d-%H:%M:%S&#x27;`&#x27;&#x27;</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">#curl -s 静默模式，就是不显示错误和进度</span><br><span class="line">A=`curl -s https://qyapi.weixin.qq.com/cgi-bin/gettoken?corpid=$corpid\&amp;corpsecret=$corpsecret`</span><br><span class="line">#解析json格式 并获取access_token值</span><br><span class="line">token=`echo $A | jq -c &#x27;.access_token&#x27;`</span><br><span class="line">#去除变量值两边的双引号</span><br><span class="line">token=$&#123;token#*\&quot;&#125;</span><br><span class="line">token=$&#123;token%*\&quot;&#125;</span><br><span class="line">#请求地址</span><br><span class="line">URL=&quot;https://qyapi.weixin.qq.com/cgi-bin/message/send?access_token=$token&quot;</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">for I in $user;do</span><br><span class="line">	#发送的JSON内容</span><br><span class="line">	JSON=&quot;&#123;\&quot;touser\&quot;: \&quot;$I\&quot;,\&quot;msgtype\&quot;: \&quot;text\&quot;,\&quot;agentid\&quot;: \&quot;$agentld\&quot;,\&quot;text\&quot;: &#123;\&quot;content\&quot;: \&quot;$msg\&quot;&#125;,\&quot;safe\&quot;:0 &#125;&quot;</span><br><span class="line">	#以POST的方式请求</span><br><span class="line">	curl -d &quot;$JSON&quot; &quot;$URL&quot; &gt;/dev/null 2&gt;&amp;1</span><br><span class="line">done</span><br><span class="line"> </span><br><span class="line">exit 0</span><br></pre></td></tr></table></figure>
-
-<p>脚本中还涉及jq命令，这里我们安装一下</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[root@linux ~]# yum install -y jq</span><br></pre></td></tr></table></figure>
-
-<p>在完善脚本之后，我们需要将脚本放置在<code>/etc/profile</code>这样用户在登陆的时候就会发送(前提是服务器可以访问外网，就是可以ping通百度)</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">vim /etc/profile</span><br><span class="line"> </span><br><span class="line">/bin/bash  /data/aimm/script/wechat.sh</span><br></pre></td></tr></table></figure>
-
-<p>登陆测试结果如下</p>
-]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>Linux</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Centos查看系统 CPU 个数、核心数、线程数</title>
     <url>/2021/09/18/Centos%E6%9F%A5%E7%9C%8B%E7%B3%BB%E7%BB%9F%20CPU%20%E4%B8%AA%E6%95%B0%E3%80%81%E6%A0%B8%E5%BF%83%E6%95%B0%E3%80%81%E7%BA%BF%E7%A8%8B%E6%95%B0/</url>
     <content><![CDATA[<p><escape><span id="more"></span></escape></p>
@@ -284,6 +235,28 @@
       </categories>
       <tags>
         <tag>System,cpu</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Linux用户登陆服务器微信告警</title>
+    <url>/2020/08/13/Linux%E7%94%A8%E6%88%B7%E7%99%BB%E9%99%86%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%BE%AE%E4%BF%A1%E5%91%8A%E8%AD%A6/</url>
+    <content><![CDATA[<p><escape><span id="more"></span></escape></p>
+<h3 id="告警脚本"><a href="#告警脚本" class="headerlink" title="告警脚本"></a>告警脚本</h3><p>cat /data/aimm/script/wechat.sh</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#!/bin/bash</span><br><span class="line">#</span><br><span class="line"> </span><br><span class="line">#使用方法 sh ./send_message.sh &quot;发送内容&quot;</span><br><span class="line">#如       sh ./send_message.sh &quot;测试环境，正在更新&quot;</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">#保存要发送人员的账号,在通讯录可获取，多个人员之间使用空格分隔，以下为展示数据</span><br><span class="line">user=&quot;HeYong&quot;</span><br><span class="line">#企业微信ID:企业微信管理界面-’我的企业‘页面中获取</span><br><span class="line">corpid=&quot;ww0ba8cfd2924c614c&quot;</span><br><span class="line">#应用秘钥:在‘自建应用’-‘创建应用’-‘应用管理’中获取</span><br><span class="line">corpsecret=&quot;xK-VerRCCCByHPqhe6-_jaFtMTuxDPPVueX9iYmohVs&quot;</span><br><span class="line">#企业应用ID:在&#x27;自建应用&#x27;-&#x27;创建应用&#x27;-&#x27;应用管理&#x27;中获取</span><br><span class="line">agentld=1000003</span><br><span class="line"> </span><br><span class="line">#------------------------以上变量需要自行修改-----------------------------------</span><br><span class="line"> </span><br><span class="line">#保存信息内容变量</span><br><span class="line">msg=&#x27;请检查服务器登录用户:\n主机名: &#x27;`hostname`&#x27;\n主机IP: &#x27;`ifconfig eth0|awk -F &#x27;[ :]+&#x27; &#x27;NR==2 &#123;print $3&#125;&#x27;`&#x27;\n登录用户: &#x27;`whoami`&#x27;\n登录IP: &#x27;`who am i |awk -F &#x27;[()]&#x27; &#x27;&#123;print $2&#125;&#x27;`&#x27;\n登录时间: &#x27;`date &#x27;+%Y-%m-%d-%H:%M:%S&#x27;`&#x27;&#x27;</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">#curl -s 静默模式，就是不显示错误和进度</span><br><span class="line">A=`curl -s https://qyapi.weixin.qq.com/cgi-bin/gettoken?corpid=$corpid\&amp;corpsecret=$corpsecret`</span><br><span class="line">#解析json格式 并获取access_token值</span><br><span class="line">token=`echo $A | jq -c &#x27;.access_token&#x27;`</span><br><span class="line">#去除变量值两边的双引号</span><br><span class="line">token=$&#123;token#*\&quot;&#125;</span><br><span class="line">token=$&#123;token%*\&quot;&#125;</span><br><span class="line">#请求地址</span><br><span class="line">URL=&quot;https://qyapi.weixin.qq.com/cgi-bin/message/send?access_token=$token&quot;</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">for I in $user;do</span><br><span class="line">	#发送的JSON内容</span><br><span class="line">	JSON=&quot;&#123;\&quot;touser\&quot;: \&quot;$I\&quot;,\&quot;msgtype\&quot;: \&quot;text\&quot;,\&quot;agentid\&quot;: \&quot;$agentld\&quot;,\&quot;text\&quot;: &#123;\&quot;content\&quot;: \&quot;$msg\&quot;&#125;,\&quot;safe\&quot;:0 &#125;&quot;</span><br><span class="line">	#以POST的方式请求</span><br><span class="line">	curl -d &quot;$JSON&quot; &quot;$URL&quot; &gt;/dev/null 2&gt;&amp;1</span><br><span class="line">done</span><br><span class="line"> </span><br><span class="line">exit 0</span><br></pre></td></tr></table></figure>
+
+<p>脚本中还涉及jq命令，这里我们安装一下</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[root@linux ~]# yum install -y jq</span><br></pre></td></tr></table></figure>
+
+<p>在完善脚本之后，我们需要将脚本放置在<code>/etc/profile</code>这样用户在登陆的时候就会发送(前提是服务器可以访问外网，就是可以ping通百度)</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">vim /etc/profile</span><br><span class="line"> </span><br><span class="line">/bin/bash  /data/aimm/script/wechat.sh</span><br></pre></td></tr></table></figure>
+
+<p>登陆测试结果如下</p>
+]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>Linux</tag>
       </tags>
   </entry>
   <entry>
@@ -419,6 +392,33 @@
       </categories>
       <tags>
         <tag>Nginx</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Linux磁盘满了解决方案</title>
+    <url>/2019/03/10/Linux%E7%A3%81%E7%9B%98%E6%BB%A1%E4%BA%86%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/</url>
+    <content><![CDATA[<p><escape><span id="more"></span></escape></p>
+<p>查看磁盘情况</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[root@iz2zebp5657k0fz0pvgcgnz ~]# df -h</span><br><span class="line">Filesystem      Size  Used Avail Use% Mounted on</span><br><span class="line">devtmpfs        909M     0  909M   0% /dev</span><br><span class="line">tmpfs           919M     0  919M   0% /dev/shm</span><br><span class="line">tmpfs           919M  8.6M  911M   1% /run</span><br><span class="line">tmpfs           919M     0  919M   0% /sys/fs/cgroup</span><br><span class="line">/dev/vda1        40G  8.4G   29G  23% /</span><br><span class="line">overlay          40G  8.4G   29G  23% /var/lib/docker/overlay2/e374b04682a79626e00aca70c896b2a9b5a46ae9730c3311dd774b1bc56bdb9d/merged</span><br><span class="line">overlay          40G  8.4G   29G  23% /var/lib/docker/overlay2/c59338b367886fefb1ff03641e25ad7a3800421f39652d43e08a51b51ac95009/merged</span><br><span class="line">tmpfs           184M     0  184M   0% /run/user/0</span><br></pre></td></tr></table></figure>
+
+<p>df: 用于显示目前在Linux系统上的文件系统的磁盘使用情况统计。</p>
+<p>-h：以K，M，G为单位，提高信息的可读性。</p>
+<p>Size：总内存数</p>
+<p>Used：使用内存数</p>
+<p>Avail：剩余内存数</p>
+<p>Mounted on：挂载点</p>
+<p>查看文件夹下面的磁盘使用情况</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 进入根目录</span><br><span class="line">[root@iz2zebp5657k0fz0pvgcgnz ~]# cd /</span><br><span class="line">[root@iz2zebp5657k0fz0pvgcgnz /]# du --max-depth=1 -h</span><br><span class="line">44K	./home</span><br><span class="line">8.6M	./run</span><br><span class="line">24M	./tmp</span><br><span class="line">16K	./opt</span><br><span class="line">......</span><br><span class="line">0	./dev</span><br><span class="line">0	./sys</span><br><span class="line">101M	./root</span><br><span class="line">4.0K	./media</span><br><span class="line">48M	./etc</span><br><span class="line">4.9G	./var</span><br><span class="line">120M	./data</span><br><span class="line">11G	.</span><br></pre></td></tr></table></figure>
+
+<p>du：会显示指定的目录或文件所占用的磁盘空间。</p>
+<p>–max-depth-1：–max-depth=&lt;目录层数&gt; 超过指定层数的目录后，予以忽略。</p>
+<p>-h：以K，M，G为单位，提高信息的可读性。</p>
+]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>Linux</tag>
       </tags>
   </entry>
   <entry>
