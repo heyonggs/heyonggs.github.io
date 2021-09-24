@@ -6,7 +6,7 @@
   <link href="https://heyonggs.github.io/atom.xml" rel="self"/>
   
   <link href="https://heyonggs.github.io/"/>
-  <updated>2021-09-24T02:40:38.634Z</updated>
+  <updated>2021-09-24T09:53:06.478Z</updated>
   <id>https://heyonggs.github.io/</id>
   
   <author>
@@ -15,6 +15,29 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Kubernetes桌面客户端Lens</title>
+    <link href="https://heyonggs.github.io/p/27615.html"/>
+    <id>https://heyonggs.github.io/p/27615.html</id>
+    <published>2021-09-24T08:56:14.000Z</published>
+    <updated>2021-09-24T09:53:06.478Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;&lt;escape&gt;&lt;/escape&gt;&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="Kubernetes" scheme="https://heyonggs.github.io/categories/Kubernetes/"/>
+    
+    
+    <category term="k8s" scheme="https://heyonggs.github.io/tags/k8s/"/>
+    
+    <category term="容器" scheme="https://heyonggs.github.io/tags/%E5%AE%B9%E5%99%A8/"/>
+    
+    <category term="Kubernetes" scheme="https://heyonggs.github.io/tags/Kubernetes/"/>
+    
+  </entry>
   
   <entry>
     <title>kubeadm平滑升级集群</title>
@@ -268,7 +291,7 @@
     <link href="https://heyonggs.github.io/p/61914.html"/>
     <id>https://heyonggs.github.io/p/61914.html</id>
     <published>2016-05-24T06:30:10.000Z</published>
-    <updated>2021-09-24T07:20:05.446Z</updated>
+    <updated>2021-09-24T07:24:57.097Z</updated>
     
     
     <summary type="html">&lt;p&gt;&lt;escape&gt;&lt;/escape&gt;&lt;/p&gt;</summary>
@@ -279,6 +302,25 @@
     
     
     <category term="Linux,命令" scheme="https://heyonggs.github.io/tags/Linux-%E5%91%BD%E4%BB%A4/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Linux面试题</title>
+    <link href="https://heyonggs.github.io/p/5935.html"/>
+    <id>https://heyonggs.github.io/p/5935.html</id>
+    <published>2016-03-24T07:37:39.000Z</published>
+    <updated>2021-09-24T08:05:08.866Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;&lt;escape&gt;&lt;/escape&gt;&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="Linux,面试题" scheme="https://heyonggs.github.io/categories/Linux-%E9%9D%A2%E8%AF%95%E9%A2%98/"/>
+    
+    
+    <category term="Linux,面试题" scheme="https://heyonggs.github.io/tags/Linux-%E9%9D%A2%E8%AF%95%E9%A2%98/"/>
     
   </entry>
   
