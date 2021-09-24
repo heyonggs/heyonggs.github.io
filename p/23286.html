@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+<meta name="google-site-verification" content="9txmeVmeJ6bMHjmAuOJ4jIB5_Oxio9bwz8neOVbFbe4" />
+<meta name="baidu-site-verification" content="code-mn6sfA1sqp" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"heyonggs.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"onmobile":false,"b2t":true,"scrollpercent":true},"copycode":{"enable":true,"show_result":true,"style":"default"},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta property="og:type" content="article">
+<meta property="og:title" content="kubeadm修改证书时间为99年">
+<meta property="og:url" content="https://heyonggs.github.io/p/23286.html">
+<meta property="og:site_name" content="何宇泽">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-04-10T02:27:40.000Z">
+<meta property="article:modified_time" content="2021-09-24T02:29:52.296Z">
+<meta property="article:author" content="何宇泽">
+<meta property="article:tag" content="k8s">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://heyonggs.github.io/p/23286.html">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>kubeadm修改证书时间为99年 | 何宇泽</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="何宇泽" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">何宇泽</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-主页">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>主页</a>
+
+  </li>
+        <li class="menu-item menu-item-归档">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-分类">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-标签">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-关于">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-站点地图">
+
+    <a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>站点地图</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://heyonggs.github.io/p/23286.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="何宇泽">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="何宇泽">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          kubeadm修改证书时间为99年
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-04-10 10:27:40" itemprop="dateCreated datePublished" datetime="2021-04-10T10:27:40+08:00">2021-04-10</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-09-24 10:29:52" itemprop="dateModified" datetime="2021-09-24T10:29:52+08:00">2021-09-24</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/k8s/" itemprop="url" rel="index"><span itemprop="name">k8s</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span><br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>8.1k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>7 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p><escape><span id="more"></span></escape></p>
+<h1 id="kubeadm修改证书时间为99年">1. kubeadm修改证书时间为99年</h1><h2 id="查看当前证书时间">1.1. 查看当前证书时间</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">[root@k8s-master ~]# kubeadm alpha certs check-expiration</span><br><span class="line">[check-expiration] Reading configuration from the cluster...</span><br><span class="line">[check-expiration] FYI: You can look at this config file with &#x27;kubectl -n kube-system get cm kubeadm-config -oyaml&#x27;</span><br><span class="line"></span><br><span class="line">CERTIFICATE                EXPIRES                  RESIDUAL TIME   CERTIFICATE AUTHORITY   EXTERNALLY MANAGED</span><br><span class="line">admin.conf                 Aug 30, 2022 07:53 UTC   363d                                    no      </span><br><span class="line">apiserver                  Aug 30, 2022 07:52 UTC   363d            ca                      no      </span><br><span class="line">apiserver-etcd-client      Aug 30, 2022 07:53 UTC   363d            etcd-ca                 no      </span><br><span class="line">apiserver-kubelet-client   Aug 30, 2022 07:52 UTC   363d            ca                      no      </span><br><span class="line">controller-manager.conf    Aug 30, 2022 07:53 UTC   363d                                    no      </span><br><span class="line">etcd-healthcheck-client    Aug 30, 2022 07:53 UTC   363d            etcd-ca                 no      </span><br><span class="line">etcd-peer                  Aug 30, 2022 07:53 UTC   363d            etcd-ca                 no      </span><br><span class="line">etcd-server                Aug 30, 2022 07:53 UTC   363d            etcd-ca                 no      </span><br><span class="line">front-proxy-client         Aug 30, 2022 07:53 UTC   363d            front-proxy-ca          no      </span><br><span class="line">scheduler.conf             Aug 30, 2022 07:53 UTC   363d                                    no      </span><br><span class="line"></span><br><span class="line">CERTIFICATE AUTHORITY   EXPIRES                  RESIDUAL TIME   EXTERNALLY MANAGED</span><br><span class="line">ca                      Aug 28, 2031 07:52 UTC   9y              no      </span><br><span class="line">etcd-ca                 Aug 28, 2031 07:53 UTC   9y              no      </span><br><span class="line">front-proxy-ca          Aug 28, 2031 07:53 UTC   9y              no      </span><br></pre></td></tr></table></figure>
+
+<p>可以看到正常只有一年时间。</p>
+<h2 id="下载源码">1.2. 下载源码</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/kubernetes/kubernetes.git</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>注意：如果github下载慢可以用gitee下载地址：<a target="_blank" rel="noopener" href="https://gitee.com/mirrors/Kubernetes.git">https://gitee.com/mirrors/Kubernetes.git</a></p>
+</blockquote>
+<p>查看k8s版本</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@k8s-master ~]# kubectl version</span><br><span class="line">Client Version: version.Info&#123;Major:&quot;1&quot;, Minor:&quot;18&quot;, GitVersion:&quot;v1.18.0&quot;, GitCommit:&quot;9e991415386e4cf155a24b1da15becaa390438d8&quot;, GitTreeState:&quot;clean&quot;, BuildDate:&quot;2020-03-25T14:58:59Z&quot;, GoVersion:&quot;go1.13.8&quot;, Compiler:&quot;gc&quot;, Platform:&quot;linux/amd64&quot;&#125;</span><br><span class="line">Server Version: version.Info&#123;Major:&quot;1&quot;, Minor:&quot;18&quot;, GitVersion:&quot;v1.18.0&quot;, GitCommit:&quot;9e991415386e4cf155a24b1da15becaa390438d8&quot;, GitTreeState:&quot;clean&quot;, BuildDate:&quot;2020-03-25T14:50:46Z&quot;, GoVersion:&quot;go1.13.8&quot;, Compiler:&quot;gc&quot;, Platform:&quot;linux/amd64&quot;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>切换到自己的版本，修改源码，比如我的是v1.18.0版本</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd kubernetes</span><br><span class="line">git checkout v1.18.0</span><br></pre></td></tr></table></figure>
+
+<p>vim cmd/kubeadm/app/constants/constants.go，找到CertificateValidity，修改如下</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">....</span><br><span class="line">const (</span><br><span class="line">        // KubernetesDir is the directory Kubernetes owns for storing various configuration files</span><br><span class="line">        KubernetesDir = &quot;/etc/kubernetes&quot;</span><br><span class="line">        // ManifestsSubDirName defines directory name to store manifests</span><br><span class="line">        ManifestsSubDirName = &quot;manifests&quot;</span><br><span class="line">        // TempDirForKubeadm defines temporary directory for kubeadm</span><br><span class="line">        // should be joined with KubernetesDir.</span><br><span class="line">        TempDirForKubeadm = &quot;tmp&quot;</span><br><span class="line"></span><br><span class="line">        // CertificateValidity defines the validity for all the signed certificates generated by kubeadm</span><br><span class="line">        CertificateValidity = time.Hour * 24 * 365 * 100</span><br><span class="line">....</span><br></pre></td></tr></table></figure>
+
+<h2 id="安装编译软件">1.3. 安装编译软件</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum -y install gcc automake autoconf libtool make</span><br></pre></td></tr></table></figure>
+
+<p>安装go编译环境，这里就直接使用yum安装</p>
+<p>查看go是否安装过</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@k8s-master kubernetes]# go env</span><br><span class="line">-bash: go: command not found</span><br></pre></td></tr></table></figure>
+
+<p>查看yum的Golang</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">[root@k8s-master kubernetes]# yum info golang</span><br><span class="line">Last metadata expiration check: 0:06:47 ago on Wed 01 Sep 2021 10:07:23 AM CST.</span><br><span class="line">Available Packages</span><br><span class="line">Name         : golang</span><br><span class="line">Version      : 1.15.14</span><br><span class="line">Release      : 1.module_el8.4.0+882+ab13bcd9</span><br><span class="line">Architecture : x86_64</span><br><span class="line">Size         : 708 k</span><br><span class="line">Source       : golang-1.15.14-1.module_el8.4.0+882+ab13bcd9.src.rpm</span><br><span class="line">Repository   : AppStream</span><br><span class="line">Summary      : The Go Programming Language</span><br><span class="line">URL          : http://golang.org/</span><br><span class="line">License      : BSD and Public Domain</span><br><span class="line">Description  : The Go Programming Language.</span><br></pre></td></tr></table></figure>
+
+<p>安装golang</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install -y golang</span><br></pre></td></tr></table></figure>
+
+<p>再次查看go环境变量</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">[root@k8s-master kubernetes]# go env</span><br><span class="line">GO111MODULE=&quot;&quot;</span><br><span class="line">GOARCH=&quot;amd64&quot;</span><br><span class="line">GOBIN=&quot;&quot;</span><br><span class="line">GOCACHE=&quot;/root/.cache/go-build&quot;</span><br><span class="line">GOENV=&quot;/root/.config/go/env&quot;</span><br><span class="line">GOEXE=&quot;&quot;</span><br><span class="line">GOFLAGS=&quot;&quot;</span><br><span class="line">GOHOSTARCH=&quot;amd64&quot;</span><br><span class="line">GOHOSTOS=&quot;linux&quot;</span><br><span class="line">GOINSECURE=&quot;&quot;</span><br><span class="line">GOMODCACHE=&quot;/root/go/pkg/mod&quot;</span><br><span class="line">GONOPROXY=&quot;&quot;</span><br><span class="line">GONOSUMDB=&quot;&quot;</span><br><span class="line">GOOS=&quot;linux&quot;</span><br><span class="line">GOPATH=&quot;/root/go&quot;</span><br><span class="line">GOPRIVATE=&quot;&quot;</span><br><span class="line">GOPROXY=&quot;https://proxy.golang.org,direct&quot;</span><br><span class="line">GOROOT=&quot;/usr/lib/golang&quot;</span><br><span class="line">GOSUMDB=&quot;sum.golang.org&quot;</span><br><span class="line">GOTMPDIR=&quot;&quot;</span><br><span class="line">GOTOOLDIR=&quot;/usr/lib/golang/pkg/tool/linux_amd64&quot;</span><br><span class="line">GCCGO=&quot;gccgo&quot;</span><br><span class="line">AR=&quot;ar&quot;</span><br><span class="line">CC=&quot;gcc&quot;</span><br><span class="line">CXX=&quot;g++&quot;</span><br><span class="line">CGO_ENABLED=&quot;1&quot;</span><br><span class="line">GOMOD=&quot;/root/kubernetes/go.mod&quot;</span><br><span class="line">CGO_CFLAGS=&quot;-g -O2&quot;</span><br><span class="line">CGO_CPPFLAGS=&quot;&quot;</span><br><span class="line">CGO_CXXFLAGS=&quot;-g -O2&quot;</span><br><span class="line">CGO_FFLAGS=&quot;-g -O2&quot;</span><br><span class="line">CGO_LDFLAGS=&quot;-g -O2&quot;</span><br><span class="line">PKG_CONFIG=&quot;pkg-config&quot;</span><br><span class="line">GOGCCFLAGS=&quot;-fPIC -m64 -pthread -fmessage-length=0 -fdebug-prefix-map=/tmp/go-build406782294=/tmp/go-build -gno-record-gcc-switches&quot;</span><br></pre></td></tr></table></figure>
+
+<h2 id="执行make-WHAT-cmd-kubeadm编译">1.4. 执行make WHAT=cmd/kubeadm编译</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">[root@k8s-master kubernetes]# make WHAT=cmd/kubeadm</span><br><span class="line">+++ [0901 10:20:55] Building go targets for linux/amd64:</span><br><span class="line">    ./vendor/k8s.io/code-generator/cmd/deepcopy-gen</span><br><span class="line">+++ [0901 10:21:08] Building go targets for linux/amd64:</span><br><span class="line">    ./vendor/k8s.io/code-generator/cmd/defaulter-gen</span><br><span class="line">+++ [0901 10:21:18] Building go targets for linux/amd64:</span><br><span class="line">    ./vendor/k8s.io/code-generator/cmd/conversion-gen</span><br><span class="line">+++ [0901 10:21:37] Building go targets for linux/amd64:</span><br><span class="line">    ./vendor/k8s.io/kube-openapi/cmd/openapi-gen</span><br><span class="line">+++ [0901 10:21:53] Building go targets for linux/amd64:</span><br><span class="line">    ./vendor/github.com/go-bindata/go-bindata/go-bindata</span><br><span class="line">warning: ignoring symlink /root/kubernetes/_output/local/go/src/k8s.io/kubernetes</span><br><span class="line">go: warning: &quot;k8s.io/kubernetes/vendor/github.com/go-bindata/go-bindata/...&quot; matched no packages</span><br><span class="line">+++ [0901 10:21:55] Building go targets for linux/amd64:</span><br><span class="line">    cmd/kubeadm</span><br></pre></td></tr></table></figure>
+
+<p>编译完生成如下目录和二进制文件</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[root@k8s-master kubernetes]# ll _output/bin/</span><br><span class="line">total 70380</span><br><span class="line">-rwxr-xr-x 1 root root  6242304 Sep  1 10:21 conversion-gen</span><br><span class="line">-rwxr-xr-x 1 root root  6234112 Sep  1 10:20 deepcopy-gen</span><br><span class="line">-rwxr-xr-x 1 root root  6205440 Sep  1 10:21 defaulter-gen</span><br><span class="line">-rwxr-xr-x 1 root root  3688610 Sep  1 10:20 go2make</span><br><span class="line">-rwxr-xr-x 1 root root  2023424 Sep  1 10:21 go-bindata</span><br><span class="line">-rwxr-xr-x 1 root root 37076992 Sep  1 10:23 kubeadm</span><br><span class="line">-rwxr-xr-x 1 root root 10596352 Sep  1 10:21 openapi-gen</span><br></pre></td></tr></table></figure>
+
+<p>备份原kubeadm和证书文件</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cp /usr/bin/kubeadm&#123;,.bak20210901&#125;</span><br><span class="line">cp -r /etc/kubernetes/pki&#123;,.bak20210901&#125;</span><br></pre></td></tr></table></figure>
+
+<p>将新生成的kubeadm进行替换</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cp _output/bin/kubeadm /usr/bin/kubeadm</span><br></pre></td></tr></table></figure>
+
+<p>生成新的证书</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd /etc/kubernetes/pki</span><br><span class="line">kubeadm alpha certs renew all</span><br></pre></td></tr></table></figure>
+
+<p>输出如下</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">[root@k8s-master kubernetes]# cd /etc/kubernetes/pki</span><br><span class="line">[root@k8s-master pki]# kubeadm alpha certs renew all</span><br><span class="line">[renew] Reading configuration from the cluster...</span><br><span class="line">[renew] FYI: You can look at this config file with &#x27;kubectl -n kube-system get cm kubeadm-config -oyaml&#x27;</span><br><span class="line"></span><br><span class="line">certificate embedded in the kubeconfig file for the admin to use and for kubeadm itself renewed</span><br><span class="line">certificate for serving the Kubernetes API renewed</span><br><span class="line">certificate the apiserver uses to access etcd renewed</span><br><span class="line">certificate for the API server to connect to kubelet renewed</span><br><span class="line">certificate embedded in the kubeconfig file for the controller manager to use renewed</span><br><span class="line">certificate for liveness probes to healthcheck etcd renewed</span><br><span class="line">certificate for etcd nodes to communicate with each other renewed</span><br><span class="line">certificate for serving etcd renewed</span><br><span class="line">certificate for the front proxy client renewed</span><br><span class="line">certificate embedded in the kubeconfig file for the scheduler manager to use renewed</span><br></pre></td></tr></table></figure>
+
+<p>验证结果</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubeadm alpha certs check-expiration</span><br></pre></td></tr></table></figure>
+
+<p>输出如下</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">[root@k8s-master pki]# kubeadm alpha certs check-expiration</span><br><span class="line">[check-expiration] Reading configuration from the cluster...</span><br><span class="line">[check-expiration] FYI: You can look at this config file with &#x27;kubectl -n kube-system get cm kubeadm-config -oyaml&#x27;</span><br><span class="line"></span><br><span class="line">CERTIFICATE                EXPIRES                  RESIDUAL TIME   CERTIFICATE AUTHORITY   EXTERNALLY MANAGED</span><br><span class="line">admin.conf                 Aug 08, 2121 02:32 UTC   99y                                     no      </span><br><span class="line">apiserver                  Aug 08, 2121 02:32 UTC   99y             ca                      no      </span><br><span class="line">apiserver-etcd-client      Aug 08, 2121 02:32 UTC   99y             etcd-ca                 no      </span><br><span class="line">apiserver-kubelet-client   Aug 08, 2121 02:32 UTC   99y             ca                      no      </span><br><span class="line">controller-manager.conf    Aug 08, 2121 02:32 UTC   99y                                     no      </span><br><span class="line">etcd-healthcheck-client    Aug 08, 2121 02:32 UTC   99y             etcd-ca                 no      </span><br><span class="line">etcd-peer                  Aug 08, 2121 02:32 UTC   99y             etcd-ca                 no      </span><br><span class="line">etcd-server                Aug 08, 2121 02:32 UTC   99y             etcd-ca                 no      </span><br><span class="line">front-proxy-client         Aug 08, 2121 02:32 UTC   99y             front-proxy-ca          no      </span><br><span class="line">scheduler.conf             Aug 08, 2121 02:32 UTC   99y                                     no      </span><br><span class="line"></span><br><span class="line">CERTIFICATE AUTHORITY   EXPIRES                  RESIDUAL TIME   EXTERNALLY MANAGED</span><br><span class="line">ca                      Aug 28, 2031 07:52 UTC   9y              no      </span><br><span class="line">etcd-ca                 Aug 28, 2031 07:53 UTC   9y              no      </span><br><span class="line">front-proxy-ca          Aug 28, 2031 07:53 UTC   9y              no      </span><br></pre></td></tr></table></figure>
+
+<p>查看集群状态是否OK。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root@k8s-master pki]# kubectl get node</span><br><span class="line">NAME         STATUS   ROLES    AGE   VERSION</span><br><span class="line">k8s-master   Ready    master   42h   v1.18.0</span><br><span class="line">k8s-node1    Ready    &lt;none&gt;   42h   v1.18.0</span><br><span class="line">k8s-node2    Ready    &lt;none&gt;   42h   v1.18.0</span><br></pre></td></tr></table></figure>
+
+<p>查看pod</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">[root@k8s-master pki]# kubectl get pod -n kube-system</span><br><span class="line">NAME                                 READY   STATUS    RESTARTS   AGE</span><br><span class="line">coredns-7ff77c879f-6pwrg             1/1     Running   1          42h</span><br><span class="line">coredns-7ff77c879f-d6s95             1/1     Running   2          42h</span><br><span class="line">etcd-k8s-master                      1/1     Running   3          42h</span><br><span class="line">kube-apiserver-k8s-master            1/1     Running   2          42h</span><br><span class="line">kube-controller-manager-k8s-master   1/1     Running   3          42h</span><br><span class="line">kube-flannel-ds-fs8dj                1/1     Running   3          42h</span><br><span class="line">kube-flannel-ds-g6d4l                1/1     Running   2          42h</span><br><span class="line">kube-flannel-ds-tnrzq                1/1     Running   1          42h</span><br><span class="line">kube-proxy-dngh8                     1/1     Running   1          42h</span><br><span class="line">kube-proxy-nxb5q                     1/1     Running   2          42h</span><br><span class="line">kube-proxy-zz5xn                     1/1     Running   3          42h</span><br><span class="line">kube-scheduler-k8s-master            1/1     Running   2          42h</span><br></pre></td></tr></table></figure>
+
+<p>如看到上面的Ready和Running，即表示证书修改成功。</p>
+
+    </div>
+
+    
+    
+    
+
+<div>
+  
+    <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+
+  
+</div>
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>何宇泽
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://heyonggs.github.io/p/23286.html" title="kubeadm修改证书时间为99年">https://heyonggs.github.io/p/23286.html</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh-CN" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/k8s/" rel="tag"><i class="fa fa-tag"></i> k8s</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/p/20278.html" rel="prev" title="k8s部署nacos集群">
+      <i class="fa fa-chevron-left"></i> k8s部署nacos集群
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/p/36110.html" rel="next" title="Centos查看系统 CPU 个数、核心数、线程数">
+      Centos查看系统 CPU 个数、核心数、线程数 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="lv-container" data-id="city" data-uid="MTAyMC81NDMyMS8zMDc5Mg=="></div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+<script type="text/javascript" id="clustrmaps" src="//clustrmaps.com/map_v2.js?d=PGYncUiSTnkUS8Nkg3hKuBb67df9OnAR0ugkllogplA&cl=ffffff&w=a"></script>
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#kubeadm%E4%BF%AE%E6%94%B9%E8%AF%81%E4%B9%A6%E6%97%B6%E9%97%B4%E4%B8%BA99%E5%B9%B4"><span class="nav-text">1. kubeadm修改证书时间为99年</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E5%BD%93%E5%89%8D%E8%AF%81%E4%B9%A6%E6%97%B6%E9%97%B4"><span class="nav-text">1.1. 查看当前证书时间</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%8B%E8%BD%BD%E6%BA%90%E7%A0%81"><span class="nav-text">1.2. 下载源码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85%E7%BC%96%E8%AF%91%E8%BD%AF%E4%BB%B6"><span class="nav-text">1.3. 安装编译软件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%89%A7%E8%A1%8Cmake-WHAT-cmd-kubeadm%E7%BC%96%E8%AF%91"><span class="nav-text">1.4. 执行make WHAT&#x3D;cmd&#x2F;kubeadm编译</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="何宇泽"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">何宇泽</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">14</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/heyonggs" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;heyonggs" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:heyonggs@gmail.com" title="E-Mail → mailto:heyonggs@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/heyong" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;heyong" rel="noopener" target="_blank"><i class="fab fa-weibo fa-fw"></i>Weibo</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://twitter.com/heyong" title="Twitter → https:&#x2F;&#x2F;twitter.com&#x2F;heyong" rel="noopener" target="_blank"><i class="fab fa-twitter fa-fw"></i>Twitter</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.facebook.com/heyonggs" title="FB Page → https:&#x2F;&#x2F;www.facebook.com&#x2F;heyonggs" rel="noopener" target="_blank"><i class="fab fa-facebook fa-fw"></i>FB Page</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://youtube.com/heyonggs" title="YouTube → https:&#x2F;&#x2F;youtube.com&#x2F;heyonggs" rel="noopener" target="_blank"><i class="fab fa-youtube fa-fw"></i>YouTube</a>
+      </span>
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh-CN" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2015 – 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">何宇泽</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">99k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">1:30</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+<script>
+    var now = new Date();
+    function createtime() {
+        var grt= new Date("12/03/2018 00:00:00");//此处修改你的建站时间或者网站上线时间
+        now.setTime(now.getTime()+250);
+        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
+        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
+        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
+        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
+        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
+        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;}
+        document.getElementById("timeDate").innerHTML = "Running for "+dnum+" Days ";
+        document.getElementById("times").innerHTML = hnum + " Hours " + mnum + " m " + snum + " s";
+    }
+    setInterval("createtime()",250);
+</script>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+  <script defer src="/lib/three/three.min.js"></script>
+    <script defer src="/lib/three/three-waves.min.js"></script>
+    <script defer src="/lib/three/canvas_lines.min.js"></script>
+    <script defer src="/lib/three/canvas_sphere.min.js"></script>
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script>
+NexT.utils.loadComments(document.querySelector('#lv-container'), () => {
+  window.livereOptions = {
+    refer: location.pathname.replace(CONFIG.root, '').replace('index.html', '')
+  };
+  (function(d, s) {
+    var j, e = d.getElementsByTagName(s)[0];
+    if (typeof LivereTower === 'function') { return; }
+    j = d.createElement(s);
+    j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+    j.async = true;
+    e.parentNode.insertBefore(j, e);
+  })(document, 'script');
+});
+</script>
+
+
+
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/assets/z16.model.json"},"display":{"position":"right","width":250,"height":500},"mobile":{"show":true},"log":false});</script></body>
+</html>
+<!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/src/love.js"></script>

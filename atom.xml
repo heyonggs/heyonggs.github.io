@@ -6,7 +6,7 @@
   <link href="https://heyonggs.github.io/atom.xml" rel="self"/>
   
   <link href="https://heyonggs.github.io/"/>
-  <updated>2021-09-22T03:42:23.322Z</updated>
+  <updated>2021-09-24T02:32:49.370Z</updated>
   <id>https://heyonggs.github.io/</id>
   
   <author>
@@ -17,11 +17,30 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>kubeadm平滑升级集群</title>
+    <link href="https://heyonggs.github.io/p/23481.html"/>
+    <id>https://heyonggs.github.io/p/23481.html</id>
+    <published>2021-09-24T02:30:51.000Z</published>
+    <updated>2021-09-24T02:32:49.370Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;&lt;escape&gt;&lt;/escape&gt;&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="k8s" scheme="https://heyonggs.github.io/categories/k8s/"/>
+    
+    
+    <category term="k8s" scheme="https://heyonggs.github.io/tags/k8s/"/>
+    
+  </entry>
+  
+  <entry>
     <title>Nginx更换SSL证书</title>
     <link href="https://heyonggs.github.io/p/63588.html"/>
     <id>https://heyonggs.github.io/p/63588.html</id>
     <published>2021-09-18T09:40:04.000Z</published>
-    <updated>2021-09-22T03:42:23.322Z</updated>
+    <updated>2021-09-23T10:29:38.337Z</updated>
     
     
     <summary type="html">&lt;p&gt;&lt;escape&gt;&lt;/escape&gt;&lt;/p&gt;</summary>
@@ -40,7 +59,7 @@
     <link href="https://heyonggs.github.io/p/36110.html"/>
     <id>https://heyonggs.github.io/p/36110.html</id>
     <published>2021-09-18T02:42:02.000Z</published>
-    <updated>2021-09-18T07:07:29.524Z</updated>
+    <updated>2021-09-23T10:29:38.334Z</updated>
     
     
     <summary type="html">&lt;p&gt;&lt;escape&gt;&lt;/escape&gt;&lt;/p&gt;</summary>
@@ -55,11 +74,30 @@
   </entry>
   
   <entry>
+    <title>kubeadm修改证书时间为99年</title>
+    <link href="https://heyonggs.github.io/p/23286.html"/>
+    <id>https://heyonggs.github.io/p/23286.html</id>
+    <published>2021-04-10T02:27:40.000Z</published>
+    <updated>2021-09-24T02:29:52.296Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;&lt;escape&gt;&lt;/escape&gt;&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="k8s" scheme="https://heyonggs.github.io/categories/k8s/"/>
+    
+    
+    <category term="k8s" scheme="https://heyonggs.github.io/tags/k8s/"/>
+    
+  </entry>
+  
+  <entry>
     <title>k8s部署nacos集群</title>
     <link href="https://heyonggs.github.io/p/20278.html"/>
     <id>https://heyonggs.github.io/p/20278.html</id>
     <published>2021-03-10T08:59:21.000Z</published>
-    <updated>2021-09-22T09:06:39.866Z</updated>
+    <updated>2021-09-23T10:29:38.339Z</updated>
     
     
     <summary type="html">&lt;p&gt;&lt;escape&gt;&lt;/escape&gt;&lt;/p&gt;</summary>
@@ -78,7 +116,7 @@
     <link href="https://heyonggs.github.io/p/9854.html"/>
     <id>https://heyonggs.github.io/p/9854.html</id>
     <published>2021-02-22T09:03:45.000Z</published>
-    <updated>2021-09-22T09:06:17.948Z</updated>
+    <updated>2021-09-23T10:29:38.343Z</updated>
     
     
     <summary type="html">&lt;p&gt;&lt;escape&gt;&lt;/escape&gt;&lt;/p&gt;</summary>
@@ -97,7 +135,7 @@
     <link href="https://heyonggs.github.io/p/1525.html"/>
     <id>https://heyonggs.github.io/p/1525.html</id>
     <published>2020-09-16T06:09:20.000Z</published>
-    <updated>2021-09-18T07:07:29.526Z</updated>
+    <updated>2021-09-23T10:29:38.341Z</updated>
     
     
     <summary type="html">&lt;p&gt;&lt;escape&gt;&lt;/escape&gt;&lt;/p&gt;</summary>
@@ -116,7 +154,7 @@
     <link href="https://heyonggs.github.io/p/30445.html"/>
     <id>https://heyonggs.github.io/p/30445.html</id>
     <published>2020-08-18T02:27:59.000Z</published>
-    <updated>2021-09-18T07:07:29.526Z</updated>
+    <updated>2021-09-23T10:29:38.347Z</updated>
     
     
     <summary type="html">&lt;p&gt;&lt;escape&gt;&lt;/escape&gt;&lt;/p&gt;</summary>
@@ -173,7 +211,7 @@
     <link href="https://heyonggs.github.io/p/59442.html"/>
     <id>https://heyonggs.github.io/p/59442.html</id>
     <published>2018-07-20T06:36:59.000Z</published>
-    <updated>2021-09-22T06:52:37.763Z</updated>
+    <updated>2021-09-23T10:29:38.336Z</updated>
     
     
     <summary type="html">&lt;p&gt;&lt;escape&gt;&lt;/escape&gt;&lt;/p&gt;</summary>
@@ -192,7 +230,7 @@
     <link href="https://heyonggs.github.io/p/31038.html"/>
     <id>https://heyonggs.github.io/p/31038.html</id>
     <published>2018-03-15T02:08:39.000Z</published>
-    <updated>2021-09-18T07:07:29.523Z</updated>
+    <updated>2021-09-23T10:29:38.330Z</updated>
     
     
     <summary type="html">&lt;p&gt;&lt;escape&gt;&lt;/escape&gt;&lt;/p&gt;</summary>
@@ -211,7 +249,7 @@
     <link href="https://heyonggs.github.io/p/28124.html"/>
     <id>https://heyonggs.github.io/p/28124.html</id>
     <published>2017-09-15T03:04:34.000Z</published>
-    <updated>2021-09-22T03:44:24.136Z</updated>
+    <updated>2021-09-23T10:29:38.346Z</updated>
     
     
     <summary type="html">&lt;p&gt;&lt;escape&gt;&lt;/escape&gt;&lt;/p&gt;</summary>
@@ -230,7 +268,7 @@
     <link href="https://heyonggs.github.io/p/24997.html"/>
     <id>https://heyonggs.github.io/p/24997.html</id>
     <published>2015-03-22T03:44:04.000Z</published>
-    <updated>2021-09-22T06:20:55.746Z</updated>
+    <updated>2021-09-23T10:29:38.344Z</updated>
     
     
     <summary type="html">&lt;p&gt;&lt;escape&gt;&lt;/escape&gt;&lt;/p&gt;</summary>

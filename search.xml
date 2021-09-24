@@ -238,6 +238,42 @@
       </tags>
   </entry>
   <entry>
+    <title>Nginx更换SSL证书</title>
+    <url>/p/63588.html</url>
+    <content><![CDATA[<p><escape><span id="more"></span></escape></p>
+<p>申请SSL证书需要的CSR文件</p>
+<blockquote>
+<p><a href="https://www.chinassl.net/ssltools/generator-csr.html">https://www.chinassl.net/ssltools/generator-csr.html</a></p>
+</blockquote>
+<p>填写相关信息生成两个文件</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">*_csr.txt</span><br><span class="line">*_key.txt</span><br></pre></td></tr></table></figure>
+
+<p>csr文件用来申请ssl证书，key文件用于nginx中使用</p>
+<p>申请证书</p>
+<blockquote>
+<p><a href="https://cheapsslsecurity.com/">https://cheapsslsecurity.com/</a></p>
+</blockquote>
+<p>申请的证书目录如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">DigiCertCA.crt</span><br><span class="line">My_CA_Bundle.crt</span><br><span class="line">star_aimmcloud_com.crt</span><br><span class="line">TrustedRoot.crt</span><br></pre></td></tr></table></figure>
+
+<p>将domain_name.crt 和 DigCertCA.crt写入bundle.crt</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">cat your_domain_name.crt DigiCertCA.crt &gt;&gt; bundle.crt</span><br></pre></td></tr></table></figure>
+
+<p>此处应为</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">cat star_aimmcloud_com.crt DigiCertCA.crt &gt;&gt; bundle.crt</span><br></pre></td></tr></table></figure>
+
+<p>nginx的配置</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">server &#123;</span><br><span class="line"></span><br><span class="line">listen   443;</span><br><span class="line"></span><br><span class="line">ssl    on;</span><br><span class="line">ssl_certificate    /etc/ssl/your_domain_name.pem; (or bundle.crt)</span><br><span class="line">ssl_certificate_key    /etc/ssl/your_domain_name.key;</span><br><span class="line"></span><br><span class="line">server_name your.domain.com;</span><br><span class="line">access_log /var/log/nginx/nginx.vhost.access.log;</span><br><span class="line">error_log /var/log/nginx/nginx.vhost.error.log;</span><br><span class="line">location / &#123;</span><br><span class="line">root   /home/www/public_html/your.domain.com/public/;</span><br><span class="line">index  index.html;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>Nginx</category>
+      </categories>
+      <tags>
+        <tag>Nginx</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Linux用户登陆服务器微信告警</title>
     <url>/p/undefined.html</url>
     <content><![CDATA[<p><escape><span id="more"></span></escape></p>
@@ -251,33 +287,6 @@
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">vim /etc/profile</span><br><span class="line"> </span><br><span class="line">/bin/bash  /data/aimm/script/wechat.sh</span><br></pre></td></tr></table></figure>
 
 <p>登陆测试结果如下</p>
-]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>Linux</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Linux磁盘满了解决方案</title>
-    <url>/p/undefined.html</url>
-    <content><![CDATA[<p><escape><span id="more"></span></escape></p>
-<p>查看磁盘情况</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[root@iz2zebp5657k0fz0pvgcgnz ~]# df -h</span><br><span class="line">Filesystem      Size  Used Avail Use% Mounted on</span><br><span class="line">devtmpfs        909M     0  909M   0% /dev</span><br><span class="line">tmpfs           919M     0  919M   0% /dev/shm</span><br><span class="line">tmpfs           919M  8.6M  911M   1% /run</span><br><span class="line">tmpfs           919M     0  919M   0% /sys/fs/cgroup</span><br><span class="line">/dev/vda1        40G  8.4G   29G  23% /</span><br><span class="line">overlay          40G  8.4G   29G  23% /var/lib/docker/overlay2/e374b04682a79626e00aca70c896b2a9b5a46ae9730c3311dd774b1bc56bdb9d/merged</span><br><span class="line">overlay          40G  8.4G   29G  23% /var/lib/docker/overlay2/c59338b367886fefb1ff03641e25ad7a3800421f39652d43e08a51b51ac95009/merged</span><br><span class="line">tmpfs           184M     0  184M   0% /run/user/0</span><br></pre></td></tr></table></figure>
-
-<p>df: 用于显示目前在Linux系统上的文件系统的磁盘使用情况统计。</p>
-<p>-h：以K，M，G为单位，提高信息的可读性。</p>
-<p>Size：总内存数</p>
-<p>Used：使用内存数</p>
-<p>Avail：剩余内存数</p>
-<p>Mounted on：挂载点</p>
-<p>查看文件夹下面的磁盘使用情况</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 进入根目录</span><br><span class="line">[root@iz2zebp5657k0fz0pvgcgnz ~]# cd /</span><br><span class="line">[root@iz2zebp5657k0fz0pvgcgnz /]# du --max-depth=1 -h</span><br><span class="line">44K	./home</span><br><span class="line">8.6M	./run</span><br><span class="line">24M	./tmp</span><br><span class="line">16K	./opt</span><br><span class="line">......</span><br><span class="line">0	./dev</span><br><span class="line">0	./sys</span><br><span class="line">101M	./root</span><br><span class="line">4.0K	./media</span><br><span class="line">48M	./etc</span><br><span class="line">4.9G	./var</span><br><span class="line">120M	./data</span><br><span class="line">11G	.</span><br></pre></td></tr></table></figure>
-
-<p>du：会显示指定的目录或文件所占用的磁盘空间。</p>
-<p>–max-depth-1：–max-depth=&lt;目录层数&gt; 超过指定层数的目录后，予以忽略。</p>
-<p>-h：以K，M，G为单位，提高信息的可读性。</p>
 ]]></content>
       <categories>
         <category>Linux</category>
@@ -386,42 +395,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Nginx更换SSL证书</title>
-    <url>/p/63588.html</url>
-    <content><![CDATA[<p><escape><span id="more"></span></escape></p>
-<p>申请SSL证书需要的CSR文件</p>
-<blockquote>
-<p><a href="https://www.chinassl.net/ssltools/generator-csr.html">https://www.chinassl.net/ssltools/generator-csr.html</a></p>
-</blockquote>
-<p>填写相关信息生成两个文件</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">*_csr.txt</span><br><span class="line">*_key.txt</span><br></pre></td></tr></table></figure>
-
-<p>csr文件用来申请ssl证书，key文件用于nginx中使用</p>
-<p>申请证书</p>
-<blockquote>
-<p><a href="https://cheapsslsecurity.com/">https://cheapsslsecurity.com/</a></p>
-</blockquote>
-<p>申请的证书目录如下：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">DigiCertCA.crt</span><br><span class="line">My_CA_Bundle.crt</span><br><span class="line">star_aimmcloud_com.crt</span><br><span class="line">TrustedRoot.crt</span><br></pre></td></tr></table></figure>
-
-<p>将domain_name.crt 和 DigCertCA.crt写入bundle.crt</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">cat your_domain_name.crt DigiCertCA.crt &gt;&gt; bundle.crt</span><br></pre></td></tr></table></figure>
-
-<p>此处应为</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">cat star_aimmcloud_com.crt DigiCertCA.crt &gt;&gt; bundle.crt</span><br></pre></td></tr></table></figure>
-
-<p>nginx的配置</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">server &#123;</span><br><span class="line"></span><br><span class="line">listen   443;</span><br><span class="line"></span><br><span class="line">ssl    on;</span><br><span class="line">ssl_certificate    /etc/ssl/your_domain_name.pem; (or bundle.crt)</span><br><span class="line">ssl_certificate_key    /etc/ssl/your_domain_name.key;</span><br><span class="line"></span><br><span class="line">server_name your.domain.com;</span><br><span class="line">access_log /var/log/nginx/nginx.vhost.access.log;</span><br><span class="line">error_log /var/log/nginx/nginx.vhost.error.log;</span><br><span class="line">location / &#123;</span><br><span class="line">root   /home/www/public_html/your.domain.com/public/;</span><br><span class="line">index  index.html;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-]]></content>
-      <categories>
-        <category>Nginx</category>
-      </categories>
-      <tags>
-        <tag>Nginx</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>k8s部署nacos集群</title>
     <url>/p/20278.html</url>
     <content><![CDATA[<p><escape><span id="more"></span></escape></p>
@@ -478,27 +451,30 @@
       </tags>
   </entry>
   <entry>
-    <title>mysql导入数据慢解决方法</title>
-    <url>/p/1525.html</url>
+    <title>Linux磁盘满了解决方案</title>
+    <url>/p/undefined.html</url>
     <content><![CDATA[<p><escape><span id="more"></span></escape></p>
-<p>mysql导入慢，添加两个参数：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">max_allowed_packet   客户端/服务器之间通信的缓存区的最大大小</span><br><span class="line">net_buffer_length    TCP/IP和套接字通信缓冲区大小，创建长度达net_buffer_length行。</span><br></pre></td></tr></table></figure>
+<p>查看磁盘情况</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[root@iz2zebp5657k0fz0pvgcgnz ~]# df -h</span><br><span class="line">Filesystem      Size  Used Avail Use% Mounted on</span><br><span class="line">devtmpfs        909M     0  909M   0% /dev</span><br><span class="line">tmpfs           919M     0  919M   0% /dev/shm</span><br><span class="line">tmpfs           919M  8.6M  911M   1% /run</span><br><span class="line">tmpfs           919M     0  919M   0% /sys/fs/cgroup</span><br><span class="line">/dev/vda1        40G  8.4G   29G  23% /</span><br><span class="line">overlay          40G  8.4G   29G  23% /var/lib/docker/overlay2/e374b04682a79626e00aca70c896b2a9b5a46ae9730c3311dd774b1bc56bdb9d/merged</span><br><span class="line">overlay          40G  8.4G   29G  23% /var/lib/docker/overlay2/c59338b367886fefb1ff03641e25ad7a3800421f39652d43e08a51b51ac95009/merged</span><br><span class="line">tmpfs           184M     0  184M   0% /run/user/0</span><br></pre></td></tr></table></figure>
 
-<blockquote>
-<p>注：max_allowed_packet; net_buffer_length 这两个参数不能比目标数据度配置大，否则会报错。</p>
-</blockquote>
-<p>先查看目标库的参数值 如下：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">mysql&gt; show variables like &#x27;max_allowed_packet&#x27;;</span><br><span class="line">+--------------------+----------+</span><br><span class="line">| Variable_name      | Value    |</span><br><span class="line">+--------------------+----------+</span><br><span class="line">| max_allowed_packet | 67108864 |</span><br><span class="line">+--------------------+----------+</span><br><span class="line">1 row in set (0.22 sec)</span><br><span class="line"></span><br><span class="line">mysql&gt; show variables like &#x27;net_buffer_length&#x27;;</span><br><span class="line">+-------------------+-------+</span><br><span class="line">| Variable_name     | Value |</span><br><span class="line">+-------------------+-------+</span><br><span class="line">| net_buffer_length | 16384 |</span><br><span class="line">+-------------------+-------+</span><br><span class="line">1 row in set (0.00 sec)</span><br></pre></td></tr></table></figure>
+<p>df: 用于显示目前在Linux系统上的文件系统的磁盘使用情况统计。</p>
+<p>-h：以K，M，G为单位，提高信息的可读性。</p>
+<p>Size：总内存数</p>
+<p>Used：使用内存数</p>
+<p>Avail：剩余内存数</p>
+<p>Mounted on：挂载点</p>
+<p>查看文件夹下面的磁盘使用情况</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 进入根目录</span><br><span class="line">[root@iz2zebp5657k0fz0pvgcgnz ~]# cd /</span><br><span class="line">[root@iz2zebp5657k0fz0pvgcgnz /]# du --max-depth=1 -h</span><br><span class="line">44K	./home</span><br><span class="line">8.6M	./run</span><br><span class="line">24M	./tmp</span><br><span class="line">16K	./opt</span><br><span class="line">......</span><br><span class="line">0	./dev</span><br><span class="line">0	./sys</span><br><span class="line">101M	./root</span><br><span class="line">4.0K	./media</span><br><span class="line">48M	./etc</span><br><span class="line">4.9G	./var</span><br><span class="line">120M	./data</span><br><span class="line">11G	.</span><br></pre></td></tr></table></figure>
 
-<p>命令行加上两个参数执行</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">mysql -h127.0.0.1 -uroot -p&#x27;Pass!234&#x27; data_base_name --max_allowed_packet=67108864 --net_buffer_length=16384&lt;your_sql_script.sql</span><br></pre></td></tr></table></figure>
-
+<p>du：会显示指定的目录或文件所占用的磁盘空间。</p>
+<p>–max-depth-1：–max-depth=&lt;目录层数&gt; 超过指定层数的目录后，予以忽略。</p>
+<p>-h：以K，M，G为单位，提高信息的可读性。</p>
 ]]></content>
       <categories>
-        <category>MySQL</category>
+        <category>Linux</category>
       </categories>
       <tags>
-        <tag>MySQL</tag>
+        <tag>Linux</tag>
       </tags>
   </entry>
   <entry>
@@ -576,6 +552,104 @@
       </tags>
   </entry>
   <entry>
+    <title>kubeadm修改证书时间为99年</title>
+    <url>/p/23286.html</url>
+    <content><![CDATA[<p><escape><span id="more"></span></escape></p>
+<h1 id="kubeadm修改证书时间为99年">1. kubeadm修改证书时间为99年</h1><h2 id="查看当前证书时间">1.1. 查看当前证书时间</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[root@k8s-master ~]# kubeadm alpha certs check-expiration</span><br><span class="line">[check-expiration] Reading configuration from the cluster...</span><br><span class="line">[check-expiration] FYI: You can look at this config file with &#x27;kubectl -n kube-system get cm kubeadm-config -oyaml&#x27;</span><br><span class="line"></span><br><span class="line">CERTIFICATE                EXPIRES                  RESIDUAL TIME   CERTIFICATE AUTHORITY   EXTERNALLY MANAGED</span><br><span class="line">admin.conf                 Aug 30, 2022 07:53 UTC   363d                                    no      </span><br><span class="line">apiserver                  Aug 30, 2022 07:52 UTC   363d            ca                      no      </span><br><span class="line">apiserver-etcd-client      Aug 30, 2022 07:53 UTC   363d            etcd-ca                 no      </span><br><span class="line">apiserver-kubelet-client   Aug 30, 2022 07:52 UTC   363d            ca                      no      </span><br><span class="line">controller-manager.conf    Aug 30, 2022 07:53 UTC   363d                                    no      </span><br><span class="line">etcd-healthcheck-client    Aug 30, 2022 07:53 UTC   363d            etcd-ca                 no      </span><br><span class="line">etcd-peer                  Aug 30, 2022 07:53 UTC   363d            etcd-ca                 no      </span><br><span class="line">etcd-server                Aug 30, 2022 07:53 UTC   363d            etcd-ca                 no      </span><br><span class="line">front-proxy-client         Aug 30, 2022 07:53 UTC   363d            front-proxy-ca          no      </span><br><span class="line">scheduler.conf             Aug 30, 2022 07:53 UTC   363d                                    no      </span><br><span class="line"></span><br><span class="line">CERTIFICATE AUTHORITY   EXPIRES                  RESIDUAL TIME   EXTERNALLY MANAGED</span><br><span class="line">ca                      Aug 28, 2031 07:52 UTC   9y              no      </span><br><span class="line">etcd-ca                 Aug 28, 2031 07:53 UTC   9y              no      </span><br><span class="line">front-proxy-ca          Aug 28, 2031 07:53 UTC   9y              no      </span><br></pre></td></tr></table></figure>
+
+<p>可以看到正常只有一年时间。</p>
+<h2 id="下载源码">1.2. 下载源码</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git clone https://github.com/kubernetes/kubernetes.git</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>注意：如果github下载慢可以用gitee下载地址：<a href="https://gitee.com/mirrors/Kubernetes.git">https://gitee.com/mirrors/Kubernetes.git</a></p>
+</blockquote>
+<p>查看k8s版本</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[root@k8s-master ~]# kubectl version</span><br><span class="line">Client Version: version.Info&#123;Major:&quot;1&quot;, Minor:&quot;18&quot;, GitVersion:&quot;v1.18.0&quot;, GitCommit:&quot;9e991415386e4cf155a24b1da15becaa390438d8&quot;, GitTreeState:&quot;clean&quot;, BuildDate:&quot;2020-03-25T14:58:59Z&quot;, GoVersion:&quot;go1.13.8&quot;, Compiler:&quot;gc&quot;, Platform:&quot;linux/amd64&quot;&#125;</span><br><span class="line">Server Version: version.Info&#123;Major:&quot;1&quot;, Minor:&quot;18&quot;, GitVersion:&quot;v1.18.0&quot;, GitCommit:&quot;9e991415386e4cf155a24b1da15becaa390438d8&quot;, GitTreeState:&quot;clean&quot;, BuildDate:&quot;2020-03-25T14:50:46Z&quot;, GoVersion:&quot;go1.13.8&quot;, Compiler:&quot;gc&quot;, Platform:&quot;linux/amd64&quot;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>切换到自己的版本，修改源码，比如我的是v1.18.0版本</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">cd kubernetes</span><br><span class="line">git checkout v1.18.0</span><br></pre></td></tr></table></figure>
+
+<p>vim cmd/kubeadm/app/constants/constants.go，找到CertificateValidity，修改如下</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">....</span><br><span class="line">const (</span><br><span class="line">        // KubernetesDir is the directory Kubernetes owns for storing various configuration files</span><br><span class="line">        KubernetesDir = &quot;/etc/kubernetes&quot;</span><br><span class="line">        // ManifestsSubDirName defines directory name to store manifests</span><br><span class="line">        ManifestsSubDirName = &quot;manifests&quot;</span><br><span class="line">        // TempDirForKubeadm defines temporary directory for kubeadm</span><br><span class="line">        // should be joined with KubernetesDir.</span><br><span class="line">        TempDirForKubeadm = &quot;tmp&quot;</span><br><span class="line"></span><br><span class="line">        // CertificateValidity defines the validity for all the signed certificates generated by kubeadm</span><br><span class="line">        CertificateValidity = time.Hour * 24 * 365 * 100</span><br><span class="line">....</span><br></pre></td></tr></table></figure>
+
+<h2 id="安装编译软件">1.3. 安装编译软件</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">yum -y install gcc automake autoconf libtool make</span><br></pre></td></tr></table></figure>
+
+<p>安装go编译环境，这里就直接使用yum安装</p>
+<p>查看go是否安装过</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[root@k8s-master kubernetes]# go env</span><br><span class="line">-bash: go: command not found</span><br></pre></td></tr></table></figure>
+
+<p>查看yum的Golang</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[root@k8s-master kubernetes]# yum info golang</span><br><span class="line">Last metadata expiration check: 0:06:47 ago on Wed 01 Sep 2021 10:07:23 AM CST.</span><br><span class="line">Available Packages</span><br><span class="line">Name         : golang</span><br><span class="line">Version      : 1.15.14</span><br><span class="line">Release      : 1.module_el8.4.0+882+ab13bcd9</span><br><span class="line">Architecture : x86_64</span><br><span class="line">Size         : 708 k</span><br><span class="line">Source       : golang-1.15.14-1.module_el8.4.0+882+ab13bcd9.src.rpm</span><br><span class="line">Repository   : AppStream</span><br><span class="line">Summary      : The Go Programming Language</span><br><span class="line">URL          : http://golang.org/</span><br><span class="line">License      : BSD and Public Domain</span><br><span class="line">Description  : The Go Programming Language.</span><br></pre></td></tr></table></figure>
+
+<p>安装golang</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">yum install -y golang</span><br></pre></td></tr></table></figure>
+
+<p>再次查看go环境变量</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[root@k8s-master kubernetes]# go env</span><br><span class="line">GO111MODULE=&quot;&quot;</span><br><span class="line">GOARCH=&quot;amd64&quot;</span><br><span class="line">GOBIN=&quot;&quot;</span><br><span class="line">GOCACHE=&quot;/root/.cache/go-build&quot;</span><br><span class="line">GOENV=&quot;/root/.config/go/env&quot;</span><br><span class="line">GOEXE=&quot;&quot;</span><br><span class="line">GOFLAGS=&quot;&quot;</span><br><span class="line">GOHOSTARCH=&quot;amd64&quot;</span><br><span class="line">GOHOSTOS=&quot;linux&quot;</span><br><span class="line">GOINSECURE=&quot;&quot;</span><br><span class="line">GOMODCACHE=&quot;/root/go/pkg/mod&quot;</span><br><span class="line">GONOPROXY=&quot;&quot;</span><br><span class="line">GONOSUMDB=&quot;&quot;</span><br><span class="line">GOOS=&quot;linux&quot;</span><br><span class="line">GOPATH=&quot;/root/go&quot;</span><br><span class="line">GOPRIVATE=&quot;&quot;</span><br><span class="line">GOPROXY=&quot;https://proxy.golang.org,direct&quot;</span><br><span class="line">GOROOT=&quot;/usr/lib/golang&quot;</span><br><span class="line">GOSUMDB=&quot;sum.golang.org&quot;</span><br><span class="line">GOTMPDIR=&quot;&quot;</span><br><span class="line">GOTOOLDIR=&quot;/usr/lib/golang/pkg/tool/linux_amd64&quot;</span><br><span class="line">GCCGO=&quot;gccgo&quot;</span><br><span class="line">AR=&quot;ar&quot;</span><br><span class="line">CC=&quot;gcc&quot;</span><br><span class="line">CXX=&quot;g++&quot;</span><br><span class="line">CGO_ENABLED=&quot;1&quot;</span><br><span class="line">GOMOD=&quot;/root/kubernetes/go.mod&quot;</span><br><span class="line">CGO_CFLAGS=&quot;-g -O2&quot;</span><br><span class="line">CGO_CPPFLAGS=&quot;&quot;</span><br><span class="line">CGO_CXXFLAGS=&quot;-g -O2&quot;</span><br><span class="line">CGO_FFLAGS=&quot;-g -O2&quot;</span><br><span class="line">CGO_LDFLAGS=&quot;-g -O2&quot;</span><br><span class="line">PKG_CONFIG=&quot;pkg-config&quot;</span><br><span class="line">GOGCCFLAGS=&quot;-fPIC -m64 -pthread -fmessage-length=0 -fdebug-prefix-map=/tmp/go-build406782294=/tmp/go-build -gno-record-gcc-switches&quot;</span><br></pre></td></tr></table></figure>
+
+<h2 id="执行make-WHAT-cmd-kubeadm编译">1.4. 执行make WHAT=cmd/kubeadm编译</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[root@k8s-master kubernetes]# make WHAT=cmd/kubeadm</span><br><span class="line">+++ [0901 10:20:55] Building go targets for linux/amd64:</span><br><span class="line">    ./vendor/k8s.io/code-generator/cmd/deepcopy-gen</span><br><span class="line">+++ [0901 10:21:08] Building go targets for linux/amd64:</span><br><span class="line">    ./vendor/k8s.io/code-generator/cmd/defaulter-gen</span><br><span class="line">+++ [0901 10:21:18] Building go targets for linux/amd64:</span><br><span class="line">    ./vendor/k8s.io/code-generator/cmd/conversion-gen</span><br><span class="line">+++ [0901 10:21:37] Building go targets for linux/amd64:</span><br><span class="line">    ./vendor/k8s.io/kube-openapi/cmd/openapi-gen</span><br><span class="line">+++ [0901 10:21:53] Building go targets for linux/amd64:</span><br><span class="line">    ./vendor/github.com/go-bindata/go-bindata/go-bindata</span><br><span class="line">warning: ignoring symlink /root/kubernetes/_output/local/go/src/k8s.io/kubernetes</span><br><span class="line">go: warning: &quot;k8s.io/kubernetes/vendor/github.com/go-bindata/go-bindata/...&quot; matched no packages</span><br><span class="line">+++ [0901 10:21:55] Building go targets for linux/amd64:</span><br><span class="line">    cmd/kubeadm</span><br></pre></td></tr></table></figure>
+
+<p>编译完生成如下目录和二进制文件</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[root@k8s-master kubernetes]# ll _output/bin/</span><br><span class="line">total 70380</span><br><span class="line">-rwxr-xr-x 1 root root  6242304 Sep  1 10:21 conversion-gen</span><br><span class="line">-rwxr-xr-x 1 root root  6234112 Sep  1 10:20 deepcopy-gen</span><br><span class="line">-rwxr-xr-x 1 root root  6205440 Sep  1 10:21 defaulter-gen</span><br><span class="line">-rwxr-xr-x 1 root root  3688610 Sep  1 10:20 go2make</span><br><span class="line">-rwxr-xr-x 1 root root  2023424 Sep  1 10:21 go-bindata</span><br><span class="line">-rwxr-xr-x 1 root root 37076992 Sep  1 10:23 kubeadm</span><br><span class="line">-rwxr-xr-x 1 root root 10596352 Sep  1 10:21 openapi-gen</span><br></pre></td></tr></table></figure>
+
+<p>备份原kubeadm和证书文件</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">cp /usr/bin/kubeadm&#123;,.bak20210901&#125;</span><br><span class="line">cp -r /etc/kubernetes/pki&#123;,.bak20210901&#125;</span><br></pre></td></tr></table></figure>
+
+<p>将新生成的kubeadm进行替换</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">cp _output/bin/kubeadm /usr/bin/kubeadm</span><br></pre></td></tr></table></figure>
+
+<p>生成新的证书</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">cd /etc/kubernetes/pki</span><br><span class="line">kubeadm alpha certs renew all</span><br></pre></td></tr></table></figure>
+
+<p>输出如下</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[root@k8s-master kubernetes]# cd /etc/kubernetes/pki</span><br><span class="line">[root@k8s-master pki]# kubeadm alpha certs renew all</span><br><span class="line">[renew] Reading configuration from the cluster...</span><br><span class="line">[renew] FYI: You can look at this config file with &#x27;kubectl -n kube-system get cm kubeadm-config -oyaml&#x27;</span><br><span class="line"></span><br><span class="line">certificate embedded in the kubeconfig file for the admin to use and for kubeadm itself renewed</span><br><span class="line">certificate for serving the Kubernetes API renewed</span><br><span class="line">certificate the apiserver uses to access etcd renewed</span><br><span class="line">certificate for the API server to connect to kubelet renewed</span><br><span class="line">certificate embedded in the kubeconfig file for the controller manager to use renewed</span><br><span class="line">certificate for liveness probes to healthcheck etcd renewed</span><br><span class="line">certificate for etcd nodes to communicate with each other renewed</span><br><span class="line">certificate for serving etcd renewed</span><br><span class="line">certificate for the front proxy client renewed</span><br><span class="line">certificate embedded in the kubeconfig file for the scheduler manager to use renewed</span><br></pre></td></tr></table></figure>
+
+<p>验证结果</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">kubeadm alpha certs check-expiration</span><br></pre></td></tr></table></figure>
+
+<p>输出如下</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[root@k8s-master pki]# kubeadm alpha certs check-expiration</span><br><span class="line">[check-expiration] Reading configuration from the cluster...</span><br><span class="line">[check-expiration] FYI: You can look at this config file with &#x27;kubectl -n kube-system get cm kubeadm-config -oyaml&#x27;</span><br><span class="line"></span><br><span class="line">CERTIFICATE                EXPIRES                  RESIDUAL TIME   CERTIFICATE AUTHORITY   EXTERNALLY MANAGED</span><br><span class="line">admin.conf                 Aug 08, 2121 02:32 UTC   99y                                     no      </span><br><span class="line">apiserver                  Aug 08, 2121 02:32 UTC   99y             ca                      no      </span><br><span class="line">apiserver-etcd-client      Aug 08, 2121 02:32 UTC   99y             etcd-ca                 no      </span><br><span class="line">apiserver-kubelet-client   Aug 08, 2121 02:32 UTC   99y             ca                      no      </span><br><span class="line">controller-manager.conf    Aug 08, 2121 02:32 UTC   99y                                     no      </span><br><span class="line">etcd-healthcheck-client    Aug 08, 2121 02:32 UTC   99y             etcd-ca                 no      </span><br><span class="line">etcd-peer                  Aug 08, 2121 02:32 UTC   99y             etcd-ca                 no      </span><br><span class="line">etcd-server                Aug 08, 2121 02:32 UTC   99y             etcd-ca                 no      </span><br><span class="line">front-proxy-client         Aug 08, 2121 02:32 UTC   99y             front-proxy-ca          no      </span><br><span class="line">scheduler.conf             Aug 08, 2121 02:32 UTC   99y                                     no      </span><br><span class="line"></span><br><span class="line">CERTIFICATE AUTHORITY   EXPIRES                  RESIDUAL TIME   EXTERNALLY MANAGED</span><br><span class="line">ca                      Aug 28, 2031 07:52 UTC   9y              no      </span><br><span class="line">etcd-ca                 Aug 28, 2031 07:53 UTC   9y              no      </span><br><span class="line">front-proxy-ca          Aug 28, 2031 07:53 UTC   9y              no      </span><br></pre></td></tr></table></figure>
+
+<p>查看集群状态是否OK。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[root@k8s-master pki]# kubectl get node</span><br><span class="line">NAME         STATUS   ROLES    AGE   VERSION</span><br><span class="line">k8s-master   Ready    master   42h   v1.18.0</span><br><span class="line">k8s-node1    Ready    &lt;none&gt;   42h   v1.18.0</span><br><span class="line">k8s-node2    Ready    &lt;none&gt;   42h   v1.18.0</span><br></pre></td></tr></table></figure>
+
+<p>查看pod</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[root@k8s-master pki]# kubectl get pod -n kube-system</span><br><span class="line">NAME                                 READY   STATUS    RESTARTS   AGE</span><br><span class="line">coredns-7ff77c879f-6pwrg             1/1     Running   1          42h</span><br><span class="line">coredns-7ff77c879f-d6s95             1/1     Running   2          42h</span><br><span class="line">etcd-k8s-master                      1/1     Running   3          42h</span><br><span class="line">kube-apiserver-k8s-master            1/1     Running   2          42h</span><br><span class="line">kube-controller-manager-k8s-master   1/1     Running   3          42h</span><br><span class="line">kube-flannel-ds-fs8dj                1/1     Running   3          42h</span><br><span class="line">kube-flannel-ds-g6d4l                1/1     Running   2          42h</span><br><span class="line">kube-flannel-ds-tnrzq                1/1     Running   1          42h</span><br><span class="line">kube-proxy-dngh8                     1/1     Running   1          42h</span><br><span class="line">kube-proxy-nxb5q                     1/1     Running   2          42h</span><br><span class="line">kube-proxy-zz5xn                     1/1     Running   3          42h</span><br><span class="line">kube-scheduler-k8s-master            1/1     Running   2          42h</span><br></pre></td></tr></table></figure>
+
+<p>如看到上面的Ready和Running，即表示证书修改成功。</p>
+]]></content>
+      <categories>
+        <category>k8s</category>
+      </categories>
+      <tags>
+        <tag>k8s</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>mysql导入数据慢解决方法</title>
+    <url>/p/1525.html</url>
+    <content><![CDATA[<p><escape><span id="more"></span></escape></p>
+<p>mysql导入慢，添加两个参数：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">max_allowed_packet   客户端/服务器之间通信的缓存区的最大大小</span><br><span class="line">net_buffer_length    TCP/IP和套接字通信缓冲区大小，创建长度达net_buffer_length行。</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>注：max_allowed_packet; net_buffer_length 这两个参数不能比目标数据度配置大，否则会报错。</p>
+</blockquote>
+<p>先查看目标库的参数值 如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">mysql&gt; show variables like &#x27;max_allowed_packet&#x27;;</span><br><span class="line">+--------------------+----------+</span><br><span class="line">| Variable_name      | Value    |</span><br><span class="line">+--------------------+----------+</span><br><span class="line">| max_allowed_packet | 67108864 |</span><br><span class="line">+--------------------+----------+</span><br><span class="line">1 row in set (0.22 sec)</span><br><span class="line"></span><br><span class="line">mysql&gt; show variables like &#x27;net_buffer_length&#x27;;</span><br><span class="line">+-------------------+-------+</span><br><span class="line">| Variable_name     | Value |</span><br><span class="line">+-------------------+-------+</span><br><span class="line">| net_buffer_length | 16384 |</span><br><span class="line">+-------------------+-------+</span><br><span class="line">1 row in set (0.00 sec)</span><br></pre></td></tr></table></figure>
+
+<p>命令行加上两个参数执行</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">mysql -h127.0.0.1 -uroot -p&#x27;Pass!234&#x27; data_base_name --max_allowed_packet=67108864 --net_buffer_length=16384&lt;your_sql_script.sql</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>MySQL</category>
+      </categories>
+      <tags>
+        <tag>MySQL</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>常用工具汇总</title>
     <url>/p/24997.html</url>
     <content><![CDATA[<p><escape><span id="more"></span></escape></p>
@@ -594,6 +668,81 @@
       </categories>
       <tags>
         <tag>工具</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>kubeadm平滑升级集群</title>
+    <url>/p/23481.html</url>
+    <content><![CDATA[<p><escape><span id="more"></span></escape></p>
+<h1 id="kubeadm平滑升级群集">1. kubeadm平滑升级群集</h1><p>我们安装的版本为<code>1.18.0</code>，但是最新的版本为<code>1.18.20</code>想要升级为最新的版本又不影响业务的访问。</p>
+<h2 id="检查群集">1.1. 检查群集</h2><p>检查群集可用于升级的版本和当前群集是否可升级</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">kubeadm upgrade plan</span><br></pre></td></tr></table></figure>
+
+<p>执行结果如下</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[root@k8s-master ~]# kubeadm upgrade plan</span><br><span class="line">[upgrade/config] Making sure the configuration is correct:</span><br><span class="line">[upgrade/config] Reading configuration from the cluster...</span><br><span class="line">[upgrade/config] FYI: You can look at this config file with &#x27;kubectl -n kube-system get cm kubeadm-config -oyaml&#x27;</span><br><span class="line">[preflight] Running pre-flight checks.</span><br><span class="line">[upgrade] Running cluster health checks</span><br><span class="line">[upgrade] Fetching available versions to upgrade to</span><br><span class="line">[upgrade/versions] Cluster version: v1.18.0</span><br><span class="line">[upgrade/versions] kubeadm version: v1.18.0-dirty</span><br><span class="line">I0906 09:48:57.817361 3822642 version.go:252] remote version is much newer: v1.22.1; falling back to: stable-1.18</span><br><span class="line">[upgrade/versions] Latest stable version: v1.18.20</span><br><span class="line">[upgrade/versions] Latest stable version: v1.18.20</span><br><span class="line">[upgrade/versions] Latest version in the v1.18 series: v1.18.20</span><br><span class="line">[upgrade/versions] Latest version in the v1.18 series: v1.18.20</span><br><span class="line"></span><br><span class="line">Components that must be upgraded manually after you have upgraded the control plane with &#x27;kubeadm upgrade apply&#x27;:</span><br><span class="line">COMPONENT   CURRENT       AVAILABLE</span><br><span class="line">Kubelet     3 x v1.18.0   v1.18.20</span><br><span class="line"></span><br><span class="line">Upgrade to the latest version in the v1.18 series:</span><br><span class="line"></span><br><span class="line">COMPONENT            CURRENT   AVAILABLE</span><br><span class="line">API Server           v1.18.0   v1.18.20</span><br><span class="line">Controller Manager   v1.18.0   v1.18.20</span><br><span class="line">Scheduler            v1.18.0   v1.18.20</span><br><span class="line">Kube Proxy           v1.18.0   v1.18.20</span><br><span class="line">CoreDNS              1.6.7     1.6.7</span><br><span class="line">Etcd                 3.4.3     3.4.3-0</span><br><span class="line"></span><br><span class="line">You can now apply the upgrade by executing the following command:</span><br><span class="line"></span><br><span class="line">	kubeadm upgrade apply v1.18.20</span><br><span class="line"></span><br><span class="line">Note: Before you can perform this upgrade, you have to update kubeadm to v1.18.20.</span><br><span class="line"></span><br><span class="line">_____________________________________________________________________</span><br></pre></td></tr></table></figure>
+
+<p>这里需要先升级<code>kubeadm``kubelet``kubectl</code></p>
+<h2 id="升级kubelet-kubeadm-kubectl">1.2. 升级kubelet kubeadm kubectl</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">yum install -y kubelet-1.18.20 kubeadm-1.18.20 kubectl-1.18.20</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>其他节点也需要执行</p>
+</blockquote>
+<h2 id="升级群集组件">1.3. 升级群集组件</h2><p>过程会稍微有点慢，因需要下载新版本的镜像</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">kubeadm upgrade apply v1.18.20</span><br></pre></td></tr></table></figure>
+
+<p>执行之后输出如下</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[root@k8s-master ~]# kubeadm upgrade apply v1.18.20</span><br><span class="line">[upgrade/config] Making sure the configuration is correct:</span><br><span class="line">[upgrade/config] Reading configuration from the cluster...</span><br><span class="line">[upgrade/config] FYI: You can look at this config file with &#x27;kubectl -n kube-system get cm kubeadm-config -oyaml&#x27;</span><br><span class="line">[preflight] Running pre-flight checks.</span><br><span class="line">[upgrade] Running cluster health checks</span><br><span class="line">[upgrade/version] You have chosen to change the cluster version to &quot;v1.18.20&quot;</span><br><span class="line">[upgrade/versions] Cluster version: v1.18.0</span><br><span class="line">[upgrade/versions] kubeadm version: v1.18.20</span><br><span class="line">[upgrade/confirm] Are you sure you want to proceed with the upgrade? [y/N]: y</span><br><span class="line">[upgrade/prepull] Will prepull images for components [kube-apiserver kube-controller-manager kube-scheduler etcd]</span><br><span class="line">[upgrade/prepull] Prepulling image for component etcd.</span><br><span class="line">[upgrade/prepull] Prepulling image for component kube-apiserver.</span><br><span class="line">[upgrade/prepull] Prepulling image for component kube-controller-manager.</span><br><span class="line">[upgrade/prepull] Prepulling image for component kube-scheduler.</span><br><span class="line">[apiclient] Found 1 Pods for label selector k8s-app=upgrade-prepull-kube-apiserver</span><br><span class="line">[apiclient] Found 0 Pods for label selector k8s-app=upgrade-prepull-kube-scheduler</span><br><span class="line">[apiclient] Found 1 Pods for label selector k8s-app=upgrade-prepull-kube-controller-manager</span><br><span class="line">[apiclient] Found 0 Pods for label selector k8s-app=upgrade-prepull-etcd</span><br><span class="line">[apiclient] Found 1 Pods for label selector k8s-app=upgrade-prepull-kube-scheduler</span><br><span class="line">[apiclient] Found 1 Pods for label selector k8s-app=upgrade-prepull-etcd</span><br><span class="line">[upgrade/prepull] Prepulled image for component etcd.</span><br><span class="line">[upgrade/prepull] Prepulled image for component kube-controller-manager.</span><br><span class="line">[upgrade/prepull] Prepulled image for component kube-scheduler.</span><br><span class="line">[upgrade/prepull] Prepulled image for component kube-apiserver.</span><br><span class="line">[upgrade/prepull] Successfully prepulled the images for all the control plane components</span><br><span class="line">[upgrade/apply] Upgrading your Static Pod-hosted control plane to version &quot;v1.18.20&quot;...</span><br><span class="line">Static pod: kube-apiserver-k8s-master hash: 19d5d1ced032267ed77feb4529dd89b6</span><br><span class="line">Static pod: kube-controller-manager-k8s-master hash: c99654aba4d0627786d6f7f6ca3cf8a4</span><br><span class="line">Static pod: kube-scheduler-k8s-master hash: b901723f22729fcf965378cb64525117</span><br><span class="line">[upgrade/etcd] Upgrading to TLS for etcd</span><br><span class="line">[upgrade/etcd] Non fatal issue encountered during upgrade: the desired etcd version for this Kubernetes version &quot;v1.18.20&quot; is &quot;3.4.3-0&quot;, but the current etcd version is &quot;3.4.3&quot;. Won&#x27;t downgrade etcd, instead just continue</span><br><span class="line">[upgrade/staticpods] Writing new Static Pod manifests to &quot;/etc/kubernetes/tmp/kubeadm-upgraded-manifests350292254&quot;</span><br><span class="line">W0906 12:02:13.995741 3880622 manifests.go:225] the default kube-apiserver authorization-mode is &quot;Node,RBAC&quot;; using &quot;Node,RBAC&quot;</span><br><span class="line">[upgrade/staticpods] Preparing for &quot;kube-apiserver&quot; upgrade</span><br><span class="line">[upgrade/staticpods] Renewing apiserver certificate</span><br><span class="line">[upgrade/staticpods] Renewing apiserver-kubelet-client certificate</span><br><span class="line">[upgrade/staticpods] Renewing front-proxy-client certificate</span><br><span class="line">[upgrade/staticpods] Renewing apiserver-etcd-client certificate</span><br><span class="line">[upgrade/staticpods] Moved new manifest to &quot;/etc/kubernetes/manifests/kube-apiserver.yaml&quot; and backed up old manifest to &quot;/etc/kubernetes/tmp/kubeadm-backup-manifests-2021-09-06-12-02-12/kube-apiserver.yaml&quot;</span><br><span class="line">[upgrade/staticpods] Waiting for the kubelet to restart the component</span><br><span class="line">[upgrade/staticpods] This might take a minute or longer depending on the component/version gap (timeout 5m0s)</span><br><span class="line">Static pod: kube-apiserver-k8s-master hash: 19d5d1ced032267ed77feb4529dd89b6</span><br><span class="line">Static pod: kube-apiserver-k8s-master hash: 4b88bf8fbacc7b265a069eb9c4b66b28</span><br><span class="line">[apiclient] Found 1 Pods for label selector component=kube-apiserver</span><br><span class="line">[upgrade/staticpods] Component &quot;kube-apiserver&quot; upgraded successfully!</span><br><span class="line">[upgrade/staticpods] Preparing for &quot;kube-controller-manager&quot; upgrade</span><br><span class="line">[upgrade/staticpods] Renewing controller-manager.conf certificate</span><br><span class="line">[upgrade/staticpods] Moved new manifest to &quot;/etc/kubernetes/manifests/kube-controller-manager.yaml&quot; and backed up old manifest to &quot;/etc/kubernetes/tmp/kubeadm-backup-manifests-2021-09-06-12-02-12/kube-controller-manager.yaml&quot;</span><br><span class="line">[upgrade/staticpods] Waiting for the kubelet to restart the component</span><br><span class="line">[upgrade/staticpods] This might take a minute or longer depending on the component/version gap (timeout 5m0s)</span><br><span class="line">Static pod: kube-controller-manager-k8s-master hash: c99654aba4d0627786d6f7f6ca3cf8a4</span><br><span class="line">Static pod: kube-controller-manager-k8s-master hash: 36c14c513b299c15f058e6c085d03822</span><br><span class="line">[apiclient] Found 1 Pods for label selector component=kube-controller-manager</span><br><span class="line">[upgrade/staticpods] Component &quot;kube-controller-manager&quot; upgraded successfully!</span><br><span class="line">[upgrade/staticpods] Preparing for &quot;kube-scheduler&quot; upgrade</span><br><span class="line">[upgrade/staticpods] Renewing scheduler.conf certificate</span><br><span class="line">[upgrade/staticpods] Moved new manifest to &quot;/etc/kubernetes/manifests/kube-scheduler.yaml&quot; and backed up old manifest to &quot;/etc/kubernetes/tmp/kubeadm-backup-manifests-2021-09-06-12-02-12/kube-scheduler.yaml&quot;</span><br><span class="line">[upgrade/staticpods] Waiting for the kubelet to restart the component</span><br><span class="line">[upgrade/staticpods] This might take a minute or longer depending on the component/version gap (timeout 5m0s)</span><br><span class="line">Static pod: kube-scheduler-k8s-master hash: b901723f22729fcf965378cb64525117</span><br><span class="line">Static pod: kube-scheduler-k8s-master hash: f8fbdc8109ec0a5dd59acbd52a6c05ca</span><br><span class="line">[apiclient] Found 1 Pods for label selector component=kube-scheduler</span><br><span class="line">[upgrade/staticpods] Component &quot;kube-scheduler&quot; upgraded successfully!</span><br><span class="line">[upload-config] Storing the configuration used in ConfigMap &quot;kubeadm-config&quot; in the &quot;kube-system&quot; Namespace</span><br><span class="line">[kubelet] Creating a ConfigMap &quot;kubelet-config-1.18&quot; in namespace kube-system with the configuration for the kubelets in the cluster</span><br><span class="line">[kubelet-start] Downloading configuration for the kubelet from the &quot;kubelet-config-1.18&quot; ConfigMap in the kube-system namespace</span><br><span class="line">[kubelet-start] Writing kubelet configuration to file &quot;/var/lib/kubelet/config.yaml&quot;</span><br><span class="line">[bootstrap-token] configured RBAC rules to allow Node Bootstrap tokens to get nodes</span><br><span class="line">[bootstrap-token] configured RBAC rules to allow Node Bootstrap tokens to post CSRs in order for nodes to get long term certificate credentials</span><br><span class="line">[bootstrap-token] configured RBAC rules to allow the csrapprover controller automatically approve CSRs from a Node Bootstrap Token</span><br><span class="line">[bootstrap-token] configured RBAC rules to allow certificate rotation for all node client certificates in the cluster</span><br><span class="line">[addons] Applied essential addon: CoreDNS</span><br><span class="line">[addons] Applied essential addon: kube-proxy</span><br><span class="line"></span><br><span class="line">[upgrade/successful] SUCCESS! Your cluster was upgraded to &quot;v1.18.20&quot;. Enjoy!</span><br><span class="line"></span><br><span class="line">[upgrade/kubelet] Now that your control plane is upgraded, please proceed with upgrading your kubelets if you haven&#x27;t already done so.</span><br></pre></td></tr></table></figure>
+
+<p>在其他master节点升级</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">kubeadm upgrade node</span><br></pre></td></tr></table></figure>
+
+<p>执行后输出如下</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[root@k8s-master ~]# kubeadm upgrade node</span><br><span class="line">[upgrade] Reading configuration from the cluster...</span><br><span class="line">[upgrade] FYI: You can look at this config file with &#x27;kubectl -n kube-system get cm kubeadm-config -oyaml&#x27;</span><br><span class="line">[upgrade] Upgrading your Static Pod-hosted control plane instance to version &quot;v1.18.20&quot;...</span><br><span class="line">Static pod: kube-apiserver-k8s-master hash: 4b88bf8fbacc7b265a069eb9c4b66b28</span><br><span class="line">Static pod: kube-controller-manager-k8s-master hash: 36c14c513b299c15f058e6c085d03822</span><br><span class="line">Static pod: kube-scheduler-k8s-master hash: f8fbdc8109ec0a5dd59acbd52a6c05ca</span><br><span class="line">[upgrade/etcd] Upgrading to TLS for etcd</span><br><span class="line">[upgrade/etcd] Non fatal issue encountered during upgrade: the desired etcd version for this Kubernetes version &quot;v1.18.20&quot; is &quot;3.4.3-0&quot;, but the current etcd version is &quot;3.4.3&quot;. Won&#x27;t downgrade etcd, instead just continue</span><br><span class="line">[upgrade/staticpods] Writing new Static Pod manifests to &quot;/etc/kubernetes/tmp/kubeadm-upgraded-manifests324894338&quot;</span><br><span class="line">W0906 13:40:16.646872 3923374 manifests.go:225] the default kube-apiserver authorization-mode is &quot;Node,RBAC&quot;; using &quot;Node,RBAC&quot;</span><br><span class="line">[upgrade/staticpods] Preparing for &quot;kube-apiserver&quot; upgrade</span><br><span class="line">[upgrade/staticpods] Current and new manifests of kube-apiserver are equal, skipping upgrade</span><br><span class="line">[upgrade/staticpods] Preparing for &quot;kube-controller-manager&quot; upgrade</span><br><span class="line">[upgrade/staticpods] Current and new manifests of kube-controller-manager are equal, skipping upgrade</span><br><span class="line">[upgrade/staticpods] Preparing for &quot;kube-scheduler&quot; upgrade</span><br><span class="line">[upgrade/staticpods] Current and new manifests of kube-scheduler are equal, skipping upgrade</span><br><span class="line">[upgrade] The control plane instance for this node was successfully updated!</span><br><span class="line">[kubelet-start] Downloading configuration for the kubelet from the &quot;kubelet-config-1.18&quot; ConfigMap in the kube-system namespace</span><br><span class="line">[kubelet-start] Writing kubelet configuration to file &quot;/var/lib/kubelet/config.yaml&quot;</span><br><span class="line">[upgrade] The configuration for this node was successfully updated!</span><br><span class="line">[upgrade] Now you should go ahead and upgrade the kubelet package using your package manager.</span><br></pre></td></tr></table></figure>
+
+<h2 id="升级flannel-可选">1.4. 升级flannel (可选)</h2><p>这个根据实际情况升级，如不是使用的<code>flannel</code>请参考官网</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml</span><br></pre></td></tr></table></figure>
+
+<h2 id="验证群集升级">1.5. 验证群集升级</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[root@k8s-master ~]# kubectl get nodes</span><br><span class="line">NAME         STATUS   ROLES    AGE     VERSION</span><br><span class="line">k8s-master   Ready    master   6d19h   v1.18.0</span><br><span class="line">k8s-node1    Ready    &lt;none&gt;   6d19h   v1.18.0</span><br><span class="line">k8s-node2    Ready    &lt;none&gt;   6d19h   v1.18.0</span><br></pre></td></tr></table></figure>
+
+<p>kubectl版本</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[root@k8s-master ~]# kubectl version</span><br><span class="line">Client Version: version.Info&#123;Major:&quot;1&quot;, Minor:&quot;18&quot;, GitVersion:&quot;v1.18.20&quot;, GitCommit:&quot;632ed300f2c34f6d6d15ca4cef3d3c7073412212&quot;, GitTreeState:&quot;clean&quot;, BuildDate:&quot;2021-08-19T15:45:37Z&quot;, GoVersion:&quot;go1.16.7&quot;, Compiler:&quot;gc&quot;, Platform:&quot;linux/amd64&quot;&#125;</span><br><span class="line">Server Version: version.Info&#123;Major:&quot;1&quot;, Minor:&quot;18&quot;, GitVersion:&quot;v1.18.0&quot;, GitCommit:&quot;9e991415386e4cf155a24b1da15becaa390438d8&quot;, GitTreeState:&quot;clean&quot;, BuildDate:&quot;2020-03-25T14:50:46Z&quot;, GoVersion:&quot;go1.13.8&quot;, Compiler:&quot;gc&quot;, Platform:&quot;linux/amd64&quot;&#125;</span><br><span class="line">WARNING: version difference between client (1.18) and server (1.18) exceeds the supported minor version skew of +/-1</span><br></pre></td></tr></table></figure>
+
+<p>这里发现<code>version</code>还是<code>1.18.0</code>, kubectl的server还是<code>1.18.0</code>，只需要重启一下kubelet即可</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">systemctl daemon-reload;systemctl restart kubelet.service</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>所有节点都需要执行</p>
+</blockquote>
+<p>再次查看</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[root@k8s-master ~]# kubeadm upgrade plan</span><br><span class="line">[upgrade/config] Making sure the configuration is correct:</span><br><span class="line">[upgrade/config] Reading configuration from the cluster...</span><br><span class="line">[upgrade/config] FYI: You can look at this config file with &#x27;kubectl -n kube-system get cm kubeadm-config -oyaml&#x27;</span><br><span class="line">[preflight] Running pre-flight checks.</span><br><span class="line">[upgrade] Running cluster health checks</span><br><span class="line">[upgrade] Fetching available versions to upgrade to</span><br><span class="line">[upgrade/versions] Cluster version: v1.18.20</span><br><span class="line">[upgrade/versions] kubeadm version: v1.18.20</span><br><span class="line">I0906 13:48:20.988439 3926779 version.go:255] remote version is much newer: v1.22.1; falling back to: stable-1.18</span><br><span class="line">[upgrade/versions] Latest stable version: v1.18.20</span><br><span class="line">[upgrade/versions] Latest stable version: v1.18.20</span><br><span class="line">[upgrade/versions] Latest version in the v1.18 series: v1.18.20</span><br><span class="line">[upgrade/versions] Latest version in the v1.18 series: v1.18.20</span><br><span class="line"></span><br><span class="line">Awesome, you&#x27;re up-to-date! Enjoy!</span><br></pre></td></tr></table></figure>
+
+<p>最后发现群集已经为1.18.20</p>
+<h2 id="更新群集证书">1.6. 更新群集证书</h2><ul>
+<li>更新所有证书</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">kubeadm alpha certs renew all</span><br></pre></td></tr></table></figure>
+
+<p>输出如下</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[root@k8s-master ~]# kubeadm alpha certs renew all</span><br><span class="line">[renew] Reading configuration from the cluster...</span><br><span class="line">[renew] FYI: You can look at this config file with &#x27;kubectl -n kube-system get cm kubeadm-config -oyaml&#x27;</span><br><span class="line"></span><br><span class="line">certificate embedded in the kubeconfig file for the admin to use and for kubeadm itself renewed</span><br><span class="line">certificate for serving the Kubernetes API renewed</span><br><span class="line">certificate the apiserver uses to access etcd renewed</span><br><span class="line">certificate for the API server to connect to kubelet renewed</span><br><span class="line">certificate embedded in the kubeconfig file for the controller manager to use renewed</span><br><span class="line">certificate for liveness probes to healthcheck etcd renewed</span><br><span class="line">certificate for etcd nodes to communicate with each other renewed</span><br><span class="line">certificate for serving etcd renewed</span><br><span class="line">certificate for the front proxy client renewed</span><br><span class="line">certificate embedded in the kubeconfig file for the scheduler manager to use renewed</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>更新其他单个证书请参考官方文档<a href="https://kubernetes.io/docs/reference/setup-tools/kubeadm/kubeadm-alpha/#cmd-certs-renew">https://kubernetes.io/docs/reference/setup-tools/kubeadm/kubeadm-alpha/#cmd-certs-renew</a></li>
+</ul>
+<p>查看当前证书时间</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[root@k8s-master ~]# kubeadm alpha certs check-expiration</span><br><span class="line">[check-expiration] Reading configuration from the cluster...</span><br><span class="line">[check-expiration] FYI: You can look at this config file with &#x27;kubectl -n kube-system get cm kubeadm-config -oyaml&#x27;</span><br><span class="line"></span><br><span class="line">CERTIFICATE                EXPIRES                  RESIDUAL TIME   CERTIFICATE AUTHORITY   EXTERNALLY MANAGED</span><br><span class="line">admin.conf                 Sep 06, 2022 05:51 UTC   364d                                    no      </span><br><span class="line">apiserver                  Sep 06, 2022 05:51 UTC   364d            ca                      no      </span><br><span class="line">apiserver-etcd-client      Sep 06, 2022 05:51 UTC   364d            etcd-ca                 no      </span><br><span class="line">apiserver-kubelet-client   Sep 06, 2022 05:51 UTC   364d            ca                      no      </span><br><span class="line">controller-manager.conf    Sep 06, 2022 05:51 UTC   364d                                    no      </span><br><span class="line">etcd-healthcheck-client    Sep 06, 2022 05:51 UTC   364d            etcd-ca                 no      </span><br><span class="line">etcd-peer                  Sep 06, 2022 05:51 UTC   364d            etcd-ca                 no      </span><br><span class="line">etcd-server                Sep 06, 2022 05:51 UTC   364d            etcd-ca                 no      </span><br><span class="line">front-proxy-client         Sep 06, 2022 05:51 UTC   364d            front-proxy-ca          no      </span><br><span class="line">scheduler.conf             Sep 06, 2022 05:51 UTC   364d                                    no      </span><br><span class="line"></span><br><span class="line">CERTIFICATE AUTHORITY   EXPIRES                  RESIDUAL TIME   EXTERNALLY MANAGED</span><br><span class="line">ca                      Aug 28, 2031 07:52 UTC   9y              no      </span><br><span class="line">etcd-ca                 Aug 28, 2031 07:53 UTC   9y              no      </span><br><span class="line">front-proxy-ca          Aug 28, 2031 07:53 UTC   9y              no      </span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+]]></content>
+      <categories>
+        <category>k8s</category>
+      </categories>
+      <tags>
+        <tag>k8s</tag>
       </tags>
   </entry>
   <entry>
