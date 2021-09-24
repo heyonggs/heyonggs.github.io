@@ -77,8 +77,8 @@
     <title>kubeadm修改证书时间为99年</title>
     <link href="https://heyonggs.github.io/p/23286.html"/>
     <id>https://heyonggs.github.io/p/23286.html</id>
-    <published>2021-04-10T02:27:40.000Z</published>
-    <updated>2021-09-24T02:42:46.466Z</updated>
+    <published>2021-09-10T02:27:40.000Z</published>
+    <updated>2021-09-24T02:56:09.760Z</updated>
     
     
     <summary type="html">&lt;p&gt;&lt;escape&gt;&lt;/escape&gt;&lt;/p&gt;</summary>
@@ -260,6 +260,25 @@
     
     
     <category term="ansible" scheme="https://heyonggs.github.io/tags/ansible/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Linux常用命令汇总</title>
+    <link href="https://heyonggs.github.io/p/61914.html"/>
+    <id>https://heyonggs.github.io/p/61914.html</id>
+    <published>2016-05-24T06:30:10.000Z</published>
+    <updated>2021-09-24T07:20:05.446Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;&lt;escape&gt;&lt;/escape&gt;&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="Linux,命令" scheme="https://heyonggs.github.io/categories/Linux-%E5%91%BD%E4%BB%A4/"/>
+    
+    
+    <category term="Linux,命令" scheme="https://heyonggs.github.io/tags/Linux-%E5%91%BD%E4%BB%A4/"/>
     
   </entry>
   
