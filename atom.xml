@@ -198,6 +198,25 @@
   </entry>
   
   <entry>
+    <title>转载&#39;OpenSSL SSL_connect Connection was reset in connection to github.com 443&#39;</title>
+    <link href="https://heyonggs.github.io/p/14759.html"/>
+    <id>https://heyonggs.github.io/p/14759.html</id>
+    <published>2021-02-12T07:42:26.000Z</published>
+    <updated>2021-09-26T07:53:31.483Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;&lt;escape&gt;&lt;/escape&gt;&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="git" scheme="https://heyonggs.github.io/categories/git/"/>
+    
+    
+    <category term="git" scheme="https://heyonggs.github.io/tags/git/"/>
+    
+  </entry>
+  
+  <entry>
     <title>mysql导入数据慢解决方法</title>
     <link href="https://heyonggs.github.io/p/1525.html"/>
     <id>https://heyonggs.github.io/p/1525.html</id>
@@ -294,10 +313,10 @@
   
   <entry>
     <title>Linux磁盘满了解决方案</title>
-    <link href="https://heyonggs.github.io/p/undefined.html"/>
-    <id>https://heyonggs.github.io/p/undefined.html</id>
+    <link href="https://heyonggs.github.io/p/14331.html"/>
+    <id>https://heyonggs.github.io/p/14331.html</id>
     <published>2019-03-10T02:37:46.000Z</published>
-    <updated>2021-09-24T02:42:58.847Z</updated>
+    <updated>2021-09-26T07:54:12.533Z</updated>
     
     
     <summary type="html">&lt;p&gt;&lt;escape&gt;&lt;/escape&gt;&lt;/p&gt;</summary>
@@ -384,25 +403,6 @@
     
     
     <category term="Linux,命令" scheme="https://heyonggs.github.io/tags/Linux-%E5%91%BD%E4%BB%A4/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Linux面试题</title>
-    <link href="https://heyonggs.github.io/p/5935.html"/>
-    <id>https://heyonggs.github.io/p/5935.html</id>
-    <published>2016-03-24T07:37:39.000Z</published>
-    <updated>2021-09-24T08:05:08.866Z</updated>
-    
-    
-    <summary type="html">&lt;p&gt;&lt;escape&gt;&lt;/escape&gt;&lt;/p&gt;</summary>
-    
-    
-    
-    <category term="Linux,面试题" scheme="https://heyonggs.github.io/categories/Linux-%E9%9D%A2%E8%AF%95%E9%A2%98/"/>
-    
-    
-    <category term="Linux,面试题" scheme="https://heyonggs.github.io/tags/Linux-%E9%9D%A2%E8%AF%95%E9%A2%98/"/>
     
   </entry>
   
