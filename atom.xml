@@ -6,7 +6,7 @@
   <link href="https://heyonggs.github.io/atom.xml" rel="self"/>
   
   <link href="https://heyonggs.github.io/"/>
-  <updated>2021-10-08T09:00:24.496Z</updated>
+  <updated>2021-10-08T09:31:04.029Z</updated>
   <id>https://heyonggs.github.io/</id>
   
   <author>
@@ -15,6 +15,19 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>2019-07-02-Pipeline详解</title>
+    <link href="https://heyonggs.github.io/p/33227.html"/>
+    <id>https://heyonggs.github.io/p/33227.html</id>
+    <published>2021-10-08T09:31:04.000Z</published>
+    <updated>2021-10-08T09:31:04.029Z</updated>
+    
+    
+    
+    
+    
+  </entry>
   
   <entry>
     <title>docker容器化搭建OpenLDAP</title>
@@ -380,29 +393,6 @@
     
     
     <category term="网络" scheme="https://heyonggs.github.io/tags/%E7%BD%91%E7%BB%9C/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>k8s私有库secret配置</title>
-    <link href="https://heyonggs.github.io/p/63681.html"/>
-    <id>https://heyonggs.github.io/p/63681.html</id>
-    <published>2020-03-11T02:16:24.000Z</published>
-    <updated>2021-09-28T02:18:06.161Z</updated>
-    
-    
-    <summary type="html">&lt;p&gt;&lt;escape&gt;&lt;/escape&gt;&lt;/p&gt;</summary>
-    
-    
-    
-    <category term="Kubernetes" scheme="https://heyonggs.github.io/categories/Kubernetes/"/>
-    
-    
-    <category term="k8s" scheme="https://heyonggs.github.io/tags/k8s/"/>
-    
-    <category term="容器" scheme="https://heyonggs.github.io/tags/%E5%AE%B9%E5%99%A8/"/>
-    
-    <category term="Kubernetes" scheme="https://heyonggs.github.io/tags/Kubernetes/"/>
     
   </entry>
   
