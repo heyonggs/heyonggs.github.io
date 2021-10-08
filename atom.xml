@@ -6,7 +6,7 @@
   <link href="https://heyonggs.github.io/atom.xml" rel="self"/>
   
   <link href="https://heyonggs.github.io/"/>
-  <updated>2021-09-28T02:18:06.168Z</updated>
+  <updated>2021-10-08T08:59:41.066Z</updated>
   <id>https://heyonggs.github.io/</id>
   
   <author>
@@ -15,6 +15,29 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>docker容器化搭建OpenLDAP</title>
+    <link href="https://heyonggs.github.io/p/39881.html"/>
+    <id>https://heyonggs.github.io/p/39881.html</id>
+    <published>2021-10-08T08:57:47.000Z</published>
+    <updated>2021-10-08T08:59:41.066Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;&lt;escape&gt;&lt;/escape&gt;&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="LDAP" scheme="https://heyonggs.github.io/categories/LDAP/"/>
+    
+    
+    <category term="Docker" scheme="https://heyonggs.github.io/tags/Docker/"/>
+    
+    <category term="LDAP" scheme="https://heyonggs.github.io/tags/LDAP/"/>
+    
+    <category term="OpenLDAP" scheme="https://heyonggs.github.io/tags/OpenLDAP/"/>
+    
+  </entry>
   
   <entry>
     <title>2020-12-05-k8s集群动态存储管理GlusterFS</title>
@@ -380,31 +403,6 @@
     <category term="容器" scheme="https://heyonggs.github.io/tags/%E5%AE%B9%E5%99%A8/"/>
     
     <category term="Kubernetes" scheme="https://heyonggs.github.io/tags/Kubernetes/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>k8s部署Redis集群</title>
-    <link href="https://heyonggs.github.io/p/53265.html"/>
-    <id>https://heyonggs.github.io/p/53265.html</id>
-    <published>2020-01-02T05:48:46.000Z</published>
-    <updated>2021-09-28T02:18:06.154Z</updated>
-    
-    
-    <summary type="html">&lt;p&gt;&lt;escape&gt;&lt;/escape&gt;&lt;/p&gt;</summary>
-    
-    
-    
-    <category term="Kubernetes" scheme="https://heyonggs.github.io/categories/Kubernetes/"/>
-    
-    
-    <category term="k8s" scheme="https://heyonggs.github.io/tags/k8s/"/>
-    
-    <category term="容器" scheme="https://heyonggs.github.io/tags/%E5%AE%B9%E5%99%A8/"/>
-    
-    <category term="Kubernetes" scheme="https://heyonggs.github.io/tags/Kubernetes/"/>
-    
-    <category term="Redis" scheme="https://heyonggs.github.io/tags/Redis/"/>
     
   </entry>
   
