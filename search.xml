@@ -22,40 +22,6 @@
       </tags>
   </entry>
   <entry>
-    <title>RTNETLINK answers No such file or directory</title>
-    <url>/p/42234.html</url>
-    <content><![CDATA[<p><escape><span id="more"></span></escape></p>
-<h1 id="RTNETLINK-answers-No-such-file-or-directory">1. RTNETLINK answers: No such file or directory</h1><p>修改默认路由时，有如下报错：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[root@linux ~]#ip route change default via 192.168.1.2</span><br><span class="line"></span><br><span class="line">RTNETLINK answers: No such file or directory</span><br></pre></td></tr></table></figure>
-
-<p>查看路由信息</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[root@linux ~]# route -n</span><br><span class="line">Kernel IP routing table</span><br><span class="line">Destination     Gateway         Genmask         Flags Metric Ref    Use Iface</span><br><span class="line">0.0.0.0         192.168.1.1  0.0.0.0         UG    0      0        0 eth0</span><br><span class="line">169.254.0.0     0.0.0.0         255.255.0.0     U     1002   0        0 eth0</span><br><span class="line">192.168.1.0    0.0.0.0         255.255.240.0   U     0      0        0 eth0</span><br></pre></td></tr></table></figure>
-
-
-
-<p>解决方法：</p>
-<p>关闭NetworkManager并取消开机自启</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">systemctl stop NetworkManager</span><br><span class="line">systemctl disable NetworkManager</span><br></pre></td></tr></table></figure>
-
-<p>重启网卡</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">systemctl restart network</span><br></pre></td></tr></table></figure>
-
-<p>接着执行修改默认路由命令</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ip route change default via 192.168.1.2</span><br></pre></td></tr></table></figure>
-
-<p>查看路由信息</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[root@linux ~]# route -n</span><br><span class="line">Kernel IP routing table</span><br><span class="line">Destination     Gateway         Genmask         Flags Metric Ref    Use Iface</span><br><span class="line">0.0.0.0         192.168.1.2  0.0.0.0         UG    0      0        0 eth0</span><br><span class="line">169.254.0.0     0.0.0.0         255.255.0.0     U     1002   0        0 eth0</span><br><span class="line">192.168.1.0    0.0.0.0         255.255.240.0   U     0      0        0 eth0</span><br></pre></td></tr></table></figure>
-
-<p>可以看到已经成功修改。</p>
-]]></content>
-      <categories>
-        <category>网络</category>
-      </categories>
-      <tags>
-        <tag>网络</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>k8s私有库secret配置</title>
     <url>/p/63681.html</url>
     <content><![CDATA[<p><escape><span id="more"></span></escape></p>
@@ -76,7 +42,7 @@
 
 <blockquote>
 <p>注意：这里默认生成的secrets只能在default工作空间使用，如果需要在指定的工作空间创建，需要加：-n参数指定工作空间</p>
-<p>例如：kubectl create secret docker-registry harbor-registry –docker-server=harbor.xxx.com –docker-username=admin –docker-password=Harbor12345 --docker-email=<a href="mailto:&#104;&#101;&#x79;&#117;&#x7a;&#101;&#64;&#x31;&#x36;&#51;&#46;&#x63;&#111;&#x6d;">&#104;&#101;&#x79;&#117;&#x7a;&#101;&#64;&#x31;&#x36;&#51;&#46;&#x63;&#111;&#x6d;</a> -n test</p>
+<p>例如：kubectl create secret docker-registry harbor-registry –docker-server=harbor.xxx.com –docker-username=admin –docker-password=Harbor12345 --docker-email=<a href="mailto:&#x68;&#x65;&#x79;&#x75;&#122;&#101;&#64;&#x31;&#x36;&#x33;&#46;&#x63;&#111;&#x6d;">&#x68;&#x65;&#x79;&#x75;&#122;&#101;&#64;&#x31;&#x36;&#x33;&#46;&#x63;&#111;&#x6d;</a> -n test</p>
 </blockquote>
 <p>配置yaml，通过secret获取images</p>
 <figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line">[<span class="string">root@master1</span> <span class="string">machine-tool</span>]<span class="comment"># vi nginx.yaml</span></span><br><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Pod</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">nginx</span></span><br><span class="line">  <span class="attr">namespace:</span> <span class="string">default</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">containers:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">nginx</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">harbor.xxx.com/test/ssh-centos7:latest</span></span><br><span class="line">    <span class="attr">command:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">top</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&#x27;-b&#x27;</span></span><br><span class="line">  <span class="attr">imagePullSecrets:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">harbor-registry</span></span><br></pre></td></tr></table></figure>
@@ -154,6 +120,40 @@
       </tags>
   </entry>
   <entry>
+    <title>RTNETLINK answers No such file or directory</title>
+    <url>/p/42234.html</url>
+    <content><![CDATA[<p><escape><span id="more"></span></escape></p>
+<h1 id="RTNETLINK-answers-No-such-file-or-directory">1. RTNETLINK answers: No such file or directory</h1><p>修改默认路由时，有如下报错：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[root@linux ~]#ip route change default via 192.168.1.2</span><br><span class="line"></span><br><span class="line">RTNETLINK answers: No such file or directory</span><br></pre></td></tr></table></figure>
+
+<p>查看路由信息</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[root@linux ~]# route -n</span><br><span class="line">Kernel IP routing table</span><br><span class="line">Destination     Gateway         Genmask         Flags Metric Ref    Use Iface</span><br><span class="line">0.0.0.0         192.168.1.1  0.0.0.0         UG    0      0        0 eth0</span><br><span class="line">169.254.0.0     0.0.0.0         255.255.0.0     U     1002   0        0 eth0</span><br><span class="line">192.168.1.0    0.0.0.0         255.255.240.0   U     0      0        0 eth0</span><br></pre></td></tr></table></figure>
+
+
+
+<p>解决方法：</p>
+<p>关闭NetworkManager并取消开机自启</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">systemctl stop NetworkManager</span><br><span class="line">systemctl disable NetworkManager</span><br></pre></td></tr></table></figure>
+
+<p>重启网卡</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">systemctl restart network</span><br></pre></td></tr></table></figure>
+
+<p>接着执行修改默认路由命令</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ip route change default via 192.168.1.2</span><br></pre></td></tr></table></figure>
+
+<p>查看路由信息</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[root@linux ~]# route -n</span><br><span class="line">Kernel IP routing table</span><br><span class="line">Destination     Gateway         Genmask         Flags Metric Ref    Use Iface</span><br><span class="line">0.0.0.0         192.168.1.2  0.0.0.0         UG    0      0        0 eth0</span><br><span class="line">169.254.0.0     0.0.0.0         255.255.0.0     U     1002   0        0 eth0</span><br><span class="line">192.168.1.0    0.0.0.0         255.255.240.0   U     0      0        0 eth0</span><br></pre></td></tr></table></figure>
+
+<p>可以看到已经成功修改。</p>
+]]></content>
+      <categories>
+        <category>网络</category>
+      </categories>
+      <tags>
+        <tag>网络</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>helm部署zookeeper和kafka集群</title>
     <url>/p/30035.html</url>
     <content><![CDATA[<p><escape><span id="more"></span></escape></p>
@@ -184,11 +184,6 @@
 
 
 ]]></content>
-  </entry>
-  <entry>
-    <title>k8s集群动态存储管理GlusterFS</title>
-    <url>/p/22918.html</url>
-    <content><![CDATA[]]></content>
   </entry>
   <entry>
     <title>转载&#39;OpenSSL SSL_connect Connection was reset in connection to github.com 443&#39;</title>
@@ -226,34 +221,108 @@
       </tags>
   </entry>
   <entry>
-    <title>升级Windows11</title>
-    <url>/p/34458.html</url>
+    <title>k8s集群动态存储管理GlusterFS</title>
+    <url>/p/22918.html</url>
+    <content><![CDATA[]]></content>
+  </entry>
+  <entry>
+    <title>docker容器化搭建OpenLDAP</title>
+    <url>/p/39881.html</url>
     <content><![CDATA[<p><escape><span id="more"></span></escape></p>
-<p>升级Windows11</p>
-<p>下载win11检测工具</p>
-<p>先使用 Win11 检测工具（PC Health Check）看是否支持 Win11 系统</p>
-<blockquote>
-<p>下载地址：<a href="https://aka.ms/GetPCHealthCheckApp">https://aka.ms/GetPCHealthCheckApp</a></p>
+<h1 id="docker-容器化搭建-OpenLDAP">1. docker 容器化搭建 OpenLDAP</h1><h2 id="准备工作">1.1. 准备工作</h2><p>（1）需要在本地虚拟机或者服务器中安装docker。<br>（2）在运行之前我们首先需要将openLDAP的docker镜像拉取到本地。使用命令。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker pull osixia/openldap</span><br></pre></td></tr></table></figure>
+
+<p>此时拉取到的镜像就是最新版本的，如果要拉取指定版本的，则在上条命令中加入对应tag即可，如：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker pull osixia/openldap:1.3.0</span><br></pre></td></tr></table></figure>
+
+<p>（3）还需要一个可视化的ldap管理工具，我使用的是phpldapadmin。同样使用docker pull命令拉取对应镜像。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker pull osixia/phpldapadmin</span><br></pre></td></tr></table></figure>
+
+<h2 id="运行openLDAP">1.2. 运行openLDAP</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker run -p 389:389 -p 636:636 \</span><br><span class="line">    --name openldap-server \</span><br><span class="line">    --env LDAP_TLS_VERIFY_CLIENT=&quot;never&quot; \</span><br><span class="line">    --env LDAP_ORGANISATION=&quot;example&quot; \</span><br><span class="line">    --env LDAP_DOMAIN=&quot;example.com&quot; \</span><br><span class="line">    --env LDAP_ADMIN_PASSWORD=&quot;Pass1234cn&quot; \</span><br><span class="line">    -v /data/ldap/data:/var/lib/ldap \</span><br><span class="line">    -v /data/ldap/conf:/etc/ldap/slapd.d \</span><br><span class="line">    --detach osixia/openldap:1.3.0</span><br></pre></td></tr></table></figure>
+
+<p>参数如下：</p>
+<ul>
+<li> -p 389:389 \ TCP/IP访问端口，-p 636:636 \ SSL连接端口。</li>
+<li> –name your_ldap 容器名称为your_ldap</li>
+<li> –hostname openldap-host 设置容器主机名称为 openldap-host</li>
+<li> –env LDAP_ORGANISATION=“example” 配置LDAP组织名称</li>
+<li> –env LDAP_DOMAIN=“example.com” 配置LDAP域名</li>
+<li> –env LDAP_ADMIN_PASSWORD=“youedata520” 配置LDAP密码</li>
+<li> -v /data/ldap/data:/var/lib/ldap 配置数据映射到本地</li>
+<li> -v /data/ldap/conf:/etc/ldap/slapd.d 配置文件映射到本地</li>
+<li> 默认登录用户名：admin</li>
+</ul>
+<h2 id="运行phpldapadmin">1.3. 运行phpldapadmin</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker run \</span><br><span class="line">    -p 80:80 \</span><br><span class="line">    --name openldap-admin \</span><br><span class="line">    --env PHPLDAPADMIN_HTTPS=false \</span><br><span class="line">    --env PHPLDAPADMIN_LDAP_HOSTS=192.168.101.196 \</span><br><span class="line">    --detach \</span><br><span class="line">    osixia/phpldapadmin</span><br></pre></td></tr></table></figure>
+
+<p>参数如下：</p>
+<ul>
+<li>-d 分离模式启动容器</li>
+<li>–privileged 特权模式启动(使用该参数，container内的root拥有真正的root权限。</li>
+<li>否则，container内的root只是外部的一个普通用户权限。)</li>
+<li>–env PHPLDAPADMIN_HTTPS=false 禁用HTTPS</li>
+<li>–env PHPLDAPADMIN_LDAP_HOSTS =192.168.101.196 配置openLDAP的IP或者域名，我的openLDAP是在本地192.168.101.196启动。</li>
+</ul>
+<h2 id="登录">1.4. 登录</h2><blockquote>
+<p>用户名：cn=admin,dc=example,dc=com</p>
+<p>密码：Pass1234cn</p>
 </blockquote>
-<p>也可以进入官网使用下载按钮下载</p>
-<blockquote>
-<p>链接：<a href="https://www.microsoft.com/zh-cn/windows/windows-11">https://www.microsoft.com/zh-cn/windows/windows-11</a></p>
-</blockquote>
-<p><img src="https://cdn.jsdelivr.net/gh/heyonggs/images@master/wp/2021/windows/202110111401352.png" alt="windows"></p>
-<p>升级Windows11</p>
-<p>通过微软提供的升级页面选择符合自己的方式进行升级。</p>
-<blockquote>
-<p><a href="https://www.microsoft.com/zh-cn/software-download/windows11">https://www.microsoft.com/zh-cn/software-download/windows11</a></p>
-</blockquote>
-<p><img src="https://cdn.jsdelivr.net/gh/heyonggs/images@master/wp/2021/windows/202110111405130.png" alt="windows"></p>
-<p><a href="https://cdn.jsdelivr.net/gh/heyonggs/images@master/wp/2021/windows/202110111401352.png"><img src="https://cdn.jsdelivr.net/gh/heyonggs/images@master/wp/2021/windows/202110111401352.png" alt class="aligncenter size-full wp-image-49"></a></p>
-<p><a href="#"><img src="https://cdn.jsdelivr.net/gh/heyonggs/images@master/wp/2020/2月/jenkins-maven/gitlab分支版本号.png" alt></a></p>
+<p>在运行成功后访问phpldapadmin，地址为：192.168.101.196，如图所示</p>
+<p><img src="https://cdn.jsdelivr.net/gh/heyonggs/images@master/wp/2021/ldap202110081453830.png" alt="ldap"></p>
+<p>点击登录，用户名为cn=admin,dc=example,dc=com 密码：Pass1234cn</p>
+<p><img src="https://cdn.jsdelivr.net/gh/heyonggs/images@master/wp/2021/ldap202110081457264.png" alt="ldap"></p>
+<h2 id="在界面新建组与用户">1.5. 在界面新建组与用户</h2><p><img src="https://cdn.jsdelivr.net/gh/heyonggs/images@master/wp/2021/ldap202110081501662.png" alt="ldap"></p>
+<p>先创建一个组织单元，我这里创建研发部</p>
+<p><img src="https://cdn.jsdelivr.net/gh/heyonggs/images@master/wp/2021/ldap202110081507703.png" alt="ldap"></p>
+<p>这里点击Commit即可</p>
+<p><img src="https://cdn.jsdelivr.net/gh/heyonggs/images@master/wp/2021/ldap202110081508021.png" alt="ldap"></p>
+<p>创建成功</p>
+<p><img src="https://cdn.jsdelivr.net/gh/heyonggs/images@master/wp/2021/ldap/202110081512638.png" alt="ldap"></p>
+<p>然后在该部门中创建组，或者不在细分的话也可直接创建用户。为了演示我就都先创建组然后创建用户。<br>同样点击刚创建好的RD部的条目，点击create a child entry，选择Posix Group，创建一个开发组。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/heyonggs/images@master/wp/2021/ldap/202110081515452.png"></p>
+<p>点击Commit即可</p>
+<p><img src="https://cdn.jsdelivr.net/gh/heyonggs/images@master/wp/2021/ldap/202110081516186.png"></p>
+<p>创建成功</p>
+<p><img src="https://cdn.jsdelivr.net/gh/heyonggs/images@master/wp/2021/ldap/202110081519761.png"></p>
+<p>在新建的组下添加用户，选中developmnt条目，创建子条目，选择User Account或Account，推荐使用User Account，因为User Account中包含了Account，还增加了更多的属性。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/heyonggs/images@master/wp/2021/ldap/202110081535545.png"></p>
+<p>点击Commit</p>
+<p><img src="https://cdn.jsdelivr.net/gh/heyonggs/images@master/wp/2021/ldap/202110081536505.png"></p>
+<p>创建完成</p>
+<p><img src="https://cdn.jsdelivr.net/gh/heyonggs/images@master/wp/2021/ldap/202110081537859.png"></p>
+<p>此时该用户的dn为cn=zhang san,cn=development,ou=RD,dc=example,dc=com，如果想使用uid来识别用户可以在界面中rename修改用户的dn。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/heyonggs/images@master/wp/2021/ldap/202110081539680.png"></p>
+<p>修改成功</p>
+<p><img src="https://cdn.jsdelivr.net/gh/heyonggs/images@master/wp/2021/ldap/202110081542120.png"></p>
+<h2 id="在界面使用LDIF-文件进行组与用户的创建">1.6. 在界面使用LDIF 文件进行组与用户的创建</h2><p>选择import</p>
+<p><img src="https://cdn.jsdelivr.net/gh/heyonggs/images@master/wp/2021/ldap/202110081547984.png"></p>
+<p>在界面选择import，可直接输入LDIF文件内容，也可导入对应的LDIF文件，如创建一个RD部门下的devops组。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/heyonggs/images@master/wp/2021/ldap/202110081551336.png"></p>
+<p>文件内容：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">dn: cn=devops,ou=RD,dc=example,dc=com</span><br><span class="line">cn: devops</span><br><span class="line">gidnumber: 501</span><br><span class="line">objectclass: posixGroup</span><br><span class="line">objectclass: top</span><br></pre></td></tr></table></figure>
+
+<p>创建成功</p>
+<p><img src="https://cdn.jsdelivr.net/gh/heyonggs/images@master/wp/2021/ldap/202110081554758.png"></p>
+<p>在devops组下创建一个uid=lisi的人员</p>
+<p><img src="https://cdn.jsdelivr.net/gh/heyonggs/images@master/wp/2021/ldap/202110081609892.png"></p>
+<p>文件内容</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">dn: uid=lisi,cn=devops,ou=RD,dc=example,dc=com</span><br><span class="line">cn: lisi</span><br><span class="line">gidnumber: 500</span><br><span class="line">givenname: li</span><br><span class="line">homedirectory: /home/user/lisi</span><br><span class="line">objectclass: inerOrgPerson</span><br><span class="line">objectclass: posixAccount</span><br><span class="line">objectclass: top</span><br><span class="line">sn: si</span><br><span class="line">uid: lisi</span><br><span class="line">uidnumber: 1001</span><br><span class="line">userpassword: 123456</span><br></pre></td></tr></table></figure>
+
+<p>创建成功</p>
+<p><img src="https://cdn.jsdelivr.net/gh/heyonggs/images@master/wp/2021/ldap/202110081612487.png"></p>
+<p>LDIF文件可以从相似的条目中导出，然后稍作修改后进行创建。如图</p>
+<p><img src="https://cdn.jsdelivr.net/gh/heyonggs/images@master/wp/2021/ldap/202110081614249.png"></p>
+<p>导出</p>
+<p><img src="https://cdn.jsdelivr.net/gh/heyonggs/images@master/wp/2021/ldap/202110081615747.png"></p>
+<p>可以将下面的内容复制修改后在import即可</p>
+<p><img src="https://cdn.jsdelivr.net/gh/heyonggs/images@master/wp/2021/ldap/202110081617092.png"></p>
 ]]></content>
       <categories>
-        <category>Windows</category>
+        <category>LDAP</category>
       </categories>
       <tags>
-        <tag>Windows</tag>
+        <tag>Docker</tag>
+        <tag>LDAP</tag>
+        <tag>OpenLDAP</tag>
       </tags>
   </entry>
   <entry>
@@ -445,106 +514,6 @@
       </tags>
   </entry>
   <entry>
-    <title>docker容器化搭建OpenLDAP</title>
-    <url>/p/39881.html</url>
-    <content><![CDATA[<p><escape><span id="more"></span></escape></p>
-<h1 id="docker-容器化搭建-OpenLDAP">1. docker 容器化搭建 OpenLDAP</h1><h2 id="准备工作">1.1. 准备工作</h2><p>（1）需要在本地虚拟机或者服务器中安装docker。<br>（2）在运行之前我们首先需要将openLDAP的docker镜像拉取到本地。使用命令。</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker pull osixia/openldap</span><br></pre></td></tr></table></figure>
-
-<p>此时拉取到的镜像就是最新版本的，如果要拉取指定版本的，则在上条命令中加入对应tag即可，如：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker pull osixia/openldap:1.3.0</span><br></pre></td></tr></table></figure>
-
-<p>（3）还需要一个可视化的ldap管理工具，我使用的是phpldapadmin。同样使用docker pull命令拉取对应镜像。</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker pull osixia/phpldapadmin</span><br></pre></td></tr></table></figure>
-
-<h2 id="运行openLDAP">1.2. 运行openLDAP</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker run -p 389:389 -p 636:636 \</span><br><span class="line">    --name openldap-server \</span><br><span class="line">    --env LDAP_TLS_VERIFY_CLIENT=&quot;never&quot; \</span><br><span class="line">    --env LDAP_ORGANISATION=&quot;example&quot; \</span><br><span class="line">    --env LDAP_DOMAIN=&quot;example.com&quot; \</span><br><span class="line">    --env LDAP_ADMIN_PASSWORD=&quot;Pass1234cn&quot; \</span><br><span class="line">    -v /data/ldap/data:/var/lib/ldap \</span><br><span class="line">    -v /data/ldap/conf:/etc/ldap/slapd.d \</span><br><span class="line">    --detach osixia/openldap:1.3.0</span><br></pre></td></tr></table></figure>
-
-<p>参数如下：</p>
-<ul>
-<li> -p 389:389 \ TCP/IP访问端口，-p 636:636 \ SSL连接端口。</li>
-<li> –name your_ldap 容器名称为your_ldap</li>
-<li> –hostname openldap-host 设置容器主机名称为 openldap-host</li>
-<li> –env LDAP_ORGANISATION=“example” 配置LDAP组织名称</li>
-<li> –env LDAP_DOMAIN=“example.com” 配置LDAP域名</li>
-<li> –env LDAP_ADMIN_PASSWORD=“youedata520” 配置LDAP密码</li>
-<li> -v /data/ldap/data:/var/lib/ldap 配置数据映射到本地</li>
-<li> -v /data/ldap/conf:/etc/ldap/slapd.d 配置文件映射到本地</li>
-<li> 默认登录用户名：admin</li>
-</ul>
-<h2 id="运行phpldapadmin">1.3. 运行phpldapadmin</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker run \</span><br><span class="line">    -p 80:80 \</span><br><span class="line">    --name openldap-admin \</span><br><span class="line">    --env PHPLDAPADMIN_HTTPS=false \</span><br><span class="line">    --env PHPLDAPADMIN_LDAP_HOSTS=192.168.101.196 \</span><br><span class="line">    --detach \</span><br><span class="line">    osixia/phpldapadmin</span><br></pre></td></tr></table></figure>
-
-<p>参数如下：</p>
-<ul>
-<li>-d 分离模式启动容器</li>
-<li>–privileged 特权模式启动(使用该参数，container内的root拥有真正的root权限。</li>
-<li>否则，container内的root只是外部的一个普通用户权限。)</li>
-<li>–env PHPLDAPADMIN_HTTPS=false 禁用HTTPS</li>
-<li>–env PHPLDAPADMIN_LDAP_HOSTS =192.168.101.196 配置openLDAP的IP或者域名，我的openLDAP是在本地192.168.101.196启动。</li>
-</ul>
-<h2 id="登录">1.4. 登录</h2><blockquote>
-<p>用户名：cn=admin,dc=example,dc=com</p>
-<p>密码：Pass1234cn</p>
-</blockquote>
-<p>在运行成功后访问phpldapadmin，地址为：192.168.101.196，如图所示</p>
-<p><img src="https://cdn.jsdelivr.net/gh/heyonggs/images@master/wp/2021/ldap202110081453830.png" alt="ldap"></p>
-<p>点击登录，用户名为cn=admin,dc=example,dc=com 密码：Pass1234cn</p>
-<p><img src="https://cdn.jsdelivr.net/gh/heyonggs/images@master/wp/2021/ldap202110081457264.png" alt="ldap"></p>
-<h2 id="在界面新建组与用户">1.5. 在界面新建组与用户</h2><p><img src="https://cdn.jsdelivr.net/gh/heyonggs/images@master/wp/2021/ldap202110081501662.png" alt="ldap"></p>
-<p>先创建一个组织单元，我这里创建研发部</p>
-<p><img src="https://cdn.jsdelivr.net/gh/heyonggs/images@master/wp/2021/ldap202110081507703.png" alt="ldap"></p>
-<p>这里点击Commit即可</p>
-<p><img src="https://cdn.jsdelivr.net/gh/heyonggs/images@master/wp/2021/ldap202110081508021.png" alt="ldap"></p>
-<p>创建成功</p>
-<p><img src="https://cdn.jsdelivr.net/gh/heyonggs/images@master/wp/2021/ldap/202110081512638.png" alt="ldap"></p>
-<p>然后在该部门中创建组，或者不在细分的话也可直接创建用户。为了演示我就都先创建组然后创建用户。<br>同样点击刚创建好的RD部的条目，点击create a child entry，选择Posix Group，创建一个开发组。</p>
-<p><img src="https://cdn.jsdelivr.net/gh/heyonggs/images@master/wp/2021/ldap/202110081515452.png"></p>
-<p>点击Commit即可</p>
-<p><img src="https://cdn.jsdelivr.net/gh/heyonggs/images@master/wp/2021/ldap/202110081516186.png"></p>
-<p>创建成功</p>
-<p><img src="https://cdn.jsdelivr.net/gh/heyonggs/images@master/wp/2021/ldap/202110081519761.png"></p>
-<p>在新建的组下添加用户，选中developmnt条目，创建子条目，选择User Account或Account，推荐使用User Account，因为User Account中包含了Account，还增加了更多的属性。</p>
-<p><img src="https://cdn.jsdelivr.net/gh/heyonggs/images@master/wp/2021/ldap/202110081535545.png"></p>
-<p>点击Commit</p>
-<p><img src="https://cdn.jsdelivr.net/gh/heyonggs/images@master/wp/2021/ldap/202110081536505.png"></p>
-<p>创建完成</p>
-<p><img src="https://cdn.jsdelivr.net/gh/heyonggs/images@master/wp/2021/ldap/202110081537859.png"></p>
-<p>此时该用户的dn为cn=zhang san,cn=development,ou=RD,dc=example,dc=com，如果想使用uid来识别用户可以在界面中rename修改用户的dn。</p>
-<p><img src="https://cdn.jsdelivr.net/gh/heyonggs/images@master/wp/2021/ldap/202110081539680.png"></p>
-<p>修改成功</p>
-<p><img src="https://cdn.jsdelivr.net/gh/heyonggs/images@master/wp/2021/ldap/202110081542120.png"></p>
-<h2 id="在界面使用LDIF-文件进行组与用户的创建">1.6. 在界面使用LDIF 文件进行组与用户的创建</h2><p>选择import</p>
-<p><img src="https://cdn.jsdelivr.net/gh/heyonggs/images@master/wp/2021/ldap/202110081547984.png"></p>
-<p>在界面选择import，可直接输入LDIF文件内容，也可导入对应的LDIF文件，如创建一个RD部门下的devops组。</p>
-<p><img src="https://cdn.jsdelivr.net/gh/heyonggs/images@master/wp/2021/ldap/202110081551336.png"></p>
-<p>文件内容：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">dn: cn=devops,ou=RD,dc=example,dc=com</span><br><span class="line">cn: devops</span><br><span class="line">gidnumber: 501</span><br><span class="line">objectclass: posixGroup</span><br><span class="line">objectclass: top</span><br></pre></td></tr></table></figure>
-
-<p>创建成功</p>
-<p><img src="https://cdn.jsdelivr.net/gh/heyonggs/images@master/wp/2021/ldap/202110081554758.png"></p>
-<p>在devops组下创建一个uid=lisi的人员</p>
-<p><img src="https://cdn.jsdelivr.net/gh/heyonggs/images@master/wp/2021/ldap/202110081609892.png"></p>
-<p>文件内容</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">dn: uid=lisi,cn=devops,ou=RD,dc=example,dc=com</span><br><span class="line">cn: lisi</span><br><span class="line">gidnumber: 500</span><br><span class="line">givenname: li</span><br><span class="line">homedirectory: /home/user/lisi</span><br><span class="line">objectclass: inerOrgPerson</span><br><span class="line">objectclass: posixAccount</span><br><span class="line">objectclass: top</span><br><span class="line">sn: si</span><br><span class="line">uid: lisi</span><br><span class="line">uidnumber: 1001</span><br><span class="line">userpassword: 123456</span><br></pre></td></tr></table></figure>
-
-<p>创建成功</p>
-<p><img src="https://cdn.jsdelivr.net/gh/heyonggs/images@master/wp/2021/ldap/202110081612487.png"></p>
-<p>LDIF文件可以从相似的条目中导出，然后稍作修改后进行创建。如图</p>
-<p><img src="https://cdn.jsdelivr.net/gh/heyonggs/images@master/wp/2021/ldap/202110081614249.png"></p>
-<p>导出</p>
-<p><img src="https://cdn.jsdelivr.net/gh/heyonggs/images@master/wp/2021/ldap/202110081615747.png"></p>
-<p>可以将下面的内容复制修改后在import即可</p>
-<p><img src="https://cdn.jsdelivr.net/gh/heyonggs/images@master/wp/2021/ldap/202110081617092.png"></p>
-]]></content>
-      <categories>
-        <category>LDAP</category>
-      </categories>
-      <tags>
-        <tag>Docker</tag>
-        <tag>LDAP</tag>
-        <tag>OpenLDAP</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>使用frp实现内网穿透</title>
     <url>/p/7496.html</url>
     <content><![CDATA[<p><escape><span id="more"></span></escape></p>
@@ -576,6 +545,37 @@
       <tags>
         <tag>网络</tag>
         <tag>FRP</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>升级Windows11</title>
+    <url>/p/34458.html</url>
+    <content><![CDATA[<p><escape><span id="more"></span></escape></p>
+<p>升级Windows11</p>
+<p>下载win11检测工具</p>
+<p>先使用 Win11 检测工具（PC Health Check）看是否支持 Win11 系统</p>
+<blockquote>
+<p>下载地址：<a href="https://aka.ms/GetPCHealthCheckApp">https://aka.ms/GetPCHealthCheckApp</a></p>
+</blockquote>
+<p>也可以进入官网使用下载按钮下载</p>
+<blockquote>
+<p>链接：<a href="https://www.microsoft.com/zh-cn/windows/windows-11">https://www.microsoft.com/zh-cn/windows/windows-11</a></p>
+</blockquote>
+<p><img src="https://cdn.jsdelivr.net/gh/heyonggs/images@master/wp/2021/windows/202110111401352.png" alt="windows"></p>
+<p>升级Windows11</p>
+<p>通过微软提供的升级页面选择符合自己的方式进行升级。</p>
+<blockquote>
+<p><a href="https://www.microsoft.com/zh-cn/software-download/windows11">https://www.microsoft.com/zh-cn/software-download/windows11</a></p>
+</blockquote>
+<p><img src="https://cdn.jsdelivr.net/gh/heyonggs/images@master/wp/2021/windows/202110111405130.png" alt="windows"></p>
+<p><a href="https://cdn.jsdelivr.net/gh/heyonggs/images@master/wp/2021/windows/202110111401352.png"><img src="https://cdn.jsdelivr.net/gh/heyonggs/images@master/wp/2021/windows/202110111401352.png" alt class="aligncenter size-full wp-image-49"></a></p>
+<p><a href="#"><img src="https://cdn.jsdelivr.net/gh/heyonggs/images@master/wp/2020/2月/jenkins-maven/gitlab分支版本号.png" alt style="border:none"></a></p>
+]]></content>
+      <categories>
+        <category>Windows</category>
+      </categories>
+      <tags>
+        <tag>Windows</tag>
       </tags>
   </entry>
   <entry>
@@ -675,35 +675,26 @@
       </tags>
   </entry>
   <entry>
-    <title>Linux面试题</title>
-    <url>/p/5935.html</url>
+    <title>Linux用户登陆服务器微信告警</title>
+    <url>/p/undefined.html</url>
     <content><![CDATA[<p><escape><span id="more"></span></escape></p>
-<h1 id="以文件的方式创建并挂载2G的swap分区">1. 以文件的方式创建并挂载2G的swap分区</h1><p>使用 dd 命令生成一个 2GB 大小的文件</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">root@linux:~# dd if=/dev/zero of=/swapfile bs=4M count=500</span><br><span class="line">500+0 records in</span><br><span class="line">500+0 records out</span><br><span class="line">2097152000 bytes (2.1 GB, 2.0 GiB) copied, 13.26 s, 158 MB/s</span><br></pre></td></tr></table></figure>
+<h1 id="Linux用户登陆服务器微信告警">1. Linux用户登陆服务器微信告警</h1><h2 id="告警脚本">1.1. 告警脚本</h2><p>cat /data/aimm/script/wechat.sh</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/bin/bash</span></span><br><span class="line"><span class="meta">#</span><span class="bash"></span></span><br><span class="line"><span class="bash"></span><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash">使用方法 sh ./send_message.sh <span class="string">&quot;发送内容&quot;</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash">如       sh ./send_message.sh <span class="string">&quot;测试环境，正在更新&quot;</span></span></span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash">保存要发送人员的账号,在通讯录可获取，多个人员之间使用空格分隔，以下为展示数据</span></span><br><span class="line">user=&quot;HeYong&quot;</span><br><span class="line"><span class="meta">#</span><span class="bash">企业微信ID:企业微信管理界面-’我的企业‘页面中获取</span></span><br><span class="line">corpid=&quot;ww0ba8cfd......&quot;</span><br><span class="line"><span class="meta">#</span><span class="bash">应用秘钥:在‘自建应用’-‘创建应用’-‘应用管理’中获取</span></span><br><span class="line">corpsecret=&quot;xK-......&quot;</span><br><span class="line"><span class="meta">#</span><span class="bash">企业应用ID:在<span class="string">&#x27;自建应用&#x27;</span>-<span class="string">&#x27;创建应用&#x27;</span>-<span class="string">&#x27;应用管理&#x27;</span>中获取</span></span><br><span class="line">agentld=1000003</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash">------------------------以上变量需要自行修改-----------------------------------</span></span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash">保存信息内容变量</span></span><br><span class="line">msg=&#x27;请检查服务器登录用户:\n主机名: &#x27;`hostname`&#x27;\n主机IP: &#x27;`ifconfig eth0|awk -F &#x27;[ :]+&#x27; &#x27;NR==2 &#123;print $3&#125;&#x27;`&#x27;\n登录用户: &#x27;`whoami`&#x27;\n登录IP: &#x27;`who am i |awk -F &#x27;[()]&#x27; &#x27;&#123;print $2&#125;&#x27;`&#x27;\n登录时间: &#x27;`date &#x27;+%Y-%m-%d-%H:%M:%S&#x27;`&#x27;&#x27;</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash">curl -s 静默模式，就是不显示错误和进度</span></span><br><span class="line">A=`curl -s https://qyapi.weixin.qq.com/cgi-bin/gettoken?corpid=$corpid\&amp;corpsecret=$corpsecret`</span><br><span class="line"><span class="meta">#</span><span class="bash">解析json格式 并获取access_token值</span></span><br><span class="line">token=`echo $A | jq -c &#x27;.access_token&#x27;`</span><br><span class="line"><span class="meta">#</span><span class="bash">去除变量值两边的双引号</span></span><br><span class="line">token=$&#123;token#*\&quot;&#125;</span><br><span class="line">token=$&#123;token%*\&quot;&#125;</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash">请求地址</span></span><br><span class="line">URL=&quot;https://qyapi.weixin.qq.com/cgi-bin/message/send?access_token=$token&quot;</span><br><span class="line"></span><br><span class="line">for I in $user;do</span><br><span class="line"><span class="meta">	#</span><span class="bash">发送的JSON内容</span></span><br><span class="line">	JSON=&quot;&#123;\&quot;touser\&quot;: \&quot;$I\&quot;,\&quot;msgtype\&quot;: \&quot;text\&quot;,\&quot;agentid\&quot;: \&quot;$agentld\&quot;,\&quot;text\&quot;: &#123;\&quot;content\&quot;: \&quot;$msg\&quot;&#125;,\&quot;safe\&quot;:0 &#125;&quot;</span><br><span class="line"><span class="meta">	#</span><span class="bash">以POST的方式请求</span></span><br><span class="line">	curl -d &quot;$JSON&quot; &quot;$URL&quot; &gt;/dev/null 2&gt;&amp;1</span><br><span class="line">done</span><br><span class="line"></span><br><span class="line">exit 0</span><br></pre></td></tr></table></figure>
 
-<p>这里生成的是2.1GB,多出来0.1GB，原因是文件大小单位不同，一个是 <code>MB</code> 另一个是 <code>MiB</code></p>
-<p>具体对应大小</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">megabyte(MB) = 1000000</span><br><span class="line">mebibyte(MiB) = 1024x1024 = 1048576</span><br></pre></td></tr></table></figure>
+<p>脚本中还涉及jq命令，这里我们安装一下</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[root@linux ~]# yum install -y jq</span><br></pre></td></tr></table></figure>
 
-<p>MB是1024的倍数，而MiB是1000的倍数，同理KB和KiB：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">kilobyte(KB) = 1000</span><br><span class="line">kibibyte(KiB) = 1024</span><br></pre></td></tr></table></figure>
+<p>在完善脚本之后，我们需要将脚本放置在<code>/etc/profile</code>这样用户在登陆的时候就会发送(前提是服务器可以访问外网，就是可以ping通百度)</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">vim /etc/profile</span><br><span class="line"> </span><br><span class="line">/bin/bash  /data/aimm/script/wechat.sh</span><br></pre></td></tr></table></figure>
 
-<p>接下来使用 <code>mkswap</code> 命令将刚刚创建好的 <code>/swapfile</code> 文件格式化为交换分区所需要的格式，并修改一下文件权限为 600 ，即只能由 root 用户读，不然默认的 755 会被其他用户看到，而里面的内容是内存里的信息，所以安全起见还是修改一下权限。</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">root@linux:~# mkswap /swapfile</span><br><span class="line">Setting up swapspace version 1, size = 2 GiB (2097147904 bytes)</span><br><span class="line">no label, UUID=253bbab8-a489-4f21-8007-f161b9c795f1</span><br><span class="line">root@linux:~# chmod 600 /swapfile</span><br><span class="line">root@linux:~# swapon !$</span><br><span class="line">swapon /swapfile</span><br><span class="line">root@linux:~# free -h</span><br><span class="line">              total        used        free      shared  buff/cache   available</span><br><span class="line">Mem:          1.9Gi       454Mi        80Mi       2.0Mi       1.4Gi       1.3Gi</span><br><span class="line">Swap:         2.0Gi          0B       2.0Gi</span><br></pre></td></tr></table></figure>
-
-<p>修改/etc/fstab使其启动时自动mount：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">/swapfile  swap  swap    defaults 0 0</span><br></pre></td></tr></table></figure>
-
-
-
-
-
+<p>登陆测试结果如下</p>
+<p><img src="https://cdn.jsdelivr.net/gh/heyonggs/images@master/wp/2021/linux202109260951985.png"></p>
 ]]></content>
       <categories>
-        <category>Linux,面试题</category>
+        <category>Linux</category>
       </categories>
       <tags>
-        <tag>Linux,面试题</tag>
+        <tag>Linux</tag>
       </tags>
   </entry>
   <entry>
@@ -908,26 +899,98 @@
       </tags>
   </entry>
   <entry>
-    <title>Linux用户登陆服务器微信告警</title>
-    <url>/p/undefined.html</url>
+    <title>Linux磁盘满了解决方案</title>
+    <url>/p/14331.html</url>
     <content><![CDATA[<p><escape><span id="more"></span></escape></p>
-<h1 id="Linux用户登陆服务器微信告警">1. Linux用户登陆服务器微信告警</h1><h2 id="告警脚本">1.1. 告警脚本</h2><p>cat /data/aimm/script/wechat.sh</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/bin/bash</span></span><br><span class="line"><span class="meta">#</span><span class="bash"></span></span><br><span class="line"><span class="bash"></span><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash">使用方法 sh ./send_message.sh <span class="string">&quot;发送内容&quot;</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash">如       sh ./send_message.sh <span class="string">&quot;测试环境，正在更新&quot;</span></span></span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash">保存要发送人员的账号,在通讯录可获取，多个人员之间使用空格分隔，以下为展示数据</span></span><br><span class="line">user=&quot;HeYong&quot;</span><br><span class="line"><span class="meta">#</span><span class="bash">企业微信ID:企业微信管理界面-’我的企业‘页面中获取</span></span><br><span class="line">corpid=&quot;ww0ba8cfd......&quot;</span><br><span class="line"><span class="meta">#</span><span class="bash">应用秘钥:在‘自建应用’-‘创建应用’-‘应用管理’中获取</span></span><br><span class="line">corpsecret=&quot;xK-......&quot;</span><br><span class="line"><span class="meta">#</span><span class="bash">企业应用ID:在<span class="string">&#x27;自建应用&#x27;</span>-<span class="string">&#x27;创建应用&#x27;</span>-<span class="string">&#x27;应用管理&#x27;</span>中获取</span></span><br><span class="line">agentld=1000003</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash">------------------------以上变量需要自行修改-----------------------------------</span></span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash">保存信息内容变量</span></span><br><span class="line">msg=&#x27;请检查服务器登录用户:\n主机名: &#x27;`hostname`&#x27;\n主机IP: &#x27;`ifconfig eth0|awk -F &#x27;[ :]+&#x27; &#x27;NR==2 &#123;print $3&#125;&#x27;`&#x27;\n登录用户: &#x27;`whoami`&#x27;\n登录IP: &#x27;`who am i |awk -F &#x27;[()]&#x27; &#x27;&#123;print $2&#125;&#x27;`&#x27;\n登录时间: &#x27;`date &#x27;+%Y-%m-%d-%H:%M:%S&#x27;`&#x27;&#x27;</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash">curl -s 静默模式，就是不显示错误和进度</span></span><br><span class="line">A=`curl -s https://qyapi.weixin.qq.com/cgi-bin/gettoken?corpid=$corpid\&amp;corpsecret=$corpsecret`</span><br><span class="line"><span class="meta">#</span><span class="bash">解析json格式 并获取access_token值</span></span><br><span class="line">token=`echo $A | jq -c &#x27;.access_token&#x27;`</span><br><span class="line"><span class="meta">#</span><span class="bash">去除变量值两边的双引号</span></span><br><span class="line">token=$&#123;token#*\&quot;&#125;</span><br><span class="line">token=$&#123;token%*\&quot;&#125;</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash">请求地址</span></span><br><span class="line">URL=&quot;https://qyapi.weixin.qq.com/cgi-bin/message/send?access_token=$token&quot;</span><br><span class="line"></span><br><span class="line">for I in $user;do</span><br><span class="line"><span class="meta">	#</span><span class="bash">发送的JSON内容</span></span><br><span class="line">	JSON=&quot;&#123;\&quot;touser\&quot;: \&quot;$I\&quot;,\&quot;msgtype\&quot;: \&quot;text\&quot;,\&quot;agentid\&quot;: \&quot;$agentld\&quot;,\&quot;text\&quot;: &#123;\&quot;content\&quot;: \&quot;$msg\&quot;&#125;,\&quot;safe\&quot;:0 &#125;&quot;</span><br><span class="line"><span class="meta">	#</span><span class="bash">以POST的方式请求</span></span><br><span class="line">	curl -d &quot;$JSON&quot; &quot;$URL&quot; &gt;/dev/null 2&gt;&amp;1</span><br><span class="line">done</span><br><span class="line"></span><br><span class="line">exit 0</span><br></pre></td></tr></table></figure>
+<p>查看磁盘情况</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[root@iz2zebp5657k0fz0pvgcgnz ~]# df -h</span><br><span class="line">Filesystem      Size  Used Avail Use% Mounted on</span><br><span class="line">devtmpfs        909M     0  909M   0% /dev</span><br><span class="line">tmpfs           919M     0  919M   0% /dev/shm</span><br><span class="line">tmpfs           919M  8.6M  911M   1% /run</span><br><span class="line">tmpfs           919M     0  919M   0% /sys/fs/cgroup</span><br><span class="line">/dev/vda1        40G  8.4G   29G  23% /</span><br><span class="line">overlay          40G  8.4G   29G  23% /var/lib/docker/overlay2/e374b04682a79626e00aca70c896b2a9b5a46ae9730c3311dd774b1bc56bdb9d/merged</span><br><span class="line">overlay          40G  8.4G   29G  23% /var/lib/docker/overlay2/c59338b367886fefb1ff03641e25ad7a3800421f39652d43e08a51b51ac95009/merged</span><br><span class="line">tmpfs           184M     0  184M   0% /run/user/0</span><br></pre></td></tr></table></figure>
 
-<p>脚本中还涉及jq命令，这里我们安装一下</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[root@linux ~]# yum install -y jq</span><br></pre></td></tr></table></figure>
+<p>df: 用于显示目前在Linux系统上的文件系统的磁盘使用情况统计。</p>
+<p>-h：以K，M，G为单位，提高信息的可读性。</p>
+<p>Size：总内存数</p>
+<p>Used：使用内存数</p>
+<p>Avail：剩余内存数</p>
+<p>Mounted on：挂载点</p>
+<p>查看文件夹下面的磁盘使用情况</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 进入根目录</span></span><br><span class="line">[root@iz2zebp5657k0fz0pvgcgnz ~]# cd /</span><br><span class="line">[root@iz2zebp5657k0fz0pvgcgnz /]# du --max-depth=1 -h</span><br><span class="line">44K	./home</span><br><span class="line">8.6M	./run</span><br><span class="line">24M	./tmp</span><br><span class="line">16K	./opt</span><br><span class="line">......</span><br><span class="line">0	./dev</span><br><span class="line">0	./sys</span><br><span class="line">101M	./root</span><br><span class="line">4.0K	./media</span><br><span class="line">48M	./etc</span><br><span class="line">4.9G	./var</span><br><span class="line">120M	./data</span><br><span class="line">11G	.</span><br></pre></td></tr></table></figure>
 
-<p>在完善脚本之后，我们需要将脚本放置在<code>/etc/profile</code>这样用户在登陆的时候就会发送(前提是服务器可以访问外网，就是可以ping通百度)</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">vim /etc/profile</span><br><span class="line"> </span><br><span class="line">/bin/bash  /data/aimm/script/wechat.sh</span><br></pre></td></tr></table></figure>
-
-<p>登陆测试结果如下</p>
-<p><img src="https://cdn.jsdelivr.net/gh/heyonggs/images@master/wp/2021/linux202109260951985.png"></p>
+<p>du：会显示指定的目录或文件所占用的磁盘空间。</p>
+<p>–max-depth-1：–max-depth=&lt;目录层数&gt; 超过指定层数的目录后，予以忽略。</p>
+<p>-h：以K，M，G为单位，提高信息的可读性。</p>
 ]]></content>
       <categories>
         <category>Linux</category>
       </categories>
       <tags>
         <tag>Linux</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Linux面试题</title>
+    <url>/p/5935.html</url>
+    <content><![CDATA[<p><escape><span id="more"></span></escape></p>
+<h1 id="以文件的方式创建并挂载2G的swap分区">1. 以文件的方式创建并挂载2G的swap分区</h1><p>使用 dd 命令生成一个 2GB 大小的文件</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">root@linux:~# dd if=/dev/zero of=/swapfile bs=4M count=500</span><br><span class="line">500+0 records in</span><br><span class="line">500+0 records out</span><br><span class="line">2097152000 bytes (2.1 GB, 2.0 GiB) copied, 13.26 s, 158 MB/s</span><br></pre></td></tr></table></figure>
+
+<p>这里生成的是2.1GB,多出来0.1GB，原因是文件大小单位不同，一个是 <code>MB</code> 另一个是 <code>MiB</code></p>
+<p>具体对应大小</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">megabyte(MB) = 1000000</span><br><span class="line">mebibyte(MiB) = 1024x1024 = 1048576</span><br></pre></td></tr></table></figure>
+
+<p>MB是1024的倍数，而MiB是1000的倍数，同理KB和KiB：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">kilobyte(KB) = 1000</span><br><span class="line">kibibyte(KiB) = 1024</span><br></pre></td></tr></table></figure>
+
+<p>接下来使用 <code>mkswap</code> 命令将刚刚创建好的 <code>/swapfile</code> 文件格式化为交换分区所需要的格式，并修改一下文件权限为 600 ，即只能由 root 用户读，不然默认的 755 会被其他用户看到，而里面的内容是内存里的信息，所以安全起见还是修改一下权限。</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">root@linux:~# mkswap /swapfile</span><br><span class="line">Setting up swapspace version 1, size = 2 GiB (2097147904 bytes)</span><br><span class="line">no label, UUID=253bbab8-a489-4f21-8007-f161b9c795f1</span><br><span class="line">root@linux:~# chmod 600 /swapfile</span><br><span class="line">root@linux:~# swapon !$</span><br><span class="line">swapon /swapfile</span><br><span class="line">root@linux:~# free -h</span><br><span class="line">              total        used        free      shared  buff/cache   available</span><br><span class="line">Mem:          1.9Gi       454Mi        80Mi       2.0Mi       1.4Gi       1.3Gi</span><br><span class="line">Swap:         2.0Gi          0B       2.0Gi</span><br></pre></td></tr></table></figure>
+
+<p>修改/etc/fstab使其启动时自动mount：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">/swapfile  swap  swap    defaults 0 0</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+]]></content>
+      <categories>
+        <category>Linux,面试题</category>
+      </categories>
+      <tags>
+        <tag>Linux,面试题</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Nginx更换SSL证书</title>
+    <url>/p/63588.html</url>
+    <content><![CDATA[<p><escape><span id="more"></span></escape></p>
+<p>申请SSL证书需要的CSR文件</p>
+<blockquote>
+<p><a href="https://www.chinassl.net/ssltools/generator-csr.html">https://www.chinassl.net/ssltools/generator-csr.html</a></p>
+</blockquote>
+<p>填写相关信息生成两个文件</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">*_csr.txt</span><br><span class="line">*_key.txt</span><br></pre></td></tr></table></figure>
+
+<p>csr文件用来申请ssl证书，key文件用于nginx中使用</p>
+<p>申请证书</p>
+<blockquote>
+<p><a href="https://cheapsslsecurity.com/">https://cheapsslsecurity.com/</a></p>
+</blockquote>
+<p>申请的证书目录如下：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">DigiCertCA.crt</span><br><span class="line">My_CA_Bundle.crt</span><br><span class="line">star_aimmcloud_com.crt</span><br><span class="line">TrustedRoot.crt</span><br></pre></td></tr></table></figure>
+
+<p>将domain_name.crt 和 DigCertCA.crt写入bundle.crt</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cat your_domain_name.crt DigiCertCA.crt &gt;&gt; bundle.crt</span><br></pre></td></tr></table></figure>
+
+<p>此处应为</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cat star_aimmcloud_com.crt DigiCertCA.crt &gt;&gt; bundle.crt</span><br></pre></td></tr></table></figure>
+
+<p>nginx的配置</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">server &#123;</span><br><span class="line"></span><br><span class="line">listen   443;</span><br><span class="line"></span><br><span class="line">ssl    on;</span><br><span class="line">ssl_certificate    /etc/ssl/your_domain_name.pem; (or bundle.crt)</span><br><span class="line">ssl_certificate_key    /etc/ssl/your_domain_name.key;</span><br><span class="line"></span><br><span class="line">server_name your.domain.com;</span><br><span class="line">access_log /var/log/nginx/nginx.vhost.access.log;</span><br><span class="line">error_log /var/log/nginx/nginx.vhost.error.log;</span><br><span class="line">location / &#123;</span><br><span class="line">root   /home/www/public_html/your.domain.com/public/;</span><br><span class="line">index  index.html;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>Nginx</category>
+      </categories>
+      <tags>
+        <tag>Nginx</tag>
       </tags>
   </entry>
   <entry>
@@ -1030,66 +1093,59 @@
       </tags>
   </entry>
   <entry>
-    <title>Nginx更换SSL证书</title>
-    <url>/p/63588.html</url>
+    <title>k8s部署nacos集群</title>
+    <url>/p/20278.html</url>
     <content><![CDATA[<p><escape><span id="more"></span></escape></p>
-<p>申请SSL证书需要的CSR文件</p>
+<h1 id="k8s部署nacos集群">1. k8s部署nacos集群</h1><h2 id="Nacos集群部署的安装包准备">1.1. Nacos集群部署的安装包准备</h2><p>下载nacos安装包</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[root@k8s-master data]# pwd</span><br><span class="line">/data/nacos-server-2.0.2</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 下载安装包</span></span><br><span class="line">[root@k8s-master data]# wget https://github.com/alibaba/nacos/releases/download/2.0.2/nacos-server-2.0.2.zip</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 解压</span></span><br><span class="line">[root@k8s-master data]# unzip nacos-server-2.0.2.zip</span><br><span class="line">[root@k8s-master data]# mv nacos nacos-server-2.0.2</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 进入配置文件目录</span></span><br><span class="line">[root@k8s-master conf]# cd nacos-server-2.0.2/nacos/conf</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 备份配置文件</span></span><br><span class="line">[root@k8s-master conf]# mv application.properties application.properties.bak</span><br></pre></td></tr></table></figure>
+
+<p>修改配置文件</p>
+<p>[root@k8s-master conf]# cat application.properties</p>
+<figure class="highlight properties"><table><tr><td class="code"><pre><span class="line"><span class="comment"># spring</span></span><br><span class="line"><span class="meta">server.servlet.contextPath</span>=<span class="string">$&#123;SERVER_SERVLET_CONTEXTPATH:/nacos&#125;</span></span><br><span class="line"><span class="meta">server.contextPath</span>=<span class="string">/nacos</span></span><br><span class="line"><span class="meta">server.port</span>=<span class="string">$&#123;NACOS_SERVER_PORT:8848&#125;</span></span><br><span class="line"><span class="meta">spring.datasource.platform</span>=<span class="string">$&#123;SPRING_DATASOURCE_PLATFORM:&quot;&quot;&#125;</span></span><br><span class="line"><span class="meta">nacos.cmdb.dumpTaskInterval</span>=<span class="string">3600</span></span><br><span class="line"><span class="meta">nacos.cmdb.eventTaskInterval</span>=<span class="string">10</span></span><br><span class="line"><span class="meta">nacos.cmdb.labelTaskInterval</span>=<span class="string">300</span></span><br><span class="line"><span class="meta">nacos.cmdb.loadDataAtStart</span>=<span class="string">false</span></span><br><span class="line"><span class="meta">db.num</span>=<span class="string">$&#123;MYSQL_DATABASE_NUM:1&#125;</span></span><br><span class="line"><span class="meta">db.url.0</span>=<span class="string">jdbc:mysql://$&#123;MYSQL_SERVICE_HOST&#125;:$&#123;MYSQL_SERVICE_PORT:3306&#125;/$&#123;MYSQL_SERVICE_DB_NAME&#125;?characterEncoding=utf8&amp;connectTimeout=1000&amp;socketTimeout=3000&amp;autoReconnect=true</span></span><br><span class="line"><span class="meta">db.user</span>=<span class="string">$&#123;MYSQL_SERVICE_USER&#125;</span></span><br><span class="line"><span class="meta">db.password</span>=<span class="string">$&#123;MYSQL_SERVICE_PASSWORD&#125;</span></span><br><span class="line"><span class="comment">### The auth system to use, currently only &#x27;nacos&#x27; is supported:</span></span><br><span class="line"><span class="meta">nacos.core.auth.system.type</span>=<span class="string">$&#123;NACOS_AUTH_SYSTEM_TYPE:nacos&#125;</span></span><br><span class="line"><span class="comment"> </span></span><br><span class="line"><span class="comment"> </span></span><br><span class="line"><span class="comment">### The token expiration in seconds:</span></span><br><span class="line"><span class="meta">nacos.core.auth.default.token.expire.seconds</span>=<span class="string">$&#123;NACOS_AUTH_TOKEN_EXPIRE_SECONDS:18000&#125;</span></span><br><span class="line"><span class="comment"> </span></span><br><span class="line"><span class="comment">### The default token:</span></span><br><span class="line"><span class="meta">nacos.core.auth.default.token.secret.key</span>=<span class="string">$&#123;NACOS_AUTH_TOKEN:SecretKey012345678901234567890123456789012345678901234567890123456789&#125;</span></span><br><span class="line"><span class="comment"> </span></span><br><span class="line"><span class="comment">### Turn on/off caching of auth information. By turning on this switch, the update of auth information would have a 15 seconds delay.</span></span><br><span class="line"><span class="meta">nacos.core.auth.caching.enabled</span>=<span class="string">$&#123;NACOS_AUTH_CACHE_ENABLE:false&#125;</span></span><br><span class="line"> </span><br><span class="line"><span class="meta">server.tomcat.accesslog.enabled</span>=<span class="string">$&#123;TOMCAT_ACCESSLOG_ENABLED:false&#125;</span></span><br><span class="line"><span class="meta">server.tomcat.accesslog.pattern</span>=<span class="string">%h %l %u %t &quot;%r&quot; %s %b %D</span></span><br><span class="line"><span class="comment"># default current work dir</span></span><br><span class="line"><span class="meta">server.tomcat.basedir</span>=<span class="string"></span></span><br><span class="line"><span class="comment">## spring security config</span></span><br><span class="line"><span class="comment">### turn off security</span></span><br><span class="line"><span class="meta">nacos.security.ignore.urls</span>=<span class="string">/,/error,/**/*.css,/**/*.js,/**/*.html,/**/*.map,/**/*.svg,/**/*.png,/**/*.ico,/console-fe/public/**,/v1/auth/**,/v1/console/health/**,/actuator/**,/v1/console/server/**</span></span><br><span class="line"><span class="comment"># metrics for elastic search</span></span><br><span class="line"><span class="meta">management.metrics.export.elastic.enabled</span>=<span class="string">false</span></span><br><span class="line"><span class="meta">management.metrics.export.influx.enabled</span>=<span class="string">false</span></span><br><span class="line"> </span><br><span class="line"><span class="meta">nacos.naming.distro.taskDispatchThreadCount</span>=<span class="string">10</span></span><br><span class="line"><span class="meta">nacos.naming.distro.taskDispatchPeriod</span>=<span class="string">200</span></span><br><span class="line"><span class="meta">nacos.naming.distro.batchSyncKeyCount</span>=<span class="string">1000</span></span><br><span class="line"><span class="meta">nacos.naming.distro.initDataRatio</span>=<span class="string">0.9</span></span><br><span class="line"><span class="meta">nacos.naming.distro.syncRetryDelay</span>=<span class="string">5000</span></span><br><span class="line"><span class="meta">nacos.naming.data.warmup</span>=<span class="string">true</span></span><br></pre></td></tr></table></figure>
+
+<p>添加docker-startup.sh脚本</p>
+<p>容器里nacos集群模式的启动脚本必须使用docker-startup.sh，不能使用startup.sh启动脚本</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[root@k8s-master conf]# cd ../bin/</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">[root@k8s-master bin]# cat docker-startup.sh</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash">!/bin/bash</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> Copyright 1999-2018 Alibaba Group Holding Ltd.</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> Licensed under the Apache License, Version 2.0 (the <span class="string">&quot;License&quot;</span>);</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> you may not use this file except <span class="keyword">in</span> compliance with the License.</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> You may obtain a copy of the License at</span></span><br><span class="line"><span class="meta"> </span></span><br><span class="line"><span class="meta">#</span><span class="bash">      http://www.apache.org/licenses/LICENSE-2.0</span></span><br><span class="line"><span class="meta">#</span><span class="bash"></span></span><br><span class="line"><span class="bash"><span class="comment"># Unless required by applicable law or agreed to in writing, software</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> distributed under the License is distributed on an <span class="string">&quot;AS IS&quot;</span> BASIS,</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> See the License <span class="keyword">for</span> the specific language governing permissions and</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> limitations under the License.</span></span><br><span class="line">set -x</span><br><span class="line">export DEFAULT_SEARCH_LOCATIONS=&quot;classpath:/,classpath:/config/,file:./,file:./config/&quot;</span><br><span class="line">export CUSTOM_SEARCH_LOCATIONS=$&#123;DEFAULT_SEARCH_LOCATIONS&#125;,file:$&#123;BASE_DIR&#125;/conf/,$&#123;BASE_DIR&#125;/init.d/</span><br><span class="line">export CUSTOM_SEARCH_NAMES=&quot;application,custom&quot;</span><br><span class="line">PLUGINS_DIR=&quot;/home/nacos/plugins/peer-finder&quot;</span><br><span class="line">function print_servers()&#123;</span><br><span class="line">   if [[ ! -d &quot;$&#123;PLUGINS_DIR&#125;&quot; ]]; then</span><br><span class="line">    echo &quot;&quot; &gt; &quot;$CLUSTER_CONF&quot;</span><br><span class="line">    for server in $&#123;NACOS_SERVERS&#125;; do</span><br><span class="line">            echo &quot;$server&quot; &gt;&gt; &quot;$CLUSTER_CONF&quot;</span><br><span class="line">    done</span><br><span class="line">   else</span><br><span class="line">    bash $PLUGINS_DIR/plugin.sh</span><br><span class="line">   sleep 30</span><br><span class="line">        fi</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">#</span><span class="bash">===========================================================================================</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> JVM Configuration</span></span><br><span class="line"><span class="meta">#</span><span class="bash">===========================================================================================</span></span><br><span class="line">if [[ &quot;$&#123;MODE&#125;&quot; == &quot;standalone&quot; ]]; then</span><br><span class="line"> </span><br><span class="line">    JAVA_OPT=&quot;$&#123;JAVA_OPT&#125; -Xms512m -Xmx512m -Xmn256m&quot;</span><br><span class="line">    JAVA_OPT=&quot;$&#123;JAVA_OPT&#125; -Dnacos.standalone=true&quot;</span><br><span class="line">else</span><br><span class="line"> </span><br><span class="line">  JAVA_OPT=&quot;$&#123;JAVA_OPT&#125; -server -Xms$&#123;JVM_XMS&#125; -Xmx$&#123;JVM_XMX&#125; -Xmn$&#123;JVM_XMN&#125; -XX:MetaspaceSize=$&#123;JVM_MS&#125; -XX:MaxMetaspaceSize=$&#123;JVM_MMS&#125;&quot;</span><br><span class="line">  if [[ &quot;$&#123;NACOS_DEBUG&#125;&quot; == &quot;y&quot; ]]; then</span><br><span class="line">    JAVA_OPT=&quot;$&#123;JAVA_OPT&#125; -Xdebug -Xrunjdwp:transport=dt_socket,address=9555,server=y,suspend=n&quot;</span><br><span class="line">  fi</span><br><span class="line">  JAVA_OPT=&quot;$&#123;JAVA_OPT&#125; -XX:-OmitStackTraceInFastThrow -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=$&#123;BASE_DIR&#125;/logs/java_heapdump.hprof&quot;</span><br><span class="line">  JAVA_OPT=&quot;$&#123;JAVA_OPT&#125; -XX:-UseLargePages&quot;</span><br><span class="line">  print_servers</span><br><span class="line">fi</span><br><span class="line"><span class="meta"> </span></span><br><span class="line"><span class="meta">#</span><span class="bash">===========================================================================================</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> Setting system properties</span></span><br><span class="line"><span class="meta">#</span><span class="bash">===========================================================================================</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> <span class="built_in">set</span>  mode that Nacos Server <span class="keyword">function</span> of split</span></span><br><span class="line">if [[ &quot;$&#123;FUNCTION_MODE&#125;&quot; == &quot;config&quot; ]]; then</span><br><span class="line">    JAVA_OPT=&quot;$&#123;JAVA_OPT&#125; -Dnacos.functionMode=config&quot;</span><br><span class="line">elif [[ &quot;$&#123;FUNCTION_MODE&#125;&quot; == &quot;naming&quot; ]]; then</span><br><span class="line">    JAVA_OPT=&quot;$&#123;JAVA_OPT&#125; -Dnacos.functionMode=naming&quot;</span><br><span class="line">fi</span><br><span class="line"><span class="meta">#</span><span class="bash"> <span class="built_in">set</span> nacos server ip</span></span><br><span class="line">if [[ ! -z &quot;$&#123;NACOS_SERVER_IP&#125;&quot; ]]; then</span><br><span class="line">    JAVA_OPT=&quot;$&#123;JAVA_OPT&#125; -Dnacos.server.ip=$&#123;NACOS_SERVER_IP&#125;&quot;</span><br><span class="line">fi</span><br><span class="line"> </span><br><span class="line">if [[ ! -z &quot;$&#123;USE_ONLY_SITE_INTERFACES&#125;&quot; ]]; then</span><br><span class="line">    JAVA_OPT=&quot;$&#123;JAVA_OPT&#125; -Dnacos.inetutils.use-only-site-local-interfaces=$&#123;USE_ONLY_SITE_INTERFACES&#125;&quot;</span><br><span class="line">fi</span><br><span class="line"> </span><br><span class="line">if [[ ! -z &quot;$&#123;PREFERRED_NETWORKS&#125;&quot; ]]; then</span><br><span class="line">    JAVA_OPT=&quot;$&#123;JAVA_OPT&#125; -Dnacos.inetutils.preferred-networks=$&#123;PREFERRED_NETWORKS&#125;&quot;</span><br><span class="line">fi</span><br><span class="line"> </span><br><span class="line">if [[ ! -z &quot;$&#123;IGNORED_INTERFACES&#125;&quot; ]]; then</span><br><span class="line">    JAVA_OPT=&quot;$&#123;JAVA_OPT&#125; -Dnacos.inetutils.ignored-interfaces=$&#123;IGNORED_INTERFACES&#125;&quot;</span><br><span class="line">fi</span><br><span class="line"><span class="meta"> </span></span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="comment">## If turn on auth system:</span></span></span><br><span class="line">if [[ ! -z &quot;$&#123;NACOS_AUTH_ENABLE&#125;&quot; ]]; then</span><br><span class="line">    JAVA_OPT=&quot;$&#123;JAVA_OPT&#125; -Dnacos.core.auth.enabled=$&#123;NACOS_AUTH_ENABLE&#125;&quot;</span><br><span class="line">fi</span><br><span class="line"> </span><br><span class="line">if [[ &quot;$&#123;PREFER_HOST_MODE&#125;&quot; == &quot;hostname&quot; ]]; then</span><br><span class="line">    JAVA_OPT=&quot;$&#123;JAVA_OPT&#125; -Dnacos.preferHostnameOverIp=true&quot;</span><br><span class="line">fi</span><br><span class="line"> </span><br><span class="line">JAVA_MAJOR_VERSION=$($JAVA -version 2&gt;&amp;1 | sed -E -n &#x27;s/.* version &quot;([0-9]*).*$/\1/p&#x27;)</span><br><span class="line">if [[ &quot;$JAVA_MAJOR_VERSION&quot; -ge &quot;9&quot; ]] ; then</span><br><span class="line">  JAVA_OPT=&quot;$&#123;JAVA_OPT&#125; -cp .:$&#123;BASE_DIR&#125;/plugins/cmdb/*.jar:$&#123;BASE_DIR&#125;/plugins/mysql/*.jar&quot;</span><br><span class="line">  JAVA_OPT=&quot;$&#123;JAVA_OPT&#125; -Xlog:gc*:file=$&#123;BASE_DIR&#125;/logs/nacos_gc.log:time,tags:filecount=10,filesize=102400&quot;</span><br><span class="line">else</span><br><span class="line">  JAVA_OPT=&quot;$&#123;JAVA_OPT&#125; -Djava.ext.dirs=$&#123;JAVA_HOME&#125;/jre/lib/ext:$&#123;JAVA_HOME&#125;/lib/ext:$&#123;BASE_DIR&#125;/plugins/health:$&#123;BASE_DIR&#125;/plugins/cmdb:$&#123;BASE_DIR&#125;/plugins/mysql&quot;</span><br><span class="line">  JAVA_OPT=&quot;$&#123;JAVA_OPT&#125; -Xloggc:$&#123;BASE_DIR&#125;/logs/nacos_gc.log -verbose:gc -XX:+PrintGCDetails -XX:+PrintGCDateStamps -XX:+PrintGCTimeStamps -XX:+UseGCLogFileRotation -XX:NumberOfGCLogFiles=10 -XX:GCLogFileSize=100M&quot;</span><br><span class="line">fi</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">JAVA_OPT=&quot;$&#123;JAVA_OPT&#125; -Dnacos.home=$&#123;BASE_DIR&#125;&quot;</span><br><span class="line">JAVA_OPT=&quot;$&#123;JAVA_OPT&#125; -jar $&#123;BASE_DIR&#125;/target/nacos-server.jar&quot;</span><br><span class="line">JAVA_OPT=&quot;$&#123;JAVA_OPT&#125; $&#123;JAVA_OPT_EXT&#125;&quot;</span><br><span class="line">JAVA_OPT=&quot;$&#123;JAVA_OPT&#125; --spring.config.location=$&#123;CUSTOM_SEARCH_LOCATIONS&#125;&quot;</span><br><span class="line">JAVA_OPT=&quot;$&#123;JAVA_OPT&#125; --spring.config.name=$&#123;CUSTOM_SEARCH_NAMES&#125;&quot;</span><br><span class="line">JAVA_OPT=&quot;$&#123;JAVA_OPT&#125; --logging.config=$&#123;BASE_DIR&#125;/conf/nacos-logback.xml&quot;</span><br><span class="line">JAVA_OPT=&quot;$&#123;JAVA_OPT&#125; --server.max-http-header-size=524288&quot;</span><br><span class="line"> </span><br><span class="line">echo &quot;nacos is starting,you can check the $&#123;BASE_DIR&#125;/logs/start.out&quot;</span><br><span class="line">echo &quot;$JAVA $&#123;JAVA_OPT&#125;&quot; &gt; $&#123;BASE_DIR&#125;/logs/start.out 2&gt;&amp;1 &amp;</span><br><span class="line">nohup $JAVA $&#123;JAVA_OPT&#125; &gt; $&#123;BASE_DIR&#125;/logs/start.out 2&gt;&amp;1 &lt; /dev/null</span><br></pre></td></tr></table></figure>
+
+<p>打包</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[root@k8s-master bin]# cd /data</span><br><span class="line">[root@k8s-master data]# tar -zvcf nacos-server-2.0.2.tar.gz nacos-server-2.0.2</span><br><span class="line">[root@k8s-master data]# ls</span><br><span class="line">nacos-server-2.0.2  nacos-server-2.0.2.tar.gz  nacos-server-2.0.2.zip</span><br></pre></td></tr></table></figure>
+
+<h2 id="Nacos镜像制作">1.2. Nacos镜像制作</h2><p>编写dockerfile</p>
+<figure class="highlight dockerfile"><table><tr><td class="code"><pre><span class="line">[root@k8s-master data]<span class="comment"># cat Dockerfile</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">FROM</span> heyuze/jdk1.<span class="number">8.0</span>_301:latest</span><br><span class="line"><span class="keyword">RUN</span><span class="bash"> rm -f /etc/localtime \</span></span><br><span class="line"><span class="bash">&amp;&amp; ln -sv /usr/share/zoneinfo/Asia/Shanghai /etc/localtime \</span></span><br><span class="line"><span class="bash">&amp;&amp; <span class="built_in">echo</span> <span class="string">&quot;Asia/Shanghai&quot;</span> &gt; /etc/timezone</span></span><br><span class="line"> </span><br><span class="line"><span class="keyword">ENV</span> LANG en_US.UTF-<span class="number">8</span></span><br><span class="line"> </span><br><span class="line"><span class="keyword">ENV</span> MODE cluster</span><br><span class="line"><span class="keyword">ENV</span> PREFER_HOST_MODE ip</span><br><span class="line"><span class="keyword">ENV</span> BASE_DIR /home/nacos</span><br><span class="line"><span class="keyword">ENV</span> CLASSPATH .:/home/nacos/conf:</span><br><span class="line"><span class="keyword">ENV</span> CLUSTER_CONF /home/nacos/conf/cluster.conf</span><br><span class="line"><span class="keyword">ENV</span> FUNCTION_MODE all</span><br><span class="line"><span class="keyword">ENV</span> JAVA_HOME /usr/local/jdk/jdk1.<span class="number">8.0</span>_301</span><br><span class="line"><span class="keyword">ENV</span> NACOS_USER nacos</span><br><span class="line"><span class="keyword">ENV</span> JAVA /usr/local/jdk/jdk1.<span class="number">8.0</span>_301/bin/java</span><br><span class="line"><span class="keyword">ENV</span> JVM_XMS <span class="number">2</span>g</span><br><span class="line"><span class="keyword">ENV</span> JVM_XMX <span class="number">2</span>g</span><br><span class="line"><span class="keyword">ENV</span> JVM_XMN <span class="number">1</span>g</span><br><span class="line"><span class="keyword">ENV</span> JVM_MS <span class="number">128</span>m</span><br><span class="line"><span class="keyword">ENV</span> JVM_MMS <span class="number">320</span>m</span><br><span class="line"><span class="keyword">ENV</span> NACOS_DEBUG n</span><br><span class="line"><span class="keyword">ENV</span> TOMCAT_ACCESSLOG_ENABLED false</span><br><span class="line"> </span><br><span class="line"><span class="keyword">WORKDIR</span><span class="bash"> /home/nacos</span></span><br><span class="line"><span class="keyword">ADD</span><span class="bash"> nacos-server-2.0.2.tar.gz /home</span></span><br><span class="line"><span class="keyword">RUN</span><span class="bash"> <span class="built_in">set</span> -x &amp;&amp; mv /home/nacos-server-2.0.2/nacos/* /home/nacos/ &amp;&amp; rm -rf /home/nacos-server-2.0.2</span></span><br><span class="line"> </span><br><span class="line"><span class="keyword">RUN</span><span class="bash"> mkdir -p logs &amp;&amp; <span class="built_in">cd</span> logs &amp;&amp; touch start.out &amp;&amp; ln -sf /dev/stdout start.out &amp;&amp; ln -sf /dev/stderr start.out</span></span><br><span class="line"><span class="keyword">RUN</span><span class="bash"> chmod 755 bin/docker-startup.sh</span></span><br><span class="line"> </span><br><span class="line"><span class="keyword">EXPOSE</span> <span class="number">8848</span></span><br><span class="line"><span class="keyword">ENTRYPOINT</span><span class="bash"> [<span class="string">&quot;bin/docker-startup.sh&quot;</span>]</span></span><br></pre></td></tr></table></figure>
+
+<p>制作镜像并上传</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[root@k8s-master data]# docker build -t heyuze/nacos-cluster:v2.0.2 .</span><br><span class="line">[root@k8s-master data]# docker push heyuze/nacos-cluster:v2.0.2</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="部署Nacos集群">1.3. 部署Nacos集群</h2><p>这里采用了configmap存储卷，将mysql配置信息存到了configmap中</p>
 <blockquote>
-<p><a href="https://www.chinassl.net/ssltools/generator-csr.html">https://www.chinassl.net/ssltools/generator-csr.html</a></p>
+<p>注意：需要提前在mysql数据库中创建一个nacos库名！然后将上面nacos-server-2.0.2.tar.gz包中的conf/nacos-mysql.sql文件里的sql语句在mysql的nacos库下执行（source nacos-mysql.sql ）导入语句。</p>
 </blockquote>
-<p>填写相关信息生成两个文件</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">*_csr.txt</span><br><span class="line">*_key.txt</span><br></pre></td></tr></table></figure>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line">[<span class="string">root@k8s-master</span> <span class="string">nacos_cluster</span>]<span class="comment"># pwd</span></span><br><span class="line"><span class="string">/data/k8s-yaml/test_yaml/nacos_cluster</span></span><br><span class="line"></span><br><span class="line">[<span class="string">root@k8s-master</span> <span class="string">nacos_cluster</span>]<span class="comment"># cat nacos-cluster.yaml</span></span><br><span class="line"></span><br><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Service</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">namespace:</span> <span class="string">wise</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">nacos-cluster</span></span><br><span class="line">  <span class="attr">labels:</span></span><br><span class="line">    <span class="attr">app:</span> <span class="string">nacos-cluster</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">ports:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">port:</span> <span class="number">8848</span></span><br><span class="line">      <span class="attr">name:</span> <span class="string">server</span></span><br><span class="line">      <span class="attr">targetPort:</span> <span class="number">8848</span></span><br><span class="line">  <span class="attr">clusterIP:</span> <span class="string">None</span></span><br><span class="line">  <span class="attr">selector:</span></span><br><span class="line">    <span class="attr">app:</span> <span class="string">nacos-cluster</span></span><br><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">ConfigMap</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">namespace:</span> <span class="string">wise</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">nacos-cluster-cm</span></span><br><span class="line"><span class="attr">data:</span></span><br><span class="line">  <span class="attr">mysql.host:</span> <span class="string">&quot;192.168.101.221&quot;</span></span><br><span class="line">  <span class="attr">mysql.db.name:</span> <span class="string">&quot;nacos&quot;</span></span><br><span class="line">  <span class="attr">mysql.port:</span> <span class="string">&quot;3306&quot;</span></span><br><span class="line">  <span class="attr">mysql.user:</span> <span class="string">&quot;nacos&quot;</span></span><br><span class="line">  <span class="attr">mysql.password:</span> <span class="string">&quot;nacos@123&quot;</span></span><br><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="attr">apiVersion:</span> <span class="string">apps/v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">StatefulSet</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">namespace:</span> <span class="string">wise</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">nacos-cluster</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">serviceName:</span> <span class="string">nacos-cluster</span></span><br><span class="line">  <span class="attr">replicas:</span> <span class="number">3</span></span><br><span class="line">  <span class="attr">template:</span></span><br><span class="line">    <span class="attr">metadata:</span></span><br><span class="line">      <span class="attr">labels:</span></span><br><span class="line">        <span class="attr">app:</span> <span class="string">nacos-cluster</span></span><br><span class="line">      <span class="attr">annotations:</span></span><br><span class="line">        <span class="attr">pod.alpha.kubernetes.io/initialized:</span> <span class="string">&quot;true&quot;</span></span><br><span class="line">    <span class="attr">spec:</span></span><br><span class="line">      <span class="attr">affinity:</span></span><br><span class="line">        <span class="attr">podAntiAffinity:</span></span><br><span class="line">          <span class="attr">requiredDuringSchedulingIgnoredDuringExecution:</span></span><br><span class="line">            <span class="bullet">-</span> <span class="attr">labelSelector:</span></span><br><span class="line">                <span class="attr">matchExpressions:</span></span><br><span class="line">                  <span class="bullet">-</span> <span class="attr">key:</span> <span class="string">&quot;app&quot;</span></span><br><span class="line">                    <span class="attr">operator:</span> <span class="string">In</span></span><br><span class="line">                    <span class="attr">values:</span></span><br><span class="line">                      <span class="bullet">-</span> <span class="string">nacos-cluster</span></span><br><span class="line">              <span class="attr">topologyKey:</span> <span class="string">&quot;kubernetes.io/hostname&quot;</span></span><br><span class="line">      <span class="attr">containers:</span></span><br><span class="line">        <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">k8snacos</span></span><br><span class="line">          <span class="attr">imagePullPolicy:</span> <span class="string">Always</span></span><br><span class="line">          <span class="attr">image:</span> <span class="string">heyuze/nacos-cluster:v2.0.2</span></span><br><span class="line">          <span class="attr">resources:</span></span><br><span class="line">            <span class="attr">requests:</span></span><br><span class="line">              <span class="attr">memory:</span> <span class="string">2048Mi</span></span><br><span class="line">              <span class="attr">cpu:</span> <span class="string">1000m</span></span><br><span class="line">            <span class="attr">limits:</span></span><br><span class="line">              <span class="attr">memory:</span> <span class="string">2048Mi</span></span><br><span class="line">              <span class="attr">cpu:</span> <span class="string">1000m</span></span><br><span class="line">          <span class="attr">ports:</span></span><br><span class="line">            <span class="bullet">-</span> <span class="attr">containerPort:</span> <span class="number">8848</span></span><br><span class="line">              <span class="attr">name:</span> <span class="string">client</span></span><br><span class="line">          <span class="attr">env:</span></span><br><span class="line">            <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">NACOS_REPLICAS</span></span><br><span class="line">              <span class="attr">value:</span> <span class="string">&quot;3&quot;</span></span><br><span class="line">            <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">MYSQL_SERVICE_HOST</span></span><br><span class="line">              <span class="attr">valueFrom:</span></span><br><span class="line">                <span class="attr">configMapKeyRef:</span></span><br><span class="line">                  <span class="attr">name:</span> <span class="string">nacos-cluster-cm</span></span><br><span class="line">                  <span class="attr">key:</span> <span class="string">mysql.host</span></span><br><span class="line">            <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">MYSQL_SERVICE_DB_NAME</span></span><br><span class="line">              <span class="attr">valueFrom:</span></span><br><span class="line">                <span class="attr">configMapKeyRef:</span></span><br><span class="line">                  <span class="attr">name:</span> <span class="string">nacos-cluster-cm</span></span><br><span class="line">                  <span class="attr">key:</span> <span class="string">mysql.db.name</span></span><br><span class="line">            <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">MYSQL_SERVICE_PORT</span></span><br><span class="line">              <span class="attr">valueFrom:</span></span><br><span class="line">                <span class="attr">configMapKeyRef:</span></span><br><span class="line">                  <span class="attr">name:</span> <span class="string">nacos-cluster-cm</span></span><br><span class="line">                  <span class="attr">key:</span> <span class="string">mysql.port</span></span><br><span class="line">            <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">MYSQL_SERVICE_USER</span></span><br><span class="line">              <span class="attr">valueFrom:</span></span><br><span class="line">                <span class="attr">configMapKeyRef:</span></span><br><span class="line">                  <span class="attr">name:</span> <span class="string">nacos-cluster-cm</span></span><br><span class="line">                  <span class="attr">key:</span> <span class="string">mysql.user</span></span><br><span class="line">            <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">MYSQL_SERVICE_PASSWORD</span></span><br><span class="line">              <span class="attr">valueFrom:</span></span><br><span class="line">                <span class="attr">configMapKeyRef:</span></span><br><span class="line">                  <span class="attr">name:</span> <span class="string">nacos-cluster-cm</span></span><br><span class="line">                  <span class="attr">key:</span> <span class="string">mysql.password</span></span><br><span class="line">            <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">NACOS_SERVER_PORT</span></span><br><span class="line">              <span class="attr">value:</span> <span class="string">&quot;8848&quot;</span></span><br><span class="line">            <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">PREFER_HOST_MODE</span></span><br><span class="line">              <span class="attr">value:</span> <span class="string">&quot;hostname&quot;</span></span><br><span class="line">            <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">NACOS_SERVERS</span></span><br><span class="line">              <span class="attr">value:</span> <span class="string">&quot;nacos-cluster-0.nacos-cluster.wise.svc.cluster.local:8848 nacos-cluster-1.nacos-cluster.wise.svc.cluster.local:8848 nacos-cluster-2.nacos-cluster.wise.svc.cluster.local:8848&quot;</span></span><br><span class="line">  <span class="attr">selector:</span></span><br><span class="line">    <span class="attr">matchLabels:</span></span><br><span class="line">      <span class="attr">app:</span> <span class="string">nacos-cluster</span></span><br></pre></td></tr></table></figure>
 
-<p>csr文件用来申请ssl证书，key文件用于nginx中使用</p>
-<p>申请证书</p>
+<p>创建并查看</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[root@k8s-master nacos_cluster]# kubectl create -f nacos-cluster.yaml </span><br><span class="line">service/nacos-cluster created</span><br><span class="line">configmap/nacos-cluster-cm created</span><br><span class="line">statefulset.apps/nacos-cluster created</span><br><span class="line"></span><br><span class="line">[root@k8s-master nacos_cluster]# kubectl get pods -n wise|grep nacos-cluster</span><br><span class="line">nacos-cluster-0   1/1     Running   0          12m</span><br><span class="line">nacos-cluster-1   1/1     Running   0          11m</span><br><span class="line">nacos-cluster-2   1/1     Running   0          10m</span><br><span class="line"></span><br><span class="line">[root@k8s-master nacos_cluster]# kubectl get svc -n wise|grep nacos-cluster</span><br><span class="line">nacos-cluster   ClusterIP   None         &lt;none&gt;        8848/TCP   12m</span><br><span class="line"></span><br><span class="line">[root@k8s-master nacos_cluster]# kubectl get statefulset -n wise</span><br><span class="line">NAME            READY   AGE</span><br><span class="line">nacos-cluster   3/3     13m</span><br><span class="line"></span><br><span class="line">[root@k8s-master nacos_cluster]# kubectl get configmap -n wise|grep nacos-cluster</span><br><span class="line">nacos-cluster-cm   5      13m</span><br></pre></td></tr></table></figure>
+
+<p>创建ingress访问</p>
+<p>vim nacos-ingress.yaml</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="attr">apiVersion:</span> <span class="string">extensions/v1beta1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Ingress</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">annotations:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">nacos-cluster</span></span><br><span class="line">  <span class="attr">namespace:</span> <span class="string">wis</span></span><br><span class="line">  <span class="attr">annotations:</span></span><br><span class="line">    <span class="attr">kubernetes.io/ingress.class:</span> <span class="string">traefik-v2.3</span>     </span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">rules:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">host:</span> <span class="string">nacos.heyonggs.com</span></span><br><span class="line">    <span class="attr">http:</span></span><br><span class="line">      <span class="attr">paths:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">backend:</span></span><br><span class="line">          <span class="attr">serviceName:</span> <span class="string">nacos-cluster</span></span><br><span class="line">          <span class="attr">servicePort:</span> <span class="number">8848</span></span><br></pre></td></tr></table></figure>
+
+<p>应用</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">kubectl apply -f nacos-ingress.yaml </span><br></pre></td></tr></table></figure>
+
+<p>先做域名解析在访问查看集群：http://域名/nacos</p>
 <blockquote>
-<p><a href="https://cheapsslsecurity.com/">https://cheapsslsecurity.com/</a></p>
+<p>账号：nacos</p>
+<p>密码：nacos</p>
 </blockquote>
-<p>申请的证书目录如下：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">DigiCertCA.crt</span><br><span class="line">My_CA_Bundle.crt</span><br><span class="line">star_aimmcloud_com.crt</span><br><span class="line">TrustedRoot.crt</span><br></pre></td></tr></table></figure>
-
-<p>将domain_name.crt 和 DigCertCA.crt写入bundle.crt</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cat your_domain_name.crt DigiCertCA.crt &gt;&gt; bundle.crt</span><br></pre></td></tr></table></figure>
-
-<p>此处应为</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cat star_aimmcloud_com.crt DigiCertCA.crt &gt;&gt; bundle.crt</span><br></pre></td></tr></table></figure>
-
-<p>nginx的配置</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">server &#123;</span><br><span class="line"></span><br><span class="line">listen   443;</span><br><span class="line"></span><br><span class="line">ssl    on;</span><br><span class="line">ssl_certificate    /etc/ssl/your_domain_name.pem; (or bundle.crt)</span><br><span class="line">ssl_certificate_key    /etc/ssl/your_domain_name.key;</span><br><span class="line"></span><br><span class="line">server_name your.domain.com;</span><br><span class="line">access_log /var/log/nginx/nginx.vhost.access.log;</span><br><span class="line">error_log /var/log/nginx/nginx.vhost.error.log;</span><br><span class="line">location / &#123;</span><br><span class="line">root   /home/www/public_html/your.domain.com/public/;</span><br><span class="line">index  index.html;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
+<p><img src="https://cdn.jsdelivr.net/gh/heyonggs/images@master/wp/2021/nacos/1.jpg" alt="traefik"></p>
 ]]></content>
       <categories>
-        <category>Nginx</category>
+        <category>k8s</category>
       </categories>
       <tags>
-        <tag>Nginx</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Linux磁盘满了解决方案</title>
-    <url>/p/14331.html</url>
-    <content><![CDATA[<p><escape><span id="more"></span></escape></p>
-<p>查看磁盘情况</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[root@iz2zebp5657k0fz0pvgcgnz ~]# df -h</span><br><span class="line">Filesystem      Size  Used Avail Use% Mounted on</span><br><span class="line">devtmpfs        909M     0  909M   0% /dev</span><br><span class="line">tmpfs           919M     0  919M   0% /dev/shm</span><br><span class="line">tmpfs           919M  8.6M  911M   1% /run</span><br><span class="line">tmpfs           919M     0  919M   0% /sys/fs/cgroup</span><br><span class="line">/dev/vda1        40G  8.4G   29G  23% /</span><br><span class="line">overlay          40G  8.4G   29G  23% /var/lib/docker/overlay2/e374b04682a79626e00aca70c896b2a9b5a46ae9730c3311dd774b1bc56bdb9d/merged</span><br><span class="line">overlay          40G  8.4G   29G  23% /var/lib/docker/overlay2/c59338b367886fefb1ff03641e25ad7a3800421f39652d43e08a51b51ac95009/merged</span><br><span class="line">tmpfs           184M     0  184M   0% /run/user/0</span><br></pre></td></tr></table></figure>
-
-<p>df: 用于显示目前在Linux系统上的文件系统的磁盘使用情况统计。</p>
-<p>-h：以K，M，G为单位，提高信息的可读性。</p>
-<p>Size：总内存数</p>
-<p>Used：使用内存数</p>
-<p>Avail：剩余内存数</p>
-<p>Mounted on：挂载点</p>
-<p>查看文件夹下面的磁盘使用情况</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 进入根目录</span></span><br><span class="line">[root@iz2zebp5657k0fz0pvgcgnz ~]# cd /</span><br><span class="line">[root@iz2zebp5657k0fz0pvgcgnz /]# du --max-depth=1 -h</span><br><span class="line">44K	./home</span><br><span class="line">8.6M	./run</span><br><span class="line">24M	./tmp</span><br><span class="line">16K	./opt</span><br><span class="line">......</span><br><span class="line">0	./dev</span><br><span class="line">0	./sys</span><br><span class="line">101M	./root</span><br><span class="line">4.0K	./media</span><br><span class="line">48M	./etc</span><br><span class="line">4.9G	./var</span><br><span class="line">120M	./data</span><br><span class="line">11G	.</span><br></pre></td></tr></table></figure>
-
-<p>du：会显示指定的目录或文件所占用的磁盘空间。</p>
-<p>–max-depth-1：–max-depth=&lt;目录层数&gt; 超过指定层数的目录后，予以忽略。</p>
-<p>-h：以K，M，G为单位，提高信息的可读性。</p>
-]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>Linux</tag>
+        <tag>k8s</tag>
       </tags>
   </entry>
   <entry>
@@ -1167,53 +1223,71 @@
       </tags>
   </entry>
   <entry>
-    <title>k8s部署nacos集群</title>
-    <url>/p/20278.html</url>
+    <title>kubeadm修改证书时间为99年</title>
+    <url>/p/23286.html</url>
     <content><![CDATA[<p><escape><span id="more"></span></escape></p>
-<h1 id="k8s部署nacos集群">1. k8s部署nacos集群</h1><h2 id="Nacos集群部署的安装包准备">1.1. Nacos集群部署的安装包准备</h2><p>下载nacos安装包</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[root@k8s-master data]# pwd</span><br><span class="line">/data/nacos-server-2.0.2</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 下载安装包</span></span><br><span class="line">[root@k8s-master data]# wget https://github.com/alibaba/nacos/releases/download/2.0.2/nacos-server-2.0.2.zip</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 解压</span></span><br><span class="line">[root@k8s-master data]# unzip nacos-server-2.0.2.zip</span><br><span class="line">[root@k8s-master data]# mv nacos nacos-server-2.0.2</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 进入配置文件目录</span></span><br><span class="line">[root@k8s-master conf]# cd nacos-server-2.0.2/nacos/conf</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 备份配置文件</span></span><br><span class="line">[root@k8s-master conf]# mv application.properties application.properties.bak</span><br></pre></td></tr></table></figure>
+<h1 id="kubeadm修改证书时间为99年">1. kubeadm修改证书时间为99年</h1><h2 id="查看当前证书时间">1.1. 查看当前证书时间</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[root@k8s-master ~]# kubeadm alpha certs check-expiration</span><br><span class="line">[check-expiration] Reading configuration from the cluster...</span><br><span class="line">[check-expiration] FYI: You can look at this config file with &#x27;kubectl -n kube-system get cm kubeadm-config -oyaml&#x27;</span><br><span class="line"></span><br><span class="line">CERTIFICATE                EXPIRES                  RESIDUAL TIME   CERTIFICATE AUTHORITY   EXTERNALLY MANAGED</span><br><span class="line">admin.conf                 Aug 30, 2022 07:53 UTC   363d                                    no      </span><br><span class="line">apiserver                  Aug 30, 2022 07:52 UTC   363d            ca                      no      </span><br><span class="line">apiserver-etcd-client      Aug 30, 2022 07:53 UTC   363d            etcd-ca                 no      </span><br><span class="line">apiserver-kubelet-client   Aug 30, 2022 07:52 UTC   363d            ca                      no      </span><br><span class="line">controller-manager.conf    Aug 30, 2022 07:53 UTC   363d                                    no      </span><br><span class="line">etcd-healthcheck-client    Aug 30, 2022 07:53 UTC   363d            etcd-ca                 no      </span><br><span class="line">etcd-peer                  Aug 30, 2022 07:53 UTC   363d            etcd-ca                 no      </span><br><span class="line">etcd-server                Aug 30, 2022 07:53 UTC   363d            etcd-ca                 no      </span><br><span class="line">front-proxy-client         Aug 30, 2022 07:53 UTC   363d            front-proxy-ca          no      </span><br><span class="line">scheduler.conf             Aug 30, 2022 07:53 UTC   363d                                    no      </span><br><span class="line"></span><br><span class="line">CERTIFICATE AUTHORITY   EXPIRES                  RESIDUAL TIME   EXTERNALLY MANAGED</span><br><span class="line">ca                      Aug 28, 2031 07:52 UTC   9y              no      </span><br><span class="line">etcd-ca                 Aug 28, 2031 07:53 UTC   9y              no      </span><br><span class="line">front-proxy-ca          Aug 28, 2031 07:53 UTC   9y              no      </span><br></pre></td></tr></table></figure>
 
-<p>修改配置文件</p>
-<p>[root@k8s-master conf]# cat application.properties</p>
-<figure class="highlight properties"><table><tr><td class="code"><pre><span class="line"><span class="comment"># spring</span></span><br><span class="line"><span class="meta">server.servlet.contextPath</span>=<span class="string">$&#123;SERVER_SERVLET_CONTEXTPATH:/nacos&#125;</span></span><br><span class="line"><span class="meta">server.contextPath</span>=<span class="string">/nacos</span></span><br><span class="line"><span class="meta">server.port</span>=<span class="string">$&#123;NACOS_SERVER_PORT:8848&#125;</span></span><br><span class="line"><span class="meta">spring.datasource.platform</span>=<span class="string">$&#123;SPRING_DATASOURCE_PLATFORM:&quot;&quot;&#125;</span></span><br><span class="line"><span class="meta">nacos.cmdb.dumpTaskInterval</span>=<span class="string">3600</span></span><br><span class="line"><span class="meta">nacos.cmdb.eventTaskInterval</span>=<span class="string">10</span></span><br><span class="line"><span class="meta">nacos.cmdb.labelTaskInterval</span>=<span class="string">300</span></span><br><span class="line"><span class="meta">nacos.cmdb.loadDataAtStart</span>=<span class="string">false</span></span><br><span class="line"><span class="meta">db.num</span>=<span class="string">$&#123;MYSQL_DATABASE_NUM:1&#125;</span></span><br><span class="line"><span class="meta">db.url.0</span>=<span class="string">jdbc:mysql://$&#123;MYSQL_SERVICE_HOST&#125;:$&#123;MYSQL_SERVICE_PORT:3306&#125;/$&#123;MYSQL_SERVICE_DB_NAME&#125;?characterEncoding=utf8&amp;connectTimeout=1000&amp;socketTimeout=3000&amp;autoReconnect=true</span></span><br><span class="line"><span class="meta">db.user</span>=<span class="string">$&#123;MYSQL_SERVICE_USER&#125;</span></span><br><span class="line"><span class="meta">db.password</span>=<span class="string">$&#123;MYSQL_SERVICE_PASSWORD&#125;</span></span><br><span class="line"><span class="comment">### The auth system to use, currently only &#x27;nacos&#x27; is supported:</span></span><br><span class="line"><span class="meta">nacos.core.auth.system.type</span>=<span class="string">$&#123;NACOS_AUTH_SYSTEM_TYPE:nacos&#125;</span></span><br><span class="line"><span class="comment"> </span></span><br><span class="line"><span class="comment"> </span></span><br><span class="line"><span class="comment">### The token expiration in seconds:</span></span><br><span class="line"><span class="meta">nacos.core.auth.default.token.expire.seconds</span>=<span class="string">$&#123;NACOS_AUTH_TOKEN_EXPIRE_SECONDS:18000&#125;</span></span><br><span class="line"><span class="comment"> </span></span><br><span class="line"><span class="comment">### The default token:</span></span><br><span class="line"><span class="meta">nacos.core.auth.default.token.secret.key</span>=<span class="string">$&#123;NACOS_AUTH_TOKEN:SecretKey012345678901234567890123456789012345678901234567890123456789&#125;</span></span><br><span class="line"><span class="comment"> </span></span><br><span class="line"><span class="comment">### Turn on/off caching of auth information. By turning on this switch, the update of auth information would have a 15 seconds delay.</span></span><br><span class="line"><span class="meta">nacos.core.auth.caching.enabled</span>=<span class="string">$&#123;NACOS_AUTH_CACHE_ENABLE:false&#125;</span></span><br><span class="line"> </span><br><span class="line"><span class="meta">server.tomcat.accesslog.enabled</span>=<span class="string">$&#123;TOMCAT_ACCESSLOG_ENABLED:false&#125;</span></span><br><span class="line"><span class="meta">server.tomcat.accesslog.pattern</span>=<span class="string">%h %l %u %t &quot;%r&quot; %s %b %D</span></span><br><span class="line"><span class="comment"># default current work dir</span></span><br><span class="line"><span class="meta">server.tomcat.basedir</span>=<span class="string"></span></span><br><span class="line"><span class="comment">## spring security config</span></span><br><span class="line"><span class="comment">### turn off security</span></span><br><span class="line"><span class="meta">nacos.security.ignore.urls</span>=<span class="string">/,/error,/**/*.css,/**/*.js,/**/*.html,/**/*.map,/**/*.svg,/**/*.png,/**/*.ico,/console-fe/public/**,/v1/auth/**,/v1/console/health/**,/actuator/**,/v1/console/server/**</span></span><br><span class="line"><span class="comment"># metrics for elastic search</span></span><br><span class="line"><span class="meta">management.metrics.export.elastic.enabled</span>=<span class="string">false</span></span><br><span class="line"><span class="meta">management.metrics.export.influx.enabled</span>=<span class="string">false</span></span><br><span class="line"> </span><br><span class="line"><span class="meta">nacos.naming.distro.taskDispatchThreadCount</span>=<span class="string">10</span></span><br><span class="line"><span class="meta">nacos.naming.distro.taskDispatchPeriod</span>=<span class="string">200</span></span><br><span class="line"><span class="meta">nacos.naming.distro.batchSyncKeyCount</span>=<span class="string">1000</span></span><br><span class="line"><span class="meta">nacos.naming.distro.initDataRatio</span>=<span class="string">0.9</span></span><br><span class="line"><span class="meta">nacos.naming.distro.syncRetryDelay</span>=<span class="string">5000</span></span><br><span class="line"><span class="meta">nacos.naming.data.warmup</span>=<span class="string">true</span></span><br></pre></td></tr></table></figure>
+<p>可以看到正常只有一年时间。</p>
+<h2 id="下载源码">1.2. 下载源码</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">git clone https://github.com/kubernetes/kubernetes.git</span><br></pre></td></tr></table></figure>
 
-<p>添加docker-startup.sh脚本</p>
-<p>容器里nacos集群模式的启动脚本必须使用docker-startup.sh，不能使用startup.sh启动脚本</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[root@k8s-master conf]# cd ../bin/</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">[root@k8s-master bin]# cat docker-startup.sh</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash">!/bin/bash</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> Copyright 1999-2018 Alibaba Group Holding Ltd.</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> Licensed under the Apache License, Version 2.0 (the <span class="string">&quot;License&quot;</span>);</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> you may not use this file except <span class="keyword">in</span> compliance with the License.</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> You may obtain a copy of the License at</span></span><br><span class="line"><span class="meta"> </span></span><br><span class="line"><span class="meta">#</span><span class="bash">      http://www.apache.org/licenses/LICENSE-2.0</span></span><br><span class="line"><span class="meta">#</span><span class="bash"></span></span><br><span class="line"><span class="bash"><span class="comment"># Unless required by applicable law or agreed to in writing, software</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> distributed under the License is distributed on an <span class="string">&quot;AS IS&quot;</span> BASIS,</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> See the License <span class="keyword">for</span> the specific language governing permissions and</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> limitations under the License.</span></span><br><span class="line">set -x</span><br><span class="line">export DEFAULT_SEARCH_LOCATIONS=&quot;classpath:/,classpath:/config/,file:./,file:./config/&quot;</span><br><span class="line">export CUSTOM_SEARCH_LOCATIONS=$&#123;DEFAULT_SEARCH_LOCATIONS&#125;,file:$&#123;BASE_DIR&#125;/conf/,$&#123;BASE_DIR&#125;/init.d/</span><br><span class="line">export CUSTOM_SEARCH_NAMES=&quot;application,custom&quot;</span><br><span class="line">PLUGINS_DIR=&quot;/home/nacos/plugins/peer-finder&quot;</span><br><span class="line">function print_servers()&#123;</span><br><span class="line">   if [[ ! -d &quot;$&#123;PLUGINS_DIR&#125;&quot; ]]; then</span><br><span class="line">    echo &quot;&quot; &gt; &quot;$CLUSTER_CONF&quot;</span><br><span class="line">    for server in $&#123;NACOS_SERVERS&#125;; do</span><br><span class="line">            echo &quot;$server&quot; &gt;&gt; &quot;$CLUSTER_CONF&quot;</span><br><span class="line">    done</span><br><span class="line">   else</span><br><span class="line">    bash $PLUGINS_DIR/plugin.sh</span><br><span class="line">   sleep 30</span><br><span class="line">        fi</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">#</span><span class="bash">===========================================================================================</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> JVM Configuration</span></span><br><span class="line"><span class="meta">#</span><span class="bash">===========================================================================================</span></span><br><span class="line">if [[ &quot;$&#123;MODE&#125;&quot; == &quot;standalone&quot; ]]; then</span><br><span class="line"> </span><br><span class="line">    JAVA_OPT=&quot;$&#123;JAVA_OPT&#125; -Xms512m -Xmx512m -Xmn256m&quot;</span><br><span class="line">    JAVA_OPT=&quot;$&#123;JAVA_OPT&#125; -Dnacos.standalone=true&quot;</span><br><span class="line">else</span><br><span class="line"> </span><br><span class="line">  JAVA_OPT=&quot;$&#123;JAVA_OPT&#125; -server -Xms$&#123;JVM_XMS&#125; -Xmx$&#123;JVM_XMX&#125; -Xmn$&#123;JVM_XMN&#125; -XX:MetaspaceSize=$&#123;JVM_MS&#125; -XX:MaxMetaspaceSize=$&#123;JVM_MMS&#125;&quot;</span><br><span class="line">  if [[ &quot;$&#123;NACOS_DEBUG&#125;&quot; == &quot;y&quot; ]]; then</span><br><span class="line">    JAVA_OPT=&quot;$&#123;JAVA_OPT&#125; -Xdebug -Xrunjdwp:transport=dt_socket,address=9555,server=y,suspend=n&quot;</span><br><span class="line">  fi</span><br><span class="line">  JAVA_OPT=&quot;$&#123;JAVA_OPT&#125; -XX:-OmitStackTraceInFastThrow -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=$&#123;BASE_DIR&#125;/logs/java_heapdump.hprof&quot;</span><br><span class="line">  JAVA_OPT=&quot;$&#123;JAVA_OPT&#125; -XX:-UseLargePages&quot;</span><br><span class="line">  print_servers</span><br><span class="line">fi</span><br><span class="line"><span class="meta"> </span></span><br><span class="line"><span class="meta">#</span><span class="bash">===========================================================================================</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> Setting system properties</span></span><br><span class="line"><span class="meta">#</span><span class="bash">===========================================================================================</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> <span class="built_in">set</span>  mode that Nacos Server <span class="keyword">function</span> of split</span></span><br><span class="line">if [[ &quot;$&#123;FUNCTION_MODE&#125;&quot; == &quot;config&quot; ]]; then</span><br><span class="line">    JAVA_OPT=&quot;$&#123;JAVA_OPT&#125; -Dnacos.functionMode=config&quot;</span><br><span class="line">elif [[ &quot;$&#123;FUNCTION_MODE&#125;&quot; == &quot;naming&quot; ]]; then</span><br><span class="line">    JAVA_OPT=&quot;$&#123;JAVA_OPT&#125; -Dnacos.functionMode=naming&quot;</span><br><span class="line">fi</span><br><span class="line"><span class="meta">#</span><span class="bash"> <span class="built_in">set</span> nacos server ip</span></span><br><span class="line">if [[ ! -z &quot;$&#123;NACOS_SERVER_IP&#125;&quot; ]]; then</span><br><span class="line">    JAVA_OPT=&quot;$&#123;JAVA_OPT&#125; -Dnacos.server.ip=$&#123;NACOS_SERVER_IP&#125;&quot;</span><br><span class="line">fi</span><br><span class="line"> </span><br><span class="line">if [[ ! -z &quot;$&#123;USE_ONLY_SITE_INTERFACES&#125;&quot; ]]; then</span><br><span class="line">    JAVA_OPT=&quot;$&#123;JAVA_OPT&#125; -Dnacos.inetutils.use-only-site-local-interfaces=$&#123;USE_ONLY_SITE_INTERFACES&#125;&quot;</span><br><span class="line">fi</span><br><span class="line"> </span><br><span class="line">if [[ ! -z &quot;$&#123;PREFERRED_NETWORKS&#125;&quot; ]]; then</span><br><span class="line">    JAVA_OPT=&quot;$&#123;JAVA_OPT&#125; -Dnacos.inetutils.preferred-networks=$&#123;PREFERRED_NETWORKS&#125;&quot;</span><br><span class="line">fi</span><br><span class="line"> </span><br><span class="line">if [[ ! -z &quot;$&#123;IGNORED_INTERFACES&#125;&quot; ]]; then</span><br><span class="line">    JAVA_OPT=&quot;$&#123;JAVA_OPT&#125; -Dnacos.inetutils.ignored-interfaces=$&#123;IGNORED_INTERFACES&#125;&quot;</span><br><span class="line">fi</span><br><span class="line"><span class="meta"> </span></span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="comment">## If turn on auth system:</span></span></span><br><span class="line">if [[ ! -z &quot;$&#123;NACOS_AUTH_ENABLE&#125;&quot; ]]; then</span><br><span class="line">    JAVA_OPT=&quot;$&#123;JAVA_OPT&#125; -Dnacos.core.auth.enabled=$&#123;NACOS_AUTH_ENABLE&#125;&quot;</span><br><span class="line">fi</span><br><span class="line"> </span><br><span class="line">if [[ &quot;$&#123;PREFER_HOST_MODE&#125;&quot; == &quot;hostname&quot; ]]; then</span><br><span class="line">    JAVA_OPT=&quot;$&#123;JAVA_OPT&#125; -Dnacos.preferHostnameOverIp=true&quot;</span><br><span class="line">fi</span><br><span class="line"> </span><br><span class="line">JAVA_MAJOR_VERSION=$($JAVA -version 2&gt;&amp;1 | sed -E -n &#x27;s/.* version &quot;([0-9]*).*$/\1/p&#x27;)</span><br><span class="line">if [[ &quot;$JAVA_MAJOR_VERSION&quot; -ge &quot;9&quot; ]] ; then</span><br><span class="line">  JAVA_OPT=&quot;$&#123;JAVA_OPT&#125; -cp .:$&#123;BASE_DIR&#125;/plugins/cmdb/*.jar:$&#123;BASE_DIR&#125;/plugins/mysql/*.jar&quot;</span><br><span class="line">  JAVA_OPT=&quot;$&#123;JAVA_OPT&#125; -Xlog:gc*:file=$&#123;BASE_DIR&#125;/logs/nacos_gc.log:time,tags:filecount=10,filesize=102400&quot;</span><br><span class="line">else</span><br><span class="line">  JAVA_OPT=&quot;$&#123;JAVA_OPT&#125; -Djava.ext.dirs=$&#123;JAVA_HOME&#125;/jre/lib/ext:$&#123;JAVA_HOME&#125;/lib/ext:$&#123;BASE_DIR&#125;/plugins/health:$&#123;BASE_DIR&#125;/plugins/cmdb:$&#123;BASE_DIR&#125;/plugins/mysql&quot;</span><br><span class="line">  JAVA_OPT=&quot;$&#123;JAVA_OPT&#125; -Xloggc:$&#123;BASE_DIR&#125;/logs/nacos_gc.log -verbose:gc -XX:+PrintGCDetails -XX:+PrintGCDateStamps -XX:+PrintGCTimeStamps -XX:+UseGCLogFileRotation -XX:NumberOfGCLogFiles=10 -XX:GCLogFileSize=100M&quot;</span><br><span class="line">fi</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">JAVA_OPT=&quot;$&#123;JAVA_OPT&#125; -Dnacos.home=$&#123;BASE_DIR&#125;&quot;</span><br><span class="line">JAVA_OPT=&quot;$&#123;JAVA_OPT&#125; -jar $&#123;BASE_DIR&#125;/target/nacos-server.jar&quot;</span><br><span class="line">JAVA_OPT=&quot;$&#123;JAVA_OPT&#125; $&#123;JAVA_OPT_EXT&#125;&quot;</span><br><span class="line">JAVA_OPT=&quot;$&#123;JAVA_OPT&#125; --spring.config.location=$&#123;CUSTOM_SEARCH_LOCATIONS&#125;&quot;</span><br><span class="line">JAVA_OPT=&quot;$&#123;JAVA_OPT&#125; --spring.config.name=$&#123;CUSTOM_SEARCH_NAMES&#125;&quot;</span><br><span class="line">JAVA_OPT=&quot;$&#123;JAVA_OPT&#125; --logging.config=$&#123;BASE_DIR&#125;/conf/nacos-logback.xml&quot;</span><br><span class="line">JAVA_OPT=&quot;$&#123;JAVA_OPT&#125; --server.max-http-header-size=524288&quot;</span><br><span class="line"> </span><br><span class="line">echo &quot;nacos is starting,you can check the $&#123;BASE_DIR&#125;/logs/start.out&quot;</span><br><span class="line">echo &quot;$JAVA $&#123;JAVA_OPT&#125;&quot; &gt; $&#123;BASE_DIR&#125;/logs/start.out 2&gt;&amp;1 &amp;</span><br><span class="line">nohup $JAVA $&#123;JAVA_OPT&#125; &gt; $&#123;BASE_DIR&#125;/logs/start.out 2&gt;&amp;1 &lt; /dev/null</span><br></pre></td></tr></table></figure>
-
-<p>打包</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[root@k8s-master bin]# cd /data</span><br><span class="line">[root@k8s-master data]# tar -zvcf nacos-server-2.0.2.tar.gz nacos-server-2.0.2</span><br><span class="line">[root@k8s-master data]# ls</span><br><span class="line">nacos-server-2.0.2  nacos-server-2.0.2.tar.gz  nacos-server-2.0.2.zip</span><br></pre></td></tr></table></figure>
-
-<h2 id="Nacos镜像制作">1.2. Nacos镜像制作</h2><p>编写dockerfile</p>
-<figure class="highlight dockerfile"><table><tr><td class="code"><pre><span class="line">[root@k8s-master data]<span class="comment"># cat Dockerfile</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">FROM</span> heyuze/jdk1.<span class="number">8.0</span>_301:latest</span><br><span class="line"><span class="keyword">RUN</span><span class="bash"> rm -f /etc/localtime \</span></span><br><span class="line"><span class="bash">&amp;&amp; ln -sv /usr/share/zoneinfo/Asia/Shanghai /etc/localtime \</span></span><br><span class="line"><span class="bash">&amp;&amp; <span class="built_in">echo</span> <span class="string">&quot;Asia/Shanghai&quot;</span> &gt; /etc/timezone</span></span><br><span class="line"> </span><br><span class="line"><span class="keyword">ENV</span> LANG en_US.UTF-<span class="number">8</span></span><br><span class="line"> </span><br><span class="line"><span class="keyword">ENV</span> MODE cluster</span><br><span class="line"><span class="keyword">ENV</span> PREFER_HOST_MODE ip</span><br><span class="line"><span class="keyword">ENV</span> BASE_DIR /home/nacos</span><br><span class="line"><span class="keyword">ENV</span> CLASSPATH .:/home/nacos/conf:</span><br><span class="line"><span class="keyword">ENV</span> CLUSTER_CONF /home/nacos/conf/cluster.conf</span><br><span class="line"><span class="keyword">ENV</span> FUNCTION_MODE all</span><br><span class="line"><span class="keyword">ENV</span> JAVA_HOME /usr/local/jdk/jdk1.<span class="number">8.0</span>_301</span><br><span class="line"><span class="keyword">ENV</span> NACOS_USER nacos</span><br><span class="line"><span class="keyword">ENV</span> JAVA /usr/local/jdk/jdk1.<span class="number">8.0</span>_301/bin/java</span><br><span class="line"><span class="keyword">ENV</span> JVM_XMS <span class="number">2</span>g</span><br><span class="line"><span class="keyword">ENV</span> JVM_XMX <span class="number">2</span>g</span><br><span class="line"><span class="keyword">ENV</span> JVM_XMN <span class="number">1</span>g</span><br><span class="line"><span class="keyword">ENV</span> JVM_MS <span class="number">128</span>m</span><br><span class="line"><span class="keyword">ENV</span> JVM_MMS <span class="number">320</span>m</span><br><span class="line"><span class="keyword">ENV</span> NACOS_DEBUG n</span><br><span class="line"><span class="keyword">ENV</span> TOMCAT_ACCESSLOG_ENABLED false</span><br><span class="line"> </span><br><span class="line"><span class="keyword">WORKDIR</span><span class="bash"> /home/nacos</span></span><br><span class="line"><span class="keyword">ADD</span><span class="bash"> nacos-server-2.0.2.tar.gz /home</span></span><br><span class="line"><span class="keyword">RUN</span><span class="bash"> <span class="built_in">set</span> -x &amp;&amp; mv /home/nacos-server-2.0.2/nacos/* /home/nacos/ &amp;&amp; rm -rf /home/nacos-server-2.0.2</span></span><br><span class="line"> </span><br><span class="line"><span class="keyword">RUN</span><span class="bash"> mkdir -p logs &amp;&amp; <span class="built_in">cd</span> logs &amp;&amp; touch start.out &amp;&amp; ln -sf /dev/stdout start.out &amp;&amp; ln -sf /dev/stderr start.out</span></span><br><span class="line"><span class="keyword">RUN</span><span class="bash"> chmod 755 bin/docker-startup.sh</span></span><br><span class="line"> </span><br><span class="line"><span class="keyword">EXPOSE</span> <span class="number">8848</span></span><br><span class="line"><span class="keyword">ENTRYPOINT</span><span class="bash"> [<span class="string">&quot;bin/docker-startup.sh&quot;</span>]</span></span><br></pre></td></tr></table></figure>
-
-<p>制作镜像并上传</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[root@k8s-master data]# docker build -t heyuze/nacos-cluster:v2.0.2 .</span><br><span class="line">[root@k8s-master data]# docker push heyuze/nacos-cluster:v2.0.2</span><br></pre></td></tr></table></figure>
-
-
-
-<h2 id="部署Nacos集群">1.3. 部署Nacos集群</h2><p>这里采用了configmap存储卷，将mysql配置信息存到了configmap中</p>
 <blockquote>
-<p>注意：需要提前在mysql数据库中创建一个nacos库名！然后将上面nacos-server-2.0.2.tar.gz包中的conf/nacos-mysql.sql文件里的sql语句在mysql的nacos库下执行（source nacos-mysql.sql ）导入语句。</p>
+<p>注意：如果github下载慢可以用gitee下载地址：<a href="https://gitee.com/mirrors/Kubernetes.git">https://gitee.com/mirrors/Kubernetes.git</a></p>
 </blockquote>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line">[<span class="string">root@k8s-master</span> <span class="string">nacos_cluster</span>]<span class="comment"># pwd</span></span><br><span class="line"><span class="string">/data/k8s-yaml/test_yaml/nacos_cluster</span></span><br><span class="line"></span><br><span class="line">[<span class="string">root@k8s-master</span> <span class="string">nacos_cluster</span>]<span class="comment"># cat nacos-cluster.yaml</span></span><br><span class="line"></span><br><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Service</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">namespace:</span> <span class="string">wise</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">nacos-cluster</span></span><br><span class="line">  <span class="attr">labels:</span></span><br><span class="line">    <span class="attr">app:</span> <span class="string">nacos-cluster</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">ports:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">port:</span> <span class="number">8848</span></span><br><span class="line">      <span class="attr">name:</span> <span class="string">server</span></span><br><span class="line">      <span class="attr">targetPort:</span> <span class="number">8848</span></span><br><span class="line">  <span class="attr">clusterIP:</span> <span class="string">None</span></span><br><span class="line">  <span class="attr">selector:</span></span><br><span class="line">    <span class="attr">app:</span> <span class="string">nacos-cluster</span></span><br><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">ConfigMap</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">namespace:</span> <span class="string">wise</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">nacos-cluster-cm</span></span><br><span class="line"><span class="attr">data:</span></span><br><span class="line">  <span class="attr">mysql.host:</span> <span class="string">&quot;192.168.101.221&quot;</span></span><br><span class="line">  <span class="attr">mysql.db.name:</span> <span class="string">&quot;nacos&quot;</span></span><br><span class="line">  <span class="attr">mysql.port:</span> <span class="string">&quot;3306&quot;</span></span><br><span class="line">  <span class="attr">mysql.user:</span> <span class="string">&quot;nacos&quot;</span></span><br><span class="line">  <span class="attr">mysql.password:</span> <span class="string">&quot;nacos@123&quot;</span></span><br><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="attr">apiVersion:</span> <span class="string">apps/v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">StatefulSet</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">namespace:</span> <span class="string">wise</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">nacos-cluster</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">serviceName:</span> <span class="string">nacos-cluster</span></span><br><span class="line">  <span class="attr">replicas:</span> <span class="number">3</span></span><br><span class="line">  <span class="attr">template:</span></span><br><span class="line">    <span class="attr">metadata:</span></span><br><span class="line">      <span class="attr">labels:</span></span><br><span class="line">        <span class="attr">app:</span> <span class="string">nacos-cluster</span></span><br><span class="line">      <span class="attr">annotations:</span></span><br><span class="line">        <span class="attr">pod.alpha.kubernetes.io/initialized:</span> <span class="string">&quot;true&quot;</span></span><br><span class="line">    <span class="attr">spec:</span></span><br><span class="line">      <span class="attr">affinity:</span></span><br><span class="line">        <span class="attr">podAntiAffinity:</span></span><br><span class="line">          <span class="attr">requiredDuringSchedulingIgnoredDuringExecution:</span></span><br><span class="line">            <span class="bullet">-</span> <span class="attr">labelSelector:</span></span><br><span class="line">                <span class="attr">matchExpressions:</span></span><br><span class="line">                  <span class="bullet">-</span> <span class="attr">key:</span> <span class="string">&quot;app&quot;</span></span><br><span class="line">                    <span class="attr">operator:</span> <span class="string">In</span></span><br><span class="line">                    <span class="attr">values:</span></span><br><span class="line">                      <span class="bullet">-</span> <span class="string">nacos-cluster</span></span><br><span class="line">              <span class="attr">topologyKey:</span> <span class="string">&quot;kubernetes.io/hostname&quot;</span></span><br><span class="line">      <span class="attr">containers:</span></span><br><span class="line">        <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">k8snacos</span></span><br><span class="line">          <span class="attr">imagePullPolicy:</span> <span class="string">Always</span></span><br><span class="line">          <span class="attr">image:</span> <span class="string">heyuze/nacos-cluster:v2.0.2</span></span><br><span class="line">          <span class="attr">resources:</span></span><br><span class="line">            <span class="attr">requests:</span></span><br><span class="line">              <span class="attr">memory:</span> <span class="string">2048Mi</span></span><br><span class="line">              <span class="attr">cpu:</span> <span class="string">1000m</span></span><br><span class="line">            <span class="attr">limits:</span></span><br><span class="line">              <span class="attr">memory:</span> <span class="string">2048Mi</span></span><br><span class="line">              <span class="attr">cpu:</span> <span class="string">1000m</span></span><br><span class="line">          <span class="attr">ports:</span></span><br><span class="line">            <span class="bullet">-</span> <span class="attr">containerPort:</span> <span class="number">8848</span></span><br><span class="line">              <span class="attr">name:</span> <span class="string">client</span></span><br><span class="line">          <span class="attr">env:</span></span><br><span class="line">            <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">NACOS_REPLICAS</span></span><br><span class="line">              <span class="attr">value:</span> <span class="string">&quot;3&quot;</span></span><br><span class="line">            <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">MYSQL_SERVICE_HOST</span></span><br><span class="line">              <span class="attr">valueFrom:</span></span><br><span class="line">                <span class="attr">configMapKeyRef:</span></span><br><span class="line">                  <span class="attr">name:</span> <span class="string">nacos-cluster-cm</span></span><br><span class="line">                  <span class="attr">key:</span> <span class="string">mysql.host</span></span><br><span class="line">            <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">MYSQL_SERVICE_DB_NAME</span></span><br><span class="line">              <span class="attr">valueFrom:</span></span><br><span class="line">                <span class="attr">configMapKeyRef:</span></span><br><span class="line">                  <span class="attr">name:</span> <span class="string">nacos-cluster-cm</span></span><br><span class="line">                  <span class="attr">key:</span> <span class="string">mysql.db.name</span></span><br><span class="line">            <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">MYSQL_SERVICE_PORT</span></span><br><span class="line">              <span class="attr">valueFrom:</span></span><br><span class="line">                <span class="attr">configMapKeyRef:</span></span><br><span class="line">                  <span class="attr">name:</span> <span class="string">nacos-cluster-cm</span></span><br><span class="line">                  <span class="attr">key:</span> <span class="string">mysql.port</span></span><br><span class="line">            <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">MYSQL_SERVICE_USER</span></span><br><span class="line">              <span class="attr">valueFrom:</span></span><br><span class="line">                <span class="attr">configMapKeyRef:</span></span><br><span class="line">                  <span class="attr">name:</span> <span class="string">nacos-cluster-cm</span></span><br><span class="line">                  <span class="attr">key:</span> <span class="string">mysql.user</span></span><br><span class="line">            <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">MYSQL_SERVICE_PASSWORD</span></span><br><span class="line">              <span class="attr">valueFrom:</span></span><br><span class="line">                <span class="attr">configMapKeyRef:</span></span><br><span class="line">                  <span class="attr">name:</span> <span class="string">nacos-cluster-cm</span></span><br><span class="line">                  <span class="attr">key:</span> <span class="string">mysql.password</span></span><br><span class="line">            <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">NACOS_SERVER_PORT</span></span><br><span class="line">              <span class="attr">value:</span> <span class="string">&quot;8848&quot;</span></span><br><span class="line">            <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">PREFER_HOST_MODE</span></span><br><span class="line">              <span class="attr">value:</span> <span class="string">&quot;hostname&quot;</span></span><br><span class="line">            <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">NACOS_SERVERS</span></span><br><span class="line">              <span class="attr">value:</span> <span class="string">&quot;nacos-cluster-0.nacos-cluster.wise.svc.cluster.local:8848 nacos-cluster-1.nacos-cluster.wise.svc.cluster.local:8848 nacos-cluster-2.nacos-cluster.wise.svc.cluster.local:8848&quot;</span></span><br><span class="line">  <span class="attr">selector:</span></span><br><span class="line">    <span class="attr">matchLabels:</span></span><br><span class="line">      <span class="attr">app:</span> <span class="string">nacos-cluster</span></span><br></pre></td></tr></table></figure>
+<p>查看k8s版本</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[root@k8s-master ~]# kubectl version</span><br><span class="line">Client Version: version.Info&#123;Major:&quot;1&quot;, Minor:&quot;18&quot;, GitVersion:&quot;v1.18.0&quot;, GitCommit:&quot;9e991415386e4cf155a24b1da15becaa390438d8&quot;, GitTreeState:&quot;clean&quot;, BuildDate:&quot;2020-03-25T14:58:59Z&quot;, GoVersion:&quot;go1.13.8&quot;, Compiler:&quot;gc&quot;, Platform:&quot;linux/amd64&quot;&#125;</span><br><span class="line">Server Version: version.Info&#123;Major:&quot;1&quot;, Minor:&quot;18&quot;, GitVersion:&quot;v1.18.0&quot;, GitCommit:&quot;9e991415386e4cf155a24b1da15becaa390438d8&quot;, GitTreeState:&quot;clean&quot;, BuildDate:&quot;2020-03-25T14:50:46Z&quot;, GoVersion:&quot;go1.13.8&quot;, Compiler:&quot;gc&quot;, Platform:&quot;linux/amd64&quot;&#125;</span><br></pre></td></tr></table></figure>
 
-<p>创建并查看</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[root@k8s-master nacos_cluster]# kubectl create -f nacos-cluster.yaml </span><br><span class="line">service/nacos-cluster created</span><br><span class="line">configmap/nacos-cluster-cm created</span><br><span class="line">statefulset.apps/nacos-cluster created</span><br><span class="line"></span><br><span class="line">[root@k8s-master nacos_cluster]# kubectl get pods -n wise|grep nacos-cluster</span><br><span class="line">nacos-cluster-0   1/1     Running   0          12m</span><br><span class="line">nacos-cluster-1   1/1     Running   0          11m</span><br><span class="line">nacos-cluster-2   1/1     Running   0          10m</span><br><span class="line"></span><br><span class="line">[root@k8s-master nacos_cluster]# kubectl get svc -n wise|grep nacos-cluster</span><br><span class="line">nacos-cluster   ClusterIP   None         &lt;none&gt;        8848/TCP   12m</span><br><span class="line"></span><br><span class="line">[root@k8s-master nacos_cluster]# kubectl get statefulset -n wise</span><br><span class="line">NAME            READY   AGE</span><br><span class="line">nacos-cluster   3/3     13m</span><br><span class="line"></span><br><span class="line">[root@k8s-master nacos_cluster]# kubectl get configmap -n wise|grep nacos-cluster</span><br><span class="line">nacos-cluster-cm   5      13m</span><br></pre></td></tr></table></figure>
+<p>切换到自己的版本，修改源码，比如我的是v1.18.0版本</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cd kubernetes</span><br><span class="line">git checkout v1.18.0</span><br></pre></td></tr></table></figure>
 
-<p>创建ingress访问</p>
-<p>vim nacos-ingress.yaml</p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="attr">apiVersion:</span> <span class="string">extensions/v1beta1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Ingress</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">annotations:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">nacos-cluster</span></span><br><span class="line">  <span class="attr">namespace:</span> <span class="string">wis</span></span><br><span class="line">  <span class="attr">annotations:</span></span><br><span class="line">    <span class="attr">kubernetes.io/ingress.class:</span> <span class="string">traefik-v2.3</span>     </span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">rules:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">host:</span> <span class="string">nacos.heyonggs.com</span></span><br><span class="line">    <span class="attr">http:</span></span><br><span class="line">      <span class="attr">paths:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">backend:</span></span><br><span class="line">          <span class="attr">serviceName:</span> <span class="string">nacos-cluster</span></span><br><span class="line">          <span class="attr">servicePort:</span> <span class="number">8848</span></span><br></pre></td></tr></table></figure>
+<p>vim cmd/kubeadm/app/constants/constants.go，找到CertificateValidity，修改如下</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">....</span><br><span class="line">const (</span><br><span class="line">        // KubernetesDir is the directory Kubernetes owns for storing various configuration files</span><br><span class="line">        KubernetesDir = &quot;/etc/kubernetes&quot;</span><br><span class="line">        // ManifestsSubDirName defines directory name to store manifests</span><br><span class="line">        ManifestsSubDirName = &quot;manifests&quot;</span><br><span class="line">        // TempDirForKubeadm defines temporary directory for kubeadm</span><br><span class="line">        // should be joined with KubernetesDir.</span><br><span class="line">        TempDirForKubeadm = &quot;tmp&quot;</span><br><span class="line"></span><br><span class="line">        // CertificateValidity defines the validity for all the signed certificates generated by kubeadm</span><br><span class="line">        CertificateValidity = time.Hour * 24 * 365 * 100</span><br><span class="line">....</span><br></pre></td></tr></table></figure>
 
-<p>应用</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">kubectl apply -f nacos-ingress.yaml </span><br></pre></td></tr></table></figure>
+<h2 id="安装编译软件">1.3. 安装编译软件</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">yum -y install gcc automake autoconf libtool make</span><br></pre></td></tr></table></figure>
 
-<p>先做域名解析在访问查看集群：http://域名/nacos</p>
-<blockquote>
-<p>账号：nacos</p>
-<p>密码：nacos</p>
-</blockquote>
-<p><img src="https://cdn.jsdelivr.net/gh/heyonggs/images@master/wp/2021/nacos/1.jpg" alt="traefik"></p>
+<p>安装go编译环境，这里就直接使用yum安装</p>
+<p>查看go是否安装过</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[root@k8s-master kubernetes]# go env</span><br><span class="line">-bash: go: command not found</span><br></pre></td></tr></table></figure>
+
+<p>查看yum的Golang</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[root@k8s-master kubernetes]# yum info golang</span><br><span class="line">Last metadata expiration check: 0:06:47 ago on Wed 01 Sep 2021 10:07:23 AM CST.</span><br><span class="line">Available Packages</span><br><span class="line">Name         : golang</span><br><span class="line">Version      : 1.15.14</span><br><span class="line">Release      : 1.module_el8.4.0+882+ab13bcd9</span><br><span class="line">Architecture : x86_64</span><br><span class="line">Size         : 708 k</span><br><span class="line">Source       : golang-1.15.14-1.module_el8.4.0+882+ab13bcd9.src.rpm</span><br><span class="line">Repository   : AppStream</span><br><span class="line">Summary      : The Go Programming Language</span><br><span class="line">URL          : http://golang.org/</span><br><span class="line">License      : BSD and Public Domain</span><br><span class="line">Description  : The Go Programming Language.</span><br></pre></td></tr></table></figure>
+
+<p>安装golang</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">yum install -y golang</span><br></pre></td></tr></table></figure>
+
+<p>再次查看go环境变量</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[root@k8s-master kubernetes]# go env</span><br><span class="line">GO111MODULE=&quot;&quot;</span><br><span class="line">GOARCH=&quot;amd64&quot;</span><br><span class="line">GOBIN=&quot;&quot;</span><br><span class="line">GOCACHE=&quot;/root/.cache/go-build&quot;</span><br><span class="line">GOENV=&quot;/root/.config/go/env&quot;</span><br><span class="line">GOEXE=&quot;&quot;</span><br><span class="line">GOFLAGS=&quot;&quot;</span><br><span class="line">GOHOSTARCH=&quot;amd64&quot;</span><br><span class="line">GOHOSTOS=&quot;linux&quot;</span><br><span class="line">GOINSECURE=&quot;&quot;</span><br><span class="line">GOMODCACHE=&quot;/root/go/pkg/mod&quot;</span><br><span class="line">GONOPROXY=&quot;&quot;</span><br><span class="line">GONOSUMDB=&quot;&quot;</span><br><span class="line">GOOS=&quot;linux&quot;</span><br><span class="line">GOPATH=&quot;/root/go&quot;</span><br><span class="line">GOPRIVATE=&quot;&quot;</span><br><span class="line">GOPROXY=&quot;https://proxy.golang.org,direct&quot;</span><br><span class="line">GOROOT=&quot;/usr/lib/golang&quot;</span><br><span class="line">GOSUMDB=&quot;sum.golang.org&quot;</span><br><span class="line">GOTMPDIR=&quot;&quot;</span><br><span class="line">GOTOOLDIR=&quot;/usr/lib/golang/pkg/tool/linux_amd64&quot;</span><br><span class="line">GCCGO=&quot;gccgo&quot;</span><br><span class="line">AR=&quot;ar&quot;</span><br><span class="line">CC=&quot;gcc&quot;</span><br><span class="line">CXX=&quot;g++&quot;</span><br><span class="line">CGO_ENABLED=&quot;1&quot;</span><br><span class="line">GOMOD=&quot;/root/kubernetes/go.mod&quot;</span><br><span class="line">CGO_CFLAGS=&quot;-g -O2&quot;</span><br><span class="line">CGO_CPPFLAGS=&quot;&quot;</span><br><span class="line">CGO_CXXFLAGS=&quot;-g -O2&quot;</span><br><span class="line">CGO_FFLAGS=&quot;-g -O2&quot;</span><br><span class="line">CGO_LDFLAGS=&quot;-g -O2&quot;</span><br><span class="line">PKG_CONFIG=&quot;pkg-config&quot;</span><br><span class="line">GOGCCFLAGS=&quot;-fPIC -m64 -pthread -fmessage-length=0 -fdebug-prefix-map=/tmp/go-build406782294=/tmp/go-build -gno-record-gcc-switches&quot;</span><br></pre></td></tr></table></figure>
+
+<h2 id="执行make-WHAT-cmd-kubeadm编译">1.4. 执行make WHAT=cmd/kubeadm编译</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[root@k8s-master kubernetes]# make WHAT=cmd/kubeadm</span><br><span class="line">+++ [0901 10:20:55] Building go targets for linux/amd64:</span><br><span class="line">    ./vendor/k8s.io/code-generator/cmd/deepcopy-gen</span><br><span class="line">+++ [0901 10:21:08] Building go targets for linux/amd64:</span><br><span class="line">    ./vendor/k8s.io/code-generator/cmd/defaulter-gen</span><br><span class="line">+++ [0901 10:21:18] Building go targets for linux/amd64:</span><br><span class="line">    ./vendor/k8s.io/code-generator/cmd/conversion-gen</span><br><span class="line">+++ [0901 10:21:37] Building go targets for linux/amd64:</span><br><span class="line">    ./vendor/k8s.io/kube-openapi/cmd/openapi-gen</span><br><span class="line">+++ [0901 10:21:53] Building go targets for linux/amd64:</span><br><span class="line">    ./vendor/github.com/go-bindata/go-bindata/go-bindata</span><br><span class="line">warning: ignoring symlink /root/kubernetes/_output/local/go/src/k8s.io/kubernetes</span><br><span class="line">go: warning: &quot;k8s.io/kubernetes/vendor/github.com/go-bindata/go-bindata/...&quot; matched no packages</span><br><span class="line">+++ [0901 10:21:55] Building go targets for linux/amd64:</span><br><span class="line">    cmd/kubeadm</span><br></pre></td></tr></table></figure>
+
+<p>编译完生成如下目录和二进制文件</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[root@k8s-master kubernetes]# ll _output/bin/</span><br><span class="line">total 70380</span><br><span class="line">-rwxr-xr-x 1 root root  6242304 Sep  1 10:21 conversion-gen</span><br><span class="line">-rwxr-xr-x 1 root root  6234112 Sep  1 10:20 deepcopy-gen</span><br><span class="line">-rwxr-xr-x 1 root root  6205440 Sep  1 10:21 defaulter-gen</span><br><span class="line">-rwxr-xr-x 1 root root  3688610 Sep  1 10:20 go2make</span><br><span class="line">-rwxr-xr-x 1 root root  2023424 Sep  1 10:21 go-bindata</span><br><span class="line">-rwxr-xr-x 1 root root 37076992 Sep  1 10:23 kubeadm</span><br><span class="line">-rwxr-xr-x 1 root root 10596352 Sep  1 10:21 openapi-gen</span><br></pre></td></tr></table></figure>
+
+<p>备份原kubeadm和证书文件</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cp /usr/bin/kubeadm&#123;,.bak20210901&#125;</span><br><span class="line">cp -r /etc/kubernetes/pki&#123;,.bak20210901&#125;</span><br></pre></td></tr></table></figure>
+
+<p>将新生成的kubeadm进行替换</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cp _output/bin/kubeadm /usr/bin/kubeadm</span><br></pre></td></tr></table></figure>
+
+<p>生成新的证书</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cd /etc/kubernetes/pki</span><br><span class="line">kubeadm alpha certs renew all</span><br></pre></td></tr></table></figure>
+
+<p>输出如下</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[root@k8s-master kubernetes]# cd /etc/kubernetes/pki</span><br><span class="line">[root@k8s-master pki]# kubeadm alpha certs renew all</span><br><span class="line">[renew] Reading configuration from the cluster...</span><br><span class="line">[renew] FYI: You can look at this config file with &#x27;kubectl -n kube-system get cm kubeadm-config -oyaml&#x27;</span><br><span class="line"></span><br><span class="line">certificate embedded in the kubeconfig file for the admin to use and for kubeadm itself renewed</span><br><span class="line">certificate for serving the Kubernetes API renewed</span><br><span class="line">certificate the apiserver uses to access etcd renewed</span><br><span class="line">certificate for the API server to connect to kubelet renewed</span><br><span class="line">certificate embedded in the kubeconfig file for the controller manager to use renewed</span><br><span class="line">certificate for liveness probes to healthcheck etcd renewed</span><br><span class="line">certificate for etcd nodes to communicate with each other renewed</span><br><span class="line">certificate for serving etcd renewed</span><br><span class="line">certificate for the front proxy client renewed</span><br><span class="line">certificate embedded in the kubeconfig file for the scheduler manager to use renewed</span><br></pre></td></tr></table></figure>
+
+<p>验证结果</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">kubeadm alpha certs check-expiration</span><br></pre></td></tr></table></figure>
+
+<p>输出如下</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[root@k8s-master pki]# kubeadm alpha certs check-expiration</span><br><span class="line">[check-expiration] Reading configuration from the cluster...</span><br><span class="line">[check-expiration] FYI: You can look at this config file with &#x27;kubectl -n kube-system get cm kubeadm-config -oyaml&#x27;</span><br><span class="line"></span><br><span class="line">CERTIFICATE                EXPIRES                  RESIDUAL TIME   CERTIFICATE AUTHORITY   EXTERNALLY MANAGED</span><br><span class="line">admin.conf                 Aug 08, 2121 02:32 UTC   99y                                     no      </span><br><span class="line">apiserver                  Aug 08, 2121 02:32 UTC   99y             ca                      no      </span><br><span class="line">apiserver-etcd-client      Aug 08, 2121 02:32 UTC   99y             etcd-ca                 no      </span><br><span class="line">apiserver-kubelet-client   Aug 08, 2121 02:32 UTC   99y             ca                      no      </span><br><span class="line">controller-manager.conf    Aug 08, 2121 02:32 UTC   99y                                     no      </span><br><span class="line">etcd-healthcheck-client    Aug 08, 2121 02:32 UTC   99y             etcd-ca                 no      </span><br><span class="line">etcd-peer                  Aug 08, 2121 02:32 UTC   99y             etcd-ca                 no      </span><br><span class="line">etcd-server                Aug 08, 2121 02:32 UTC   99y             etcd-ca                 no      </span><br><span class="line">front-proxy-client         Aug 08, 2121 02:32 UTC   99y             front-proxy-ca          no      </span><br><span class="line">scheduler.conf             Aug 08, 2121 02:32 UTC   99y                                     no      </span><br><span class="line"></span><br><span class="line">CERTIFICATE AUTHORITY   EXPIRES                  RESIDUAL TIME   EXTERNALLY MANAGED</span><br><span class="line">ca                      Aug 28, 2031 07:52 UTC   9y              no      </span><br><span class="line">etcd-ca                 Aug 28, 2031 07:53 UTC   9y              no      </span><br><span class="line">front-proxy-ca          Aug 28, 2031 07:53 UTC   9y              no      </span><br></pre></td></tr></table></figure>
+
+<p>查看集群状态是否OK。</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[root@k8s-master pki]# kubectl get node</span><br><span class="line">NAME         STATUS   ROLES    AGE   VERSION</span><br><span class="line">k8s-master   Ready    master   42h   v1.18.0</span><br><span class="line">k8s-node1    Ready    &lt;none&gt;   42h   v1.18.0</span><br><span class="line">k8s-node2    Ready    &lt;none&gt;   42h   v1.18.0</span><br></pre></td></tr></table></figure>
+
+<p>查看pod</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[root@k8s-master pki]# kubectl get pod -n kube-system</span><br><span class="line">NAME                                 READY   STATUS    RESTARTS   AGE</span><br><span class="line">coredns-7ff77c879f-6pwrg             1/1     Running   1          42h</span><br><span class="line">coredns-7ff77c879f-d6s95             1/1     Running   2          42h</span><br><span class="line">etcd-k8s-master                      1/1     Running   3          42h</span><br><span class="line">kube-apiserver-k8s-master            1/1     Running   2          42h</span><br><span class="line">kube-controller-manager-k8s-master   1/1     Running   3          42h</span><br><span class="line">kube-flannel-ds-fs8dj                1/1     Running   3          42h</span><br><span class="line">kube-flannel-ds-g6d4l                1/1     Running   2          42h</span><br><span class="line">kube-flannel-ds-tnrzq                1/1     Running   1          42h</span><br><span class="line">kube-proxy-dngh8                     1/1     Running   1          42h</span><br><span class="line">kube-proxy-nxb5q                     1/1     Running   2          42h</span><br><span class="line">kube-proxy-zz5xn                     1/1     Running   3          42h</span><br><span class="line">kube-scheduler-k8s-master            1/1     Running   2          42h</span><br></pre></td></tr></table></figure>
+
+<p>如看到上面的Ready和Running，即表示证书修改成功。</p>
 ]]></content>
       <categories>
         <category>k8s</category>
@@ -1322,77 +1396,24 @@
       </tags>
   </entry>
   <entry>
-    <title>kubeadm修改证书时间为99年</title>
-    <url>/p/23286.html</url>
+    <title>常用工具汇总</title>
+    <url>/p/24997.html</url>
     <content><![CDATA[<p><escape><span id="more"></span></escape></p>
-<h1 id="kubeadm修改证书时间为99年">1. kubeadm修改证书时间为99年</h1><h2 id="查看当前证书时间">1.1. 查看当前证书时间</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[root@k8s-master ~]# kubeadm alpha certs check-expiration</span><br><span class="line">[check-expiration] Reading configuration from the cluster...</span><br><span class="line">[check-expiration] FYI: You can look at this config file with &#x27;kubectl -n kube-system get cm kubeadm-config -oyaml&#x27;</span><br><span class="line"></span><br><span class="line">CERTIFICATE                EXPIRES                  RESIDUAL TIME   CERTIFICATE AUTHORITY   EXTERNALLY MANAGED</span><br><span class="line">admin.conf                 Aug 30, 2022 07:53 UTC   363d                                    no      </span><br><span class="line">apiserver                  Aug 30, 2022 07:52 UTC   363d            ca                      no      </span><br><span class="line">apiserver-etcd-client      Aug 30, 2022 07:53 UTC   363d            etcd-ca                 no      </span><br><span class="line">apiserver-kubelet-client   Aug 30, 2022 07:52 UTC   363d            ca                      no      </span><br><span class="line">controller-manager.conf    Aug 30, 2022 07:53 UTC   363d                                    no      </span><br><span class="line">etcd-healthcheck-client    Aug 30, 2022 07:53 UTC   363d            etcd-ca                 no      </span><br><span class="line">etcd-peer                  Aug 30, 2022 07:53 UTC   363d            etcd-ca                 no      </span><br><span class="line">etcd-server                Aug 30, 2022 07:53 UTC   363d            etcd-ca                 no      </span><br><span class="line">front-proxy-client         Aug 30, 2022 07:53 UTC   363d            front-proxy-ca          no      </span><br><span class="line">scheduler.conf             Aug 30, 2022 07:53 UTC   363d                                    no      </span><br><span class="line"></span><br><span class="line">CERTIFICATE AUTHORITY   EXPIRES                  RESIDUAL TIME   EXTERNALLY MANAGED</span><br><span class="line">ca                      Aug 28, 2031 07:52 UTC   9y              no      </span><br><span class="line">etcd-ca                 Aug 28, 2031 07:53 UTC   9y              no      </span><br><span class="line">front-proxy-ca          Aug 28, 2031 07:53 UTC   9y              no      </span><br></pre></td></tr></table></figure>
-
-<p>可以看到正常只有一年时间。</p>
-<h2 id="下载源码">1.2. 下载源码</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">git clone https://github.com/kubernetes/kubernetes.git</span><br></pre></td></tr></table></figure>
-
+<h1 id="常用工具汇总">1. 常用工具汇总</h1><h2 id="Adobe">1.1. Adobe</h2><h3 id="Adobe-Acrobat-Pro-DC2021破解直装版">1.1.1. Adobe Acrobat Pro DC2021破解直装版</h3><p>   Adobe Acrobat Pro DC是Adobe公司的一款PDF编辑和阅读软件。它将全球最佳的PDF解决方案提升到新的高度，配有直观触控式界面，通过开发强大的新功能，使用户能在任何地方完成工作。新工具中心可更简单迅速的访问最常使用的工具。Acrobat DC可利用Photoshop强大的图像编辑功能，将任何纸质文件转换为可编辑的电子文件，用于传输、签字。Acrobat DC 是完全重塑的全球最佳 PDF 解决方案的桌面版。它包括一个移动应用程序，因此您可以在任何设备上填写、签署以及共享 PDF。</p>
 <blockquote>
-<p>注意：如果github下载慢可以用gitee下载地址：<a href="https://gitee.com/mirrors/Kubernetes.git">https://gitee.com/mirrors/Kubernetes.git</a></p>
+<p>[大小]：868MB</p>
+<p>[操作系统]：32/64位</p>
+<p>[安装环境]：Win7/Win8/Win10</p>
+<p>[安装包下载地址]：<a href="https://pan.baidu.com/s/1Eqwu72Y-VPJKY806UonVjg">https://pan.baidu.com/s/1Eqwu72Y-VPJKY806UonVjg</a> </p>
+<p>提取码：r72k</p>
+<p>解压密码：dzrjk8</p>
 </blockquote>
-<p>查看k8s版本</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[root@k8s-master ~]# kubectl version</span><br><span class="line">Client Version: version.Info&#123;Major:&quot;1&quot;, Minor:&quot;18&quot;, GitVersion:&quot;v1.18.0&quot;, GitCommit:&quot;9e991415386e4cf155a24b1da15becaa390438d8&quot;, GitTreeState:&quot;clean&quot;, BuildDate:&quot;2020-03-25T14:58:59Z&quot;, GoVersion:&quot;go1.13.8&quot;, Compiler:&quot;gc&quot;, Platform:&quot;linux/amd64&quot;&#125;</span><br><span class="line">Server Version: version.Info&#123;Major:&quot;1&quot;, Minor:&quot;18&quot;, GitVersion:&quot;v1.18.0&quot;, GitCommit:&quot;9e991415386e4cf155a24b1da15becaa390438d8&quot;, GitTreeState:&quot;clean&quot;, BuildDate:&quot;2020-03-25T14:50:46Z&quot;, GoVersion:&quot;go1.13.8&quot;, Compiler:&quot;gc&quot;, Platform:&quot;linux/amd64&quot;&#125;</span><br></pre></td></tr></table></figure>
-
-<p>切换到自己的版本，修改源码，比如我的是v1.18.0版本</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cd kubernetes</span><br><span class="line">git checkout v1.18.0</span><br></pre></td></tr></table></figure>
-
-<p>vim cmd/kubeadm/app/constants/constants.go，找到CertificateValidity，修改如下</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">....</span><br><span class="line">const (</span><br><span class="line">        // KubernetesDir is the directory Kubernetes owns for storing various configuration files</span><br><span class="line">        KubernetesDir = &quot;/etc/kubernetes&quot;</span><br><span class="line">        // ManifestsSubDirName defines directory name to store manifests</span><br><span class="line">        ManifestsSubDirName = &quot;manifests&quot;</span><br><span class="line">        // TempDirForKubeadm defines temporary directory for kubeadm</span><br><span class="line">        // should be joined with KubernetesDir.</span><br><span class="line">        TempDirForKubeadm = &quot;tmp&quot;</span><br><span class="line"></span><br><span class="line">        // CertificateValidity defines the validity for all the signed certificates generated by kubeadm</span><br><span class="line">        CertificateValidity = time.Hour * 24 * 365 * 100</span><br><span class="line">....</span><br></pre></td></tr></table></figure>
-
-<h2 id="安装编译软件">1.3. 安装编译软件</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">yum -y install gcc automake autoconf libtool make</span><br></pre></td></tr></table></figure>
-
-<p>安装go编译环境，这里就直接使用yum安装</p>
-<p>查看go是否安装过</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[root@k8s-master kubernetes]# go env</span><br><span class="line">-bash: go: command not found</span><br></pre></td></tr></table></figure>
-
-<p>查看yum的Golang</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[root@k8s-master kubernetes]# yum info golang</span><br><span class="line">Last metadata expiration check: 0:06:47 ago on Wed 01 Sep 2021 10:07:23 AM CST.</span><br><span class="line">Available Packages</span><br><span class="line">Name         : golang</span><br><span class="line">Version      : 1.15.14</span><br><span class="line">Release      : 1.module_el8.4.0+882+ab13bcd9</span><br><span class="line">Architecture : x86_64</span><br><span class="line">Size         : 708 k</span><br><span class="line">Source       : golang-1.15.14-1.module_el8.4.0+882+ab13bcd9.src.rpm</span><br><span class="line">Repository   : AppStream</span><br><span class="line">Summary      : The Go Programming Language</span><br><span class="line">URL          : http://golang.org/</span><br><span class="line">License      : BSD and Public Domain</span><br><span class="line">Description  : The Go Programming Language.</span><br></pre></td></tr></table></figure>
-
-<p>安装golang</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">yum install -y golang</span><br></pre></td></tr></table></figure>
-
-<p>再次查看go环境变量</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[root@k8s-master kubernetes]# go env</span><br><span class="line">GO111MODULE=&quot;&quot;</span><br><span class="line">GOARCH=&quot;amd64&quot;</span><br><span class="line">GOBIN=&quot;&quot;</span><br><span class="line">GOCACHE=&quot;/root/.cache/go-build&quot;</span><br><span class="line">GOENV=&quot;/root/.config/go/env&quot;</span><br><span class="line">GOEXE=&quot;&quot;</span><br><span class="line">GOFLAGS=&quot;&quot;</span><br><span class="line">GOHOSTARCH=&quot;amd64&quot;</span><br><span class="line">GOHOSTOS=&quot;linux&quot;</span><br><span class="line">GOINSECURE=&quot;&quot;</span><br><span class="line">GOMODCACHE=&quot;/root/go/pkg/mod&quot;</span><br><span class="line">GONOPROXY=&quot;&quot;</span><br><span class="line">GONOSUMDB=&quot;&quot;</span><br><span class="line">GOOS=&quot;linux&quot;</span><br><span class="line">GOPATH=&quot;/root/go&quot;</span><br><span class="line">GOPRIVATE=&quot;&quot;</span><br><span class="line">GOPROXY=&quot;https://proxy.golang.org,direct&quot;</span><br><span class="line">GOROOT=&quot;/usr/lib/golang&quot;</span><br><span class="line">GOSUMDB=&quot;sum.golang.org&quot;</span><br><span class="line">GOTMPDIR=&quot;&quot;</span><br><span class="line">GOTOOLDIR=&quot;/usr/lib/golang/pkg/tool/linux_amd64&quot;</span><br><span class="line">GCCGO=&quot;gccgo&quot;</span><br><span class="line">AR=&quot;ar&quot;</span><br><span class="line">CC=&quot;gcc&quot;</span><br><span class="line">CXX=&quot;g++&quot;</span><br><span class="line">CGO_ENABLED=&quot;1&quot;</span><br><span class="line">GOMOD=&quot;/root/kubernetes/go.mod&quot;</span><br><span class="line">CGO_CFLAGS=&quot;-g -O2&quot;</span><br><span class="line">CGO_CPPFLAGS=&quot;&quot;</span><br><span class="line">CGO_CXXFLAGS=&quot;-g -O2&quot;</span><br><span class="line">CGO_FFLAGS=&quot;-g -O2&quot;</span><br><span class="line">CGO_LDFLAGS=&quot;-g -O2&quot;</span><br><span class="line">PKG_CONFIG=&quot;pkg-config&quot;</span><br><span class="line">GOGCCFLAGS=&quot;-fPIC -m64 -pthread -fmessage-length=0 -fdebug-prefix-map=/tmp/go-build406782294=/tmp/go-build -gno-record-gcc-switches&quot;</span><br></pre></td></tr></table></figure>
-
-<h2 id="执行make-WHAT-cmd-kubeadm编译">1.4. 执行make WHAT=cmd/kubeadm编译</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[root@k8s-master kubernetes]# make WHAT=cmd/kubeadm</span><br><span class="line">+++ [0901 10:20:55] Building go targets for linux/amd64:</span><br><span class="line">    ./vendor/k8s.io/code-generator/cmd/deepcopy-gen</span><br><span class="line">+++ [0901 10:21:08] Building go targets for linux/amd64:</span><br><span class="line">    ./vendor/k8s.io/code-generator/cmd/defaulter-gen</span><br><span class="line">+++ [0901 10:21:18] Building go targets for linux/amd64:</span><br><span class="line">    ./vendor/k8s.io/code-generator/cmd/conversion-gen</span><br><span class="line">+++ [0901 10:21:37] Building go targets for linux/amd64:</span><br><span class="line">    ./vendor/k8s.io/kube-openapi/cmd/openapi-gen</span><br><span class="line">+++ [0901 10:21:53] Building go targets for linux/amd64:</span><br><span class="line">    ./vendor/github.com/go-bindata/go-bindata/go-bindata</span><br><span class="line">warning: ignoring symlink /root/kubernetes/_output/local/go/src/k8s.io/kubernetes</span><br><span class="line">go: warning: &quot;k8s.io/kubernetes/vendor/github.com/go-bindata/go-bindata/...&quot; matched no packages</span><br><span class="line">+++ [0901 10:21:55] Building go targets for linux/amd64:</span><br><span class="line">    cmd/kubeadm</span><br></pre></td></tr></table></figure>
-
-<p>编译完生成如下目录和二进制文件</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[root@k8s-master kubernetes]# ll _output/bin/</span><br><span class="line">total 70380</span><br><span class="line">-rwxr-xr-x 1 root root  6242304 Sep  1 10:21 conversion-gen</span><br><span class="line">-rwxr-xr-x 1 root root  6234112 Sep  1 10:20 deepcopy-gen</span><br><span class="line">-rwxr-xr-x 1 root root  6205440 Sep  1 10:21 defaulter-gen</span><br><span class="line">-rwxr-xr-x 1 root root  3688610 Sep  1 10:20 go2make</span><br><span class="line">-rwxr-xr-x 1 root root  2023424 Sep  1 10:21 go-bindata</span><br><span class="line">-rwxr-xr-x 1 root root 37076992 Sep  1 10:23 kubeadm</span><br><span class="line">-rwxr-xr-x 1 root root 10596352 Sep  1 10:21 openapi-gen</span><br></pre></td></tr></table></figure>
-
-<p>备份原kubeadm和证书文件</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cp /usr/bin/kubeadm&#123;,.bak20210901&#125;</span><br><span class="line">cp -r /etc/kubernetes/pki&#123;,.bak20210901&#125;</span><br></pre></td></tr></table></figure>
-
-<p>将新生成的kubeadm进行替换</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cp _output/bin/kubeadm /usr/bin/kubeadm</span><br></pre></td></tr></table></figure>
-
-<p>生成新的证书</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cd /etc/kubernetes/pki</span><br><span class="line">kubeadm alpha certs renew all</span><br></pre></td></tr></table></figure>
-
-<p>输出如下</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[root@k8s-master kubernetes]# cd /etc/kubernetes/pki</span><br><span class="line">[root@k8s-master pki]# kubeadm alpha certs renew all</span><br><span class="line">[renew] Reading configuration from the cluster...</span><br><span class="line">[renew] FYI: You can look at this config file with &#x27;kubectl -n kube-system get cm kubeadm-config -oyaml&#x27;</span><br><span class="line"></span><br><span class="line">certificate embedded in the kubeconfig file for the admin to use and for kubeadm itself renewed</span><br><span class="line">certificate for serving the Kubernetes API renewed</span><br><span class="line">certificate the apiserver uses to access etcd renewed</span><br><span class="line">certificate for the API server to connect to kubelet renewed</span><br><span class="line">certificate embedded in the kubeconfig file for the controller manager to use renewed</span><br><span class="line">certificate for liveness probes to healthcheck etcd renewed</span><br><span class="line">certificate for etcd nodes to communicate with each other renewed</span><br><span class="line">certificate for serving etcd renewed</span><br><span class="line">certificate for the front proxy client renewed</span><br><span class="line">certificate embedded in the kubeconfig file for the scheduler manager to use renewed</span><br></pre></td></tr></table></figure>
-
-<p>验证结果</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">kubeadm alpha certs check-expiration</span><br></pre></td></tr></table></figure>
-
-<p>输出如下</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[root@k8s-master pki]# kubeadm alpha certs check-expiration</span><br><span class="line">[check-expiration] Reading configuration from the cluster...</span><br><span class="line">[check-expiration] FYI: You can look at this config file with &#x27;kubectl -n kube-system get cm kubeadm-config -oyaml&#x27;</span><br><span class="line"></span><br><span class="line">CERTIFICATE                EXPIRES                  RESIDUAL TIME   CERTIFICATE AUTHORITY   EXTERNALLY MANAGED</span><br><span class="line">admin.conf                 Aug 08, 2121 02:32 UTC   99y                                     no      </span><br><span class="line">apiserver                  Aug 08, 2121 02:32 UTC   99y             ca                      no      </span><br><span class="line">apiserver-etcd-client      Aug 08, 2121 02:32 UTC   99y             etcd-ca                 no      </span><br><span class="line">apiserver-kubelet-client   Aug 08, 2121 02:32 UTC   99y             ca                      no      </span><br><span class="line">controller-manager.conf    Aug 08, 2121 02:32 UTC   99y                                     no      </span><br><span class="line">etcd-healthcheck-client    Aug 08, 2121 02:32 UTC   99y             etcd-ca                 no      </span><br><span class="line">etcd-peer                  Aug 08, 2121 02:32 UTC   99y             etcd-ca                 no      </span><br><span class="line">etcd-server                Aug 08, 2121 02:32 UTC   99y             etcd-ca                 no      </span><br><span class="line">front-proxy-client         Aug 08, 2121 02:32 UTC   99y             front-proxy-ca          no      </span><br><span class="line">scheduler.conf             Aug 08, 2121 02:32 UTC   99y                                     no      </span><br><span class="line"></span><br><span class="line">CERTIFICATE AUTHORITY   EXPIRES                  RESIDUAL TIME   EXTERNALLY MANAGED</span><br><span class="line">ca                      Aug 28, 2031 07:52 UTC   9y              no      </span><br><span class="line">etcd-ca                 Aug 28, 2031 07:53 UTC   9y              no      </span><br><span class="line">front-proxy-ca          Aug 28, 2031 07:53 UTC   9y              no      </span><br></pre></td></tr></table></figure>
-
-<p>查看集群状态是否OK。</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[root@k8s-master pki]# kubectl get node</span><br><span class="line">NAME         STATUS   ROLES    AGE   VERSION</span><br><span class="line">k8s-master   Ready    master   42h   v1.18.0</span><br><span class="line">k8s-node1    Ready    &lt;none&gt;   42h   v1.18.0</span><br><span class="line">k8s-node2    Ready    &lt;none&gt;   42h   v1.18.0</span><br></pre></td></tr></table></figure>
-
-<p>查看pod</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[root@k8s-master pki]# kubectl get pod -n kube-system</span><br><span class="line">NAME                                 READY   STATUS    RESTARTS   AGE</span><br><span class="line">coredns-7ff77c879f-6pwrg             1/1     Running   1          42h</span><br><span class="line">coredns-7ff77c879f-d6s95             1/1     Running   2          42h</span><br><span class="line">etcd-k8s-master                      1/1     Running   3          42h</span><br><span class="line">kube-apiserver-k8s-master            1/1     Running   2          42h</span><br><span class="line">kube-controller-manager-k8s-master   1/1     Running   3          42h</span><br><span class="line">kube-flannel-ds-fs8dj                1/1     Running   3          42h</span><br><span class="line">kube-flannel-ds-g6d4l                1/1     Running   2          42h</span><br><span class="line">kube-flannel-ds-tnrzq                1/1     Running   1          42h</span><br><span class="line">kube-proxy-dngh8                     1/1     Running   1          42h</span><br><span class="line">kube-proxy-nxb5q                     1/1     Running   2          42h</span><br><span class="line">kube-proxy-zz5xn                     1/1     Running   3          42h</span><br><span class="line">kube-scheduler-k8s-master            1/1     Running   2          42h</span><br></pre></td></tr></table></figure>
-
-<p>如看到上面的Ready和Running，即表示证书修改成功。</p>
 ]]></content>
       <categories>
-        <category>k8s</category>
+        <category>工具</category>
       </categories>
       <tags>
-        <tag>k8s</tag>
+        <tag>工具</tag>
       </tags>
   </entry>
   <entry>
@@ -1453,27 +1474,6 @@
       </categories>
       <tags>
         <tag>Linux</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>常用工具汇总</title>
-    <url>/p/24997.html</url>
-    <content><![CDATA[<p><escape><span id="more"></span></escape></p>
-<h1 id="常用工具汇总">1. 常用工具汇总</h1><h2 id="Adobe">1.1. Adobe</h2><h3 id="Adobe-Acrobat-Pro-DC2021破解直装版">1.1.1. Adobe Acrobat Pro DC2021破解直装版</h3><p>   Adobe Acrobat Pro DC是Adobe公司的一款PDF编辑和阅读软件。它将全球最佳的PDF解决方案提升到新的高度，配有直观触控式界面，通过开发强大的新功能，使用户能在任何地方完成工作。新工具中心可更简单迅速的访问最常使用的工具。Acrobat DC可利用Photoshop强大的图像编辑功能，将任何纸质文件转换为可编辑的电子文件，用于传输、签字。Acrobat DC 是完全重塑的全球最佳 PDF 解决方案的桌面版。它包括一个移动应用程序，因此您可以在任何设备上填写、签署以及共享 PDF。</p>
-<blockquote>
-<p>[大小]：868MB</p>
-<p>[操作系统]：32/64位</p>
-<p>[安装环境]：Win7/Win8/Win10</p>
-<p>[安装包下载地址]：<a href="https://pan.baidu.com/s/1Eqwu72Y-VPJKY806UonVjg">https://pan.baidu.com/s/1Eqwu72Y-VPJKY806UonVjg</a> </p>
-<p>提取码：r72k</p>
-<p>解压密码：dzrjk8</p>
-</blockquote>
-]]></content>
-      <categories>
-        <category>工具</category>
-      </categories>
-      <tags>
-        <tag>工具</tag>
       </tags>
   </entry>
   <entry>
