@@ -1045,7 +1045,7 @@
 
 <p>创建ingress访问</p>
 <p>vim nacos-ingress.yaml</p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="attr">apiVersion:</span> <span class="string">extensions/v1beta1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Ingress</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">annotations:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">nacos-cluster</span></span><br><span class="line">  <span class="attr">namespace:</span> <span class="string">wis</span></span><br><span class="line">  <span class="attr">annotations:</span></span><br><span class="line">    <span class="attr">kubernetes.io/ingress.class:</span> <span class="string">traefik-v2.3</span>     </span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">rules:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">host:</span> <span class="string">nacos.heyonggs.com</span></span><br><span class="line">    <span class="attr">http:</span></span><br><span class="line">      <span class="attr">paths:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">backend:</span></span><br><span class="line">          <span class="attr">serviceName:</span> <span class="string">nacos-cluster</span></span><br><span class="line">          <span class="attr">servicePort:</span> <span class="number">8848</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="attr">apiVersion:</span> <span class="string">extensions/v1beta1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Ingress</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">annotations:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">nacos-cluster</span></span><br><span class="line">  <span class="attr">namespace:</span> <span class="string">wise</span></span><br><span class="line">  <span class="attr">annotations:</span></span><br><span class="line">    <span class="attr">kubernetes.io/ingress.class:</span> <span class="string">traefik-v2.3</span>     </span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">rules:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">host:</span> <span class="string">nacos.heyonggs.com</span></span><br><span class="line">    <span class="attr">http:</span></span><br><span class="line">      <span class="attr">paths:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">backend:</span></span><br><span class="line">          <span class="attr">serviceName:</span> <span class="string">nacos-cluster</span></span><br><span class="line">          <span class="attr">servicePort:</span> <span class="number">8848</span></span><br></pre></td></tr></table></figure>
 
 <p>应用</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">kubectl apply -f nacos-ingress.yaml </span><br></pre></td></tr></table></figure>
@@ -1474,6 +1474,12 @@
 <p>[安装环境]：Win7/Win8/Win10/Win11</p>
 <p>[安装包下载地址]：<a href="https://pan.baidu.com/s/1G5-oVrvft07u6ZjerJd-XQ">https://pan.baidu.com/s/1G5-oVrvft07u6ZjerJd-XQ</a></p>
 <p>提取码：b131</p>
+</blockquote>
+<h2 id="安卓模拟器">1.5. 安卓模拟器</h2><h3 id="BlueStacks-蓝叠">1.5.1. BlueStacks(蓝叠)</h3><blockquote>
+<p>[大小]：461MB</p>
+<p>[操作系统]：32/64位</p>
+<p>[安装环境]：Win7/Win8/Win10/Win11</p>
+<p>[安装包下载地址]：<a href="https://aliosscdn.bluestacks.cn/client/BlueStacks4Setup.exe">https://aliosscdn.bluestacks.cn/client/BlueStacks4Setup.exe</a></p>
 </blockquote>
 ]]></content>
       <categories>
@@ -3097,6 +3103,66 @@
         <tag>k8s</tag>
         <tag>Kubernetes</tag>
         <tag>helm</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>k8s部署eureka集群</title>
+    <url>/p/35694.html</url>
+    <content><![CDATA[<p><escape><span id="more"></span></escape></p>
+<h1 id="k8s部署eureka集群">1. k8s部署eureka集群</h1><p>主要是用到了StatefulSet和headless service这两个k8s对象</p>
+<h2 id="StatefulSet">1.1. StatefulSet</h2><p>StatefulSet是为了解决有状态服务的问题（对应Deployments和ReplicaSets是为无状态服务而设计），其应用场景包括：</p>
+<p>1.稳定的持久化存储，即Pod重新调度后还是能访问到相同的持久化数据，基于PVC来实现；</p>
+<p>2.稳定的网络标志，即Pod重新调度后其PodName和HostName不变，基于Headless Service（即没有Cluster IP的Service）来实现；</p>
+<p>3.有序部署，有序扩展，即Pod是有顺序的，在部署或者扩展的时候要依据定义的顺序依次依次进行（即从0到N-1，在下一个Pod运行之前所有之前的Pod必须都是Running和Ready状态），基于init containers来实现；</p>
+<p>4.有序收缩，有序删除（即从N-1到0）；</p>
+<p>StatefulSet中每个Pod的DNS格式为：</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">statefulSetName-&#123;<span class="number">0.</span>.N<span class="number">-1</span>&#125;.serviceName.<span class="keyword">namespace</span>.svc.cluster.local</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>serviceName为Headless Service的名字<br>0..N-1为Pod所在的序号，从0开始到N-1<br>statefulSetName为StatefulSet的名字<br>namespace为服务所在的namespace，Headless Service和StatefulSet必须在相同的namespace<br>cluster.local为Cluster Domain</p>
+</blockquote>
+<h2 id="Headless-Service">1.2. Headless Service</h2><p>Headless Service 和普通service的一个显著的区别是，Headless Service的对应的每一个Endpoints，即每一个Pod，都会有对应的DNS域名<br> 例如：我们可以用过这种域名来访问某个具体的pod：</p>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line">statefulSetName-<span class="number">0</span><span class="selector-class">.serviceName</span><span class="selector-class">.namespace</span><span class="selector-class">.svc</span><span class="selector-class">.cluster</span><span class="selector-class">.local</span></span><br></pre></td></tr></table></figure>
+
+<p>在实际使用中，将service的clusterIP设置成None，就表明这个service是一个Headless Service。</p>
+<h2 id="StatefulSet和Headless-Service的结合">1.3. StatefulSet和Headless Service的结合</h2><p>通过 StatefulSet，我们得到了一些列pod，每个pod的name为statefulSetName-{0..N-1}， 加入我们创建了一个名称叫eureka的StatefulSet，并且设置replicas =3，那么部署到k8s后，k8s会为我们生成三个名称依次为eureka-0，eureka-1，eureka-2的pod。<br> 通过Headless Service，我们可以通过pod名称来访问某个pod，</p>
+<p>例如，我们在namespace=test的命名空间下创建了一个名称为register-server的service，并且关联了之前StatefulSet创建的pod，那么我们可以在集群内任意地方通过eureka-0.register-server.test.svc.cluster.local这个域名访问到eureka-0这个pod。</p>
+<h3 id="搭建：">1.3.1. 搭建：</h3><p>有了前面的基础，现在部署eureka集群的方式就逐渐清晰了。</p>
+<p>首先明确部署eureka的关键点：需要让每个eureka注册到另外的eureka上。<br> 也就是eureka.client.serviceUrl.defaultZone这个配置，是一组eureka的地址。<br> 通过StatefulSet，我们可以明确知道生成的每个eureka的名称，<br> 通过Headless Service，我们又可以访问到每个eureka，所以eureka.client.serviceUrl.defaultZone的值就是</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="string">&quot;http://eureka-0.register-server:8000/eureka/,http://eureka-1.register-server:8000/eureka/,http://eureka-2.register-server:8000/eureka/&quot;</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>由于这三个pod在同一个命名空间内，可以省略.namespace.svc.cluster.local</p>
+</blockquote>
+<h2 id="创建StatefulSet-yaml">1.4. 创建StatefulSet.yaml</h2><p>vim eureka-StatefulSet.yaml</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">apiVersion: apps/v1</span><br><span class="line">kind: StatefulSet</span><br><span class="line">metadata:</span><br><span class="line">  namespace: wise</span><br><span class="line">  name: register-server</span><br><span class="line">  labels:</span><br><span class="line">    service: register-server</span><br><span class="line">spec:</span><br><span class="line">  replicas: 3</span><br><span class="line">  serviceName: register-server</span><br><span class="line">  selector:</span><br><span class="line">    matchLabels:</span><br><span class="line">      service: register-server</span><br><span class="line">  template:</span><br><span class="line">    metadata:</span><br><span class="line">      labels:</span><br><span class="line">        service: register-server</span><br><span class="line">      annotations:</span><br><span class="line">        service: register-server</span><br><span class="line">    spec:</span><br><span class="line">      containers:</span><br><span class="line">        - name: register-server</span><br><span class="line">          image: codewjy/eureka:0.1.0</span><br><span class="line">          imagePullPolicy: Always</span><br><span class="line">          env:</span><br><span class="line">          - name: MY_POD_NAME</span><br><span class="line">            valueFrom:</span><br><span class="line">              fieldRef:</span><br><span class="line">                fieldPath: metadata.name</span><br><span class="line">          ports:</span><br><span class="line">            - name: http</span><br><span class="line">              containerPort: 8000</span><br><span class="line">              protocol: TCP</span><br><span class="line">          readinessProbe:</span><br><span class="line">            httpGet:</span><br><span class="line">              path: /actuator/health</span><br><span class="line">              port: 8001</span><br><span class="line">              scheme: HTTP</span><br><span class="line">            failureThreshold: 3</span><br><span class="line">            initialDelaySeconds: 60</span><br><span class="line">            periodSeconds: 10</span><br><span class="line">            successThreshold: 1</span><br><span class="line">            timeoutSeconds: 10</span><br><span class="line">          resources:</span><br><span class="line">            limits:</span><br><span class="line">              # cpu: 100m</span><br><span class="line">              memory: 1.7Gi</span><br><span class="line">            requests:</span><br><span class="line">                # cpu: 100m</span><br><span class="line">              memory: 1.2Gi</span><br><span class="line">          volumeMounts:</span><br><span class="line">          - mountPath: /Charts</span><br><span class="line">            name: data</span><br><span class="line">      volumes:</span><br><span class="line">      - name: data</span><br><span class="line">  podManagementPolicy: &quot;Parallel&quot;</span><br></pre></td></tr></table></figure>
+
+<p>创建并查看</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[root@k8s-master eureka]# kubectl apply -f StatefulSet.yaml </span><br><span class="line">statefulset.apps/register-server created</span><br><span class="line"></span><br><span class="line">[root@k8s-master eureka]# kubectl get pods -n wise|grep register-server</span><br><span class="line">register-server-0                   1/1     Running   0          29m</span><br><span class="line">register-server-1                   1/1     Running   0          29m</span><br><span class="line">register-server-2                   1/1     Running   0          29m</span><br></pre></td></tr></table></figure>
+
+<h2 id="创建service">1.5. 创建service</h2><p>vim eureka-service.yaml</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">apiVersion: v1</span><br><span class="line">kind: Service</span><br><span class="line">metadata:</span><br><span class="line">  namespace: wise</span><br><span class="line">  name: register-server</span><br><span class="line">  labels:</span><br><span class="line">    service: register-server</span><br><span class="line">spec:</span><br><span class="line">  clusterIP: None</span><br><span class="line">  type: ClusterIP</span><br><span class="line">  ports:</span><br><span class="line">    - port: 8000</span><br><span class="line">      targetPort: http</span><br><span class="line">      protocol: TCP</span><br><span class="line">      name: http</span><br><span class="line">  selector:</span><br><span class="line">    service: register-server</span><br></pre></td></tr></table></figure>
+
+<p>创建并查看</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[root@k8s-master eureka]# kubectl apply -f service.yaml </span><br><span class="line">service/register-server created</span><br><span class="line"></span><br><span class="line">[root@k8s-master eureka]# kubectl get pods -n wise|grep register-server</span><br><span class="line">register-server-0                   1/1     Running   0          29m</span><br><span class="line">register-server-1                   1/1     Running   0          29m</span><br><span class="line">register-server-2                   1/1     Running   0          29m</span><br><span class="line"></span><br><span class="line">[root@k8s-master eureka]# kubectl get svc -n wise|grep register-server</span><br><span class="line">register-server   ClusterIP   None             &lt;none&gt;        8000/TCP       30m</span><br></pre></td></tr></table></figure>
+
+<h2 id="创建ingress">1.6. 创建ingress</h2><p>vim eureka-ingress.yaml</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">---</span><br><span class="line">apiVersion: extensions/v1beta1</span><br><span class="line">kind: Ingress</span><br><span class="line">metadata:</span><br><span class="line">  annotations:</span><br><span class="line">  name: register-server</span><br><span class="line">  namespace: wise</span><br><span class="line">  annotations:</span><br><span class="line">    kubernetes.io/ingress.class: traefik-v2.3</span><br><span class="line">spec:</span><br><span class="line">  rules:</span><br><span class="line">  - host: eureka.heyonggs.com</span><br><span class="line">    http:</span><br><span class="line">      paths:</span><br><span class="line">      - backend:</span><br><span class="line">          serviceName: register-server</span><br><span class="line">          servicePort: 8000</span><br></pre></td></tr></table></figure>
+
+<p>创建并查看</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[root@k8s-master eureka]# kubectl apply -f ingress.yaml </span><br><span class="line">ingress.extensions/register-server created</span><br><span class="line"></span><br><span class="line">[root@k8s-master eureka]# kubectl get ingress -n wise|grep register-server</span><br><span class="line">register-server   &lt;none&gt;   eureka.heyonggs.com             80      21m</span><br></pre></td></tr></table></figure>
+
+<h2 id="访问">1.7. 访问</h2><p>先做域名解析在访问查看集群：http://域名</p>
+<p><img src="https://cdn.jsdelivr.net/gh/heyonggs/images@master/wp/2021/eureka/202110121114492.png"></p>
+<p><strong>参考：</strong></p>
+<p><a href="https://www.jianshu.com/p/a3829851a97d">https://www.jianshu.com/p/a3829851a97d</a></p>
+]]></content>
+      <categories>
+        <category>Kubernetes</category>
+      </categories>
+      <tags>
+        <tag>k8s</tag>
+        <tag>Kubernetes</tag>
       </tags>
   </entry>
 </search>

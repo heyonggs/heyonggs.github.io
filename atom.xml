@@ -255,7 +255,7 @@
     <link href="https://heyonggs.github.io/p/20278.html"/>
     <id>https://heyonggs.github.io/p/20278.html</id>
     <published>2021-03-10T08:59:21.000Z</published>
-    <updated>2021-09-27T06:31:20.210Z</updated>
+    <updated>2021-10-12T03:07:10.310Z</updated>
     
     
     <summary type="html">&lt;p&gt;&lt;escape&gt;&lt;/escape&gt;&lt;/p&gt;</summary>
@@ -304,6 +304,27 @@
     
     
     <category term="git" scheme="https://heyonggs.github.io/tags/git/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>k8s部署eureka集群</title>
+    <link href="https://heyonggs.github.io/p/35694.html"/>
+    <id>https://heyonggs.github.io/p/35694.html</id>
+    <published>2021-01-08T02:53:56.000Z</published>
+    <updated>2021-10-12T03:46:43.974Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;&lt;escape&gt;&lt;/escape&gt;&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="Kubernetes" scheme="https://heyonggs.github.io/categories/Kubernetes/"/>
+    
+    
+    <category term="k8s" scheme="https://heyonggs.github.io/tags/k8s/"/>
+    
+    <category term="Kubernetes" scheme="https://heyonggs.github.io/tags/Kubernetes/"/>
     
   </entry>
   
@@ -380,25 +401,6 @@
     
     
     <category term="Linux" scheme="https://heyonggs.github.io/tags/Linux/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>RTNETLINK answers No such file or directory</title>
-    <link href="https://heyonggs.github.io/p/42234.html"/>
-    <id>https://heyonggs.github.io/p/42234.html</id>
-    <published>2020-05-19T02:41:44.000Z</published>
-    <updated>2021-09-26T07:29:02.401Z</updated>
-    
-    
-    <summary type="html">&lt;p&gt;&lt;escape&gt;&lt;/escape&gt;&lt;/p&gt;</summary>
-    
-    
-    
-    <category term="网络" scheme="https://heyonggs.github.io/categories/%E7%BD%91%E7%BB%9C/"/>
-    
-    
-    <category term="网络" scheme="https://heyonggs.github.io/tags/%E7%BD%91%E7%BB%9C/"/>
     
   </entry>
   
