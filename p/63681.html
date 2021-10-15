@@ -285,7 +285,7 @@
 
 <blockquote>
 <p>注意：这里默认生成的secrets只能在default工作空间使用，如果需要在指定的工作空间创建，需要加：-n参数指定工作空间</p>
-<p>例如：kubectl create secret docker-registry harbor-registry –docker-server=harbor.xxx.com –docker-username=admin –docker-password=Harbor12345 --docker-email=<a href="mailto:&#104;&#101;&#x79;&#117;&#x7a;&#x65;&#x40;&#49;&#54;&#51;&#46;&#99;&#111;&#109;">&#104;&#101;&#x79;&#117;&#x7a;&#x65;&#x40;&#49;&#54;&#51;&#46;&#99;&#111;&#109;</a> -n test</p>
+<p>例如：kubectl create secret docker-registry harbor-registry –docker-server=harbor.xxx.com –docker-username=admin –docker-password=Harbor12345 --docker-email=<a href="mailto:&#x68;&#101;&#x79;&#117;&#122;&#101;&#64;&#49;&#x36;&#51;&#x2e;&#x63;&#x6f;&#x6d;">&#x68;&#101;&#x79;&#117;&#122;&#101;&#64;&#49;&#x36;&#51;&#x2e;&#x63;&#x6f;&#x6d;</a> -n test</p>
 </blockquote>
 <p>配置yaml，通过secret获取images</p>
 <figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">[<span class="string">root@master1</span> <span class="string">machine-tool</span>]<span class="comment"># vi nginx.yaml</span></span><br><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Pod</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">nginx</span></span><br><span class="line">  <span class="attr">namespace:</span> <span class="string">default</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">containers:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">nginx</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">harbor.xxx.com/test/ssh-centos7:latest</span></span><br><span class="line">    <span class="attr">command:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">top</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&#x27;-b&#x27;</span></span><br><span class="line">  <span class="attr">imagePullSecrets:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">harbor-registry</span></span><br></pre></td></tr></table></figure>
@@ -487,7 +487,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">31</span>
+          <span class="site-state-item-count">32</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -498,7 +498,7 @@
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
-        <span class="site-state-item-count">21</span>
+        <span class="site-state-item-count">22</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -563,12 +563,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">212k</span>
+    <span title="站点总字数">225k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">3:13</span>
+    <span title="站点阅读时长">3:24</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
   </div>
