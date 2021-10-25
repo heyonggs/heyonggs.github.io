@@ -2,7 +2,49 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>https://heyonggs.github.io/p/44212.html</loc>
+    <loc>https://heyonggs.github.io/p/42513.html</loc>
+    
+    <lastmod>2021-10-25</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://heyonggs.github.io/p/12102.html</loc>
+    
+    <lastmod>2021-10-25</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://heyonggs.github.io/p/43577.html</loc>
+    
+    <lastmod>2021-10-25</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://heyonggs.github.io/p/40168.html</loc>
+    
+    <lastmod>2021-10-25</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://heyonggs.github.io/p/23817.html</loc>
+    
+    <lastmod>2021-10-25</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://heyonggs.github.io/p/35698.html</loc>
+    
+    <lastmod>2021-10-25</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://heyonggs.github.io/p/29253.html</loc>
     
     <lastmod>2021-10-25</lastmod>
     
@@ -16,7 +58,7 @@
   </url>
   
   <url>
-    <loc>https://heyonggs.github.io/p/29253.html</loc>
+    <loc>https://heyonggs.github.io/p/44212.html</loc>
     
     <lastmod>2021-10-25</lastmod>
     
@@ -486,6 +528,27 @@
     <priority>0.6</priority>
   </url>
   
+  <url>
+    <loc>https://heyonggs.github.io/tags/Docker-Compose/</loc>
+    <lastmod>2021-10-25</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://heyonggs.github.io/tags/SonarQube/</loc>
+    <lastmod>2021-10-25</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://heyonggs.github.io/tags/Superset/</loc>
+    <lastmod>2021-10-25</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
 
   
   <url>
@@ -609,6 +672,27 @@
   
   <url>
     <loc>https://heyonggs.github.io/categories/LVM/</loc>
+    <lastmod>2021-10-25</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://heyonggs.github.io/categories/Docker/</loc>
+    <lastmod>2021-10-25</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://heyonggs.github.io/categories/SonarQube/</loc>
+    <lastmod>2021-10-25</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://heyonggs.github.io/categories/Superset/</loc>
     <lastmod>2021-10-25</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>

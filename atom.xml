@@ -396,21 +396,23 @@
   </entry>
   
   <entry>
-    <title>k8s面试题</title>
-    <link href="https://heyonggs.github.io/p/30445.html"/>
-    <id>https://heyonggs.github.io/p/30445.html</id>
-    <published>2020-08-18T02:27:59.000Z</published>
-    <updated>2021-09-26T01:57:13.355Z</updated>
+    <title>docker部署nacos</title>
+    <link href="https://heyonggs.github.io/p/43577.html"/>
+    <id>https://heyonggs.github.io/p/43577.html</id>
+    <published>2020-09-11T06:25:19.000Z</published>
+    <updated>2021-10-25T06:27:25.021Z</updated>
     
     
     <summary type="html">&lt;p&gt;&lt;escape&gt;&lt;/escape&gt;&lt;/p&gt;</summary>
     
     
     
-    <category term="k8s" scheme="https://heyonggs.github.io/categories/k8s/"/>
+    <category term="Docker" scheme="https://heyonggs.github.io/categories/Docker/"/>
     
     
-    <category term="k8s" scheme="https://heyonggs.github.io/tags/k8s/"/>
+    <category term="容器" scheme="https://heyonggs.github.io/tags/%E5%AE%B9%E5%99%A8/"/>
+    
+    <category term="Docker" scheme="https://heyonggs.github.io/tags/Docker/"/>
     
   </entry>
   
