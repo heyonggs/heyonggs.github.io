@@ -3282,4 +3282,213 @@
         <tag>helm</tag>
       </tags>
   </entry>
+  <entry>
+    <title>优秀技术博客及文章收藏</title>
+    <url>/p/42568.html</url>
+    <content><![CDATA[<p><escape><span id="more"></span></escape></p>
+]]></content>
+  </entry>
+  <entry>
+    <title>LVM创建及管理</title>
+    <url>/p/29253.html</url>
+    <content><![CDATA[<p><escape><span id="more"></span></escape></p>
+<h1 id="LVM创建及管理">1. LVM创建及管理</h1><p>安装lvm</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">yum install -y lvm</span><br></pre></td></tr></table></figure>
+
+<p>查看磁盘</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[root@template ~]# fdisk -l</span><br><span class="line"></span><br><span class="line">Disk /dev/vda: 10.7 GB, 10737418240 bytes, 20971520 sectors</span><br><span class="line">Units = sectors of 1 * 512 = 512 bytes</span><br><span class="line">Sector size (logical/physical): 512 bytes / 512 bytes</span><br><span class="line">I/O size (minimum/optimal): 512 bytes / 512 bytes</span><br><span class="line">Disk label type: dos</span><br><span class="line">Disk identifier: 0x000beec6</span><br><span class="line"></span><br><span class="line">   Device Boot      Start         End      Blocks   Id  System</span><br><span class="line">/dev/vda1   *        2048     2099199     1048576   83  Linux</span><br><span class="line">/dev/vda2         2099200    20971519     9436160   8e  Linux LVM</span><br><span class="line"></span><br><span class="line">Disk /dev/vdb: 53.7 GB, 53687091200 bytes, 104857600 sectors</span><br><span class="line">Units = sectors of 1 * 512 = 512 bytes</span><br><span class="line">Sector size (logical/physical): 512 bytes / 512 bytes</span><br><span class="line">I/O size (minimum/optimal): 512 bytes / 512 bytes</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Disk /dev/mapper/centos-root: 8585 MB, 8585740288 bytes, 16769024 sectors</span><br><span class="line">Units = sectors of 1 * 512 = 512 bytes</span><br><span class="line">Sector size (logical/physical): 512 bytes / 512 bytes</span><br><span class="line">I/O size (minimum/optimal): 512 bytes / 512 bytes</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Disk /dev/mapper/centos-swap: 1073 MB, 1073741824 bytes, 2097152 sectors</span><br><span class="line">Units = sectors of 1 * 512 = 512 bytes</span><br><span class="line">Sector size (logical/physical): 512 bytes / 512 bytes</span><br><span class="line">I/O size (minimum/optimal): 512 bytes / 512 bytes</span><br></pre></td></tr></table></figure>
+
+<p>初始化</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[root@template ~]# fdisk /dev/vdb</span><br><span class="line">Welcome to fdisk (util-linux 2.23.2).</span><br><span class="line"></span><br><span class="line">Changes will remain in memory only, until you decide to write them.</span><br><span class="line">Be careful before using the write command.</span><br><span class="line"></span><br><span class="line">Device does not contain a recognized partition table</span><br><span class="line">Building a new DOS disklabel with disk identifier 0xda419f51.</span><br><span class="line"></span><br><span class="line">Command (m for help): o</span><br><span class="line">Building a new DOS disklabel with disk identifier 0x01d037f1.</span><br><span class="line"></span><br><span class="line">Command (m for help): n</span><br><span class="line">Partition type:</span><br><span class="line">   p   primary (0 primary, 0 extended, 4 free)</span><br><span class="line">   e   extended</span><br><span class="line">Select (default p): </span><br><span class="line">Using default response p</span><br><span class="line">Partition number (1-4, default 1): </span><br><span class="line">First sector (2048-104857599, default 2048): </span><br><span class="line">Using default value 2048</span><br><span class="line">Last sector, +sectors or +size&#123;K,M,G&#125; (2048-104857599, default 104857599): </span><br><span class="line">Using default value 104857599</span><br><span class="line">Partition 1 of type Linux and of size 50 GiB is set</span><br><span class="line">Command (m for help): t</span><br><span class="line">Selected partition 1</span><br><span class="line">Hex code (type L to list all codes): 8e</span><br><span class="line">Changed type of partition &#x27;Linux&#x27; to &#x27;Linux LVM&#x27;</span><br><span class="line"></span><br><span class="line">Command (m for help): w</span><br><span class="line">The partition table has been altered!</span><br><span class="line"></span><br><span class="line">Calling ioctl() to re-read partition table.</span><br><span class="line">Syncing disks.</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>将磁盘添加到LVM PV</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[root@template ~]# pvcreate /dev/vdb1</span><br><span class="line">  Physical volume &quot;/dev/vdb1&quot; successfully created.</span><br></pre></td></tr></table></figure>
+
+<p>列出所有PV</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[root@template ~]# pvscan</span><br><span class="line">  PV /dev/vda2   VG centos          lvm2 [&lt;9.00 GiB / 0    free]</span><br><span class="line">  PV /dev/vdb1                      lvm2 [&lt;50.00 GiB]</span><br><span class="line">  Total: 2 [&lt;59.00 GiB] / in use: 1 [&lt;9.00 GiB] / in no VG: 1 [&lt;50.00 GiB]</span><br></pre></td></tr></table></figure>
+
+<p>显示pv更多信息</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[root@template ~]# pvdisplay /dev/vdb1</span><br><span class="line">  &quot;/dev/vdb1&quot; is a new physical volume of &quot;&lt;50.00 GiB&quot;</span><br><span class="line">  --- NEW Physical volume ---</span><br><span class="line">  PV Name               /dev/vdb1</span><br><span class="line">  VG Name               </span><br><span class="line">  PV Size               &lt;50.00 GiB</span><br><span class="line">  Allocatable           NO</span><br><span class="line">  PE Size               0   </span><br><span class="line">  Total PE              0</span><br><span class="line">  Free PE               0</span><br><span class="line">  Allocated PE          0</span><br><span class="line">  PV UUID               4kmSEn-kBZG-vMJc-T03x-aWfO-dEes-5prCUL</span><br></pre></td></tr></table></figure>
+
+<p>创建卷组：使用尽可能多的PV来创建VG</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[root@template ~]# vgcreate share /dev/vdb1</span><br><span class="line">  Volume group &quot;share&quot; successfully created</span><br></pre></td></tr></table></figure>
+
+<p>列出所有VG</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[root@template ~]# vgscan</span><br><span class="line">  Reading volume groups from cache.</span><br><span class="line">  Found volume group &quot;share&quot; using metadata type lvm2</span><br><span class="line">  Found volume group &quot;centos&quot; using metadata type lvm2</span><br></pre></td></tr></table></figure>
+
+<p>显示vg更多信息</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[root@template ~]# vgdisplay share</span><br><span class="line">  --- Volume group ---</span><br><span class="line">  VG Name               share</span><br><span class="line">  System ID             </span><br><span class="line">  Format                lvm2</span><br><span class="line">  Metadata Areas        1</span><br><span class="line">  Metadata Sequence No  1</span><br><span class="line">  VG Access             read/write</span><br><span class="line">  VG Status             resizable</span><br><span class="line">  MAX LV                0</span><br><span class="line">  Cur LV                0</span><br><span class="line">  Open LV               0</span><br><span class="line">  Max PV                0</span><br><span class="line">  Cur PV                1</span><br><span class="line">  Act PV                1</span><br><span class="line">  VG Size               &lt;50.00 GiB</span><br><span class="line">  PE Size               4.00 MiB</span><br><span class="line">  Total PE              12799</span><br><span class="line">  Alloc PE / Size       0 / 0   </span><br><span class="line">  Free  PE / Size       12799 / &lt;50.00 GiB</span><br><span class="line">  VG UUID               t9gVEp-02O6-IK40-oNxs-fdFC-nuA3-Y5NgNU</span><br></pre></td></tr></table></figure>
+
+<p>创建逻辑卷：使用VG创建任意数量的LV</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[root@template ~]# lvcreate --size 49G --name vg_data share</span><br><span class="line">  Logical volume &quot;vg_data&quot; created.</span><br></pre></td></tr></table></figure>
+
+<p>列出所有LV</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[root@template ~]# lvscan</span><br><span class="line">  ACTIVE            &#x27;/dev/share/vg_data&#x27; [49.00 GiB] inherit</span><br><span class="line">  ACTIVE            &#x27;/dev/centos/swap&#x27; [1.00 GiB] inherit</span><br><span class="line">  ACTIVE            &#x27;/dev/centos/root&#x27; [&lt;8.00 GiB] inherit</span><br></pre></td></tr></table></figure>
+
+<p>格式化</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[root@template ~]# mkfs.ext4 /dev/share/vg_data</span><br><span class="line">mke2fs 1.42.9 (28-Dec-2013)</span><br><span class="line">Filesystem label=</span><br><span class="line">OS type: Linux</span><br><span class="line">Block size=4096 (log=2)</span><br><span class="line">Fragment size=4096 (log=2)</span><br><span class="line">Stride=0 blocks, Stripe width=0 blocks</span><br><span class="line">3211264 inodes, 12845056 blocks</span><br><span class="line">642252 blocks (5.00%) reserved for the super user</span><br><span class="line">First data block=0</span><br><span class="line">Maximum filesystem blocks=2162163712</span><br><span class="line">392 block groups</span><br><span class="line">32768 blocks per group, 32768 fragments per group</span><br><span class="line">8192 inodes per group</span><br><span class="line">Superblock backups stored on blocks: </span><br><span class="line">	32768, 98304, 163840, 229376, 294912, 819200, 884736, 1605632, 2654208, </span><br><span class="line">	4096000, 7962624, 11239424</span><br><span class="line"></span><br><span class="line">Allocating group tables: done                            </span><br><span class="line">Writing inode tables: done                            </span><br><span class="line">Creating journal (32768 blocks): done</span><br><span class="line">Writing superblocks and filesystem accounting information: done   </span><br></pre></td></tr></table></figure>
+
+<p>创建需要挂载到的目录</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[root@template ~]# mkdir -p /data</span><br></pre></td></tr></table></figure>
+
+<p>挂载</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[root@template ~]# mount /dev/mapper/share-vg_data /data</span><br></pre></td></tr></table></figure>
+
+<p>查看</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[root@template ~]# df -h</span><br><span class="line">Filesystem                 Size  Used Avail Use% Mounted on</span><br><span class="line">devtmpfs                   5.7G     0  5.7G   0% /dev</span><br><span class="line">tmpfs                      5.7G     0  5.7G   0% /dev/shm</span><br><span class="line">tmpfs                      5.7G  8.6M  5.7G   1% /run</span><br><span class="line">tmpfs                      5.7G     0  5.7G   0% /sys/fs/cgroup</span><br><span class="line">/dev/mapper/centos-root    8.0G  1.8G  6.3G  22% /</span><br><span class="line">/dev/vda1                 1014M  231M  784M  23% /boot</span><br><span class="line">tmpfs                      1.2G     0  1.2G   0% /run/user/0</span><br><span class="line">/dev/mapper/share-vg_data   49G   53M   46G   1% /data</span><br></pre></td></tr></table></figure>
+
+<p>开机自动挂载</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[root@template ~]# vim /etc/fstab</span><br><span class="line"></span><br><span class="line">/dev/mapper/share-vg_data  /data               ext4     defaults        0 0 </span><br></pre></td></tr></table></figure>
+
+<p>增加100G到/data</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[root@vmhost2 ~]# lvextend --size +500G --resizefs /dev/mapper/VGsdb1T-vm_main</span><br><span class="line">  Size of logical volume VGsdb1T/vm_main changed from 400.00 GiB (102400 extents) to 900.00 GiB (230400 extents).</span><br><span class="line">  Logical volume VGsdb1T/vm_main successfully resized.</span><br><span class="line">resize2fs 1.42.9 (28-Dec-2013)</span><br><span class="line">Filesystem at /dev/mapper/VGsdb1T-vm_main is mounted on /data; on-line resizing required</span><br><span class="line">old_desc_blocks = 50, new_desc_blocks = 113</span><br><span class="line">The filesystem on /dev/mapper/VGsdb1T-vm_main is now 235929600 blocks long.</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>查看</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">df -h</span><br></pre></td></tr></table></figure>
+
+<p>参数详情中文版</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[root@VMhost4 yum.repos.d]# fdisk /dev/sdb</span><br><span class="line"></span><br><span class="line">欢迎使用 fdisk (util-linux 2.32.1)。</span><br><span class="line">更改将停留在内存中，直到您决定将更改写入磁盘。</span><br><span class="line">使用写入命令前请三思。</span><br><span class="line"></span><br><span class="line">设备不包含可识别的分区表。</span><br><span class="line">创建了一个磁盘标识符为 0xc4b0420b 的新 DOS 磁盘标签。</span><br><span class="line"></span><br><span class="line">命令(输入 m 获取帮助)：m</span><br><span class="line"></span><br><span class="line">帮助：</span><br><span class="line"></span><br><span class="line">  DOS (MBR)</span><br><span class="line">   a   开关 可启动 标志</span><br><span class="line">   b   编辑嵌套的 BSD 磁盘标签</span><br><span class="line">   c   开关 dos 兼容性标志</span><br><span class="line"></span><br><span class="line">  常规</span><br><span class="line">   d   删除分区</span><br><span class="line">   F   列出未分区的空闲区</span><br><span class="line">   l   列出已知分区类型</span><br><span class="line">   n   添加新分区</span><br><span class="line">   p   打印分区表</span><br><span class="line">   t   更改分区类型</span><br><span class="line">   v   检查分区表</span><br><span class="line">   i   打印某个分区的相关信息</span><br><span class="line"></span><br><span class="line">  杂项</span><br><span class="line">   m   打印此菜单</span><br><span class="line">   u   更改 显示/记录 单位</span><br><span class="line">   x   更多功能(仅限专业人员)</span><br><span class="line"></span><br><span class="line">  脚本</span><br><span class="line">   I   从 sfdisk 脚本文件加载磁盘布局</span><br><span class="line">   O   将磁盘布局转储为 sfdisk 脚本文件</span><br><span class="line"></span><br><span class="line">  保存并退出</span><br><span class="line">   w   将分区表写入磁盘并退出</span><br><span class="line">   q   退出而不保存更改</span><br><span class="line"></span><br><span class="line">  新建空磁盘标签</span><br><span class="line">   g   新建一份 GPT 分区表</span><br><span class="line">   G   新建一份空 GPT (IRIX) 分区表</span><br><span class="line">   o   新建一份的空 DOS 分区表</span><br><span class="line">   s   新建一份空 Sun 分区表</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Hex 代码(输入 L 列出所有代码)：L</span><br><span class="line"></span><br><span class="line"> 0  空              24  NEC DOS         81  Minix / 旧 Linu bf  Solaris        </span><br><span class="line"> 1  FAT12           27  隐藏的 NTFS Win 82  Linux swap / So c1  DRDOS/sec (FAT-</span><br><span class="line"> 2  XENIX root      39  Plan 9          83  Linux           c4  DRDOS/sec (FAT-</span><br><span class="line"> 3  XENIX usr       3c  PartitionMagic  84  OS/2 隐藏 或 In c6  DRDOS/sec (FAT-</span><br><span class="line"> 4  FAT16 &lt;32M      40  Venix 80286     85  Linux 扩展      c7  Syrinx         </span><br><span class="line"> 5  扩展            41  PPC PReP Boot   86  NTFS 卷集       da  非文件系统数据 </span><br><span class="line"> 6  FAT16           42  SFS             87  NTFS 卷集       db  CP/M / CTOS / .</span><br><span class="line"> 7  HPFS/NTFS/exFAT 4d  QNX4.x          88  Linux 纯文本    de  Dell 工具      </span><br><span class="line"> 8  AIX             4e  QNX4.x 第2部分  8e  Linux LVM       df  BootIt         </span><br><span class="line"> 9  AIX 可启动      4f  QNX4.x 第3部分  93  Amoeba          e1  DOS 访问       </span><br><span class="line"> a  OS/2 启动管理器 50  OnTrack DM      94  Amoeba BBT      e3  DOS R/O        </span><br><span class="line"> b  W95 FAT32       51  OnTrack DM6 Aux 9f  BSD/OS          e4  SpeedStor      </span><br><span class="line"> c  W95 FAT32 (LBA) 52  CP/M            a0  IBM Thinkpad 休 ea  Rufus 对齐     </span><br><span class="line"> e  W95 FAT16 (LBA) 53  OnTrack DM6 Aux a5  FreeBSD         eb  BeOS fs        </span><br><span class="line"> f  W95 扩展 (LBA)  54  OnTrackDM6      a6  OpenBSD         ee  GPT            </span><br><span class="line">10  OPUS            55  EZ-Drive        a7  NeXTSTEP        ef  EFI (FAT-12/16/</span><br><span class="line">11  隐藏的 FAT12    56  Golden Bow      a8  Darwin UFS      f0  Linux/PA-RISC  </span><br><span class="line">12  Compaq 诊断     5c  Priam Edisk     a9  NetBSD          f1  SpeedStor      </span><br><span class="line">14  隐藏的 FAT16 &lt;3 61  SpeedStor       ab  Darwin 启动     f4  SpeedStor      </span><br><span class="line">16  隐藏的 FAT16    63  GNU HURD 或 Sys af  HFS / HFS+      f2  DOS 次要       </span><br><span class="line">17  隐藏的 HPFS/NTF 64  Novell Netware  b7  BSDI fs         fb  VMware VMFS    </span><br><span class="line">18  AST 智能睡眠    65  Novell Netware  b8  BSDI swap       fc  VMware VMKCORE </span><br><span class="line">1b  隐藏的 W95 FAT3 70  DiskSecure 多启 bb  Boot Wizard 隐  fd  Linux raid 自动</span><br><span class="line">1c  隐藏的 W95 FAT3 75  PC/IX           bc  Acronis FAT32 L fe  LANstep        </span><br><span class="line">1e  隐藏的 W95 FAT1 80  旧 Minix        be  Solaris 启动    ff  BBT            </span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>LVM</category>
+      </categories>
+      <tags>
+        <tag>LVM</tag>
+        <tag>磁盘</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>LVM扩容根目录（不新加磁盘）</title>
+    <url>/p/44212.html</url>
+    <content><![CDATA[<p><escape><span id="more"></span></escape></p>
+<h1 id="LVM扩容根目录（不用新添加磁盘）">1. LVM扩容根目录（不用新添加磁盘）</h1><blockquote>
+<p><a href="https://computingforgeeks.com/how-to-extend-increase-kvm-virtual-machine-disk-size/">https://computingforgeeks.com/how-to-extend-increase-kvm-virtual-machine-disk-size/</a></p>
+</blockquote>
+<p>如何在 KVM 中扩展/增加/增长虚拟磁盘？。我个人将 KVM 用于所有 Linux 虚拟化项目。有时，我需要为正在运行的 VM（来宾）扩展或添加磁盘空间以满足不断增长的软件需求。 KVM 使用 QEMU，它支持多种图像类型，其中包括 raw、cow、qcow、qcow2、vmdk、vdi 等。</p>
+<p>“原生”和最灵活的类型是 qcow2，它支持写入时复制、加密、压缩和 VM 快照。</p>
+<h2 id="关闭-KVM-上的虚拟机">1.1. 关闭 KVM 上的虚拟机</h2><p>在扩展来宾计算机虚拟磁盘之前，您需要先将其关闭。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ sudo virsh list</span><br><span class="line"> Id   Name    State</span><br><span class="line">-----------------------</span><br><span class="line"> 4    rhel8   running</span><br></pre></td></tr></table></figure>
+
+<p>如果您的来宾计算机处于运行状态，请使用其 ID 或名称将其关闭。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ sudo virsh shutdown rhel8</span><br><span class="line">Domain rhel8 is being shutdown</span><br></pre></td></tr></table></figure>
+
+<p>在继续管理其磁盘之前确认它确实已关闭。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ sudo virsh list          </span><br><span class="line"> Id   Name   State</span><br><span class="line">--------------------</span><br></pre></td></tr></table></figure>
+
+<h2 id="扩展您的-KVM-来宾操作系统磁盘">1.2. 扩展您的 KVM 来宾操作系统磁盘</h2><p>找到您的来宾操作系统磁盘路径。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ sudo virsh domblklist rhel8</span><br><span class="line"> Target   Source</span><br><span class="line">-----------------------------------------------</span><br><span class="line"> vda      /var/lib/libvirt/images/rhel8.qcow2</span><br><span class="line"> sda      -</span><br><span class="line"></span><br><span class="line">OR use:</span><br><span class="line"></span><br><span class="line">$ sudo virsh dumpxml rhel8 | egrep &#x27;disk type&#x27; -A 5</span><br><span class="line">    &lt;disk type=&#x27;file&#x27; device=&#x27;disk&#x27;&gt;</span><br><span class="line">      &lt;driver name=&#x27;qemu&#x27; type=&#x27;qcow2&#x27;/&gt;</span><br><span class="line">      &lt;source file=&#x27;/var/lib/libvirt/images/rhel8.qcow2&#x27;/&gt;</span><br><span class="line">      &lt;backingStore/&gt;</span><br><span class="line">      &lt;target dev=&#x27;vda&#x27; bus=&#x27;virtio&#x27;/&gt;</span><br><span class="line">      &lt;address type=&#x27;pci&#x27; domain=&#x27;0x0000&#x27; bus=&#x27;0x04&#x27; slot=&#x27;0x00&#x27; function=&#x27;0x0&#x27;/&gt;</span><br><span class="line">--</span><br><span class="line">    &lt;disk type=&#x27;file&#x27; device=&#x27;cdrom&#x27;&gt;</span><br><span class="line">      &lt;driver name=&#x27;qemu&#x27; type=&#x27;raw&#x27;/&gt;</span><br><span class="line">      &lt;target dev=&#x27;sda&#x27; bus=&#x27;sata&#x27;/&gt;</span><br><span class="line">      &lt;readonly/&gt;</span><br><span class="line">      &lt;address type=&#x27;drive&#x27; controller=&#x27;0&#x27; bus=&#x27;0&#x27; target=&#x27;0&#x27; unit=&#x27;0&#x27;/&gt;</span><br><span class="line">    &lt;/disk&gt;</span><br></pre></td></tr></table></figure>
+
+<p>您可以从 Virtual Machine Manager GUI 获取相同的信息。我的虚拟机磁盘位于‘/var/lib/libvirt/images/rhel8.qcow2‘。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ sudo qemu-img info /var/lib/libvirt/images/rhel8.qcow2</span><br><span class="line">image: /var/lib/libvirt/images/rhel8.qcow2</span><br><span class="line">file format: qcow2</span><br><span class="line">virtual size: 30G (42949672960 bytes)</span><br><span class="line">disk size: 2.0G</span><br><span class="line">cluster_size: 65536</span><br><span class="line">Format specific information:</span><br><span class="line">    compat: 1.1</span><br><span class="line">    lazy refcounts: true</span><br><span class="line">    refcount bits: 16</span><br><span class="line">    corrupt: false</span><br></pre></td></tr></table></figure>
+
+<h2 id="扩展来宾-VM-磁盘">1.3. 扩展来宾 VM 磁盘</h2><p>由于我们知道我们的虚拟机磁盘的位置，让我们将其扩展到我们想要的容量。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo qemu-img resize /var/lib/libvirt/images/rhel8.qcow2 +10G</span><br></pre></td></tr></table></figure>
+
+<p>请注意 qemu-img 无法调整具有快照的图像的大小。您需要先删除所有 VM 快照。看这个例子：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ sudo virsh snapshot-list rhel8</span><br><span class="line"> Name        Creation Time               State</span><br><span class="line">--------------------------------------------------</span><br><span class="line"> snapshot1   2019-04-16 08:54:24 +0300   shutoff</span><br><span class="line"></span><br><span class="line">$ sudo virsh snapshot-delete --domain rhel8 --snapshotname snapshot1</span><br><span class="line">Domain snapshot snapshot1 deleted</span><br><span class="line"></span><br><span class="line">$ sudo virsh snapshot-list rhel8                                    </span><br><span class="line"> Name   Creation Time   State</span><br><span class="line">-------------------------------</span><br></pre></td></tr></table></figure>
+
+<p>然后使用磁盘容量前的“+”扩展磁盘。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ sudo qemu-img resize /var/lib/libvirt/images/rhel8.qcow2 +10G</span><br><span class="line">Image resized.</span><br></pre></td></tr></table></figure>
+
+<p>您还可以使用 virsh 命令调整大小。这需要域正在运行。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ sudo qemu-img info /var/lib/libvirt/images/rhel8.qcow2</span><br><span class="line"> image: /var/lib/libvirt/images/rhel8.qcow2</span><br><span class="line"> file format: qcow2</span><br><span class="line"> virtual size: 30G (42949672960 bytes)</span><br><span class="line"> disk size: 2.0G</span><br><span class="line"> cluster_size: 65536</span><br><span class="line"> Format specific information:</span><br><span class="line">     compat: 1.1</span><br><span class="line">     lazy refcounts: true</span><br><span class="line">     refcount bits: 16</span><br><span class="line">     corrupt: false</span><br><span class="line"></span><br><span class="line">$ sudo virsh start rhel8</span><br><span class="line">$ sudo virsh blockresize rhel8 /var/lib/libvirt/images/rhel8.qcow2 40G</span><br><span class="line">Block device &#x27;/var/lib/libvirt/images/rhel8.qcow2&#x27; is resized</span><br></pre></td></tr></table></figure>
+
+<p>使用 fdisk 命令确认磁盘大小。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ sudo fdisk -l /var/lib/libvirt/images/rhel8.qcow2      </span><br><span class="line">Disk /var/lib/libvirt/images/rhel8.qcow2: 30.2 GiB, 32399818752 bytes, 63280896 sectors</span><br><span class="line">Units: sectors of 1 * 512 = 512 bytes</span><br><span class="line">Sector size (logical/physical): 512 bytes / 512 bytes</span><br><span class="line">I/O size (minimum/optimal): 512 bytes / 512 bytes</span><br></pre></td></tr></table></figure>
+
+<h2 id="增加虚拟机分区">1.4. 增加虚拟机分区</h2><p>现在启动虚拟机</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ sudo virsh start rhel8</span><br><span class="line">Domain rhel8 started</span><br></pre></td></tr></table></figure>
+
+<p>以 root 用户身份或使用具有 sudo 的用户帐户通过 SSH 连接到您的 VM。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ ssh rhel8             </span><br><span class="line">Last login: Fri Apr 19 06:11:19 2019 from 192.168.122.1</span><br><span class="line">[jmutai@rhel8 ~]$ </span><br></pre></td></tr></table></figure>
+
+<p>检查您的新磁盘布局。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ lsblk </span><br><span class="line"> NAME          MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT</span><br><span class="line"> sr0            11:0    1 1024M  0 rom  </span><br><span class="line"> vda           252:0    0   40G  0 disk </span><br><span class="line"> ├─vda1        252:1    0    1G  0 part /boot</span><br><span class="line"> └─vda2        252:2    0   29G  0 part </span><br><span class="line">   ├─rhel-root 253:0    0 26.9G  0 lvm  /</span><br><span class="line">   └─rhel-swap 253:1    0  2.1G  0 lvm  [SWAP]</span><br></pre></td></tr></table></figure>
+
+<p>我的 VM 总磁盘容量现在是 40GB，以前是 30GB。要扩展您的操作系统分区，请参阅以下指南。</p>
+<ul>
+<li><a href="https://computingforgeeks.com/extending-root-filesystem-using-lvm-linux/">How to extend root filesystem using LVM in Linux</a></li>
+<li><a href="https://computingforgeeks.com/resize-ext-and-xfs-root-partition-without-lvm/">How to resize an ext2/3/4 and XFS root partition without LVM</a></li>
+</ul>
+<h3 id="Recommended-Video-Courses-to-Learn-Linux-System-Administration">1.4.1. Recommended Video Courses to Learn Linux System Administration:</h3><ul>
+<li><a href="https://click.linksynergy.com/deeplink?id=2sb89XJC/EQ&mid=39197&murl=https://www.udemy.com/course/linux-mastery/">Linux Mastery: Master the Linux Command Line in 11.5 Hours</a></li>
+<li><a href="https://click.linksynergy.com/deeplink?id=2sb89XJC/EQ&mid=39197&murl=https://www.udemy.com/course/complete-linux-training-course-to-get-your-dream-it-job/">Complete Linux Training Course to Get Your Dream IT Job 2021</a></li>
+<li><a href="https://click.linksynergy.com/deeplink?id=2sb89XJC/EQ&mid=39197&murl=https://www.udemy.com/course/learn-linux-in-5-days/">Learn Linux in 5 Days and Level Up Your Career</a></li>
+<li><a href="https://click.linksynergy.com/deeplink?id=2sb89XJC/EQ&mid=39197&murl=https://www.udemy.com/course/linux-administration-bootcamp/">Linux Administration Bootcamp: Go from Beginner to Advanced</a></li>
+<li><a href="https://click.linksynergy.com/deeplink?id=2sb89XJC/EQ&mid=39197&murl=https://www.udemy.com/course/linux-bash-shell-scripting-through-real-life-examples/">Complete Linux Bash Shell Scripting with Real Life Examples</a></li>
+<li><a href="https://click.linksynergy.com/deeplink?id=2sb89XJC/EQ&mid=39197&murl=https://www.udemy.com/course/linux-shell-scripting-projects/">Linux Shell Scripting: A Project-Based Approach to Learning</a></li>
+</ul>
+<p>Other guides:</p>
+<ul>
+<li><a href="https://computingforgeeks.com/how-to-extend-aws-ec2-instance-boot-file-system-without-rebooting/">How to extend EBS boot disk on AWS without an instance reboot</a></li>
+<li><a href="https://computingforgeeks.com/how-to-create-disk-partitions-in-windows-using-diskpart-command/">How to create disk partitions in Windows using diskpart command</a></li>
+<li>[Working with qemu-img in Linux](</li>
+</ul>
+]]></content>
+      <categories>
+        <category>LVM</category>
+      </categories>
+      <tags>
+        <tag>LVM</tag>
+        <tag>磁盘</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>将新硬盘加入到根目录</title>
+    <url>/p/42147.html</url>
+    <content><![CDATA[<p><escape><span id="more"></span></escape></p>
+<h1 id="将新硬盘加入到根目录（逻辑卷LVM）">1. 将新硬盘加入到根目录（逻辑卷LVM）</h1><p>安装系统时采用了LVM分区，根目录只有9.7G</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[root@edgex ~]# df -h</span><br><span class="line">Filesystem               Size  Used Avail Use% Mounted on</span><br><span class="line">devtmpfs                 1.9G     0  1.9G   0% /dev</span><br><span class="line">tmpfs                    1.9G     0  1.9G   0% /dev/shm</span><br><span class="line">tmpfs                    1.9G  8.6M  1.9G   1% /run</span><br><span class="line">tmpfs                    1.9G     0  1.9G   0% /sys/fs/cgroup</span><br><span class="line">/dev/mapper/centos-root  8.0G  8.0G   67M 100% /</span><br><span class="line">/dev/sda1               1014M  275M  740M  28% /boot</span><br><span class="line">tmpfs                    379M     0  379M   0% /run/user/0</span><br></pre></td></tr></table></figure>
+
+<p>查看目前虚拟机的磁盘情况，看到新增磁盘：/dev/sdb1 50G</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[root@edgex ~]# fdisk -l</span><br><span class="line"></span><br><span class="line">Disk /dev/sda: 10.7 GB, 10737418240 bytes, 20971520 sectors</span><br><span class="line">Units = sectors of 1 * 512 = 512 bytes</span><br><span class="line">Sector size (logical/physical): 512 bytes / 512 bytes</span><br><span class="line">I/O size (minimum/optimal): 512 bytes / 512 bytes</span><br><span class="line">Disk label type: dos</span><br><span class="line">Disk identifier: 0x000beec6</span><br><span class="line"></span><br><span class="line">   Device Boot      Start         End      Blocks   Id  System</span><br><span class="line">/dev/sda1   *        2048     2099199     1048576   83  Linux</span><br><span class="line">/dev/sda2         2099200    20971519     9436160   8e  Linux LVM</span><br><span class="line"></span><br><span class="line">Disk /dev/sdb: 53.7 GB, 53687091200 bytes, 104857600 sectors</span><br><span class="line">Units = sectors of 1 * 512 = 512 bytes</span><br><span class="line">Sector size (logical/physical): 512 bytes / 512 bytes</span><br><span class="line">I/O size (minimum/optimal): 512 bytes / 512 bytes</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Disk /dev/mapper/centos-root: 8585 MB, 8585740288 bytes, 16769024 sectors</span><br><span class="line">Units = sectors of 1 * 512 = 512 bytes</span><br><span class="line">Sector size (logical/physical): 512 bytes / 512 bytes</span><br><span class="line">I/O size (minimum/optimal): 512 bytes / 512 bytes</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Disk /dev/mapper/centos-swap: 1073 MB, 1073741824 bytes, 2097152 sectors</span><br><span class="line">Units = sectors of 1 * 512 = 512 bytes</span><br><span class="line">Sector size (logical/physical): 512 bytes / 512 bytes</span><br><span class="line">I/O size (minimum/optimal): 512 bytes / 512 bytes</span><br></pre></td></tr></table></figure>
+
+<p>初始化</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[root@edgex ~]# fdisk /dev/sdb</span><br><span class="line">Welcome to fdisk (util-linux 2.23.2).</span><br><span class="line"></span><br><span class="line">Changes will remain in memory only, until you decide to write them.</span><br><span class="line">Be careful before using the write command.</span><br><span class="line"></span><br><span class="line">Device does not contain a recognized partition table</span><br><span class="line">Building a new DOS disklabel with disk identifier 0x795ab816.</span><br><span class="line"></span><br><span class="line">Command (m for help): o</span><br><span class="line">Building a new DOS disklabel with disk identifier 0x51f639a5.</span><br><span class="line"></span><br><span class="line">Command (m for help): n</span><br><span class="line">Partition type:</span><br><span class="line">   p   primary (0 primary, 0 extended, 4 free)</span><br><span class="line">   e   extended</span><br><span class="line">Select (default p): p</span><br><span class="line">Partition number (1-4, default 1): </span><br><span class="line">First sector (2048-104857599, default 2048): </span><br><span class="line">Using default value 2048</span><br><span class="line">Last sector, +sectors or +size&#123;K,M,G&#125; (2048-104857599, default 104857599): </span><br><span class="line">Using default value 104857599</span><br><span class="line">Partition 1 of type Linux and of size 50 GiB is set</span><br><span class="line"></span><br><span class="line">Command (m for help): t</span><br><span class="line">Selected partition 1</span><br><span class="line">Hex code (type L to list all codes): 8e</span><br><span class="line">Changed type of partition &#x27;Linux&#x27; to &#x27;Linux LVM&#x27;</span><br><span class="line"></span><br><span class="line">Command (m for help): w</span><br><span class="line">The partition table has been altered!</span><br><span class="line"></span><br><span class="line">Calling ioctl() to re-read partition table.</span><br><span class="line">Syncing disks.</span><br></pre></td></tr></table></figure>
+
+<p>创建pv ,通过pvcreate命令将磁盘/dev/sdb1创建为一个系统PV</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[root@edgex ~]# pvcreate /dev/sdb1 </span><br><span class="line">  Physical volume &quot;/dev/sdb1&quot; successfully created.</span><br></pre></td></tr></table></figure>
+
+<p>查看pv</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[root@edgex ~]# pvscan</span><br><span class="line">  PV /dev/sda2   VG centos          lvm2 [&lt;9.00 GiB / 0    free]</span><br><span class="line">  PV /dev/sdb1                      lvm2 [&lt;50.00 GiB]</span><br><span class="line">  Total: 2 [&lt;59.00 GiB] / in use: 1 [&lt;9.00 GiB] / in no VG: 1 [&lt;50.00 GiB]</span><br></pre></td></tr></table></figure>
+
+<p>查看vg</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[root@edgex ~]# vgs</span><br><span class="line">  VG     #PV #LV #SN Attr   VSize  VFree</span><br><span class="line">  centos   1   2   0 wz--n- &lt;9.00g    0 </span><br></pre></td></tr></table></figure>
+
+<p>将 PV /dev/sdb1添加到卷组centos中</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[root@edgex ~]# vgextend centos /dev/sdb1</span><br><span class="line">  Volume group &quot;centos&quot; successfully extended</span><br></pre></td></tr></table></figure>
+
+<p>查看vg，已经增加为58G</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[root@edgex ~]# vgs</span><br><span class="line">  VG     #PV #LV #SN Attr   VSize  VFree  </span><br><span class="line">  centos   2   2   0 wz--n- 58.99g &lt;50.00g</span><br></pre></td></tr></table></figure>
+
+<p>为根目录添加20G的空间。通过df -h查看根目录的lv名称为 /dev/mapper/centos-root</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[root@edgex ~]# df -h</span><br><span class="line">Filesystem               Size  Used Avail Use% Mounted on</span><br><span class="line">devtmpfs                 1.9G     0  1.9G   0% /dev</span><br><span class="line">tmpfs                    1.9G     0  1.9G   0% /dev/shm</span><br><span class="line">tmpfs                    1.9G  8.6M  1.9G   1% /run</span><br><span class="line">tmpfs                    1.9G     0  1.9G   0% /sys/fs/cgroup</span><br><span class="line">/dev/mapper/centos-root  8.0G  8.0G   67M 100% /</span><br><span class="line">/dev/sda1               1014M  275M  740M  28% /boot</span><br><span class="line">tmpfs                    379M     0  379M   0% /run/user/0</span><br></pre></td></tr></table></figure>
+
+<p>增加</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[root@edgex ~]# lvextend -L +50G -n /dev/mapper/centos-root</span><br><span class="line">  Insufficient free space: 12800 extents needed, but only 12799 available</span><br></pre></td></tr></table></figure>
+
+<p>发现报错了，空间不够，所以 降低1G输入如下命令：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[root@edgex ~]# lvextend -L +49G -n /dev/mapper/centos-root</span><br><span class="line">  Size of logical volume centos/root changed from &lt;8.00 GiB (2047 extents) to &lt;57.00 GiB (14591 extents).</span><br><span class="line">  Logical volume centos/root successfully resized.</span><br></pre></td></tr></table></figure>
+
+<p>逻辑卷扩展后并不会马上生效，需要使用“resize2fs”命令重新加载逻辑卷的大小</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[root@edgex ~]# resize2fs /dev/mapper/centos-root</span><br><span class="line">resize2fs 1.42.9 (28-Dec-2013)</span><br><span class="line">resize2fs: Bad magic number in super-block while trying to open /dev/mapper/centos-root</span><br><span class="line">Couldn&#x27;t find valid filesystem superblock.</span><br></pre></td></tr></table></figure>
+
+<p>使用 resize2fs时，提示错误，了解后发现，xfs格式的文件扩充需要使用 xfs_growfs</p>
+<p>查看/dev/mapper/centos-root的格式</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[root@edgex ~]# df -hT</span><br><span class="line">Filesystem              Type      Size  Used Avail Use% Mounted on</span><br><span class="line">devtmpfs                devtmpfs  1.9G     0  1.9G   0% /dev</span><br><span class="line">tmpfs                   tmpfs     1.9G     0  1.9G   0% /dev/shm</span><br><span class="line">tmpfs                   tmpfs     1.9G  8.6M  1.9G   1% /run</span><br><span class="line">tmpfs                   tmpfs     1.9G     0  1.9G   0% /sys/fs/cgroup</span><br><span class="line">/dev/mapper/centos-root xfs        8.0G  8.0G   67M  100% /</span><br><span class="line">/dev/sda1               xfs      1014M  275M  740M  28% /boot</span><br><span class="line">tmpfs                   tmpfs     379M     0  379M   0% /run/user/0</span><br></pre></td></tr></table></figure>
+
+<p>查看得知为xfs，使用xfs_growfs扩充</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[root@edgex ~]# xfs_growfs /dev/mapper/centos-root </span><br><span class="line">meta-data=/dev/mapper/centos-root isize=512    agcount=4, agsize=524032 blks</span><br><span class="line">         =                       sectsz=512   attr=2, projid32bit=1</span><br><span class="line">         =                       crc=1        finobt=0 spinodes=0</span><br><span class="line">data     =                       bsize=4096   blocks=2096128, imaxpct=25</span><br><span class="line">         =                       sunit=0      swidth=0 blks</span><br><span class="line">naming   =version 2              bsize=4096   ascii-ci=0 ftype=1</span><br><span class="line">log      =internal               bsize=4096   blocks=2560, version=2</span><br><span class="line">         =                       sectsz=512   sunit=0 blks, lazy-count=1</span><br><span class="line">realtime =none                   extsz=4096   blocks=0, rtextents=0</span><br><span class="line">data blocks changed from 2096128 to 14941184</span><br></pre></td></tr></table></figure>
+
+<p>至此扩充完毕。</p>
+]]></content>
+      <categories>
+        <category>LVM</category>
+      </categories>
+      <tags>
+        <tag>LVM</tag>
+        <tag>磁盘</tag>
+      </tags>
+  </entry>
 </search>
