@@ -133,7 +133,7 @@
     <link href="https://heyonggs.github.io/p/27615.html"/>
     <id>https://heyonggs.github.io/p/27615.html</id>
     <published>2021-09-24T08:56:14.000Z</published>
-    <updated>2021-09-24T09:53:29.153Z</updated>
+    <updated>2021-10-26T02:47:59.918Z</updated>
     
     
     <summary type="html">&lt;p&gt;&lt;escape&gt;&lt;/escape&gt;&lt;/p&gt;</summary>
@@ -143,9 +143,9 @@
     <category term="Kubernetes" scheme="https://heyonggs.github.io/categories/Kubernetes/"/>
     
     
-    <category term="k8s" scheme="https://heyonggs.github.io/tags/k8s/"/>
-    
     <category term="容器" scheme="https://heyonggs.github.io/tags/%E5%AE%B9%E5%99%A8/"/>
+    
+    <category term="k8s" scheme="https://heyonggs.github.io/tags/k8s/"/>
     
     <category term="Kubernetes" scheme="https://heyonggs.github.io/tags/Kubernetes/"/>
     
@@ -410,9 +410,9 @@
     <category term="Docker" scheme="https://heyonggs.github.io/categories/Docker/"/>
     
     
-    <category term="容器" scheme="https://heyonggs.github.io/tags/%E5%AE%B9%E5%99%A8/"/>
-    
     <category term="Docker" scheme="https://heyonggs.github.io/tags/Docker/"/>
+    
+    <category term="容器" scheme="https://heyonggs.github.io/tags/%E5%AE%B9%E5%99%A8/"/>
     
   </entry>
   
