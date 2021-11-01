@@ -1,12 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>优秀技术博客及文章收藏</title>
-    <url>/p/42568.html</url>
-    <content><![CDATA[<p><escape><span id="more"></span></escape></p>
-]]></content>
-  </entry>
-  <entry>
     <title>LVM创建及管理</title>
     <url>/p/29253.html</url>
     <content><![CDATA[<p><escape><span id="more"></span></escape></p>
@@ -3851,5 +3845,23 @@
         <tag>Kubernetes</tag>
         <tag>helm</tag>
       </tags>
+  </entry>
+  <entry>
+    <title>优秀文章及网站收藏</title>
+    <url>/p/42568.html</url>
+    <content><![CDATA[<p><escape><span id="more"></span></escape></p>
+<p>榜单网站</p>
+<p>Oracle全球技术专家头衔列表</p>
+<p>Find Oracle ACEs, Groundbreaker Ambassadors and Java Champions in our Groundbreakers directory.</p>
+<blockquote>
+<p><a href="https://apexapps.oracle.com/pls/apex/f?p=119297:3">https://apexapps.oracle.com/pls/apex/f?p=119297:3</a>::::::</p>
+</blockquote>
+<p>编程网站排行榜</p>
+<blockquote>
+<p><a href="https://www.tiobe.com/tiobe-index/">https://www.tiobe.com/tiobe-index/</a></p>
+</blockquote>
+<p>SQL Relay</p>
+<p><a href="http://sqlrelay.sourceforge.net/">http://sqlrelay.sourceforge.net/</a></p>
+]]></content>
   </entry>
 </search>
