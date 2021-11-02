@@ -459,27 +459,6 @@
   </url>
   
   <url>
-    <loc>https://heyonggs.github.io/tags/LDAP/</loc>
-    <lastmod>2021-11-02</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://heyonggs.github.io/tags/OpenLDAP/</loc>
-    <lastmod>2021-11-02</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://heyonggs.github.io/tags/System-cpu/</loc>
-    <lastmod>2021-11-02</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://heyonggs.github.io/tags/Windows/</loc>
     <lastmod>2021-11-02</lastmod>
     <changefreq>daily</changefreq>
@@ -488,6 +467,13 @@
   
   <url>
     <loc>https://heyonggs.github.io/tags/ansible/</loc>
+    <lastmod>2021-11-02</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://heyonggs.github.io/tags/System-cpu/</loc>
     <lastmod>2021-11-02</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -508,7 +494,21 @@
   </url>
   
   <url>
-    <loc>https://heyonggs.github.io/tags/Nginx/</loc>
+    <loc>https://heyonggs.github.io/tags/LDAP/</loc>
+    <lastmod>2021-11-02</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://heyonggs.github.io/tags/OpenLDAP/</loc>
+    <lastmod>2021-11-02</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://heyonggs.github.io/tags/SaltStack/</loc>
     <lastmod>2021-11-02</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -522,7 +522,7 @@
   </url>
   
   <url>
-    <loc>https://heyonggs.github.io/tags/SaltStack/</loc>
+    <loc>https://heyonggs.github.io/tags/Nginx/</loc>
     <lastmod>2021-11-02</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -608,20 +608,6 @@
   </url>
   
   <url>
-    <loc>https://heyonggs.github.io/categories/LDAP/</loc>
-    <lastmod>2021-11-02</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://heyonggs.github.io/categories/System-cpu/</loc>
-    <lastmod>2021-11-02</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://heyonggs.github.io/categories/Windows/</loc>
     <lastmod>2021-11-02</lastmod>
     <changefreq>daily</changefreq>
@@ -630,6 +616,13 @@
   
   <url>
     <loc>https://heyonggs.github.io/categories/ansible/</loc>
+    <lastmod>2021-11-02</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://heyonggs.github.io/categories/System-cpu/</loc>
     <lastmod>2021-11-02</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -650,7 +643,14 @@
   </url>
   
   <url>
-    <loc>https://heyonggs.github.io/categories/Nginx/</loc>
+    <loc>https://heyonggs.github.io/categories/LDAP/</loc>
+    <lastmod>2021-11-02</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://heyonggs.github.io/categories/SaltStack/</loc>
     <lastmod>2021-11-02</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -664,14 +664,14 @@
   </url>
   
   <url>
-    <loc>https://heyonggs.github.io/categories/k8s/</loc>
+    <loc>https://heyonggs.github.io/categories/Nginx/</loc>
     <lastmod>2021-11-02</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>https://heyonggs.github.io/categories/SaltStack/</loc>
+    <loc>https://heyonggs.github.io/categories/k8s/</loc>
     <lastmod>2021-11-02</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
