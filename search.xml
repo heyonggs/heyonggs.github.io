@@ -4090,4 +4090,121 @@
         <tag>helm</tag>
       </tags>
   </entry>
+  <entry>
+    <title>kubeadm部署KubernetesV1.18集群</title>
+    <url>/p/51486.html</url>
+    <content><![CDATA[<h1 id="kubeadm部署KubernetesV1-18集群">1. kubeadm部署KubernetesV1.18集群</h1><p>kubeadm是官方社区推出的一个用于快速部署kubernetes集群的工具。</p>
+<p>这个工具能通过两条指令完成一个kubernetes集群的部署：</p>
+<p><escape><span id="more"></span></escape></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 创建一个 Master 节点</span><br><span class="line">$ kubeadm init</span><br><span class="line"></span><br><span class="line"># 将一个 Node 节点加入到当前集群中</span><br><span class="line">$ kubeadm join &lt;Master节点的IP和端口 &gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="安装要求">1.1. 安装要求</h2><p>在开始之前，部署Kubernetes集群机器需要满足以下几个条件：</p>
+<ul>
+<li>一台或多台机器，操作系统 CentOS7.x-86_x64</li>
+<li>硬件配置：2GB或更多RAM，2个CPU或更多CPU，硬盘30GB或更多</li>
+<li>可以访问外网，需要拉取镜像，如果服务器不能上网，需要提前下载镜像并导入节点</li>
+<li>禁止swap分区</li>
+</ul>
+<h2 id="准备环境">1.2. 准备环境</h2><p> <img src="https://blog-1252881505.cos.ap-beijing.myqcloud.com/k8s/single-master.jpg" alt="kubernetesæ¶æå¾"> </p>
+<table>
+<thead>
+<tr>
+<th>角色</th>
+<th>IP</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>k8s-master</td>
+<td>192.168.31.61</td>
+</tr>
+<tr>
+<td>k8s-node1</td>
+<td>192.168.31.62</td>
+</tr>
+<tr>
+<td>k8s-node2</td>
+<td>192.168.31.63</td>
+</tr>
+</tbody></table>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 关闭防火墙</span><br><span class="line">systemctl stop firewalld</span><br><span class="line">systemctl disable firewalld</span><br><span class="line"></span><br><span class="line"># 关闭selinux</span><br><span class="line">sed -i &#x27;s/enforcing/disabled/&#x27; /etc/selinux/config  # 永久</span><br><span class="line">setenforce 0  # 临时</span><br><span class="line"></span><br><span class="line"># 关闭swap</span><br><span class="line">swapoff -a  # 临时</span><br><span class="line">sed -ri &#x27;s/.*swap.*/#&amp;/&#x27; /etc/fstab    # 永久</span><br><span class="line"></span><br><span class="line"># 根据规划设置主机名</span><br><span class="line">hostnamectl set-hostname &lt;hostname&gt;</span><br><span class="line"></span><br><span class="line"># 在master添加hosts</span><br><span class="line">cat &gt;&gt; /etc/hosts &lt;&lt; EOF</span><br><span class="line">192.168.31.71 k8s-master</span><br><span class="line">192.168.31.72 k8s-node1</span><br><span class="line">192.168.31.73 k8s-node2</span><br><span class="line">EOF</span><br><span class="line"></span><br><span class="line"># 将桥接的IPv4流量传递到iptables的链</span><br><span class="line">cat &gt; /etc/sysctl.d/k8s.conf &lt;&lt; EOF</span><br><span class="line">net.bridge.bridge-nf-call-ip6tables = 1</span><br><span class="line">net.bridge.bridge-nf-call-iptables = 1</span><br><span class="line">EOF</span><br><span class="line">sysctl --system  # 生效</span><br><span class="line"></span><br><span class="line"># 时间同步</span><br><span class="line">yum install ntpdate -y</span><br><span class="line">ntpdate time.windows.com</span><br></pre></td></tr></table></figure>
+
+<h2 id="所有节点安装Docker-kubeadm-kubelet">1.3. 所有节点安装Docker/kubeadm/kubelet</h2><p>Kubernetes默认CRI（容器运行时）为Docker，因此先安装Docker。</p>
+<h3 id="安装Docker">1.3.1. 安装Docker</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ wget https://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo -O /etc/yum.repos.d/docker-ce.repo</span><br><span class="line">$ yum -y install docker-ce-18.06.1.ce-3.el7</span><br><span class="line">$ systemctl enable docker &amp;&amp; systemctl start docker</span><br><span class="line">$ docker --version</span><br><span class="line">Docker version 18.06.1-ce, build e68fc7a</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ cat &gt; /etc/docker/daemon.json &lt;&lt; EOF</span><br><span class="line">&#123;</span><br><span class="line">  &quot;registry-mirrors&quot;: [&quot;https://b9pmyelo.mirror.aliyuncs.com&quot;]</span><br><span class="line">&#125;</span><br><span class="line">EOF</span><br></pre></td></tr></table></figure>
+
+<h3 id="添加阿里云YUM软件源">1.3.2. 添加阿里云YUM软件源</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ cat &gt; /etc/yum.repos.d/kubernetes.repo &lt;&lt; EOF</span><br><span class="line">[kubernetes]</span><br><span class="line">name=Kubernetes</span><br><span class="line">baseurl=https://mirrors.aliyun.com/kubernetes/yum/repos/kubernetes-el7-x86_64</span><br><span class="line">enabled=1</span><br><span class="line">gpgcheck=0</span><br><span class="line">repo_gpgcheck=0</span><br><span class="line">gpgkey=https://mirrors.aliyun.com/kubernetes/yum/doc/yum-key.gpg https://mirrors.aliyun.com/kubernetes/yum/doc/rpm-package-key.gpg</span><br><span class="line">EOF</span><br></pre></td></tr></table></figure>
+
+<h3 id="安装kubeadm，kubelet和kubectl">1.3.3. 安装kubeadm，kubelet和kubectl</h3><p>由于版本更新频繁，这里指定版本号部署：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ yum install -y kubelet-1.18.0 kubeadm-1.18.0 kubectl-1.18.0</span><br><span class="line">$ systemctl enable kubelet</span><br></pre></td></tr></table></figure>
+
+<h2 id="部署Kubernetes-Master">1.4. 部署Kubernetes Master</h2><p>在192.168.31.61（Master）执行。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ kubeadm init \</span><br><span class="line">  --apiserver-advertise-address=192.168.31.61 \</span><br><span class="line">  --image-repository registry.aliyuncs.com/google_containers \</span><br><span class="line">  --kubernetes-version v1.18.0 \</span><br><span class="line">  --service-cidr=10.96.0.0/12 \</span><br><span class="line">  --pod-network-cidr=10.244.0.0/16</span><br></pre></td></tr></table></figure>
+
+<p>由于默认拉取镜像地址k8s.gcr.io国内无法访问，这里指定阿里云镜像仓库地址。</p>
+<p>使用kubectl工具：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">mkdir -p <span class="variable">$HOME</span>/.kube</span><br><span class="line">sudo cp -i /etc/kubernetes/admin.conf <span class="variable">$HOME</span>/.kube/config</span><br><span class="line">sudo chown $(id -u):$(id -g) <span class="variable">$HOME</span>/.kube/config</span><br><span class="line">$ kubectl get nodes</span><br></pre></td></tr></table></figure>
+
+<h2 id="加入Kubernetes-Node">1.5. 加入Kubernetes Node</h2><p>在192.168.31.62/63（Node）执行。</p>
+<p>向集群添加新节点，执行在kubeadm init输出的kubeadm join命令：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ kubeadm join 192.168.31.61:6443 --token esce21.q6hetwm8si29qxwn \</span><br><span class="line">    --discovery-token-ca-cert-hash sha256:00603a05805807501d7181c3d60b478788408cfe6cedefedb1f97569708be9c5</span><br><span class="line">    </span><br><span class="line">kubeadm join 192.168.101.209:6443 --token aw0wah.wf0ucozx0syqa58z     --discovery-token-ca-cert-hash sha256:5745909fd8cba0a6643060d19fb6b45a39b718cb39572727198f6ca0218ffe0b</span><br></pre></td></tr></table></figure>
+
+<p>默认token有效期为24小时，当过期之后，该token就不可用了。这时就需要重新创建token，操作如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">kubeadm token create --print-join-command</span><br></pre></td></tr></table></figure>
+
+<h2 id="部署CNI网络插件">1.6. 部署CNI网络插件</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">wget https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml</span><br><span class="line">sed -i -r &quot;s#quay.io/coreos/flannel:.*-amd64#lizhenliang/flannel:v0.11.0-amd64#g&quot; kube-flannel.yml</span><br></pre></td></tr></table></figure>
+
+<p>默认镜像地址无法访问，sed命令修改为docker hub镜像仓库。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">kubectl apply -f kube-flannel.yml</span><br><span class="line"></span><br><span class="line">kubectl get pods -n kube-system</span><br><span class="line">NAME                          READY   STATUS    RESTARTS   AGE</span><br><span class="line">kube-flannel-ds-amd64-2pc95   1/1     Running   0          72s</span><br></pre></td></tr></table></figure>
+
+<h2 id="测试kubernetes集群">1.7. 测试kubernetes集群</h2><p>在Kubernetes集群中创建一个pod，验证是否正常运行：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ kubectl create deployment nginx --image=nginx</span><br><span class="line">$ kubectl expose deployment nginx --port=80 --type=NodePort</span><br><span class="line">$ kubectl get pod,svc</span><br></pre></td></tr></table></figure>
+
+<p>访问地址：<a href="http://NodeIP:Port">http://NodeIP:Port</a>  </p>
+<h2 id="部署-Dashboard">1.8. 部署 Dashboard</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> wget https://raw.githubusercontent.com/kubernetes/dashboard/v2.0.0-beta8/aio/deploy/recommended.yaml</span></span><br></pre></td></tr></table></figure>
+
+<p>默认Dashboard只能集群内部访问，修改Service为NodePort类型，暴露到外部：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> vi recommended.yaml</span></span><br><span class="line">kind: Service</span><br><span class="line">apiVersion: v1</span><br><span class="line">metadata:</span><br><span class="line">  labels:</span><br><span class="line">    k8s-app: kubernetes-dashboard</span><br><span class="line">  name: kubernetes-dashboard</span><br><span class="line">  namespace: kubernetes-dashboard</span><br><span class="line">spec:</span><br><span class="line">  ports:</span><br><span class="line">    - port: 443</span><br><span class="line">      targetPort: 8443</span><br><span class="line">      nodePort: 30001</span><br><span class="line">  type: NodePort</span><br><span class="line">  selector:</span><br><span class="line">    k8s-app: kubernetes-dashboard</span><br><span class="line"></span><br><span class="line">kubectl apply -f recommended.yaml</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> kubectl get pods,svc -n kubernetes-dashboard</span></span><br><span class="line">NAME                                             READY   STATUS              RESTARTS   AGE</span><br><span class="line">pod/dashboard-metrics-scraper-694557449d-z8gfb   1/1     Running             0          2m18s</span><br><span class="line">pod/kubernetes-dashboard-9774cc786-q2gsx         1/1     Running		     0          2m19s</span><br><span class="line"></span><br><span class="line">NAME                                TYPE        CLUSTER-IP   EXTERNAL-IP   PORT(S)         AGE</span><br><span class="line">service/dashboard-metrics-scraper   ClusterIP   10.0.0.141   &lt;none&gt;        8000/TCP        2m19s</span><br><span class="line">service/kubernetes-dashboard        NodePort    10.0.0.239   &lt;none&gt;        443:30001/TCP   2m19s</span><br></pre></td></tr></table></figure>
+
+<p>访问地址：<a href="https://nodeip:30001/">https://NodeIP:30001</a></p>
+<p>创建service account并绑定默认cluster-admin管理员集群角色：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">kubectl create serviceaccount dashboard-admin -n kube-system</span><br><span class="line">kubectl create clusterrolebinding dashboard-admin --clusterrole=cluster-admin --serviceaccount=kube-system:dashboard-admin</span><br><span class="line">kubectl describe secrets -n kube-system $(kubectl -n kube-system get secret | awk &#x27;/dashboard-admin/&#123;print $1&#125;&#x27;)</span><br></pre></td></tr></table></figure>
+
+<p>使用输出的token登录Dashboard。</p>
+<p><img src="https://k8s-1252881505.cos.ap-beijing.myqcloud.com/k8s-1/dashboard-login.jpg"></p>
+<p><img src="https://k8s-1252881505.cos.ap-beijing.myqcloud.com/k8s-1/dashboard.jpg"></p>
+<blockquote>
+<p>视频教程：<a href="https://ke.qq.com/course/266656">https://ke.qq.com/course/266656</a></p>
+</blockquote>
+<h2 id="生成一个不过期token">1.9. 生成一个不过期token</h2><blockquote>
+<p><a href="https://www.cnblogs.com/xiaoyongyang/p/11953660.html">https://www.cnblogs.com/xiaoyongyang/p/11953660.html</a></p>
+</blockquote>
+<p>查看生成的token</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">kubeadm token list</span><br></pre></td></tr></table></figure>
+
+<p>生成永不过期的token</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">kubeadm token create --ttl 0</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="dashboard获取不到数据">1.10. dashboard获取不到数据</h2><blockquote>
+<p><a href="https://blog.csdn.net/majixiang1996/article/details/105493071">https://blog.csdn.net/majixiang1996/article/details/105493071</a></p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">apiVersion: v1</span><br><span class="line">kind: ServiceAccount</span><br><span class="line">metadata:</span><br><span class="line">  name: dashboard-admin</span><br><span class="line">  namespace: kube-dashboard</span><br><span class="line">---</span><br><span class="line">kind: ClusterRoleBinding</span><br><span class="line">apiVersion: rbac.authorization.k8s.io/v1beta1</span><br><span class="line">metadata:</span><br><span class="line">  name: dashboard-admin</span><br><span class="line">subjects:</span><br><span class="line">  - kind: ServiceAccount</span><br><span class="line">    name: dashboard-admin</span><br><span class="line">    namespace: kube-dashboard</span><br><span class="line">roleRef:</span><br><span class="line">  kind: ClusterRole</span><br><span class="line">  name: cluster-admin</span><br><span class="line">  apiGroup: rbac.authorization.k8s.io</span><br></pre></td></tr></table></figure>
+
+<p>查看token</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">kubectl describe secret dashboard-admin -n kubernetes-dashboard</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>Kubernetes</category>
+      </categories>
+      <tags>
+        <tag>容器</tag>
+        <tag>k8s</tag>
+        <tag>Kubernetes</tag>
+      </tags>
+  </entry>
 </search>
