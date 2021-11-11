@@ -6,7 +6,7 @@
   <link href="https://heyonggs.github.io/atom.xml" rel="self"/>
   
   <link href="https://heyonggs.github.io/"/>
-  <updated>2021-10-22T01:57:55.282Z</updated>
+  <updated>2021-11-11T06:10:58.592Z</updated>
   <id>https://heyonggs.github.io/</id>
   
   <author>
@@ -15,6 +15,29 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>harbor管理helm-charts</title>
+    <link href="https://heyonggs.github.io/p/51806.html"/>
+    <id>https://heyonggs.github.io/p/51806.html</id>
+    <published>2021-11-11T06:09:08.000Z</published>
+    <updated>2021-11-11T06:10:58.592Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;&lt;escape&gt;&lt;/escape&gt;&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="helm" scheme="https://heyonggs.github.io/categories/helm/"/>
+    
+    
+    <category term="k8s" scheme="https://heyonggs.github.io/tags/k8s/"/>
+    
+    <category term="Kubernetes" scheme="https://heyonggs.github.io/tags/Kubernetes/"/>
+    
+    <category term="helm" scheme="https://heyonggs.github.io/tags/helm/"/>
+    
+  </entry>
   
   <entry>
     <title>升级Windows11</title>
@@ -274,16 +297,10 @@
     <link href="https://heyonggs.github.io/p/27338.html"/>
     <id>https://heyonggs.github.io/p/27338.html</id>
     <published>2021-02-26T01:40:57.000Z</published>
-    <updated>2021-10-22T02:41:26.248Z</updated>
+    <updated>2021-11-11T03:09:48.219Z</updated>
     
     
-      
-      
-        
-        
-    <summary type="html">&lt;h1 id=&quot;解决电脑无法访问个别网站&quot;&gt;1.</summary>
-        
-      
+    <summary type="html">&lt;p&gt;&lt;escape&gt;&lt;/escape&gt;&lt;/p&gt;</summary>
     
     
     
@@ -392,27 +409,6 @@
     
     
     <category term="MySQL" scheme="https://heyonggs.github.io/tags/MySQL/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>docker部署nacos</title>
-    <link href="https://heyonggs.github.io/p/43577.html"/>
-    <id>https://heyonggs.github.io/p/43577.html</id>
-    <published>2020-09-11T06:25:19.000Z</published>
-    <updated>2021-10-25T06:47:00.146Z</updated>
-    
-    
-    <summary type="html">&lt;p&gt;&lt;escape&gt;&lt;/escape&gt;&lt;/p&gt;</summary>
-    
-    
-    
-    <category term="Docker" scheme="https://heyonggs.github.io/categories/Docker/"/>
-    
-    
-    <category term="Docker" scheme="https://heyonggs.github.io/tags/Docker/"/>
-    
-    <category term="容器" scheme="https://heyonggs.github.io/tags/%E5%AE%B9%E5%99%A8/"/>
     
   </entry>
   
