@@ -6,7 +6,7 @@
   <link href="https://heyonggs.github.io/atom.xml" rel="self"/>
   
   <link href="https://heyonggs.github.io/"/>
-  <updated>2021-11-12T06:28:54.448Z</updated>
+  <updated>2021-10-22T01:57:55.282Z</updated>
   <id>https://heyonggs.github.io/</id>
   
   <author>
@@ -15,21 +15,6 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
-  
-  <entry>
-    <title>2016-07-21-Nginx配置清单</title>
-    <link href="https://heyonggs.github.io/p/38836.html"/>
-    <id>https://heyonggs.github.io/p/38836.html</id>
-    <published>2021-11-12T06:28:26.000Z</published>
-    <updated>2021-11-12T06:28:54.448Z</updated>
-    
-    
-    <summary type="html">&lt;p&gt;&lt;escape&gt;&lt;/escape&gt;&lt;/p&gt;</summary>
-    
-    
-    
-    
-  </entry>
   
   <entry>
     <title>升级Windows11</title>
@@ -405,6 +390,25 @@
     <category term="Kubernetes" scheme="https://heyonggs.github.io/tags/Kubernetes/"/>
     
     <category term="jenkins" scheme="https://heyonggs.github.io/tags/jenkins/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>mysql导入数据慢解决方法</title>
+    <link href="https://heyonggs.github.io/p/1525.html"/>
+    <id>https://heyonggs.github.io/p/1525.html</id>
+    <published>2020-09-16T06:09:20.000Z</published>
+    <updated>2021-09-24T02:43:25.756Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;&lt;escape&gt;&lt;/escape&gt;&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="MySQL" scheme="https://heyonggs.github.io/categories/MySQL/"/>
+    
+    
+    <category term="MySQL" scheme="https://heyonggs.github.io/tags/MySQL/"/>
     
   </entry>
   
