@@ -445,13 +445,6 @@
   </url>
   
   <url>
-    <loc>https://heyonggs.github.io/tags/helm/</loc>
-    <lastmod>2021-11-12</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://heyonggs.github.io/tags/jenkins/</loc>
     <lastmod>2021-11-12</lastmod>
     <changefreq>daily</changefreq>
@@ -473,14 +466,7 @@
   </url>
   
   <url>
-    <loc>https://heyonggs.github.io/tags/FRP/</loc>
-    <lastmod>2021-11-12</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://heyonggs.github.io/tags/ansible/</loc>
+    <loc>https://heyonggs.github.io/tags/helm/</loc>
     <lastmod>2021-11-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -501,7 +487,7 @@
   </url>
   
   <url>
-    <loc>https://heyonggs.github.io/tags/Windows/</loc>
+    <loc>https://heyonggs.github.io/tags/FRP/</loc>
     <lastmod>2021-11-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -509,6 +495,20 @@
   
   <url>
     <loc>https://heyonggs.github.io/tags/System-cpu/</loc>
+    <lastmod>2021-11-12</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://heyonggs.github.io/tags/Windows/</loc>
+    <lastmod>2021-11-12</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://heyonggs.github.io/tags/ansible/</loc>
     <lastmod>2021-11-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -536,14 +536,14 @@
   </url>
   
   <url>
-    <loc>https://heyonggs.github.io/tags/Nginx/</loc>
+    <loc>https://heyonggs.github.io/tags/SaltStack/</loc>
     <lastmod>2021-11-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>https://heyonggs.github.io/tags/SaltStack/</loc>
+    <loc>https://heyonggs.github.io/tags/Nginx/</loc>
     <lastmod>2021-11-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -608,13 +608,6 @@
   </url>
   
   <url>
-    <loc>https://heyonggs.github.io/categories/helm/</loc>
-    <lastmod>2021-11-12</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://heyonggs.github.io/categories/git/</loc>
     <lastmod>2021-11-12</lastmod>
     <changefreq>daily</changefreq>
@@ -629,7 +622,7 @@
   </url>
   
   <url>
-    <loc>https://heyonggs.github.io/categories/ansible/</loc>
+    <loc>https://heyonggs.github.io/categories/helm/</loc>
     <lastmod>2021-11-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -643,6 +636,13 @@
   </url>
   
   <url>
+    <loc>https://heyonggs.github.io/categories/System-cpu/</loc>
+    <lastmod>2021-11-12</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://heyonggs.github.io/categories/Windows/</loc>
     <lastmod>2021-11-12</lastmod>
     <changefreq>daily</changefreq>
@@ -650,7 +650,7 @@
   </url>
   
   <url>
-    <loc>https://heyonggs.github.io/categories/System-cpu/</loc>
+    <loc>https://heyonggs.github.io/categories/ansible/</loc>
     <lastmod>2021-11-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -678,14 +678,14 @@
   </url>
   
   <url>
-    <loc>https://heyonggs.github.io/categories/Nginx/</loc>
+    <loc>https://heyonggs.github.io/categories/SaltStack/</loc>
     <lastmod>2021-11-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>https://heyonggs.github.io/categories/SaltStack/</loc>
+    <loc>https://heyonggs.github.io/categories/Nginx/</loc>
     <lastmod>2021-11-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
