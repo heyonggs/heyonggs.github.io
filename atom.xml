@@ -6,7 +6,7 @@
   <link href="https://heyonggs.github.io/atom.xml" rel="self"/>
   
   <link href="https://heyonggs.github.io/"/>
-  <updated>2021-11-11T06:10:58.592Z</updated>
+  <updated>2021-10-22T01:57:55.282Z</updated>
   <id>https://heyonggs.github.io/</id>
   
   <author>
@@ -15,29 +15,6 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
-  
-  <entry>
-    <title>harbor管理helm-charts</title>
-    <link href="https://heyonggs.github.io/p/51806.html"/>
-    <id>https://heyonggs.github.io/p/51806.html</id>
-    <published>2021-11-11T06:09:08.000Z</published>
-    <updated>2021-11-11T06:10:58.592Z</updated>
-    
-    
-    <summary type="html">&lt;p&gt;&lt;escape&gt;&lt;/escape&gt;&lt;/p&gt;</summary>
-    
-    
-    
-    <category term="helm" scheme="https://heyonggs.github.io/categories/helm/"/>
-    
-    
-    <category term="k8s" scheme="https://heyonggs.github.io/tags/k8s/"/>
-    
-    <category term="Kubernetes" scheme="https://heyonggs.github.io/tags/Kubernetes/"/>
-    
-    <category term="helm" scheme="https://heyonggs.github.io/tags/helm/"/>
-    
-  </entry>
   
   <entry>
     <title>升级Windows11</title>
@@ -367,6 +344,29 @@
     <category term="k8s" scheme="https://heyonggs.github.io/tags/k8s/"/>
     
     <category term="Kubernetes" scheme="https://heyonggs.github.io/tags/Kubernetes/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>harbor管理helm-charts</title>
+    <link href="https://heyonggs.github.io/p/51806.html"/>
+    <id>https://heyonggs.github.io/p/51806.html</id>
+    <published>2020-12-20T06:09:08.000Z</published>
+    <updated>2021-11-11T06:28:48.734Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;&lt;escape&gt;&lt;/escape&gt;&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="helm" scheme="https://heyonggs.github.io/categories/helm/"/>
+    
+    
+    <category term="k8s" scheme="https://heyonggs.github.io/tags/k8s/"/>
+    
+    <category term="Kubernetes" scheme="https://heyonggs.github.io/tags/Kubernetes/"/>
+    
+    <category term="helm" scheme="https://heyonggs.github.io/tags/helm/"/>
     
   </entry>
   
