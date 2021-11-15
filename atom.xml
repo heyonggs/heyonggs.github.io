@@ -6,7 +6,7 @@
   <link href="https://heyonggs.github.io/atom.xml" rel="self"/>
   
   <link href="https://heyonggs.github.io/"/>
-  <updated>2021-10-22T01:57:55.282Z</updated>
+  <updated>2021-11-15T01:30:33.859Z</updated>
   <id>https://heyonggs.github.io/</id>
   
   <author>
@@ -15,6 +15,27 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>vnstat流量统计（新版2.8）</title>
+    <link href="https://heyonggs.github.io/p/39608.html"/>
+    <id>https://heyonggs.github.io/p/39608.html</id>
+    <published>2021-11-15T01:28:49.000Z</published>
+    <updated>2021-11-15T01:30:33.859Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;&lt;escape&gt;&lt;/escape&gt;&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="网络" scheme="https://heyonggs.github.io/categories/%E7%BD%91%E7%BB%9C/"/>
+    
+    
+    <category term="网络" scheme="https://heyonggs.github.io/tags/%E7%BD%91%E7%BB%9C/"/>
+    
+    <category term="vnstat" scheme="https://heyonggs.github.io/tags/vnstat/"/>
+    
+  </entry>
   
   <entry>
     <title>升级Windows11</title>
@@ -390,25 +411,6 @@
     <category term="Kubernetes" scheme="https://heyonggs.github.io/tags/Kubernetes/"/>
     
     <category term="jenkins" scheme="https://heyonggs.github.io/tags/jenkins/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>mysql导入数据慢解决方法</title>
-    <link href="https://heyonggs.github.io/p/1525.html"/>
-    <id>https://heyonggs.github.io/p/1525.html</id>
-    <published>2020-09-16T06:09:20.000Z</published>
-    <updated>2021-09-24T02:43:25.756Z</updated>
-    
-    
-    <summary type="html">&lt;p&gt;&lt;escape&gt;&lt;/escape&gt;&lt;/p&gt;</summary>
-    
-    
-    
-    <category term="MySQL" scheme="https://heyonggs.github.io/categories/MySQL/"/>
-    
-    
-    <category term="MySQL" scheme="https://heyonggs.github.io/tags/MySQL/"/>
     
   </entry>
   
