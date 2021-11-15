@@ -297,113 +297,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Pipeline详解</title>
-    <url>/p/33227.html</url>
-    <content><![CDATA[]]></content>
-  </entry>
-  <entry>
-    <title>修改docker数据目录位置</title>
-    <url>/p/23817.html</url>
-    <content><![CDATA[<p><escape><span id="more"></span></escape></p>
-<h1 id="修改docker数据目录位置">1. 修改docker数据目录位置</h1><blockquote>
-<p><a href="http://www.manongjc.com/article/35399.html">http://www.manongjc.com/article/35399.html</a></p>
-</blockquote>
-<p>查看当前目录</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker info</span><br><span class="line"># 当前数据目录</span><br><span class="line">Docker Root Dir: /var/lib/docker</span><br></pre></td></tr></table></figure>
-
-<p>停止docker</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">systemctl stop docker.service</span><br></pre></td></tr></table></figure>
-
-<p>将当前Docker存储目录复制到/data目录下</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">cp -R /var/lib/docker/ /data</span><br></pre></td></tr></table></figure>
-
-<p>修改docker.service配置文件，在EXECStart的后面增加 –graph=/data/docker(修改后的docker存储路径)。</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[root@T ~]# vim /usr/lib/systemd/system/docker.service</span><br><span class="line">......</span><br><span class="line">ExecStart=/usr/bin/dockerd --graph=/data/docker</span><br><span class="line">......</span><br></pre></td></tr></table></figure>
-
-<p>执行下列命令然后重启docker</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">systemctl daemon-reload</span><br><span class="line">systemctl disable docker.service</span><br><span class="line">systemctl enable docker.service</span><br><span class="line">systemctl start docker.service</span><br></pre></td></tr></table></figure>
-
-<p>docker info 检验</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Docker Root Dir: /data/docker</span><br></pre></td></tr></table></figure>
-
-]]></content>
-      <categories>
-        <category>Docker</category>
-      </categories>
-      <tags>
-        <tag>Docker</tag>
-        <tag>容器</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>安装docker和docker-compose</title>
-    <url>/p/35698.html</url>
-    <content><![CDATA[<p><escape><span id="more"></span></escape></p>
-<h1 id="安装docker和docker-compose">1. 安装docker和docker-compose</h1><h2 id="安装Docker">1.1. 安装Docker</h2><blockquote>
-<p>下载地址：<a href="https://download.docker.com/linux/static/stable/x86_64/docker-19.03.9.tgz">https://download.docker.com/linux/static/stable/x86_64/docker-19.03.9.tgz</a> </p>
-</blockquote>
-<p>以下在所有节点操作。这里采用二进制安装，用yum安装也一样。 </p>
-<p> 解压二进制包</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">wget https://download.docker.com/linux/static/stable/x86_64/docker-19.03.9.tgz </span><br><span class="line">tar zxvf docker-19.03.9.tgz</span><br><span class="line">mv docker/* /usr/bin</span><br></pre></td></tr></table></figure>
-
-<p>systemd管理docker</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">cat &gt; /usr/lib/systemd/system/docker.service &lt;&lt; EOF</span><br><span class="line">[Unit]</span><br><span class="line">Description=Docker Application Container Engine</span><br><span class="line">Documentation=https://docs.docker.com</span><br><span class="line">After=network-online.target firewalld.service</span><br><span class="line">Wants=network-online.target</span><br><span class="line">[Service]</span><br><span class="line">Type=notify</span><br><span class="line">ExecStart=/usr/bin/dockerd</span><br><span class="line">ExecReload=/bin/kill -s HUP $MAINPID</span><br><span class="line">LimitNOFILE=infinity</span><br><span class="line">LimitNPROC=infinity</span><br><span class="line">LimitCORE=infinity</span><br><span class="line">TimeoutStartSec=0</span><br><span class="line">Delegate=yes</span><br><span class="line">KillMode=process</span><br><span class="line">Restart=on-failure</span><br><span class="line">StartLimitBurst=3</span><br><span class="line">StartLimitInterval=60s</span><br><span class="line">[Install]</span><br><span class="line">WantedBy=multi-user.target</span><br><span class="line">EOF</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>registry-mirrors 阿里云镜像加速器</li>
-</ul>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">mkdir /etc/docker</span><br><span class="line">cat &gt; /etc/docker/daemon.json &lt;&lt; EOF</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">    &quot;registry-mirrors&quot;: [&quot;https://ms80kkz7.mirror.aliyuncs.com&quot;],</span><br><span class="line">&#125;</span><br><span class="line">EOF</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>启动并设置开机启动</li>
-</ul>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">systemctl daemon-reload</span><br><span class="line">systemctl start docker</span><br><span class="line">systemctl enable docker</span><br></pre></td></tr></table></figure>
-
-<h2 id="安装docker-compose">1.2. 安装docker-compose</h2><blockquote>
-<p>官网地址参考地址：<a href="https://docs.docker.com/compose/">https://docs.docker.com/compose/</a></p>
-</blockquote>
-<h3 id="在线安装（不推荐）">1.2.1. 在线安装（不推荐）</h3><p>运行以下命令以下载Docker Compose的当前稳定版本</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo curl -L &quot;https://github.com/docker/compose/releases/download/1.27.4/docker-compose-$(uname -s)-$(uname -m)&quot; -o /usr/local/bin/docker-compose</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>要安装其他版本的Compose，请用您要使用的Compose版本替换1.27.4。 </p>
-</blockquote>
-<p>授权</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo chmod +x /usr/local/bin/docker-compose</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>注意：如果命令docker-compose在安装后失败，请检查路径。您也可以创建指向/ usr / bin或路径中任何其他目录的符号链接。 </p>
-</blockquote>
-<p>软链接</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose</span><br></pre></td></tr></table></figure>
-
-<p>测试安装</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ docker-compose --version</span><br><span class="line">docker-compose version 1.27.4, build 1110ad01</span><br></pre></td></tr></table></figure>
-
-<h3 id="离线安装（推荐）">1.2.2. 离线安装（推荐）</h3><p>在 <a href="https://github.com/docker/compose/releases">https://github.com/docker/compose/releases</a> 中下载对应的版本，这里选择的是 <a href="https://github.com/docker/compose/releases/tag/1.23.2">1.27.4</a> 的 <a href="https://github.com/docker/compose/releases/download/1.27.4/docker-compose-Linux-x86_64"><strong>docker-compose-Linux-x86_64</strong></a></p>
-<p>我们已经提前下载并存放在了 /home/download/docker-compose_1.27.4/ 目录</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[root@localhost /]<span class="comment"># ls /home/download/docker-compose_1.27.4/</span></span><br><span class="line">docker-compose-Linux-x86_64</span><br></pre></td></tr></table></figure>
-
-<p>移动到bin目录并更改执行权限</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">mv /home/download/docker-compose_1.27.4/docker-compose-Linux-x86_64 /usr/local/bin/docker-compose</span><br></pre></td></tr></table></figure>
-
-<p>添加执行权限</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo chmod +x /usr/<span class="built_in">local</span>/bin/docker-compose</span><br></pre></td></tr></table></figure>
-
-<p>验证下：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[root@localhost /]<span class="comment"># docker-compose version</span></span><br><span class="line">docker-compose version 1.27.4, build 40524192</span><br><span class="line">docker-py version: 4.3.1</span><br><span class="line">CPython version: 3.7.7</span><br><span class="line">OpenSSL version: OpenSSL 1.1.0l  10 Sep 2019</span><br></pre></td></tr></table></figure>
-
-]]></content>
-      <categories>
-        <category>Docker</category>
-      </categories>
-      <tags>
-        <tag>Docker</tag>
-        <tag>容器</tag>
-        <tag>Docker Compose</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>LVM扩容根目录（不新加磁盘）</title>
     <url>/p/44212.html</url>
     <content><![CDATA[<p><escape><span id="more"></span></escape></p>
@@ -480,6 +373,113 @@
       </tags>
   </entry>
   <entry>
+    <title>修改docker数据目录位置</title>
+    <url>/p/23817.html</url>
+    <content><![CDATA[<p><escape><span id="more"></span></escape></p>
+<h1 id="修改docker数据目录位置">1. 修改docker数据目录位置</h1><blockquote>
+<p><a href="http://www.manongjc.com/article/35399.html">http://www.manongjc.com/article/35399.html</a></p>
+</blockquote>
+<p>查看当前目录</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker info</span><br><span class="line"># 当前数据目录</span><br><span class="line">Docker Root Dir: /var/lib/docker</span><br></pre></td></tr></table></figure>
+
+<p>停止docker</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">systemctl stop docker.service</span><br></pre></td></tr></table></figure>
+
+<p>将当前Docker存储目录复制到/data目录下</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">cp -R /var/lib/docker/ /data</span><br></pre></td></tr></table></figure>
+
+<p>修改docker.service配置文件，在EXECStart的后面增加 –graph=/data/docker(修改后的docker存储路径)。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[root@T ~]# vim /usr/lib/systemd/system/docker.service</span><br><span class="line">......</span><br><span class="line">ExecStart=/usr/bin/dockerd --graph=/data/docker</span><br><span class="line">......</span><br></pre></td></tr></table></figure>
+
+<p>执行下列命令然后重启docker</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">systemctl daemon-reload</span><br><span class="line">systemctl disable docker.service</span><br><span class="line">systemctl enable docker.service</span><br><span class="line">systemctl start docker.service</span><br></pre></td></tr></table></figure>
+
+<p>docker info 检验</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Docker Root Dir: /data/docker</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>Docker</category>
+      </categories>
+      <tags>
+        <tag>Docker</tag>
+        <tag>容器</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Pipeline详解</title>
+    <url>/p/33227.html</url>
+    <content><![CDATA[]]></content>
+  </entry>
+  <entry>
+    <title>安装docker和docker-compose</title>
+    <url>/p/35698.html</url>
+    <content><![CDATA[<p><escape><span id="more"></span></escape></p>
+<h1 id="安装docker和docker-compose">1. 安装docker和docker-compose</h1><h2 id="安装Docker">1.1. 安装Docker</h2><blockquote>
+<p>下载地址：<a href="https://download.docker.com/linux/static/stable/x86_64/docker-19.03.9.tgz">https://download.docker.com/linux/static/stable/x86_64/docker-19.03.9.tgz</a> </p>
+</blockquote>
+<p>以下在所有节点操作。这里采用二进制安装，用yum安装也一样。 </p>
+<p> 解压二进制包</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">wget https://download.docker.com/linux/static/stable/x86_64/docker-19.03.9.tgz </span><br><span class="line">tar zxvf docker-19.03.9.tgz</span><br><span class="line">mv docker/* /usr/bin</span><br></pre></td></tr></table></figure>
+
+<p>systemd管理docker</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">cat &gt; /usr/lib/systemd/system/docker.service &lt;&lt; EOF</span><br><span class="line">[Unit]</span><br><span class="line">Description=Docker Application Container Engine</span><br><span class="line">Documentation=https://docs.docker.com</span><br><span class="line">After=network-online.target firewalld.service</span><br><span class="line">Wants=network-online.target</span><br><span class="line">[Service]</span><br><span class="line">Type=notify</span><br><span class="line">ExecStart=/usr/bin/dockerd</span><br><span class="line">ExecReload=/bin/kill -s HUP $MAINPID</span><br><span class="line">LimitNOFILE=infinity</span><br><span class="line">LimitNPROC=infinity</span><br><span class="line">LimitCORE=infinity</span><br><span class="line">TimeoutStartSec=0</span><br><span class="line">Delegate=yes</span><br><span class="line">KillMode=process</span><br><span class="line">Restart=on-failure</span><br><span class="line">StartLimitBurst=3</span><br><span class="line">StartLimitInterval=60s</span><br><span class="line">[Install]</span><br><span class="line">WantedBy=multi-user.target</span><br><span class="line">EOF</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>registry-mirrors 阿里云镜像加速器</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">mkdir /etc/docker</span><br><span class="line">cat &gt; /etc/docker/daemon.json &lt;&lt; EOF</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">    &quot;registry-mirrors&quot;: [&quot;https://ms80kkz7.mirror.aliyuncs.com&quot;],</span><br><span class="line">&#125;</span><br><span class="line">EOF</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>启动并设置开机启动</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">systemctl daemon-reload</span><br><span class="line">systemctl start docker</span><br><span class="line">systemctl enable docker</span><br></pre></td></tr></table></figure>
+
+<h2 id="安装docker-compose">1.2. 安装docker-compose</h2><blockquote>
+<p>官网地址参考地址：<a href="https://docs.docker.com/compose/">https://docs.docker.com/compose/</a></p>
+</blockquote>
+<h3 id="在线安装（不推荐）">1.2.1. 在线安装（不推荐）</h3><p>运行以下命令以下载Docker Compose的当前稳定版本</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo curl -L &quot;https://github.com/docker/compose/releases/download/1.27.4/docker-compose-$(uname -s)-$(uname -m)&quot; -o /usr/local/bin/docker-compose</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>要安装其他版本的Compose，请用您要使用的Compose版本替换1.27.4。 </p>
+</blockquote>
+<p>授权</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo chmod +x /usr/local/bin/docker-compose</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>注意：如果命令docker-compose在安装后失败，请检查路径。您也可以创建指向/ usr / bin或路径中任何其他目录的符号链接。 </p>
+</blockquote>
+<p>软链接</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose</span><br></pre></td></tr></table></figure>
+
+<p>测试安装</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ docker-compose --version</span><br><span class="line">docker-compose version 1.27.4, build 1110ad01</span><br></pre></td></tr></table></figure>
+
+<h3 id="离线安装（推荐）">1.2.2. 离线安装（推荐）</h3><p>在 <a href="https://github.com/docker/compose/releases">https://github.com/docker/compose/releases</a> 中下载对应的版本，这里选择的是 <a href="https://github.com/docker/compose/releases/tag/1.23.2">1.27.4</a> 的 <a href="https://github.com/docker/compose/releases/download/1.27.4/docker-compose-Linux-x86_64"><strong>docker-compose-Linux-x86_64</strong></a></p>
+<p>我们已经提前下载并存放在了 /home/download/docker-compose_1.27.4/ 目录</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[root@localhost /]<span class="comment"># ls /home/download/docker-compose_1.27.4/</span></span><br><span class="line">docker-compose-Linux-x86_64</span><br></pre></td></tr></table></figure>
+
+<p>移动到bin目录并更改执行权限</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">mv /home/download/docker-compose_1.27.4/docker-compose-Linux-x86_64 /usr/local/bin/docker-compose</span><br></pre></td></tr></table></figure>
+
+<p>添加执行权限</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo chmod +x /usr/<span class="built_in">local</span>/bin/docker-compose</span><br></pre></td></tr></table></figure>
+
+<p>验证下：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[root@localhost /]<span class="comment"># docker-compose version</span></span><br><span class="line">docker-compose version 1.27.4, build 40524192</span><br><span class="line">docker-py version: 4.3.1</span><br><span class="line">CPython version: 3.7.7</span><br><span class="line">OpenSSL version: OpenSSL 1.1.0l  10 Sep 2019</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>Docker</category>
+      </categories>
+      <tags>
+        <tag>Docker</tag>
+        <tag>容器</tag>
+        <tag>Docker Compose</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>设置非root用户没有权限运行docker命令</title>
     <url>/p/40168.html</url>
     <content><![CDATA[<p><escape><span id="more"></span></escape></p>
@@ -497,22 +497,6 @@
       <tags>
         <tag>Docker</tag>
         <tag>容器</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>k8s部署Redis集群</title>
-    <url>/p/53265.html</url>
-    <content><![CDATA[<p><escape><span id="more"></span></escape></p>
-<p>k8s部署Redis集群</p>
-]]></content>
-      <categories>
-        <category>Kubernetes</category>
-      </categories>
-      <tags>
-        <tag>容器</tag>
-        <tag>k8s</tag>
-        <tag>Kubernetes</tag>
-        <tag>Redis</tag>
       </tags>
   </entry>
   <entry>
@@ -587,6 +571,22 @@
       </tags>
   </entry>
   <entry>
+    <title>k8s部署Redis集群</title>
+    <url>/p/53265.html</url>
+    <content><![CDATA[<p><escape><span id="more"></span></escape></p>
+<p>k8s部署Redis集群</p>
+]]></content>
+      <categories>
+        <category>Kubernetes</category>
+      </categories>
+      <tags>
+        <tag>容器</tag>
+        <tag>k8s</tag>
+        <tag>Kubernetes</tag>
+        <tag>Redis</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>k8s私有库secret配置</title>
     <url>/p/63681.html</url>
     <content><![CDATA[<p><escape><span id="more"></span></escape></p>
@@ -607,7 +607,7 @@
 
 <blockquote>
 <p>注意：这里默认生成的secrets只能在default工作空间使用，如果需要在指定的工作空间创建，需要加：-n参数指定工作空间</p>
-<p>例如：kubectl create secret docker-registry harbor-registry –docker-server=harbor.xxx.com –docker-username=admin –docker-password=Harbor12345 --docker-email=<a href="mailto:&#x68;&#x65;&#121;&#117;&#122;&#101;&#64;&#x31;&#54;&#x33;&#46;&#99;&#111;&#109;">&#x68;&#x65;&#121;&#117;&#122;&#101;&#64;&#x31;&#54;&#x33;&#46;&#99;&#111;&#109;</a> -n test</p>
+<p>例如：kubectl create secret docker-registry harbor-registry –docker-server=harbor.xxx.com –docker-username=admin –docker-password=Harbor12345 --docker-email=<a href="mailto:&#x68;&#x65;&#x79;&#117;&#x7a;&#101;&#x40;&#x31;&#x36;&#51;&#x2e;&#99;&#x6f;&#109;">&#x68;&#x65;&#x79;&#117;&#x7a;&#101;&#x40;&#x31;&#x36;&#51;&#x2e;&#99;&#x6f;&#109;</a> -n test</p>
 </blockquote>
 <p>配置yaml，通过secret获取images</p>
 <figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line">[<span class="string">root@master1</span> <span class="string">machine-tool</span>]<span class="comment"># vi nginx.yaml</span></span><br><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Pod</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">nginx</span></span><br><span class="line">  <span class="attr">namespace:</span> <span class="string">default</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">containers:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">nginx</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">harbor.xxx.com/test/ssh-centos7:latest</span></span><br><span class="line">    <span class="attr">command:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">top</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&#x27;-b&#x27;</span></span><br><span class="line">  <span class="attr">imagePullSecrets:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">harbor-registry</span></span><br></pre></td></tr></table></figure>
@@ -1094,49 +1094,6 @@
     <content><![CDATA[]]></content>
   </entry>
   <entry>
-    <title>harbor管理helm-charts</title>
-    <url>/p/51806.html</url>
-    <content><![CDATA[<p><escape><span id="more"></span></escape></p>
-<h1 id="harbor管理helm-charts">1. harbor管理helm-charts</h1><h2 id="版本信息">1.1. 版本信息</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">harbor version： 1.8.1</span><br><span class="line">helm version： v3.6.2</span><br><span class="line">docker version: 18.06.3</span><br><span class="line">docker-compose version: 1.25.4</span><br></pre></td></tr></table></figure>
-
-<h2 id="安装chartmuseum插件">1.2. 安装chartmuseum插件</h2><p>harbor 安装的时候 默认没有helm charts的仓库</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">docker-compose stop</span><br><span class="line">./install.sh  --with-chartmuseum</span><br></pre></td></tr></table></figure>
-
-<p>安装完成之后登录页面上就会有了 helm charts 了，页面上也可以直接上传charts</p>
-<p><img src="https://cdn.jsdelivr.net/gh/heyonggs/images@master/wp/2021/helm/202110131712456.png"></p>
-<h2 id="helm-安装push插件">1.3. helm 安装push插件</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 安装插件</span></span><br><span class="line">helm plugin install https://github.com/chartmuseum/helm-push</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看</span></span><br><span class="line">[root@k8s-master ~]<span class="comment"># helm plugin list</span></span><br><span class="line">NAME   	VERSION	DESCRIPTION                      </span><br><span class="line">cm-push	0.10.1 	Push chart package to ChartMuseum</span><br></pre></td></tr></table></figure>
-
-<p>创建一个charts项目</p>
-<p><img src="https://cdn.jsdelivr.net/gh/heyonggs/images@master/wp/2021/helm/202110131739738.png"></p>
-<h2 id="添加仓库">1.4. 添加仓库</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">helm repo add harbor https://harbor.xxx.com/chartrepo/library</span><br><span class="line"></span><br><span class="line"><span class="comment"># 如需要配置用户名密码</span></span><br><span class="line">helm repo add harbor --username=xxx --password=xxx https://harbor.xxx.com/chartrepo/library</span><br></pre></td></tr></table></figure>
-
-<p>查看</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[root@k8s-master ~]<span class="comment"># helm repo list</span></span><br><span class="line">NAME         	URL                                       </span><br><span class="line">bitnami      	https://charts.bitnami.com/bitnami        </span><br><span class="line">ingress-nginx	https://kubernetes.github.io/ingress-nginx</span><br><span class="line">harbor       	http://harbor.aimm.cn/chartrepo/library   </span><br></pre></td></tr></table></figure>
-
-<h2 id="上传到仓库">1.5. 上传到仓库</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 查找charts</span></span><br><span class="line">[root@k8s-master ~]<span class="comment"># helm search repo redis</span></span><br><span class="line">NAME                 	CHART VERSION	APP VERSION	DESCRIPTION                                       </span><br><span class="line">bitnami/redis        	15.0.4       	6.2.5      	Open <span class="built_in">source</span>, advanced key-value store. It is of...</span><br><span class="line">bitnami/redis-cluster	6.3.6        	6.2.5      	Open <span class="built_in">source</span>, advanced key-value store. It is of...</span><br><span class="line"></span><br><span class="line"><span class="comment"># 下载到本地</span></span><br><span class="line">[root@k8s-master ~]<span class="comment"># helm pull bitnami/redis</span></span><br><span class="line">[root@k8s-master ~]<span class="comment"># ls redis-15.0.4.tgz </span></span><br><span class="line">redis-15.0.4.tgz</span><br><span class="line"></span><br><span class="line"><span class="comment"># 上传到私有仓库</span></span><br><span class="line">[root@k8s-master ~]<span class="comment"># helm cm-push --username=admin --password=Harbor12345 redis-15.0.4.tgz harbor </span></span><br><span class="line">Pushing redis-15.0.4.tgz to harbor...</span><br><span class="line">Done.</span><br></pre></td></tr></table></figure>
-
-<p>上传完成后到harbor仓库查看</p>
-<p><img src="https://cdn.jsdelivr.net/gh/heyonggs/images@master/wp/2021/helm/202110131821245.png"></p>
-<p>强制推送</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[root@k8s-master ~]<span class="comment"># helm cm-push --force redis-15.0.4.tgz harbor </span></span><br><span class="line">Pushing redis-15.0.4.tgz to harbor...</span><br><span class="line">Done.</span><br></pre></td></tr></table></figure>
-
-<p>直接推送到URL</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[root@k8s-master ~]<span class="comment"># helm cm-push redis-15.0.4.tgz https://harbor.xxx.com/chartrepo/library</span></span><br><span class="line">Pushing redis-15.0.4.tgz to https://harbor.xxx.com/chartrepo/library</span><br><span class="line">Done.</span><br></pre></td></tr></table></figure>
-
-<h2 id="报错解决：">1.6. 报错解决：</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[root@k8s-master ~]<span class="comment"># helm cm-push redis-15.0.4.tgz harbor</span></span><br><span class="line">Pushing redis-15.0.4.tgz to harbor...</span><br><span class="line">Error: 401: could not properly parse response JSON: &#123;<span class="string">&quot;code&quot;</span>:401,<span class="string">&quot;message&quot;</span>:<span class="string">&quot;Unauthorized&quot;</span>&#125;</span><br><span class="line">......</span><br><span class="line">Error: plugin <span class="string">&quot;cm-push&quot;</span> exited with error</span><br></pre></td></tr></table></figure>
-
-<p>添加用户名密码即可。</p>
-]]></content>
-      <categories>
-        <category>helm</category>
-      </categories>
-      <tags>
-        <tag>k8s</tag>
-        <tag>Kubernetes</tag>
-        <tag>helm</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>k8s部署eureka集群</title>
     <url>/p/35694.html</url>
     <content><![CDATA[<p><escape><span id="more"></span></escape></p>
@@ -1197,6 +1154,49 @@
       </tags>
   </entry>
   <entry>
+    <title>harbor管理helm-charts</title>
+    <url>/p/51806.html</url>
+    <content><![CDATA[<p><escape><span id="more"></span></escape></p>
+<h1 id="harbor管理helm-charts">1. harbor管理helm-charts</h1><h2 id="版本信息">1.1. 版本信息</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">harbor version： 1.8.1</span><br><span class="line">helm version： v3.6.2</span><br><span class="line">docker version: 18.06.3</span><br><span class="line">docker-compose version: 1.25.4</span><br></pre></td></tr></table></figure>
+
+<h2 id="安装chartmuseum插件">1.2. 安装chartmuseum插件</h2><p>harbor 安装的时候 默认没有helm charts的仓库</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">docker-compose stop</span><br><span class="line">./install.sh  --with-chartmuseum</span><br></pre></td></tr></table></figure>
+
+<p>安装完成之后登录页面上就会有了 helm charts 了，页面上也可以直接上传charts</p>
+<p><img src="https://cdn.jsdelivr.net/gh/heyonggs/images@master/wp/2021/helm/202110131712456.png"></p>
+<h2 id="helm-安装push插件">1.3. helm 安装push插件</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 安装插件</span></span><br><span class="line">helm plugin install https://github.com/chartmuseum/helm-push</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看</span></span><br><span class="line">[root@k8s-master ~]<span class="comment"># helm plugin list</span></span><br><span class="line">NAME   	VERSION	DESCRIPTION                      </span><br><span class="line">cm-push	0.10.1 	Push chart package to ChartMuseum</span><br></pre></td></tr></table></figure>
+
+<p>创建一个charts项目</p>
+<p><img src="https://cdn.jsdelivr.net/gh/heyonggs/images@master/wp/2021/helm/202110131739738.png"></p>
+<h2 id="添加仓库">1.4. 添加仓库</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">helm repo add harbor https://harbor.xxx.com/chartrepo/library</span><br><span class="line"></span><br><span class="line"><span class="comment"># 如需要配置用户名密码</span></span><br><span class="line">helm repo add harbor --username=xxx --password=xxx https://harbor.xxx.com/chartrepo/library</span><br></pre></td></tr></table></figure>
+
+<p>查看</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[root@k8s-master ~]<span class="comment"># helm repo list</span></span><br><span class="line">NAME         	URL                                       </span><br><span class="line">bitnami      	https://charts.bitnami.com/bitnami        </span><br><span class="line">ingress-nginx	https://kubernetes.github.io/ingress-nginx</span><br><span class="line">harbor       	http://harbor.aimm.cn/chartrepo/library   </span><br></pre></td></tr></table></figure>
+
+<h2 id="上传到仓库">1.5. 上传到仓库</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 查找charts</span></span><br><span class="line">[root@k8s-master ~]<span class="comment"># helm search repo redis</span></span><br><span class="line">NAME                 	CHART VERSION	APP VERSION	DESCRIPTION                                       </span><br><span class="line">bitnami/redis        	15.0.4       	6.2.5      	Open <span class="built_in">source</span>, advanced key-value store. It is of...</span><br><span class="line">bitnami/redis-cluster	6.3.6        	6.2.5      	Open <span class="built_in">source</span>, advanced key-value store. It is of...</span><br><span class="line"></span><br><span class="line"><span class="comment"># 下载到本地</span></span><br><span class="line">[root@k8s-master ~]<span class="comment"># helm pull bitnami/redis</span></span><br><span class="line">[root@k8s-master ~]<span class="comment"># ls redis-15.0.4.tgz </span></span><br><span class="line">redis-15.0.4.tgz</span><br><span class="line"></span><br><span class="line"><span class="comment"># 上传到私有仓库</span></span><br><span class="line">[root@k8s-master ~]<span class="comment"># helm cm-push --username=admin --password=Harbor12345 redis-15.0.4.tgz harbor </span></span><br><span class="line">Pushing redis-15.0.4.tgz to harbor...</span><br><span class="line">Done.</span><br></pre></td></tr></table></figure>
+
+<p>上传完成后到harbor仓库查看</p>
+<p><img src="https://cdn.jsdelivr.net/gh/heyonggs/images@master/wp/2021/helm/202110131821245.png"></p>
+<p>强制推送</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[root@k8s-master ~]<span class="comment"># helm cm-push --force redis-15.0.4.tgz harbor </span></span><br><span class="line">Pushing redis-15.0.4.tgz to harbor...</span><br><span class="line">Done.</span><br></pre></td></tr></table></figure>
+
+<p>直接推送到URL</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[root@k8s-master ~]<span class="comment"># helm cm-push redis-15.0.4.tgz https://harbor.xxx.com/chartrepo/library</span></span><br><span class="line">Pushing redis-15.0.4.tgz to https://harbor.xxx.com/chartrepo/library</span><br><span class="line">Done.</span><br></pre></td></tr></table></figure>
+
+<h2 id="报错解决：">1.6. 报错解决：</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[root@k8s-master ~]<span class="comment"># helm cm-push redis-15.0.4.tgz harbor</span></span><br><span class="line">Pushing redis-15.0.4.tgz to harbor...</span><br><span class="line">Error: 401: could not properly parse response JSON: &#123;<span class="string">&quot;code&quot;</span>:401,<span class="string">&quot;message&quot;</span>:<span class="string">&quot;Unauthorized&quot;</span>&#125;</span><br><span class="line">......</span><br><span class="line">Error: plugin <span class="string">&quot;cm-push&quot;</span> exited with error</span><br></pre></td></tr></table></figure>
+
+<p>添加用户名密码即可。</p>
+]]></content>
+      <categories>
+        <category>helm</category>
+      </categories>
+      <tags>
+        <tag>k8s</tag>
+        <tag>Kubernetes</tag>
+        <tag>helm</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>转载&#39;OpenSSL SSL_connect Connection was reset in connection to github.com 443&#39;</title>
     <url>/p/14759.html</url>
     <content><![CDATA[<p><escape><span id="more"></span></escape></p>
@@ -1254,6 +1254,40 @@
       </categories>
       <tags>
         <tag>操作系统</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>使用frp实现内网穿透</title>
+    <url>/p/7496.html</url>
+    <content><![CDATA[<p><escape><span id="more"></span></escape></p>
+<p>使用frp实现内网穿透</p>
+<blockquote>
+<p>官网：<a href="https://gofrp.org/">https://gofrp.org/</a></p>
+</blockquote>
+<p>frp 主要由 <strong>客户端(frpc)</strong> 和 <strong>服务端(frps)</strong> 组成，服务端通常部署在具有公网 IP 的机器上，客户端通常部署在需要穿透的内网服务所在的机器上。</p>
+<p>安装</p>
+<p>我这里公网使用阿里云Ubuntu系统，内网使用CentOS7.</p>
+<p>安装包下载地址</p>
+<blockquote>
+<p><a href="https://github.com/fatedier/frp/releases/download/v0.37.1/frp_0.37.1_linux_amd64.tar.gz">https://github.com/fatedier/frp/releases/download/v0.37.1/frp_0.37.1_linux_amd64.tar.gz</a></p>
+</blockquote>
+<p>配置服务端</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 下载</span><br><span class="line">wget https://github.com/fatedier/frp/releases/download/v0.37.1/frp_0.37.1_linux_amd64.tar.gz</span><br><span class="line"></span><br><span class="line"># 解压</span><br><span class="line">tar -zxvf frp_0.37.1_linux_amd64.tar.gz</span><br><span class="line">cd frp_0.37.1_linux_amd64/ </span><br></pre></td></tr></table></figure>
+
+<p>这里主要关注4个文件，分别是frpc、frpc.ini和frps、frps.ini，前者两个文件是客户端的文件，后者两个文件是服务端的文件。</p>
+<p>编辑frps.ini文件</p>
+<p>vim frps.ini</p>
+<figure class="highlight ini"><table><tr><td class="code"><pre><span class="line"><span class="section">[common]</span></span><br><span class="line"><span class="attr">bind_port</span> = <span class="number">7000</span>           <span class="comment">#与客户端绑定的进行通信的端口</span></span><br><span class="line"><span class="attr">vhost_http_port</span> = <span class="number">6081</span>     <span class="comment">#访问客户端web服务自定义的端口号</span></span><br></pre></td></tr></table></figure>
+
+<p>保存然后启动服务./frps -c ./frps.ini，这是前台启动，后台启动命令为nohup ./frps -c ./frps.ini &amp;</p>
+<p>配置客服端</p>
+]]></content>
+      <categories>
+        <category>网络</category>
+      </categories>
+      <tags>
+        <tag>网络</tag>
+        <tag>FRP</tag>
       </tags>
   </entry>
   <entry>
@@ -1354,85 +1388,6 @@
         <tag>Docker</tag>
         <tag>LDAP</tag>
         <tag>OpenLDAP</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>使用frp实现内网穿透</title>
-    <url>/p/7496.html</url>
-    <content><![CDATA[<p><escape><span id="more"></span></escape></p>
-<p>使用frp实现内网穿透</p>
-<blockquote>
-<p>官网：<a href="https://gofrp.org/">https://gofrp.org/</a></p>
-</blockquote>
-<p>frp 主要由 <strong>客户端(frpc)</strong> 和 <strong>服务端(frps)</strong> 组成，服务端通常部署在具有公网 IP 的机器上，客户端通常部署在需要穿透的内网服务所在的机器上。</p>
-<p>安装</p>
-<p>我这里公网使用阿里云Ubuntu系统，内网使用CentOS7.</p>
-<p>安装包下载地址</p>
-<blockquote>
-<p><a href="https://github.com/fatedier/frp/releases/download/v0.37.1/frp_0.37.1_linux_amd64.tar.gz">https://github.com/fatedier/frp/releases/download/v0.37.1/frp_0.37.1_linux_amd64.tar.gz</a></p>
-</blockquote>
-<p>配置服务端</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 下载</span><br><span class="line">wget https://github.com/fatedier/frp/releases/download/v0.37.1/frp_0.37.1_linux_amd64.tar.gz</span><br><span class="line"></span><br><span class="line"># 解压</span><br><span class="line">tar -zxvf frp_0.37.1_linux_amd64.tar.gz</span><br><span class="line">cd frp_0.37.1_linux_amd64/ </span><br></pre></td></tr></table></figure>
-
-<p>这里主要关注4个文件，分别是frpc、frpc.ini和frps、frps.ini，前者两个文件是客户端的文件，后者两个文件是服务端的文件。</p>
-<p>编辑frps.ini文件</p>
-<p>vim frps.ini</p>
-<figure class="highlight ini"><table><tr><td class="code"><pre><span class="line"><span class="section">[common]</span></span><br><span class="line"><span class="attr">bind_port</span> = <span class="number">7000</span>           <span class="comment">#与客户端绑定的进行通信的端口</span></span><br><span class="line"><span class="attr">vhost_http_port</span> = <span class="number">6081</span>     <span class="comment">#访问客户端web服务自定义的端口号</span></span><br></pre></td></tr></table></figure>
-
-<p>保存然后启动服务./frps -c ./frps.ini，这是前台启动，后台启动命令为nohup ./frps -c ./frps.ini &amp;</p>
-<p>配置客服端</p>
-]]></content>
-      <categories>
-        <category>网络</category>
-      </categories>
-      <tags>
-        <tag>网络</tag>
-        <tag>FRP</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>升级Windows11</title>
-    <url>/p/34458.html</url>
-    <content><![CDATA[<p><escape><span id="more"></span></escape></p>
-<h1 id="升级Windows11">1. 升级Windows11</h1><p>下载win11检测工具</p>
-<p>先使用 Win11 检测工具（PC Health Check）看是否支持 Win11 系统</p>
-<blockquote>
-<p>下载地址：<a href="https://aka.ms/GetPCHealthCheckApp">https://aka.ms/GetPCHealthCheckApp</a></p>
-</blockquote>
-<p>也可以进入官网使用下载按钮下载</p>
-<blockquote>
-<p>链接：<a href="https://www.microsoft.com/zh-cn/windows/windows-11">https://www.microsoft.com/zh-cn/windows/windows-11</a></p>
-</blockquote>
-<p><img src="https://cdn.jsdelivr.net/gh/heyonggs/images@master/wp/2021/windows/202110111401352.png" alt="windows"></p>
-<p>升级Windows11</p>
-<p>通过微软提供的升级页面选择符合自己的方式进行升级。</p>
-<blockquote>
-<p><a href="https://www.microsoft.com/zh-cn/software-download/windows11">https://www.microsoft.com/zh-cn/software-download/windows11</a></p>
-</blockquote>
-<img src="https://cdn.jsdelivr.net/gh/heyonggs/images@master/wp/2021/windows/202110111405130.png" width="100%">
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-]]></content>
-      <categories>
-        <category>Windows</category>
-      </categories>
-      <tags>
-        <tag>Windows</tag>
       </tags>
   </entry>
   <entry>
@@ -1554,191 +1509,89 @@
       </tags>
   </entry>
   <entry>
-    <title>Ansible Tower-安装配置及破解</title>
-    <url>/p/31038.html</url>
+    <title>升级Windows11</title>
+    <url>/p/34458.html</url>
     <content><![CDATA[<p><escape><span id="more"></span></escape></p>
-<h1 id="Ansible-Tower-安装配置及破解">1. Ansible Tower-安装配置及破解</h1><blockquote>
-<p><a href="https://www.cnblogs.com/hujinzhong/p/12172903.html">https://www.cnblogs.com/hujinzhong/p/12172903.html</a></p>
-<p><a href="https://kionf.com/2018/11/21/tower-useage/">https://kionf.com/2018/11/21/tower-useage/</a></p>
-</blockquote>
-<h2 id="ansible-tower简介">1.1. ansible-tower简介</h2><p>1）公司中实现运维自动化的架构中主要用到ansible，ansible脚本在部署服务器指令行中显得不太直观。Ansible-Tower（之前叫做awx）是将ansible的指令界面化，简明直观，简单易用。</p>
-<p>2）Ansibke-tower其实就是一个图形化的任务调度，复杂服务部署，IT自动化的一个管理平台，属于发布配置管理系统，支持Api及界面操作，Django编写。</p>
-<p>3）Ansible-tower可以通过界面从github拉取最新playbook实施服务部署，提高生产效率。当然它也提供一个RESET API和命令行的CLI以供python脚本调用</p>
-<p>官方网站：<a href="https://www.ansible.com/products/tower">https://www.ansible.com/products/tower</a><br>中文指南：<a href="http://www.ansible.com.cn/docs/tower.html">http://www.ansible.com.cn/docs/tower.html</a><br>官方安装文档：<a href="http://docs.ansible.com/ansible-tower/latest/html/quickinstall/index.html">http://docs.ansible.com/ansible-tower/latest/html/quickinstall/index.html</a><br>官方源地址：<a href="http://releases.ansible.com/ansible-tower/setup-bundle/">http://releases.ansible.com/ansible-tower/setup-bundle/</a></p>
-<h2 id="ansible-tower安装及配置">1.2. ansible-tower安装及配置</h2><p>下载解压</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[root@mgmt2 ~]# cd /opt/</span><br><span class="line">[root@mgmt2 opt]# wget https://releases.ansible.com/ansible-tower/setup-bundle/ansible-tower-setup-bundle-3.6.2-1.el7.tar.gz</span><br><span class="line">[root@mgmt2 opt]# tar xf ansible-tower-setup-bundle-3.6.2-1.el7.tar.gz</span><br><span class="line">[root@mgmt2 opt]# cd ansible-tower-setup-bundle-3.6.2-1/</span><br><span class="line">[root@mgmt2 ansible-tower-setup-bundle-3.6.2-1]# ls</span><br><span class="line">backup.yml  bundle  group_vars  install.yml  inventory  licenses  README.md  rekey.yml  restore.yml  roles  setup.sh</span><br></pre></td></tr></table></figure>
-
-<p>修改inventory配置</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[root@mgmt2 ansible-tower-setup-bundle-3.6.2-1]# vim inventory</span><br><span class="line">[tower]</span><br><span class="line">localhost ansible_connection=local</span><br><span class="line"> </span><br><span class="line">[database]</span><br><span class="line"> </span><br><span class="line">[all:vars]</span><br><span class="line">admin_password=&#x27;tower&#x27;   #tower登录密码</span><br><span class="line"> </span><br><span class="line">pg_host=&#x27;&#x27;</span><br><span class="line">pg_port=&#x27;&#x27;</span><br><span class="line"> </span><br><span class="line">pg_database=&#x27;awx&#x27;</span><br><span class="line">pg_username=&#x27;awx&#x27;</span><br><span class="line">pg_password=&#x27;tower&#x27;</span><br><span class="line">pg_sslmode=&#x27;prefer&#x27;  # set to &#x27;verify-full&#x27; for client-side enforced SSL</span><br><span class="line"> </span><br><span class="line">rabbitmq_username=tower</span><br><span class="line">rabbitmq_password=&#x27;tower&#x27;</span><br><span class="line">rabbitmq_cookie=cookiemonster</span><br><span class="line"><span class="meta"> </span></span><br><span class="line"><span class="meta">#</span><span class="bash"> Isolated Tower nodes automatically generate an RSA key <span class="keyword">for</span> authentication;</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> To <span class="built_in">disable</span> this behavior, <span class="built_in">set</span> this value to <span class="literal">false</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> isolated_key_generation=<span class="literal">true</span></span></span><br><span class="line"> </span><br><span class="line"><span class="meta"> </span></span><br><span class="line"><span class="meta">#</span><span class="bash"> SSL-related variables</span></span><br><span class="line"><span class="meta"> </span></span><br><span class="line"><span class="meta">#</span><span class="bash"> If <span class="built_in">set</span>, this will install a custom CA certificate to the system trust store.</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> custom_ca_cert=/path/to/ca.crt</span></span><br><span class="line"><span class="meta"> </span></span><br><span class="line"><span class="meta">#</span><span class="bash"> Certificate and key to install <span class="keyword">in</span> nginx <span class="keyword">for</span> the web UI and API</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> web_server_ssl_cert=/path/to/tower.cert</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> web_server_ssl_key=/path/to/tower.key</span></span><br><span class="line"><span class="meta"> </span></span><br><span class="line"><span class="meta">#</span><span class="bash"> Use SSL <span class="keyword">for</span> RabbitMQ inter-node communication.  Because RabbitMQ never</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> communicates outside the cluster, a private CA and certificates will be</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> created, and <span class="keyword">do</span> not need to be supplied.</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> rabbitmq_use_ssl=False</span></span><br><span class="line"><span class="meta"> </span></span><br><span class="line"><span class="meta">#</span><span class="bash"> Server-side SSL settings <span class="keyword">for</span> PostgreSQL (when we are installing it).</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> postgres_use_ssl=False</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> postgres_ssl_cert=/path/to/pgsql.crt</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> postgres_ssl_key=/path/to/pgsql.key</span></span><br></pre></td></tr></table></figure>
-
-<p>开始安装</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[root@mgmt2 ansible-tower-setup-bundle-3.6.2-1]# ./setup.sh</span><br></pre></td></tr></table></figure>
-
-<p>浏览器访问</p>
+<h1 id="升级Windows11">1. 升级Windows11</h1><p>下载win11检测工具</p>
+<p>先使用 Win11 检测工具（PC Health Check）看是否支持 Win11 系统</p>
 <blockquote>
-<p><a href="https://192.168.101.200/">https://192.168.101.200</a></p>
+<p>下载地址：<a href="https://aka.ms/GetPCHealthCheckApp">https://aka.ms/GetPCHealthCheckApp</a></p>
 </blockquote>
-<p><img src="https://cdn.jsdelivr.net/gh/heyonggs/images@master/wp/2021/ansible/1.jpg" alt="ansible"></p>
-<p>登陆后这里需要认证</p>
-<p><img src="https://cdn.jsdelivr.net/gh/heyonggs/images@master/wp/2021/ansible/2.jpg" alt="ansible"></p>
-<h2 id="ansible-tower破解">1.3. ansible-tower破解</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[root@mgmt2 ~]# cd /var/lib/awx/venv/awx/lib/python3.6/site-packages/tower_license</span><br><span class="line">[root@mgmt2 tower_license]# ll</span><br><span class="line">total 8</span><br><span class="line">-rw-r--r-- 1 root root 7764 Dec 14  2019 __init__.pyc</span><br><span class="line">drwxr-xr-x 2 root root   37 Sep  8 16:06 __pycache__</span><br></pre></td></tr></table></figure>
-
-<p>安装pip</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[root@mgmt2 tower_license]# wget https://bootstrap.pypa.io/get-pip.py</span><br><span class="line">[root@mgmt2 tower_license]# python3 get-pip.py</span><br><span class="line">[root@mgmt2 tower_license]# pip -V</span><br><span class="line">pip 21.2.4 from /usr/local/lib/python3.6/site-packages/pip (python 3.6)</span><br><span class="line"></span><br><span class="line">[root@mgmt2 tower_license]# pip install uncompyle6</span><br></pre></td></tr></table></figure>
-
-<p>反汇编init.pyc</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[root@mgmt2 tower_license]# uncompyle6 __init__.pyc &gt;__init__.py</span><br><span class="line">[root@mgmt2 tower_license]# ll</span><br><span class="line">total 1932</span><br><span class="line">-rw-r--r-- 1 root root 1957374 Aug  6 19:15 get-pip.py</span><br><span class="line">-rw-r--r-- 1 root root   11453 Sep  9 09:45 __init__.py</span><br><span class="line">-rw-r--r-- 1 root root    7764 Dec 14  2019 __init__.pyc</span><br><span class="line">drwxr-xr-x 2 root root      37 Sep  8 16:06 __pycache__</span><br></pre></td></tr></table></figure>
-
-<p>修改__init__.py文件</p>
-<p>[root@mgmt2 tower_license]# vim <code>__init__</code>.py</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">_check_cloudforms_subscription</span>(<span class="params">self</span>):</span></span><br><span class="line">        <span class="keyword">return</span> <span class="literal">True</span>    <span class="comment">#添加这一行</span></span><br><span class="line">        <span class="keyword">if</span> os.path.exists(<span class="string">&#x27;/var/lib/awx/i18n.db&#x27;</span>):</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">True</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">if</span> os.path.isdir(<span class="string">&#x27;/opt/rh/cfme-appliance&#x27;</span>):</span><br><span class="line">                <span class="keyword">if</span> os.path.isdir(<span class="string">&#x27;/opt/rh/cfme-gemset&#x27;</span>):</span><br><span class="line">                    <span class="keyword">pass</span></span><br><span class="line">            <span class="keyword">try</span>:</span><br><span class="line">                has_rpms = subprocess.call([<span class="string">&#x27;rpm&#x27;</span>, <span class="string">&#x27;--quiet&#x27;</span>, <span class="string">&#x27;-q&#x27;</span>, <span class="string">&#x27;cfme&#x27;</span>, <span class="string">&#x27;cfme-appliance&#x27;</span>, <span class="string">&#x27;cfme-gemset&#x27;</span>])</span><br><span class="line">                <span class="keyword">if</span> has_rpms == <span class="number">0</span>:</span><br><span class="line">                    <span class="keyword">return</span> <span class="literal">True</span></span><br><span class="line">            <span class="keyword">except</span> OSError:</span><br><span class="line">                <span class="keyword">pass</span></span><br><span class="line"> </span><br><span class="line">            <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line">....</span><br><span class="line"></span><br><span class="line"><span class="comment"># 修改&quot;license_date=253370764800L&quot; 为 &quot;license_date=253370764800&quot;</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">_generate_cloudforms_subscription</span>(<span class="params">self</span>):</span></span><br><span class="line">        self._attrs.update(<span class="built_in">dict</span>(company_name=<span class="string">&#x27;Red Hat CloudForms License&#x27;</span>, instance_count=MAX_INSTANCES,</span><br><span class="line">          license_date=<span class="number">253370764800</span>,  <span class="comment">#修改</span></span><br><span class="line">          license_key=<span class="string">&#x27;xxxx&#x27;</span>,</span><br><span class="line">          license_type=<span class="string">&#x27;enterprise&#x27;</span>,</span><br><span class="line">          subscription_name=<span class="string">&#x27;Red Hat CloudForms License&#x27;</span>))</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
-
-<p>修改完重新编译</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[root@mgmt2 tower_license]# python3 -m py_compile __init__.py</span><br><span class="line">[root@mgmt2 tower_license]# python3 -O -m py_compile __init__.py</span><br><span class="line">[root@mgmt2 tower_license]# ll</span><br><span class="line">total 1932</span><br><span class="line">-rw-r--r-- 1 root root 1957374 Aug  6 19:15 get-pip.py</span><br><span class="line">-rw-r--r-- 1 root root   11473 Sep  9 09:51 __init__.py</span><br><span class="line">-rw-r--r-- 1 root root    7764 Dec 14  2019 __init__.pyc</span><br><span class="line">drwxr-xr-x 2 root root      74 Sep  9 09:53 __pycache__</span><br></pre></td></tr></table></figure>
-
-<p>重启服务</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[root@mgmt2 tower_license]# ansible-tower-service restart</span><br><span class="line">Restarting Tower</span><br><span class="line">Redirecting to /bin/systemctl stop postgresql.service</span><br><span class="line">Redirecting to /bin/systemctl stop rabbitmq-server.service</span><br><span class="line">Redirecting to /bin/systemctl stop nginx.service</span><br><span class="line">Redirecting to /bin/systemctl stop supervisord.service</span><br><span class="line">Redirecting to /bin/systemctl start postgresql.service</span><br><span class="line">Redirecting to /bin/systemctl start rabbitmq-server.service</span><br><span class="line">Redirecting to /bin/systemctl start nginx.service</span><br><span class="line">Redirecting to /bin/systemctl start supervisord.service</span><br></pre></td></tr></table></figure>
-
-<p>再次访问</p>
+<p>也可以进入官网使用下载按钮下载</p>
 <blockquote>
-<p><a href="https://192.168.101.200/">https://192.168.101.200</a></p>
+<p>链接：<a href="https://www.microsoft.com/zh-cn/windows/windows-11">https://www.microsoft.com/zh-cn/windows/windows-11</a></p>
 </blockquote>
-<p><img src="https://cdn.jsdelivr.net/gh/heyonggs/images@master/wp/2021/ansible/3.jpg" alt="ansible"></p>
-<p><strong>另一种破解方法（未测试）</strong></p>
+<p><img src="https://cdn.jsdelivr.net/gh/heyonggs/images@master/wp/2021/windows/202110111401352.png" alt="windows"></p>
+<p>升级Windows11</p>
+<p>通过微软提供的升级页面选择符合自己的方式进行升级。</p>
 <blockquote>
-<p> license 官方免费申请 <a href="https://www.ansible.com/license">https://www.ansible.com/license</a></p>
+<p><a href="https://www.microsoft.com/zh-cn/software-download/windows11">https://www.microsoft.com/zh-cn/software-download/windows11</a></p>
 </blockquote>
-<p>企业版无限node破解</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">先申请企业版使用30天license ,激活，再执行如下：</span><br><span class="line"> </span><br><span class="line">echo codyguo &gt; /var/lib/awx/i18n.db</span><br><span class="line">ansible-tower-service restart</span><br></pre></td></tr></table></figure>
+<img src="https://cdn.jsdelivr.net/gh/heyonggs/images@master/wp/2021/windows/202110111405130.png" width="100%">
 
 
 
-<h2 id="面板介绍">1.4. 面板介绍</h2><table>
-<thead>
-<tr>
-<th># viewes</th>
-<th></th>
-</tr>
-</thead>
-<tbody><tr>
-<td>Dashboard</td>
-<td>仪表盘展示信息的</td>
-</tr>
-<tr>
-<td>Jobs</td>
-<td>跑过的任务记录</td>
-</tr>
-<tr>
-<td>Schedules</td>
-<td>计划任务</td>
-</tr>
-<tr>
-<td>My View</td>
-<td>查看用户的工作模版，和任务记录</td>
-</tr>
-<tr>
-<td><strong># resources</strong></td>
-<td></td>
-</tr>
-<tr>
-<td>Templates</td>
-<td>任务模版，配置调用playbook执行时的各种参数，  从此处添加计划任务</td>
-</tr>
-<tr>
-<td>Credentials</td>
-<td>配置连接 机器/云主机api Key/自定义的凭证类型  的账号密码等信息</td>
-</tr>
-<tr>
-<td>Projects</td>
-<td>这里配置项目对应的playbook，可以从Git上拉取  或从本地文件夹读取playbook</td>
-</tr>
-<tr>
-<td>Inventories</td>
-<td>资产清单</td>
-</tr>
-<tr>
-<td>Inventory Scripts</td>
-<td>自定义获取资产清单的脚本</td>
-</tr>
-<tr>
-<td><strong># access</strong></td>
-<td></td>
-</tr>
-<tr>
-<td>Organizations</td>
-<td>组织管理</td>
-</tr>
-<tr>
-<td>Users</td>
-<td>用户管理</td>
-</tr>
-<tr>
-<td>Teams</td>
-<td>用户组管理</td>
-</tr>
-<tr>
-<td><strong># Administration</strong></td>
-<td></td>
-</tr>
-<tr>
-<td>Credential Types</td>
-<td>自定义凭证类型，添加后可在Credentials中使用</td>
-</tr>
-<tr>
-<td>Notifications</td>
-<td>配置任务通知，支持电子邮件，Twillio电话等</td>
-</tr>
-<tr>
-<td>Management Jobs</td>
-<td>计划任务管理</td>
-</tr>
-<tr>
-<td>Instance Groups</td>
-<td>资产组管理</td>
-</tr>
-<tr>
-<td>Applications</td>
-<td>自定义应用</td>
-</tr>
-<tr>
-<td>Settings</td>
-<td>设置</td>
-</tr>
-</tbody></table>
-<h2 id="运行测试项目">1.5. 运行测试项目</h2><p>playbook将在github上创建，Ansible Tower拉取执行，Ansible Tower的playbook默认存在 /var/lib/awx/projects/</p>
-<p>创建host登录凭据</p>
-<p><img src="https://cdn.jsdelivr.net/gh/heyonggs/images@master/wp/2021/ansible/4.jpg" alt="ansible"></p>
-<p><img src="https://cdn.jsdelivr.net/gh/heyonggs/images@master/wp/2021/ansible/5.jpg" alt="ansible"></p>
-<p><img src="https://cdn.jsdelivr.net/gh/heyonggs/images@master/wp/2021/ansible/6.jpg" alt="ansible"></p>
-<p>使用gitlab添加playbook项目</p>
-<p><img src="https://cdn.jsdelivr.net/gh/heyonggs/images@master/wp/2021/ansible/7.jpg" alt="ansible"></p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="bullet">-</span> <span class="attr">hosts:</span> <span class="string">a</span></span><br><span class="line">  <span class="attr">remote_user:</span> <span class="string">root</span></span><br><span class="line">  <span class="attr">tasks:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">Check</span> <span class="string">the</span> <span class="string">date</span> <span class="string">on</span> <span class="string">the</span> <span class="string">server</span></span><br><span class="line">      <span class="attr">command:</span> <span class="string">date</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">Check</span> <span class="string">the</span> <span class="string">ip</span> <span class="string">on</span> <span class="string">the</span> <span class="string">server</span></span><br><span class="line">      <span class="attr">command:</span> <span class="string">ifconfig</span></span><br></pre></td></tr></table></figure>
 
-<p>在Ansible Tower添加拉取gitlab项目的凭据</p>
-<p><img src="https://cdn.jsdelivr.net/gh/heyonggs/images@master/wp/2021/ansible/8.jpg" alt="ansible"></p>
-<p>创建Projects</p>
-<p><img src="https://cdn.jsdelivr.net/gh/heyonggs/images@master/wp/2021/ansible/9.jpg" alt="ansible"></p>
-<p>保存后Ansilble Tower会自动运行一次Update，如果要手动运行，点击列表中的刷新按钮。当gitlab上yml文件被更新或者新增后需要点击一下刷新按钮，否则JOB执行得还是原来的yml</p>
-<p><img src="https://cdn.jsdelivr.net/gh/heyonggs/images@master/wp/2021/ansible/10.jpg" alt="ansible"></p>
-<p><img src="https://cdn.jsdelivr.net/gh/heyonggs/images@master/wp/2021/ansible/11.jpg" alt="ansible"></p>
-<p>此时在Ansible Tower服务器的/var/lib/awx/projects/目录下已经有git拉下来的完整文件结构</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[root@mgmt2 tower_license]# cd /var/lib/awx/projects/</span><br><span class="line">[root@mgmt2 projects]# ll</span><br><span class="line">total 0</span><br><span class="line">drwxr-xr-x 3 awx awx 34 Sep  9 11:06 _8__pull_gitlab</span><br><span class="line">-rwxr-xr-x 1 awx awx  0 Sep  9 11:06 _8__pull_gitlab.lock</span><br><span class="line"></span><br><span class="line">[root@mgmt2 projects]# cd _8__pull_gitlab/</span><br><span class="line">[root@mgmt2 _8__pull_gitlab]# ll</span><br><span class="line">total 4</span><br><span class="line">-rw-r--r-- 1 awx awx 170 Sep  9 11:06 test.yml</span><br><span class="line"></span><br><span class="line">[root@mgmt2 _8__pull_gitlab]# cat test.yml </span><br><span class="line">---</span><br><span class="line">- hosts: test</span><br><span class="line">  remote_user: root</span><br><span class="line">  tasks:</span><br><span class="line">    - name: Check the date on the server</span><br><span class="line">      command: date</span><br><span class="line">    - name: Check the ip on the server</span><br><span class="line">      command: ifconfig</span><br></pre></td></tr></table></figure>
 
-<h2 id="创建主机清单">1.6. 创建主机清单</h2><p><img src="https://cdn.jsdelivr.net/gh/heyonggs/images@master/wp/2021/ansible/12.jpg" alt="ansible"></p>
-<p><img src="https://cdn.jsdelivr.net/gh/heyonggs/images@master/wp/2021/ansible/13.jpg" alt="ansible"></p>
-<h2 id="创建任务模板">1.7. 创建任务模板</h2><p><img src="https://cdn.jsdelivr.net/gh/heyonggs/images@master/wp/2021/ansible/14.jpg" alt="ansible"></p>
-<p>运行模板</p>
-<p><img src="https://cdn.jsdelivr.net/gh/heyonggs/images@master/wp/2021/ansible/15.jpg" alt="ansible"></p>
-<p><img src="https://cdn.jsdelivr.net/gh/heyonggs/images@master/wp/2021/ansible/16.jpg" alt="ansible"></p>
-<p>点击右侧日志中change几行可以看到详细信息</p>
-<p><img src="https://cdn.jsdelivr.net/gh/heyonggs/images@master/wp/2021/ansible/17.jpg" alt="ansible"></p>
-<p><img src="https://cdn.jsdelivr.net/gh/heyonggs/images@master/wp/2021/ansible/18.jpg" alt="ansible"></p>
+
+
+
+
+
+
+
+
+
+
+
+
 ]]></content>
       <categories>
-        <category>ansible</category>
+        <category>Windows</category>
       </categories>
       <tags>
-        <tag>ansible</tag>
+        <tag>Windows</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Centos查看系统 CPU 个数、核心数、线程数</title>
+    <url>/p/36110.html</url>
+    <content><![CDATA[<p><escape><span id="more"></span></escape></p>
+<h1 id="Centos查看系统-CPU-个数、核心数、线程数">1. Centos查看系统 CPU 个数、核心数、线程数</h1><p>CPU的核数表示CPU可以同时执行的任务数量，在支持超线程情况下，同时执行的任务数翻倍。CPU的线程数表示CPU可以同时执行的任务数量。两者的联系分两种：CPU支持超线程技术，那么线程数＝核心数＊2；不支持超线程，线程数＝核心数。</p>
+<p>线程数和超线程技术是两个概念，线程数是实际存在的，而超线程是CPU的技术标准。</p>
+<h2 id="优缺点">1.1. 优缺点</h2><h3 id="优点">1.1.1. 优点</h3><p>1、可以同时进行多任务处理工作，软件可以享有由超线程技术带来的性能提升；</p>
+<p>2、用户同时运行两个以上软件的时候，可以充分发挥超线程技术的效率优势。</p>
+<h3 id="缺点">1.1.2. 缺点</h3><p>1、运行单线程软件时，超线程技术会降低系统性能；</p>
+<p>2、因为很多工作站软件为Windows2000操作系统进行过优化，所以使用Windows2000的工作站无法完全利用超线程技术的优势；</p>
+<p>3、当两个线程同时需要某个资源时，其中一个线程必须让出资源暂时挂起，直到这些资源空闲以后才能继续。因此，超线程的性能并不等于两个CPU的性能。</p>
+<h2 id="查看-CPU-物理个数">1.2. 查看 CPU 物理个数</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cat /proc/cpuinfo | grep &quot;physical id&quot; | sort | uniq | wc -l</span><br><span class="line">或者</span><br><span class="line">grep &#x27;physical id&#x27; /proc/cpuinfo | sort -u | wc -l</span><br></pre></td></tr></table></figure>
+
+<h2 id="查看-CPU-核心数量">1.3. 查看 CPU 核心数量</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cat /proc/cpuinfo | grep &quot;core id&quot; | sort | uniq | wc -l</span><br><span class="line">或者</span><br><span class="line">grep &#x27;core id&#x27; /proc/cpuinfo | sort -u | wc -l</span><br></pre></td></tr></table></figure>
+
+<h2 id="查看-CPU-线程数">1.4. 查看 CPU 线程数</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cat /proc/cpuinfo | grep &quot;processor&quot; | sort | uniq | wc -l</span><br><span class="line">或者</span><br><span class="line">grep &#x27;processor&#x27; /proc/cpuinfo | sort -u | wc -l</span><br></pre></td></tr></table></figure>
+
+<h2 id="查看-CPU-型号">1.5. 查看 CPU 型号</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cat /proc/cpuinfo | grep name | sort | uniq</span><br><span class="line">或者</span><br><span class="line">dmidecode -s processor-version</span><br></pre></td></tr></table></figure>
+
+<h2 id="查看-CPU-的详细信息：">1.6. 查看 CPU 的详细信息：</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cat /proc/cpuinfo</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+
+
+
+
+
+
+]]></content>
+      <categories>
+        <category>System,cpu</category>
+      </categories>
+      <tags>
+        <tag>System,cpu</tag>
       </tags>
   </entry>
   <entry>
@@ -1794,47 +1647,6 @@
         <tag>容器</tag>
         <tag>k8s</tag>
         <tag>Kubernetes</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Centos查看系统 CPU 个数、核心数、线程数</title>
-    <url>/p/36110.html</url>
-    <content><![CDATA[<p><escape><span id="more"></span></escape></p>
-<h1 id="Centos查看系统-CPU-个数、核心数、线程数">1. Centos查看系统 CPU 个数、核心数、线程数</h1><p>CPU的核数表示CPU可以同时执行的任务数量，在支持超线程情况下，同时执行的任务数翻倍。CPU的线程数表示CPU可以同时执行的任务数量。两者的联系分两种：CPU支持超线程技术，那么线程数＝核心数＊2；不支持超线程，线程数＝核心数。</p>
-<p>线程数和超线程技术是两个概念，线程数是实际存在的，而超线程是CPU的技术标准。</p>
-<h2 id="优缺点">1.1. 优缺点</h2><h3 id="优点">1.1.1. 优点</h3><p>1、可以同时进行多任务处理工作，软件可以享有由超线程技术带来的性能提升；</p>
-<p>2、用户同时运行两个以上软件的时候，可以充分发挥超线程技术的效率优势。</p>
-<h3 id="缺点">1.1.2. 缺点</h3><p>1、运行单线程软件时，超线程技术会降低系统性能；</p>
-<p>2、因为很多工作站软件为Windows2000操作系统进行过优化，所以使用Windows2000的工作站无法完全利用超线程技术的优势；</p>
-<p>3、当两个线程同时需要某个资源时，其中一个线程必须让出资源暂时挂起，直到这些资源空闲以后才能继续。因此，超线程的性能并不等于两个CPU的性能。</p>
-<h2 id="查看-CPU-物理个数">1.2. 查看 CPU 物理个数</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cat /proc/cpuinfo | grep &quot;physical id&quot; | sort | uniq | wc -l</span><br><span class="line">或者</span><br><span class="line">grep &#x27;physical id&#x27; /proc/cpuinfo | sort -u | wc -l</span><br></pre></td></tr></table></figure>
-
-<h2 id="查看-CPU-核心数量">1.3. 查看 CPU 核心数量</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cat /proc/cpuinfo | grep &quot;core id&quot; | sort | uniq | wc -l</span><br><span class="line">或者</span><br><span class="line">grep &#x27;core id&#x27; /proc/cpuinfo | sort -u | wc -l</span><br></pre></td></tr></table></figure>
-
-<h2 id="查看-CPU-线程数">1.4. 查看 CPU 线程数</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cat /proc/cpuinfo | grep &quot;processor&quot; | sort | uniq | wc -l</span><br><span class="line">或者</span><br><span class="line">grep &#x27;processor&#x27; /proc/cpuinfo | sort -u | wc -l</span><br></pre></td></tr></table></figure>
-
-<h2 id="查看-CPU-型号">1.5. 查看 CPU 型号</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cat /proc/cpuinfo | grep name | sort | uniq</span><br><span class="line">或者</span><br><span class="line">dmidecode -s processor-version</span><br></pre></td></tr></table></figure>
-
-<h2 id="查看-CPU-的详细信息：">1.6. 查看 CPU 的详细信息：</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cat /proc/cpuinfo</span><br></pre></td></tr></table></figure>
-
-
-
-
-
-
-
-
-
-
-
-
-
-]]></content>
-      <categories>
-        <category>System,cpu</category>
-      </categories>
-      <tags>
-        <tag>System,cpu</tag>
       </tags>
   </entry>
   <entry>
@@ -2062,33 +1874,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Linux磁盘满了解决方案</title>
-    <url>/p/14331.html</url>
-    <content><![CDATA[<p><escape><span id="more"></span></escape></p>
-<p>查看磁盘情况</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[root@iz2zebp5657k0fz0pvgcgnz ~]# df -h</span><br><span class="line">Filesystem      Size  Used Avail Use% Mounted on</span><br><span class="line">devtmpfs        909M     0  909M   0% /dev</span><br><span class="line">tmpfs           919M     0  919M   0% /dev/shm</span><br><span class="line">tmpfs           919M  8.6M  911M   1% /run</span><br><span class="line">tmpfs           919M     0  919M   0% /sys/fs/cgroup</span><br><span class="line">/dev/vda1        40G  8.4G   29G  23% /</span><br><span class="line">overlay          40G  8.4G   29G  23% /var/lib/docker/overlay2/e374b04682a79626e00aca70c896b2a9b5a46ae9730c3311dd774b1bc56bdb9d/merged</span><br><span class="line">overlay          40G  8.4G   29G  23% /var/lib/docker/overlay2/c59338b367886fefb1ff03641e25ad7a3800421f39652d43e08a51b51ac95009/merged</span><br><span class="line">tmpfs           184M     0  184M   0% /run/user/0</span><br></pre></td></tr></table></figure>
-
-<p>df: 用于显示目前在Linux系统上的文件系统的磁盘使用情况统计。</p>
-<p>-h：以K，M，G为单位，提高信息的可读性。</p>
-<p>Size：总内存数</p>
-<p>Used：使用内存数</p>
-<p>Avail：剩余内存数</p>
-<p>Mounted on：挂载点</p>
-<p>查看文件夹下面的磁盘使用情况</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 进入根目录</span></span><br><span class="line">[root@iz2zebp5657k0fz0pvgcgnz ~]# cd /</span><br><span class="line">[root@iz2zebp5657k0fz0pvgcgnz /]# du --max-depth=1 -h</span><br><span class="line">44K	./home</span><br><span class="line">8.6M	./run</span><br><span class="line">24M	./tmp</span><br><span class="line">16K	./opt</span><br><span class="line">......</span><br><span class="line">0	./dev</span><br><span class="line">0	./sys</span><br><span class="line">101M	./root</span><br><span class="line">4.0K	./media</span><br><span class="line">48M	./etc</span><br><span class="line">4.9G	./var</span><br><span class="line">120M	./data</span><br><span class="line">11G	.</span><br></pre></td></tr></table></figure>
-
-<p>du：会显示指定的目录或文件所占用的磁盘空间。</p>
-<p>–max-depth-1：–max-depth=&lt;目录层数&gt; 超过指定层数的目录后，予以忽略。</p>
-<p>-h：以K，M，G为单位，提高信息的可读性。</p>
-]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>Linux</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Linux面试题</title>
     <url>/p/5935.html</url>
     <content><![CDATA[<p><escape><span id="more"></span></escape></p>
@@ -2118,6 +1903,33 @@
       </categories>
       <tags>
         <tag>Linux,面试题</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Linux磁盘满了解决方案</title>
+    <url>/p/14331.html</url>
+    <content><![CDATA[<p><escape><span id="more"></span></escape></p>
+<p>查看磁盘情况</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[root@iz2zebp5657k0fz0pvgcgnz ~]# df -h</span><br><span class="line">Filesystem      Size  Used Avail Use% Mounted on</span><br><span class="line">devtmpfs        909M     0  909M   0% /dev</span><br><span class="line">tmpfs           919M     0  919M   0% /dev/shm</span><br><span class="line">tmpfs           919M  8.6M  911M   1% /run</span><br><span class="line">tmpfs           919M     0  919M   0% /sys/fs/cgroup</span><br><span class="line">/dev/vda1        40G  8.4G   29G  23% /</span><br><span class="line">overlay          40G  8.4G   29G  23% /var/lib/docker/overlay2/e374b04682a79626e00aca70c896b2a9b5a46ae9730c3311dd774b1bc56bdb9d/merged</span><br><span class="line">overlay          40G  8.4G   29G  23% /var/lib/docker/overlay2/c59338b367886fefb1ff03641e25ad7a3800421f39652d43e08a51b51ac95009/merged</span><br><span class="line">tmpfs           184M     0  184M   0% /run/user/0</span><br></pre></td></tr></table></figure>
+
+<p>df: 用于显示目前在Linux系统上的文件系统的磁盘使用情况统计。</p>
+<p>-h：以K，M，G为单位，提高信息的可读性。</p>
+<p>Size：总内存数</p>
+<p>Used：使用内存数</p>
+<p>Avail：剩余内存数</p>
+<p>Mounted on：挂载点</p>
+<p>查看文件夹下面的磁盘使用情况</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 进入根目录</span></span><br><span class="line">[root@iz2zebp5657k0fz0pvgcgnz ~]# cd /</span><br><span class="line">[root@iz2zebp5657k0fz0pvgcgnz /]# du --max-depth=1 -h</span><br><span class="line">44K	./home</span><br><span class="line">8.6M	./run</span><br><span class="line">24M	./tmp</span><br><span class="line">16K	./opt</span><br><span class="line">......</span><br><span class="line">0	./dev</span><br><span class="line">0	./sys</span><br><span class="line">101M	./root</span><br><span class="line">4.0K	./media</span><br><span class="line">48M	./etc</span><br><span class="line">4.9G	./var</span><br><span class="line">120M	./data</span><br><span class="line">11G	.</span><br></pre></td></tr></table></figure>
+
+<p>du：会显示指定的目录或文件所占用的磁盘空间。</p>
+<p>–max-depth-1：–max-depth=&lt;目录层数&gt; 超过指定层数的目录后，予以忽略。</p>
+<p>-h：以K，M，G为单位，提高信息的可读性。</p>
+]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>Linux</tag>
       </tags>
   </entry>
   <entry>
@@ -2154,80 +1966,6 @@
       </categories>
       <tags>
         <tag>Nginx</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>k8s部署treafik2.x</title>
-    <url>/p/9854.html</url>
-    <content><![CDATA[<p><escape><span id="more"></span></escape></p>
-<h1 id="k8s部署treafik2-x">1. k8s部署treafik2.x</h1><blockquote>
-<p><a href="https://blog.51cto.com/u_15329153/3371086?xiangguantuijian">https://blog.51cto.com/u_15329153/3371086?xiangguantuijian</a></p>
-</blockquote>
-<h2 id="创建-CRD-资源">1.1. 创建 CRD 资源</h2><p>在<code>Traefik v2.0</code>版本后，开始使用<code> CRD（Custom Resource Definition）</code>来完成路由配置等，所以需要提前创建<code>CRD</code>资源。</p>
-<p>cat traefik-crd.yaml</p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="comment">## IngressRoute</span></span><br><span class="line"><span class="attr">apiVersion:</span> <span class="string">apiextensions.k8s.io/v1beta1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">CustomResourceDefinition</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">ingressroutes.traefik.containo.us</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">scope:</span> <span class="string">Namespaced</span></span><br><span class="line">  <span class="attr">group:</span> <span class="string">traefik.containo.us</span></span><br><span class="line">  <span class="attr">version:</span> <span class="string">v1alpha1</span></span><br><span class="line">  <span class="attr">names:</span></span><br><span class="line">    <span class="attr">kind:</span> <span class="string">IngressRoute</span></span><br><span class="line">    <span class="attr">plural:</span> <span class="string">ingressroutes</span></span><br><span class="line">    <span class="attr">singular:</span> <span class="string">ingressroute</span></span><br><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="comment">## IngressRouteTCP</span></span><br><span class="line"><span class="attr">apiVersion:</span> <span class="string">apiextensions.k8s.io/v1beta1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">CustomResourceDefinition</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">ingressroutetcps.traefik.containo.us</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">scope:</span> <span class="string">Namespaced</span></span><br><span class="line">  <span class="attr">group:</span> <span class="string">traefik.containo.us</span></span><br><span class="line">  <span class="attr">version:</span> <span class="string">v1alpha1</span></span><br><span class="line">  <span class="attr">names:</span></span><br><span class="line">    <span class="attr">kind:</span> <span class="string">IngressRouteTCP</span></span><br><span class="line">    <span class="attr">plural:</span> <span class="string">ingressroutetcps</span></span><br><span class="line">    <span class="attr">singular:</span> <span class="string">ingressroutetcp</span></span><br><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="comment">## Middleware</span></span><br><span class="line"><span class="attr">apiVersion:</span> <span class="string">apiextensions.k8s.io/v1beta1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">CustomResourceDefinition</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">middlewares.traefik.containo.us</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">scope:</span> <span class="string">Namespaced</span></span><br><span class="line">  <span class="attr">group:</span> <span class="string">traefik.containo.us</span></span><br><span class="line">  <span class="attr">version:</span> <span class="string">v1alpha1</span></span><br><span class="line">  <span class="attr">names:</span></span><br><span class="line">    <span class="attr">kind:</span> <span class="string">Middleware</span></span><br><span class="line">    <span class="attr">plural:</span> <span class="string">middlewares</span></span><br><span class="line">    <span class="attr">singular:</span> <span class="string">middleware</span></span><br><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="attr">apiVersion:</span> <span class="string">apiextensions.k8s.io/v1beta1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">CustomResourceDefinition</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">tlsoptions.traefik.containo.us</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">scope:</span> <span class="string">Namespaced</span></span><br><span class="line">  <span class="attr">group:</span> <span class="string">traefik.containo.us</span></span><br><span class="line">  <span class="attr">version:</span> <span class="string">v1alpha1</span></span><br><span class="line">  <span class="attr">names:</span></span><br><span class="line">    <span class="attr">kind:</span> <span class="string">TLSOption</span></span><br><span class="line">    <span class="attr">plural:</span> <span class="string">tlsoptions</span></span><br><span class="line">    <span class="attr">singular:</span> <span class="string">tlsoption</span></span><br><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="comment">## TraefikService</span></span><br><span class="line"><span class="attr">apiVersion:</span> <span class="string">apiextensions.k8s.io/v1beta1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">CustomResourceDefinition</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">traefikservices.traefik.containo.us</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">scope:</span> <span class="string">Namespaced</span></span><br><span class="line">  <span class="attr">group:</span> <span class="string">traefik.containo.us</span></span><br><span class="line">  <span class="attr">version:</span> <span class="string">v1alpha1</span></span><br><span class="line">  <span class="attr">names:</span></span><br><span class="line">    <span class="attr">kind:</span> <span class="string">TraefikService</span></span><br><span class="line">    <span class="attr">plural:</span> <span class="string">traefikservices</span></span><br><span class="line">    <span class="attr">singular:</span> <span class="string">traefikservice</span></span><br><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="comment">## TraefikTLSStore</span></span><br><span class="line"><span class="attr">apiVersion:</span> <span class="string">apiextensions.k8s.io/v1beta1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">CustomResourceDefinition</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">tlsstores.traefik.containo.us</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">scope:</span> <span class="string">Namespaced</span></span><br><span class="line">  <span class="attr">group:</span> <span class="string">traefik.containo.us</span></span><br><span class="line">  <span class="attr">version:</span> <span class="string">v1alpha1</span></span><br><span class="line">  <span class="attr">names:</span></span><br><span class="line">    <span class="attr">kind:</span> <span class="string">TLSStore</span></span><br><span class="line">    <span class="attr">plural:</span> <span class="string">tlsstores</span></span><br><span class="line">    <span class="attr">singular:</span> <span class="string">tlsstore</span></span><br><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="comment">## IngressRouteUDP</span></span><br><span class="line"><span class="attr">apiVersion:</span> <span class="string">apiextensions.k8s.io/v1beta1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">CustomResourceDefinition</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">ingressrouteudps.traefik.containo.us</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">scope:</span> <span class="string">Namespaced</span></span><br><span class="line">  <span class="attr">group:</span> <span class="string">traefik.containo.us</span></span><br><span class="line">  <span class="attr">version:</span> <span class="string">v1alpha1</span></span><br><span class="line">  <span class="attr">names:</span></span><br><span class="line">    <span class="attr">kind:</span> <span class="string">IngressRouteUDP</span></span><br><span class="line">    <span class="attr">plural:</span> <span class="string">ingressrouteudps</span></span><br><span class="line">    <span class="attr">singular:</span> <span class="string">ingressrouteudp</span></span><br></pre></td></tr></table></figure>
-
-<p>创建traefik crd 资源</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">kubectl apply -f traefik-crd.yaml</span><br></pre></td></tr></table></figure>
-
-<h2 id="创建-RBAC-权限">1.2. 创建 RBAC 权限</h2><p>Kubernetes 在 1.6 版本中引入了基于角色的访问控制（RBAC）策略，方便对 Kubernetes 资源和 API 进行细粒度控制。Traefik 需要一定的权限，所以，这里提前创建好<code>Traefik ServiceAccount</code>并分配一定的权限。</p>
-<p>cat traefik-rbac.yaml</p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># cat traefik-rbac.yaml</span></span><br><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">ServiceAccount</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">traefik-ingress-controller</span></span><br><span class="line">  <span class="attr">namespace:</span> <span class="string">kube-system</span></span><br><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">ClusterRole</span></span><br><span class="line"><span class="attr">apiVersion:</span> <span class="string">rbac.authorization.k8s.io/v1beta1</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">traefik-ingress-controller</span></span><br><span class="line"><span class="attr">rules:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">apiGroups:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&quot;&quot;</span></span><br><span class="line">    <span class="attr">resources:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">services</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">endpoints</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">secrets</span></span><br><span class="line">    <span class="attr">verbs:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">get</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">list</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">watch</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">apiGroups:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">extensions</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">networking.k8s.io</span></span><br><span class="line">    <span class="attr">resources:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">ingresses</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">ingressclasses</span></span><br><span class="line">    <span class="attr">verbs:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">get</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">list</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">watch</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">apiGroups:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">extensions</span></span><br><span class="line">    <span class="attr">resources:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">ingresses/status</span></span><br><span class="line">    <span class="attr">verbs:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">update</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">apiGroups:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">traefik.containo.us</span></span><br><span class="line">    <span class="attr">resources:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">middlewares</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">ingressroutes</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">traefikservices</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">ingressroutetcps</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">ingressrouteudps</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">tlsoptions</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">tlsstores</span></span><br><span class="line">    <span class="attr">verbs:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">get</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">list</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">watch</span></span><br><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">ClusterRoleBinding</span></span><br><span class="line"><span class="attr">apiVersion:</span> <span class="string">rbac.authorization.k8s.io/v1beta1</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">traefik-ingress-controller</span></span><br><span class="line"><span class="attr">roleRef:</span></span><br><span class="line">  <span class="attr">apiGroup:</span> <span class="string">rbac.authorization.k8s.io</span></span><br><span class="line">  <span class="attr">kind:</span> <span class="string">ClusterRole</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">traefik-ingress-controller</span></span><br><span class="line"><span class="attr">subjects:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">kind:</span> <span class="string">ServiceAccount</span></span><br><span class="line">    <span class="attr">name:</span> <span class="string">traefik-ingress-controller</span></span><br><span class="line">    <span class="attr">namespace:</span> <span class="string">kube-system</span></span><br></pre></td></tr></table></figure>
-
-<p>创建 Traefik RBAC 资源</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">kubectl apply -f traefik-rbac.yaml</span><br></pre></td></tr></table></figure>
-
-<h2 id="创建-Traefik-配置文件">1.3. 创建 Traefik 配置文件</h2><p>由于 Traefik 配置很多，通过 CLI 定义不是很方便，一般时候都会通过配置文件配置 Traefik 参数，然后存入<code>ConfigMap</code>，将其挂入 Traefik 中。</p>
-<p>下面配置中可以通过配置<code>kubernetesCRD</code>与<code>kubernetesIngress</code>和<code>kubernetesGateway</code>三项参数，让 Traefik 支持<code> CRD</code>、<code>Ingress</code>与<code>kubernetesGateway</code>三种路由配置方式。</p>
-<p>cat traefik-config.yaml</p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># cat traefik-config.yaml</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">ConfigMap</span></span><br><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">traefik-config</span></span><br><span class="line">  <span class="attr">namespace:</span> <span class="string">kube-system</span></span><br><span class="line"><span class="attr">data:</span></span><br><span class="line">  <span class="attr">traefik.yaml:</span> <span class="string">|-</span></span><br><span class="line"><span class="string">    serversTransport:</span></span><br><span class="line"><span class="string">      insecureSkipVerify: true  ## Traefik 忽略验证代理服务的 TLS 证书</span></span><br><span class="line"><span class="string">    api:</span></span><br><span class="line"><span class="string">      insecure: true            ## 允许 HTTP 方式访问 API</span></span><br><span class="line"><span class="string">      dashboard: true           ## 启用 Dashboard</span></span><br><span class="line"><span class="string">      debug: true               ## 启用 Debug 调试模式</span></span><br><span class="line"><span class="string">    metrics:</span></span><br><span class="line"><span class="string">      prometheus: metrics       ## 配置 Prometheus 监控指标数据，并使用默认配置</span></span><br><span class="line"><span class="string">    entryPoints:</span></span><br><span class="line"><span class="string">      web:</span></span><br><span class="line"><span class="string">        address: &quot;:80&quot;          ## 配置 80 端口，并设置入口名称为 web</span></span><br><span class="line"><span class="string">      websecure:</span></span><br><span class="line"><span class="string">        address: &quot;:443&quot;         ## 配置 443 端口，并设置入口名称为 websecure</span></span><br><span class="line"><span class="string">      traefik:</span></span><br><span class="line"><span class="string">        address: &quot;:8090&quot;        ## 配置 8090 端口，并设置入口名称为 dashboard</span></span><br><span class="line"><span class="string">      metrics:</span></span><br><span class="line"><span class="string">        address: &quot;:8082&quot;        ## 配置 8082 端口，作为metrics收集入口</span></span><br><span class="line"><span class="string">      tcpep:</span></span><br><span class="line"><span class="string">        address: &quot;:8000&quot;        ## 配置 8000 端口，作为tcp入口</span></span><br><span class="line"><span class="string">      udpep:</span></span><br><span class="line"><span class="string">        address: &quot;:9000/udp&quot;    ## 配置 9000 端口，作为udp入口</span></span><br><span class="line"><span class="string">    providers:</span></span><br><span class="line"><span class="string">      kubernetescrd:            ## 启用 Kubernetes CRD 方式来配置路由规则</span></span><br><span class="line"><span class="string">        ingressclass: traefik-v2.3</span></span><br><span class="line"><span class="string">      kubernetesingress:        ## 启动 Kubernetes Ingress 方式来配置路由规则</span></span><br><span class="line"><span class="string">        ingressclass: traefik-v2.3</span></span><br><span class="line"><span class="string">    log:</span></span><br><span class="line"><span class="string">      filePath: &quot;/etc/traefik/logs/traefik.log&quot;              ## 设置调试日志文件存储路径，如果为空则输出到控制台</span></span><br><span class="line"><span class="string">      level: error              ## 设置调试日志级别</span></span><br><span class="line"><span class="string">      format: json                ## 设置调试日志格式</span></span><br><span class="line"><span class="string">    accessLog:</span></span><br><span class="line"><span class="string">      filePath: &quot;/etc/traefik/logs/access.log&quot;              ## 设置访问日志文件存储路径，如果为空则输出到控制台</span></span><br><span class="line"><span class="string">      format: json                ## 设置访问调试日志格式</span></span><br><span class="line"><span class="string">      bufferingSize: 0          ## 设置访问日志缓存行数</span></span><br><span class="line"><span class="string">      filters:</span></span><br><span class="line"><span class="string">        #statusCodes: [&quot;200&quot;]   ## 设置只保留指定状态码范围内的访问日志</span></span><br><span class="line"><span class="string">        retryAttempts: true     ## 设置代理访问重试失败时，保留访问日志</span></span><br><span class="line"><span class="string">        minDuration: 20         ## 设置保留请求时间超过指定持续时间的访问日志</span></span><br><span class="line"><span class="string">      fields:                   ## 设置访问日志中的字段是否保留（keep 保留、drop 不保留）</span></span><br><span class="line"><span class="string">        defaultMode: keep       ## 设置默认保留访问日志字段</span></span><br><span class="line"><span class="string">        names:                  ## 针对访问日志特别字段特别配置保留模式</span></span><br><span class="line"><span class="string">          ClientUsername: drop  </span></span><br><span class="line"><span class="string">        headers:                ## 设置 Header 中字段是否保留</span></span><br><span class="line"><span class="string">          defaultMode: keep     ## 设置默认保留 Header 中字段</span></span><br><span class="line"><span class="string">          names:                ## 针对 Header 中特别字段特别配置保留模式</span></span><br><span class="line"><span class="string">            User-Agent: redact</span></span><br><span class="line"><span class="string">            Authorization: drop</span></span><br><span class="line"><span class="string">            Content-Type: keep</span></span><br></pre></td></tr></table></figure>
-
-<p>创建Traefik configmap 资源</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">kubectl apply -f traefik-config.yaml</span><br></pre></td></tr></table></figure>
-
-<h2 id="设置节点-Label-标签">1.4. 设置节点 Label 标签</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[root@k8s-master traefik]# kubectl label nodes k8s-master IngressProxy=traefik2.3</span><br><span class="line">node/k8s-master labeled</span><br><span class="line"></span><br><span class="line">[root@k8s-master traefik]# kubectl label nodes k8s-node1 IngressProxy=traefik2.3</span><br><span class="line">node/k8s-node1 labeled</span><br><span class="line"></span><br><span class="line">[root@k8s-master traefik]# kubectl label nodes k8s-node2 IngressProxy=traefik2.3</span><br><span class="line">node/k8s-node2 labeled</span><br></pre></td></tr></table></figure>
-
-<p>验证节点标签是否成功</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[root@k8s-master traefik]# kubectl get node --show-labels</span><br><span class="line">NAME         STATUS   ROLES    AGE   VERSION   LABELS</span><br><span class="line">k8s-master   Ready    master   46h   v1.18.0   IngressProxy=traefik2.3,beta.kubernetes.io/arch=amd64,beta.kubernetes.io/os=linux,kubernetes.io/arch=amd64,kubernetes.io/hostname=k8s-master,kubernetes.io/os=linux,node-role.kubernetes.io/master=</span><br><span class="line">k8s-node1    Ready    &lt;none&gt;   46h   v1.18.0   IngressProxy=traefik2.3,beta.kubernetes.io/arch=amd64,beta.kubernetes.io/os=linux,kubernetes.io/arch=amd64,kubernetes.io/hostname=k8s-node1,kubernetes.io/os=linux</span><br><span class="line">k8s-node2    Ready    &lt;none&gt;   46h   v1.18.0   IngressProxy=traefik2.3,beta.kubernetes.io/arch=amd64,beta.kubernetes.io/os=linux,kubernetes.io/arch=amd64,kubernetes.io/hostname=k8s-node2,kubernetes.io/os=linux</span><br></pre></td></tr></table></figure>
-
-<p>节点删除Label标签</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># kubectl label nodes k8s-master IngressProxy-</span><br><span class="line"># kubectl label nodes k8s-node1 IngressProxy-</span><br><span class="line"># kubectl label nodes k8s-node2 IngressProxy-</span><br></pre></td></tr></table></figure>
-
-
-
-<h2 id="创建-Traefik">1.5. 创建 Traefik</h2><p>下面将用<code>DaemonSet</code>方式部署 Traefik，便于在多服务器间扩展，用 hostport 方式绑定服务器 80、443 端口，方便流量通过物理机进入 Kubernetes 内部。</p>
-<p>cat traefik-deploy.yaml</p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># cat traefik-deploy.yaml</span></span><br><span class="line"><span class="attr">apiVersion:</span> <span class="string">apps/v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Deployment</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">traefik-v2</span></span><br><span class="line">  <span class="attr">namespace:</span> <span class="string">kube-system</span></span><br><span class="line">  <span class="attr">labels:</span></span><br><span class="line">    <span class="attr">app:</span> <span class="string">traefik-v2</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">replicas:</span> <span class="number">2</span></span><br><span class="line">  <span class="attr">selector:</span></span><br><span class="line">    <span class="attr">matchLabels:</span></span><br><span class="line">      <span class="attr">app:</span> <span class="string">traefik-v2</span></span><br><span class="line">  <span class="attr">template:</span></span><br><span class="line">    <span class="attr">metadata:</span></span><br><span class="line">      <span class="attr">labels:</span></span><br><span class="line">        <span class="attr">app:</span> <span class="string">traefik-v2</span></span><br><span class="line">    <span class="attr">spec:</span></span><br><span class="line">      <span class="attr">serviceAccountName:</span> <span class="string">traefik-ingress-controller</span></span><br><span class="line">      <span class="attr">terminationGracePeriodSeconds:</span> <span class="number">1</span></span><br><span class="line">      <span class="attr">containers:</span></span><br><span class="line">        <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">traefik-v2</span></span><br><span class="line">          <span class="attr">image:</span> <span class="string">traefik:v2.3</span></span><br><span class="line">          <span class="attr">args:</span></span><br><span class="line">            <span class="bullet">-</span> <span class="string">--configfile=/config/traefik.yaml</span></span><br><span class="line">          <span class="attr">ports:</span></span><br><span class="line">            <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">web</span></span><br><span class="line">              <span class="attr">containerPort:</span> <span class="number">80</span></span><br><span class="line">              <span class="attr">hostPort:</span> <span class="number">80</span>           <span class="comment">#hostPort方式，将端口暴露到集群节点</span></span><br><span class="line">            <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">websecure</span></span><br><span class="line">              <span class="attr">containerPort:</span> <span class="number">443</span></span><br><span class="line">              <span class="attr">hostPort:</span> <span class="number">443</span>          <span class="comment">#hostPort方式，将端口暴露到集群节点</span></span><br><span class="line">            <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">admin</span></span><br><span class="line">              <span class="attr">containerPort:</span> <span class="number">8090</span></span><br><span class="line">            <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">tcpep</span></span><br><span class="line">              <span class="attr">containerPort:</span> <span class="number">8000</span></span><br><span class="line">            <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">udpep</span></span><br><span class="line">              <span class="attr">containerPort:</span> <span class="number">9000</span></span><br><span class="line">          <span class="attr">resources:</span></span><br><span class="line">            <span class="attr">limits:</span></span><br><span class="line">              <span class="attr">cpu:</span> <span class="string">500m</span></span><br><span class="line">              <span class="attr">memory:</span> <span class="string">1024Mi</span></span><br><span class="line">            <span class="attr">requests:</span></span><br><span class="line">              <span class="attr">cpu:</span> <span class="string">300m</span></span><br><span class="line">              <span class="attr">memory:</span> <span class="string">1024Mi</span></span><br><span class="line">          <span class="attr">securityContext:</span></span><br><span class="line">            <span class="attr">capabilities:</span>              <span class="comment">## 只开放网络权限    </span></span><br><span class="line">              <span class="attr">drop:</span></span><br><span class="line">                <span class="bullet">-</span> <span class="string">ALL</span></span><br><span class="line">              <span class="attr">add:</span></span><br><span class="line">                <span class="bullet">-</span> <span class="string">NET_BIND_SERVICE</span></span><br><span class="line">          <span class="attr">volumeMounts:</span></span><br><span class="line">          <span class="bullet">-</span> <span class="attr">mountPath:</span> <span class="string">&quot;/config&quot;</span></span><br><span class="line">            <span class="attr">name:</span> <span class="string">&quot;config&quot;</span></span><br><span class="line">          <span class="bullet">-</span> <span class="attr">mountPath:</span> <span class="string">/etc/traefik/logs</span></span><br><span class="line">            <span class="attr">name:</span> <span class="string">logdir</span></span><br><span class="line">          <span class="bullet">-</span> <span class="attr">mountPath:</span> <span class="string">/etc/localtime</span></span><br><span class="line">            <span class="attr">name:</span> <span class="string">timezone</span></span><br><span class="line">            <span class="attr">readOnly:</span> <span class="literal">true</span></span><br><span class="line">      <span class="attr">volumes:</span></span><br><span class="line">        <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">config</span></span><br><span class="line">          <span class="attr">configMap:</span></span><br><span class="line">            <span class="attr">name:</span> <span class="string">traefik-config</span> </span><br><span class="line">        <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">logdir</span></span><br><span class="line">          <span class="attr">hostPath:</span></span><br><span class="line">            <span class="attr">path:</span> <span class="string">/data/traefik/logs</span></span><br><span class="line">            <span class="attr">type:</span> <span class="string">&quot;DirectoryOrCreate&quot;</span></span><br><span class="line">        <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">timezone</span></span><br><span class="line">          <span class="attr">hostPath:</span></span><br><span class="line">            <span class="attr">path:</span> <span class="string">/etc/localtime</span></span><br><span class="line">            <span class="attr">type:</span> <span class="string">File</span></span><br><span class="line">      <span class="attr">tolerations:</span>            </span><br><span class="line">        <span class="bullet">-</span> <span class="attr">operator:</span> <span class="string">&quot;Exists&quot;</span>        <span class="comment">## 设置容忍所有污点，防止节点被设置污点</span></span><br><span class="line">      <span class="attr">hostNetwork:</span> <span class="literal">true</span>             <span class="comment">## 开启host网络，提高网络入口的网络性能</span></span><br><span class="line">      <span class="attr">nodeSelector:</span>                 <span class="comment">## 设置node筛选器，在特定label的节点上启动</span></span><br><span class="line">        <span class="attr">IngressProxy:</span> <span class="string">&quot;traefik2.3&quot;</span></span><br><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Service</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">traefik-v2</span></span><br><span class="line">  <span class="attr">namespace:</span> <span class="string">kube-system</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">type:</span> <span class="string">LoadBalancer</span></span><br><span class="line">  <span class="attr">selector:</span></span><br><span class="line">    <span class="attr">app:</span> <span class="string">traefik-v2</span></span><br><span class="line">  <span class="attr">ports:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">protocol:</span> <span class="string">TCP</span></span><br><span class="line">      <span class="attr">port:</span> <span class="number">80</span></span><br><span class="line">      <span class="attr">name:</span> <span class="string">web</span></span><br><span class="line">      <span class="attr">targetPort:</span> <span class="number">80</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">protocol:</span> <span class="string">TCP</span></span><br><span class="line">      <span class="attr">port:</span> <span class="number">443</span></span><br><span class="line">      <span class="attr">name:</span> <span class="string">websecure</span></span><br><span class="line">      <span class="attr">targetPort:</span> <span class="number">443</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">protocol:</span> <span class="string">TCP</span></span><br><span class="line">      <span class="attr">port:</span> <span class="number">8090</span></span><br><span class="line">      <span class="attr">name:</span> <span class="string">admin</span></span><br><span class="line">      <span class="attr">targetPort:</span> <span class="number">8090</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">protocol:</span> <span class="string">TCP</span></span><br><span class="line">      <span class="attr">port:</span> <span class="number">8000</span></span><br><span class="line">      <span class="attr">name:</span> <span class="string">tcpep</span></span><br><span class="line">      <span class="attr">targetPort:</span> <span class="number">8000</span></span><br><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Service</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">traefikudp-v2</span></span><br><span class="line">  <span class="attr">namespace:</span> <span class="string">kube-system</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">type:</span> <span class="string">LoadBalancer</span></span><br><span class="line">  <span class="attr">selector:</span></span><br><span class="line">    <span class="attr">app:</span> <span class="string">traefik-v2</span></span><br><span class="line">  <span class="attr">ports:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">protocol:</span> <span class="string">UDP</span></span><br><span class="line">      <span class="attr">port:</span> <span class="number">9000</span></span><br><span class="line">      <span class="attr">name:</span> <span class="string">udpep</span></span><br><span class="line">      <span class="attr">targetPort:</span> <span class="number">9000</span></span><br></pre></td></tr></table></figure>
-
-<p>创建 Traefik</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">kubectl apply -f traefik-deploy.yaml</span><br></pre></td></tr></table></figure>
-
-<p>使用Deployment类型部署，以便于在多服务器间扩展，使用 hostport 方式占用服务器 80、443 端口，方便流量进入。</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 部署 Traefik</span><br><span class="line"># kubectl apply -f traefik-deploy.yaml </span><br><span class="line">deployment.apps/traefik-v2 created</span><br><span class="line">service/traefik-v2 created</span><br><span class="line">service/traefikudp-v2 created</span><br></pre></td></tr></table></figure>
-
-<p>到此 Traefik v2.3 应用已经部署完成。<br>这时候就可以通过节点<a href="http://IP:8090,可以看到dashboard相关信息">http://IP:8090,可以看到dashboard相关信息</a></p>
-<p><img src="https://cdn.jsdelivr.net/gh/heyonggs/images@master/wp/2021/traefik/1.jpg" alt="traefik"></p>
-<h2 id="路由配置">1.6. 路由配置</h2><h3 id="配置-HTTP-路由规则-（Traefik-Dashboard-为例）">1.6.1. 配置 HTTP 路由规则 （Traefik Dashboard 为例）</h3><p>Traefik 应用已经部署完成，但是想让外部访问 Kubernetes 内部服务，还需要配置路由规则，这里开启了 Traefik Dashboard 配置，所以首先配置 Traefik Dashboard 看板的路由规则，使外部能够访问 Traefik Dashboard。</p>
-<p>创建 Traefik Dashboard 路由规则文件 traefik-dashboard-route.yaml</p>
-<p>因为静态配置文件指定了ingressclass，所以这里的annotations 要指定，否则访问会404</p>
-<p><img src="https://cdn.jsdelivr.net/gh/heyonggs/images@master/wp/2021/traefik/2.jpg" alt="traefik"></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># cat traefik-dashboard-route.yaml</span><br><span class="line">apiVersion: traefik.containo.us/v1alpha1</span><br><span class="line">kind: IngressRoute</span><br><span class="line">metadata:</span><br><span class="line">  name: traefik-dashboard</span><br><span class="line">  namespace: kube-system</span><br><span class="line">  annotations:</span><br><span class="line">    kubernetes.io/ingress.class: traefik-v2.3     </span><br><span class="line">spec:</span><br><span class="line">  entryPoints:</span><br><span class="line">    - web</span><br><span class="line">  routes:</span><br><span class="line">  - match: Host(`traefik.heyonggs.com`) </span><br><span class="line">    kind: Rule</span><br><span class="line">    services:</span><br><span class="line">    - name: api@internal</span><br><span class="line">      kind: TraefikService</span><br></pre></td></tr></table></figure>
-
-<p>部署Traefik Dashboard 路由规则对象</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># kubectl apply -f traefik-dashboard-route.yaml</span><br><span class="line">ingressroute.traefik.containo.us/traefik-dashboard created</span><br></pre></td></tr></table></figure>
-
-<p>客户端通过域名访问服务，必须要进行 DNS 解析，可以通过 DNS 服务器进行域名解析，也可以修改 hosts 文件将 Traefik 指定节点的 IP 和自定义 host 绑定</p>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"># cat hosts</span><br><span class="line">192.168.101.202 traefik.heyonggs.com</span><br></pre></td></tr></table></figure>
-
-<p>打开任意浏览器输入地址： <a href="http://traefik.heyonggs.com进行访问,打开/">http://traefik.heyonggs.com进行访问，打开</a> Traefik Dashboard.</p>
-<p>此处没有配置验证登录，如果想配置验证登录，使用middleware即可。</p>
-<p><img src="https://cdn.jsdelivr.net/gh/heyonggs/images@master/wp/2021/traefik/3.jpg" alt="traefik"></p>
-]]></content>
-      <categories>
-        <category>k8s</category>
-      </categories>
-      <tags>
-        <tag>k8s</tag>
       </tags>
   </entry>
   <entry>
@@ -2386,6 +2124,268 @@
       </tags>
   </entry>
   <entry>
+    <title>k8s部署treafik2.x</title>
+    <url>/p/9854.html</url>
+    <content><![CDATA[<p><escape><span id="more"></span></escape></p>
+<h1 id="k8s部署treafik2-x">1. k8s部署treafik2.x</h1><blockquote>
+<p><a href="https://blog.51cto.com/u_15329153/3371086?xiangguantuijian">https://blog.51cto.com/u_15329153/3371086?xiangguantuijian</a></p>
+</blockquote>
+<h2 id="创建-CRD-资源">1.1. 创建 CRD 资源</h2><p>在<code>Traefik v2.0</code>版本后，开始使用<code> CRD（Custom Resource Definition）</code>来完成路由配置等，所以需要提前创建<code>CRD</code>资源。</p>
+<p>cat traefik-crd.yaml</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="comment">## IngressRoute</span></span><br><span class="line"><span class="attr">apiVersion:</span> <span class="string">apiextensions.k8s.io/v1beta1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">CustomResourceDefinition</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">ingressroutes.traefik.containo.us</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">scope:</span> <span class="string">Namespaced</span></span><br><span class="line">  <span class="attr">group:</span> <span class="string">traefik.containo.us</span></span><br><span class="line">  <span class="attr">version:</span> <span class="string">v1alpha1</span></span><br><span class="line">  <span class="attr">names:</span></span><br><span class="line">    <span class="attr">kind:</span> <span class="string">IngressRoute</span></span><br><span class="line">    <span class="attr">plural:</span> <span class="string">ingressroutes</span></span><br><span class="line">    <span class="attr">singular:</span> <span class="string">ingressroute</span></span><br><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="comment">## IngressRouteTCP</span></span><br><span class="line"><span class="attr">apiVersion:</span> <span class="string">apiextensions.k8s.io/v1beta1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">CustomResourceDefinition</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">ingressroutetcps.traefik.containo.us</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">scope:</span> <span class="string">Namespaced</span></span><br><span class="line">  <span class="attr">group:</span> <span class="string">traefik.containo.us</span></span><br><span class="line">  <span class="attr">version:</span> <span class="string">v1alpha1</span></span><br><span class="line">  <span class="attr">names:</span></span><br><span class="line">    <span class="attr">kind:</span> <span class="string">IngressRouteTCP</span></span><br><span class="line">    <span class="attr">plural:</span> <span class="string">ingressroutetcps</span></span><br><span class="line">    <span class="attr">singular:</span> <span class="string">ingressroutetcp</span></span><br><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="comment">## Middleware</span></span><br><span class="line"><span class="attr">apiVersion:</span> <span class="string">apiextensions.k8s.io/v1beta1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">CustomResourceDefinition</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">middlewares.traefik.containo.us</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">scope:</span> <span class="string">Namespaced</span></span><br><span class="line">  <span class="attr">group:</span> <span class="string">traefik.containo.us</span></span><br><span class="line">  <span class="attr">version:</span> <span class="string">v1alpha1</span></span><br><span class="line">  <span class="attr">names:</span></span><br><span class="line">    <span class="attr">kind:</span> <span class="string">Middleware</span></span><br><span class="line">    <span class="attr">plural:</span> <span class="string">middlewares</span></span><br><span class="line">    <span class="attr">singular:</span> <span class="string">middleware</span></span><br><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="attr">apiVersion:</span> <span class="string">apiextensions.k8s.io/v1beta1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">CustomResourceDefinition</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">tlsoptions.traefik.containo.us</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">scope:</span> <span class="string">Namespaced</span></span><br><span class="line">  <span class="attr">group:</span> <span class="string">traefik.containo.us</span></span><br><span class="line">  <span class="attr">version:</span> <span class="string">v1alpha1</span></span><br><span class="line">  <span class="attr">names:</span></span><br><span class="line">    <span class="attr">kind:</span> <span class="string">TLSOption</span></span><br><span class="line">    <span class="attr">plural:</span> <span class="string">tlsoptions</span></span><br><span class="line">    <span class="attr">singular:</span> <span class="string">tlsoption</span></span><br><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="comment">## TraefikService</span></span><br><span class="line"><span class="attr">apiVersion:</span> <span class="string">apiextensions.k8s.io/v1beta1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">CustomResourceDefinition</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">traefikservices.traefik.containo.us</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">scope:</span> <span class="string">Namespaced</span></span><br><span class="line">  <span class="attr">group:</span> <span class="string">traefik.containo.us</span></span><br><span class="line">  <span class="attr">version:</span> <span class="string">v1alpha1</span></span><br><span class="line">  <span class="attr">names:</span></span><br><span class="line">    <span class="attr">kind:</span> <span class="string">TraefikService</span></span><br><span class="line">    <span class="attr">plural:</span> <span class="string">traefikservices</span></span><br><span class="line">    <span class="attr">singular:</span> <span class="string">traefikservice</span></span><br><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="comment">## TraefikTLSStore</span></span><br><span class="line"><span class="attr">apiVersion:</span> <span class="string">apiextensions.k8s.io/v1beta1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">CustomResourceDefinition</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">tlsstores.traefik.containo.us</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">scope:</span> <span class="string">Namespaced</span></span><br><span class="line">  <span class="attr">group:</span> <span class="string">traefik.containo.us</span></span><br><span class="line">  <span class="attr">version:</span> <span class="string">v1alpha1</span></span><br><span class="line">  <span class="attr">names:</span></span><br><span class="line">    <span class="attr">kind:</span> <span class="string">TLSStore</span></span><br><span class="line">    <span class="attr">plural:</span> <span class="string">tlsstores</span></span><br><span class="line">    <span class="attr">singular:</span> <span class="string">tlsstore</span></span><br><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="comment">## IngressRouteUDP</span></span><br><span class="line"><span class="attr">apiVersion:</span> <span class="string">apiextensions.k8s.io/v1beta1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">CustomResourceDefinition</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">ingressrouteudps.traefik.containo.us</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">scope:</span> <span class="string">Namespaced</span></span><br><span class="line">  <span class="attr">group:</span> <span class="string">traefik.containo.us</span></span><br><span class="line">  <span class="attr">version:</span> <span class="string">v1alpha1</span></span><br><span class="line">  <span class="attr">names:</span></span><br><span class="line">    <span class="attr">kind:</span> <span class="string">IngressRouteUDP</span></span><br><span class="line">    <span class="attr">plural:</span> <span class="string">ingressrouteudps</span></span><br><span class="line">    <span class="attr">singular:</span> <span class="string">ingressrouteudp</span></span><br></pre></td></tr></table></figure>
+
+<p>创建traefik crd 资源</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">kubectl apply -f traefik-crd.yaml</span><br></pre></td></tr></table></figure>
+
+<h2 id="创建-RBAC-权限">1.2. 创建 RBAC 权限</h2><p>Kubernetes 在 1.6 版本中引入了基于角色的访问控制（RBAC）策略，方便对 Kubernetes 资源和 API 进行细粒度控制。Traefik 需要一定的权限，所以，这里提前创建好<code>Traefik ServiceAccount</code>并分配一定的权限。</p>
+<p>cat traefik-rbac.yaml</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># cat traefik-rbac.yaml</span></span><br><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">ServiceAccount</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">traefik-ingress-controller</span></span><br><span class="line">  <span class="attr">namespace:</span> <span class="string">kube-system</span></span><br><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">ClusterRole</span></span><br><span class="line"><span class="attr">apiVersion:</span> <span class="string">rbac.authorization.k8s.io/v1beta1</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">traefik-ingress-controller</span></span><br><span class="line"><span class="attr">rules:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">apiGroups:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&quot;&quot;</span></span><br><span class="line">    <span class="attr">resources:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">services</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">endpoints</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">secrets</span></span><br><span class="line">    <span class="attr">verbs:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">get</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">list</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">watch</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">apiGroups:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">extensions</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">networking.k8s.io</span></span><br><span class="line">    <span class="attr">resources:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">ingresses</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">ingressclasses</span></span><br><span class="line">    <span class="attr">verbs:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">get</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">list</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">watch</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">apiGroups:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">extensions</span></span><br><span class="line">    <span class="attr">resources:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">ingresses/status</span></span><br><span class="line">    <span class="attr">verbs:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">update</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">apiGroups:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">traefik.containo.us</span></span><br><span class="line">    <span class="attr">resources:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">middlewares</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">ingressroutes</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">traefikservices</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">ingressroutetcps</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">ingressrouteudps</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">tlsoptions</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">tlsstores</span></span><br><span class="line">    <span class="attr">verbs:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">get</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">list</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">watch</span></span><br><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">ClusterRoleBinding</span></span><br><span class="line"><span class="attr">apiVersion:</span> <span class="string">rbac.authorization.k8s.io/v1beta1</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">traefik-ingress-controller</span></span><br><span class="line"><span class="attr">roleRef:</span></span><br><span class="line">  <span class="attr">apiGroup:</span> <span class="string">rbac.authorization.k8s.io</span></span><br><span class="line">  <span class="attr">kind:</span> <span class="string">ClusterRole</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">traefik-ingress-controller</span></span><br><span class="line"><span class="attr">subjects:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">kind:</span> <span class="string">ServiceAccount</span></span><br><span class="line">    <span class="attr">name:</span> <span class="string">traefik-ingress-controller</span></span><br><span class="line">    <span class="attr">namespace:</span> <span class="string">kube-system</span></span><br></pre></td></tr></table></figure>
+
+<p>创建 Traefik RBAC 资源</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">kubectl apply -f traefik-rbac.yaml</span><br></pre></td></tr></table></figure>
+
+<h2 id="创建-Traefik-配置文件">1.3. 创建 Traefik 配置文件</h2><p>由于 Traefik 配置很多，通过 CLI 定义不是很方便，一般时候都会通过配置文件配置 Traefik 参数，然后存入<code>ConfigMap</code>，将其挂入 Traefik 中。</p>
+<p>下面配置中可以通过配置<code>kubernetesCRD</code>与<code>kubernetesIngress</code>和<code>kubernetesGateway</code>三项参数，让 Traefik 支持<code> CRD</code>、<code>Ingress</code>与<code>kubernetesGateway</code>三种路由配置方式。</p>
+<p>cat traefik-config.yaml</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># cat traefik-config.yaml</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">ConfigMap</span></span><br><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">traefik-config</span></span><br><span class="line">  <span class="attr">namespace:</span> <span class="string">kube-system</span></span><br><span class="line"><span class="attr">data:</span></span><br><span class="line">  <span class="attr">traefik.yaml:</span> <span class="string">|-</span></span><br><span class="line"><span class="string">    serversTransport:</span></span><br><span class="line"><span class="string">      insecureSkipVerify: true  ## Traefik 忽略验证代理服务的 TLS 证书</span></span><br><span class="line"><span class="string">    api:</span></span><br><span class="line"><span class="string">      insecure: true            ## 允许 HTTP 方式访问 API</span></span><br><span class="line"><span class="string">      dashboard: true           ## 启用 Dashboard</span></span><br><span class="line"><span class="string">      debug: true               ## 启用 Debug 调试模式</span></span><br><span class="line"><span class="string">    metrics:</span></span><br><span class="line"><span class="string">      prometheus: metrics       ## 配置 Prometheus 监控指标数据，并使用默认配置</span></span><br><span class="line"><span class="string">    entryPoints:</span></span><br><span class="line"><span class="string">      web:</span></span><br><span class="line"><span class="string">        address: &quot;:80&quot;          ## 配置 80 端口，并设置入口名称为 web</span></span><br><span class="line"><span class="string">      websecure:</span></span><br><span class="line"><span class="string">        address: &quot;:443&quot;         ## 配置 443 端口，并设置入口名称为 websecure</span></span><br><span class="line"><span class="string">      traefik:</span></span><br><span class="line"><span class="string">        address: &quot;:8090&quot;        ## 配置 8090 端口，并设置入口名称为 dashboard</span></span><br><span class="line"><span class="string">      metrics:</span></span><br><span class="line"><span class="string">        address: &quot;:8082&quot;        ## 配置 8082 端口，作为metrics收集入口</span></span><br><span class="line"><span class="string">      tcpep:</span></span><br><span class="line"><span class="string">        address: &quot;:8000&quot;        ## 配置 8000 端口，作为tcp入口</span></span><br><span class="line"><span class="string">      udpep:</span></span><br><span class="line"><span class="string">        address: &quot;:9000/udp&quot;    ## 配置 9000 端口，作为udp入口</span></span><br><span class="line"><span class="string">    providers:</span></span><br><span class="line"><span class="string">      kubernetescrd:            ## 启用 Kubernetes CRD 方式来配置路由规则</span></span><br><span class="line"><span class="string">        ingressclass: traefik-v2.3</span></span><br><span class="line"><span class="string">      kubernetesingress:        ## 启动 Kubernetes Ingress 方式来配置路由规则</span></span><br><span class="line"><span class="string">        ingressclass: traefik-v2.3</span></span><br><span class="line"><span class="string">    log:</span></span><br><span class="line"><span class="string">      filePath: &quot;/etc/traefik/logs/traefik.log&quot;              ## 设置调试日志文件存储路径，如果为空则输出到控制台</span></span><br><span class="line"><span class="string">      level: error              ## 设置调试日志级别</span></span><br><span class="line"><span class="string">      format: json                ## 设置调试日志格式</span></span><br><span class="line"><span class="string">    accessLog:</span></span><br><span class="line"><span class="string">      filePath: &quot;/etc/traefik/logs/access.log&quot;              ## 设置访问日志文件存储路径，如果为空则输出到控制台</span></span><br><span class="line"><span class="string">      format: json                ## 设置访问调试日志格式</span></span><br><span class="line"><span class="string">      bufferingSize: 0          ## 设置访问日志缓存行数</span></span><br><span class="line"><span class="string">      filters:</span></span><br><span class="line"><span class="string">        #statusCodes: [&quot;200&quot;]   ## 设置只保留指定状态码范围内的访问日志</span></span><br><span class="line"><span class="string">        retryAttempts: true     ## 设置代理访问重试失败时，保留访问日志</span></span><br><span class="line"><span class="string">        minDuration: 20         ## 设置保留请求时间超过指定持续时间的访问日志</span></span><br><span class="line"><span class="string">      fields:                   ## 设置访问日志中的字段是否保留（keep 保留、drop 不保留）</span></span><br><span class="line"><span class="string">        defaultMode: keep       ## 设置默认保留访问日志字段</span></span><br><span class="line"><span class="string">        names:                  ## 针对访问日志特别字段特别配置保留模式</span></span><br><span class="line"><span class="string">          ClientUsername: drop  </span></span><br><span class="line"><span class="string">        headers:                ## 设置 Header 中字段是否保留</span></span><br><span class="line"><span class="string">          defaultMode: keep     ## 设置默认保留 Header 中字段</span></span><br><span class="line"><span class="string">          names:                ## 针对 Header 中特别字段特别配置保留模式</span></span><br><span class="line"><span class="string">            User-Agent: redact</span></span><br><span class="line"><span class="string">            Authorization: drop</span></span><br><span class="line"><span class="string">            Content-Type: keep</span></span><br></pre></td></tr></table></figure>
+
+<p>创建Traefik configmap 资源</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">kubectl apply -f traefik-config.yaml</span><br></pre></td></tr></table></figure>
+
+<h2 id="设置节点-Label-标签">1.4. 设置节点 Label 标签</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[root@k8s-master traefik]# kubectl label nodes k8s-master IngressProxy=traefik2.3</span><br><span class="line">node/k8s-master labeled</span><br><span class="line"></span><br><span class="line">[root@k8s-master traefik]# kubectl label nodes k8s-node1 IngressProxy=traefik2.3</span><br><span class="line">node/k8s-node1 labeled</span><br><span class="line"></span><br><span class="line">[root@k8s-master traefik]# kubectl label nodes k8s-node2 IngressProxy=traefik2.3</span><br><span class="line">node/k8s-node2 labeled</span><br></pre></td></tr></table></figure>
+
+<p>验证节点标签是否成功</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[root@k8s-master traefik]# kubectl get node --show-labels</span><br><span class="line">NAME         STATUS   ROLES    AGE   VERSION   LABELS</span><br><span class="line">k8s-master   Ready    master   46h   v1.18.0   IngressProxy=traefik2.3,beta.kubernetes.io/arch=amd64,beta.kubernetes.io/os=linux,kubernetes.io/arch=amd64,kubernetes.io/hostname=k8s-master,kubernetes.io/os=linux,node-role.kubernetes.io/master=</span><br><span class="line">k8s-node1    Ready    &lt;none&gt;   46h   v1.18.0   IngressProxy=traefik2.3,beta.kubernetes.io/arch=amd64,beta.kubernetes.io/os=linux,kubernetes.io/arch=amd64,kubernetes.io/hostname=k8s-node1,kubernetes.io/os=linux</span><br><span class="line">k8s-node2    Ready    &lt;none&gt;   46h   v1.18.0   IngressProxy=traefik2.3,beta.kubernetes.io/arch=amd64,beta.kubernetes.io/os=linux,kubernetes.io/arch=amd64,kubernetes.io/hostname=k8s-node2,kubernetes.io/os=linux</span><br></pre></td></tr></table></figure>
+
+<p>节点删除Label标签</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># kubectl label nodes k8s-master IngressProxy-</span><br><span class="line"># kubectl label nodes k8s-node1 IngressProxy-</span><br><span class="line"># kubectl label nodes k8s-node2 IngressProxy-</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="创建-Traefik">1.5. 创建 Traefik</h2><p>下面将用<code>DaemonSet</code>方式部署 Traefik，便于在多服务器间扩展，用 hostport 方式绑定服务器 80、443 端口，方便流量通过物理机进入 Kubernetes 内部。</p>
+<p>cat traefik-deploy.yaml</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># cat traefik-deploy.yaml</span></span><br><span class="line"><span class="attr">apiVersion:</span> <span class="string">apps/v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Deployment</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">traefik-v2</span></span><br><span class="line">  <span class="attr">namespace:</span> <span class="string">kube-system</span></span><br><span class="line">  <span class="attr">labels:</span></span><br><span class="line">    <span class="attr">app:</span> <span class="string">traefik-v2</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">replicas:</span> <span class="number">2</span></span><br><span class="line">  <span class="attr">selector:</span></span><br><span class="line">    <span class="attr">matchLabels:</span></span><br><span class="line">      <span class="attr">app:</span> <span class="string">traefik-v2</span></span><br><span class="line">  <span class="attr">template:</span></span><br><span class="line">    <span class="attr">metadata:</span></span><br><span class="line">      <span class="attr">labels:</span></span><br><span class="line">        <span class="attr">app:</span> <span class="string">traefik-v2</span></span><br><span class="line">    <span class="attr">spec:</span></span><br><span class="line">      <span class="attr">serviceAccountName:</span> <span class="string">traefik-ingress-controller</span></span><br><span class="line">      <span class="attr">terminationGracePeriodSeconds:</span> <span class="number">1</span></span><br><span class="line">      <span class="attr">containers:</span></span><br><span class="line">        <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">traefik-v2</span></span><br><span class="line">          <span class="attr">image:</span> <span class="string">traefik:v2.3</span></span><br><span class="line">          <span class="attr">args:</span></span><br><span class="line">            <span class="bullet">-</span> <span class="string">--configfile=/config/traefik.yaml</span></span><br><span class="line">          <span class="attr">ports:</span></span><br><span class="line">            <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">web</span></span><br><span class="line">              <span class="attr">containerPort:</span> <span class="number">80</span></span><br><span class="line">              <span class="attr">hostPort:</span> <span class="number">80</span>           <span class="comment">#hostPort方式，将端口暴露到集群节点</span></span><br><span class="line">            <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">websecure</span></span><br><span class="line">              <span class="attr">containerPort:</span> <span class="number">443</span></span><br><span class="line">              <span class="attr">hostPort:</span> <span class="number">443</span>          <span class="comment">#hostPort方式，将端口暴露到集群节点</span></span><br><span class="line">            <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">admin</span></span><br><span class="line">              <span class="attr">containerPort:</span> <span class="number">8090</span></span><br><span class="line">            <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">tcpep</span></span><br><span class="line">              <span class="attr">containerPort:</span> <span class="number">8000</span></span><br><span class="line">            <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">udpep</span></span><br><span class="line">              <span class="attr">containerPort:</span> <span class="number">9000</span></span><br><span class="line">          <span class="attr">resources:</span></span><br><span class="line">            <span class="attr">limits:</span></span><br><span class="line">              <span class="attr">cpu:</span> <span class="string">500m</span></span><br><span class="line">              <span class="attr">memory:</span> <span class="string">1024Mi</span></span><br><span class="line">            <span class="attr">requests:</span></span><br><span class="line">              <span class="attr">cpu:</span> <span class="string">300m</span></span><br><span class="line">              <span class="attr">memory:</span> <span class="string">1024Mi</span></span><br><span class="line">          <span class="attr">securityContext:</span></span><br><span class="line">            <span class="attr">capabilities:</span>              <span class="comment">## 只开放网络权限    </span></span><br><span class="line">              <span class="attr">drop:</span></span><br><span class="line">                <span class="bullet">-</span> <span class="string">ALL</span></span><br><span class="line">              <span class="attr">add:</span></span><br><span class="line">                <span class="bullet">-</span> <span class="string">NET_BIND_SERVICE</span></span><br><span class="line">          <span class="attr">volumeMounts:</span></span><br><span class="line">          <span class="bullet">-</span> <span class="attr">mountPath:</span> <span class="string">&quot;/config&quot;</span></span><br><span class="line">            <span class="attr">name:</span> <span class="string">&quot;config&quot;</span></span><br><span class="line">          <span class="bullet">-</span> <span class="attr">mountPath:</span> <span class="string">/etc/traefik/logs</span></span><br><span class="line">            <span class="attr">name:</span> <span class="string">logdir</span></span><br><span class="line">          <span class="bullet">-</span> <span class="attr">mountPath:</span> <span class="string">/etc/localtime</span></span><br><span class="line">            <span class="attr">name:</span> <span class="string">timezone</span></span><br><span class="line">            <span class="attr">readOnly:</span> <span class="literal">true</span></span><br><span class="line">      <span class="attr">volumes:</span></span><br><span class="line">        <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">config</span></span><br><span class="line">          <span class="attr">configMap:</span></span><br><span class="line">            <span class="attr">name:</span> <span class="string">traefik-config</span> </span><br><span class="line">        <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">logdir</span></span><br><span class="line">          <span class="attr">hostPath:</span></span><br><span class="line">            <span class="attr">path:</span> <span class="string">/data/traefik/logs</span></span><br><span class="line">            <span class="attr">type:</span> <span class="string">&quot;DirectoryOrCreate&quot;</span></span><br><span class="line">        <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">timezone</span></span><br><span class="line">          <span class="attr">hostPath:</span></span><br><span class="line">            <span class="attr">path:</span> <span class="string">/etc/localtime</span></span><br><span class="line">            <span class="attr">type:</span> <span class="string">File</span></span><br><span class="line">      <span class="attr">tolerations:</span>            </span><br><span class="line">        <span class="bullet">-</span> <span class="attr">operator:</span> <span class="string">&quot;Exists&quot;</span>        <span class="comment">## 设置容忍所有污点，防止节点被设置污点</span></span><br><span class="line">      <span class="attr">hostNetwork:</span> <span class="literal">true</span>             <span class="comment">## 开启host网络，提高网络入口的网络性能</span></span><br><span class="line">      <span class="attr">nodeSelector:</span>                 <span class="comment">## 设置node筛选器，在特定label的节点上启动</span></span><br><span class="line">        <span class="attr">IngressProxy:</span> <span class="string">&quot;traefik2.3&quot;</span></span><br><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Service</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">traefik-v2</span></span><br><span class="line">  <span class="attr">namespace:</span> <span class="string">kube-system</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">type:</span> <span class="string">LoadBalancer</span></span><br><span class="line">  <span class="attr">selector:</span></span><br><span class="line">    <span class="attr">app:</span> <span class="string">traefik-v2</span></span><br><span class="line">  <span class="attr">ports:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">protocol:</span> <span class="string">TCP</span></span><br><span class="line">      <span class="attr">port:</span> <span class="number">80</span></span><br><span class="line">      <span class="attr">name:</span> <span class="string">web</span></span><br><span class="line">      <span class="attr">targetPort:</span> <span class="number">80</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">protocol:</span> <span class="string">TCP</span></span><br><span class="line">      <span class="attr">port:</span> <span class="number">443</span></span><br><span class="line">      <span class="attr">name:</span> <span class="string">websecure</span></span><br><span class="line">      <span class="attr">targetPort:</span> <span class="number">443</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">protocol:</span> <span class="string">TCP</span></span><br><span class="line">      <span class="attr">port:</span> <span class="number">8090</span></span><br><span class="line">      <span class="attr">name:</span> <span class="string">admin</span></span><br><span class="line">      <span class="attr">targetPort:</span> <span class="number">8090</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">protocol:</span> <span class="string">TCP</span></span><br><span class="line">      <span class="attr">port:</span> <span class="number">8000</span></span><br><span class="line">      <span class="attr">name:</span> <span class="string">tcpep</span></span><br><span class="line">      <span class="attr">targetPort:</span> <span class="number">8000</span></span><br><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Service</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">traefikudp-v2</span></span><br><span class="line">  <span class="attr">namespace:</span> <span class="string">kube-system</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">type:</span> <span class="string">LoadBalancer</span></span><br><span class="line">  <span class="attr">selector:</span></span><br><span class="line">    <span class="attr">app:</span> <span class="string">traefik-v2</span></span><br><span class="line">  <span class="attr">ports:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">protocol:</span> <span class="string">UDP</span></span><br><span class="line">      <span class="attr">port:</span> <span class="number">9000</span></span><br><span class="line">      <span class="attr">name:</span> <span class="string">udpep</span></span><br><span class="line">      <span class="attr">targetPort:</span> <span class="number">9000</span></span><br></pre></td></tr></table></figure>
+
+<p>创建 Traefik</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">kubectl apply -f traefik-deploy.yaml</span><br></pre></td></tr></table></figure>
+
+<p>使用Deployment类型部署，以便于在多服务器间扩展，使用 hostport 方式占用服务器 80、443 端口，方便流量进入。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 部署 Traefik</span><br><span class="line"># kubectl apply -f traefik-deploy.yaml </span><br><span class="line">deployment.apps/traefik-v2 created</span><br><span class="line">service/traefik-v2 created</span><br><span class="line">service/traefikudp-v2 created</span><br></pre></td></tr></table></figure>
+
+<p>到此 Traefik v2.3 应用已经部署完成。<br>这时候就可以通过节点<a href="http://IP:8090,可以看到dashboard相关信息">http://IP:8090,可以看到dashboard相关信息</a></p>
+<p><img src="https://cdn.jsdelivr.net/gh/heyonggs/images@master/wp/2021/traefik/1.jpg" alt="traefik"></p>
+<h2 id="路由配置">1.6. 路由配置</h2><h3 id="配置-HTTP-路由规则-（Traefik-Dashboard-为例）">1.6.1. 配置 HTTP 路由规则 （Traefik Dashboard 为例）</h3><p>Traefik 应用已经部署完成，但是想让外部访问 Kubernetes 内部服务，还需要配置路由规则，这里开启了 Traefik Dashboard 配置，所以首先配置 Traefik Dashboard 看板的路由规则，使外部能够访问 Traefik Dashboard。</p>
+<p>创建 Traefik Dashboard 路由规则文件 traefik-dashboard-route.yaml</p>
+<p>因为静态配置文件指定了ingressclass，所以这里的annotations 要指定，否则访问会404</p>
+<p><img src="https://cdn.jsdelivr.net/gh/heyonggs/images@master/wp/2021/traefik/2.jpg" alt="traefik"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># cat traefik-dashboard-route.yaml</span><br><span class="line">apiVersion: traefik.containo.us/v1alpha1</span><br><span class="line">kind: IngressRoute</span><br><span class="line">metadata:</span><br><span class="line">  name: traefik-dashboard</span><br><span class="line">  namespace: kube-system</span><br><span class="line">  annotations:</span><br><span class="line">    kubernetes.io/ingress.class: traefik-v2.3     </span><br><span class="line">spec:</span><br><span class="line">  entryPoints:</span><br><span class="line">    - web</span><br><span class="line">  routes:</span><br><span class="line">  - match: Host(`traefik.heyonggs.com`) </span><br><span class="line">    kind: Rule</span><br><span class="line">    services:</span><br><span class="line">    - name: api@internal</span><br><span class="line">      kind: TraefikService</span><br></pre></td></tr></table></figure>
+
+<p>部署Traefik Dashboard 路由规则对象</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># kubectl apply -f traefik-dashboard-route.yaml</span><br><span class="line">ingressroute.traefik.containo.us/traefik-dashboard created</span><br></pre></td></tr></table></figure>
+
+<p>客户端通过域名访问服务，必须要进行 DNS 解析，可以通过 DNS 服务器进行域名解析，也可以修改 hosts 文件将 Traefik 指定节点的 IP 和自定义 host 绑定</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"># cat hosts</span><br><span class="line">192.168.101.202 traefik.heyonggs.com</span><br></pre></td></tr></table></figure>
+
+<p>打开任意浏览器输入地址： <a href="http://traefik.heyonggs.com进行访问,打开/">http://traefik.heyonggs.com进行访问，打开</a> Traefik Dashboard.</p>
+<p>此处没有配置验证登录，如果想配置验证登录，使用middleware即可。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/heyonggs/images@master/wp/2021/traefik/3.jpg" alt="traefik"></p>
+]]></content>
+      <categories>
+        <category>k8s</category>
+      </categories>
+      <tags>
+        <tag>k8s</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Ansible Tower-安装配置及破解</title>
+    <url>/p/31038.html</url>
+    <content><![CDATA[<p><escape><span id="more"></span></escape></p>
+<h1 id="Ansible-Tower-安装配置及破解">1. Ansible Tower-安装配置及破解</h1><blockquote>
+<p><a href="https://www.cnblogs.com/hujinzhong/p/12172903.html">https://www.cnblogs.com/hujinzhong/p/12172903.html</a></p>
+<p><a href="https://kionf.com/2018/11/21/tower-useage/">https://kionf.com/2018/11/21/tower-useage/</a></p>
+</blockquote>
+<h2 id="ansible-tower简介">1.1. ansible-tower简介</h2><p>1）公司中实现运维自动化的架构中主要用到ansible，ansible脚本在部署服务器指令行中显得不太直观。Ansible-Tower（之前叫做awx）是将ansible的指令界面化，简明直观，简单易用。</p>
+<p>2）Ansibke-tower其实就是一个图形化的任务调度，复杂服务部署，IT自动化的一个管理平台，属于发布配置管理系统，支持Api及界面操作，Django编写。</p>
+<p>3）Ansible-tower可以通过界面从github拉取最新playbook实施服务部署，提高生产效率。当然它也提供一个RESET API和命令行的CLI以供python脚本调用</p>
+<p>官方网站：<a href="https://www.ansible.com/products/tower">https://www.ansible.com/products/tower</a><br>中文指南：<a href="http://www.ansible.com.cn/docs/tower.html">http://www.ansible.com.cn/docs/tower.html</a><br>官方安装文档：<a href="http://docs.ansible.com/ansible-tower/latest/html/quickinstall/index.html">http://docs.ansible.com/ansible-tower/latest/html/quickinstall/index.html</a><br>官方源地址：<a href="http://releases.ansible.com/ansible-tower/setup-bundle/">http://releases.ansible.com/ansible-tower/setup-bundle/</a></p>
+<h2 id="ansible-tower安装及配置">1.2. ansible-tower安装及配置</h2><p>下载解压</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[root@mgmt2 ~]# cd /opt/</span><br><span class="line">[root@mgmt2 opt]# wget https://releases.ansible.com/ansible-tower/setup-bundle/ansible-tower-setup-bundle-3.6.2-1.el7.tar.gz</span><br><span class="line">[root@mgmt2 opt]# tar xf ansible-tower-setup-bundle-3.6.2-1.el7.tar.gz</span><br><span class="line">[root@mgmt2 opt]# cd ansible-tower-setup-bundle-3.6.2-1/</span><br><span class="line">[root@mgmt2 ansible-tower-setup-bundle-3.6.2-1]# ls</span><br><span class="line">backup.yml  bundle  group_vars  install.yml  inventory  licenses  README.md  rekey.yml  restore.yml  roles  setup.sh</span><br></pre></td></tr></table></figure>
+
+<p>修改inventory配置</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[root@mgmt2 ansible-tower-setup-bundle-3.6.2-1]# vim inventory</span><br><span class="line">[tower]</span><br><span class="line">localhost ansible_connection=local</span><br><span class="line"> </span><br><span class="line">[database]</span><br><span class="line"> </span><br><span class="line">[all:vars]</span><br><span class="line">admin_password=&#x27;tower&#x27;   #tower登录密码</span><br><span class="line"> </span><br><span class="line">pg_host=&#x27;&#x27;</span><br><span class="line">pg_port=&#x27;&#x27;</span><br><span class="line"> </span><br><span class="line">pg_database=&#x27;awx&#x27;</span><br><span class="line">pg_username=&#x27;awx&#x27;</span><br><span class="line">pg_password=&#x27;tower&#x27;</span><br><span class="line">pg_sslmode=&#x27;prefer&#x27;  # set to &#x27;verify-full&#x27; for client-side enforced SSL</span><br><span class="line"> </span><br><span class="line">rabbitmq_username=tower</span><br><span class="line">rabbitmq_password=&#x27;tower&#x27;</span><br><span class="line">rabbitmq_cookie=cookiemonster</span><br><span class="line"><span class="meta"> </span></span><br><span class="line"><span class="meta">#</span><span class="bash"> Isolated Tower nodes automatically generate an RSA key <span class="keyword">for</span> authentication;</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> To <span class="built_in">disable</span> this behavior, <span class="built_in">set</span> this value to <span class="literal">false</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> isolated_key_generation=<span class="literal">true</span></span></span><br><span class="line"> </span><br><span class="line"><span class="meta"> </span></span><br><span class="line"><span class="meta">#</span><span class="bash"> SSL-related variables</span></span><br><span class="line"><span class="meta"> </span></span><br><span class="line"><span class="meta">#</span><span class="bash"> If <span class="built_in">set</span>, this will install a custom CA certificate to the system trust store.</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> custom_ca_cert=/path/to/ca.crt</span></span><br><span class="line"><span class="meta"> </span></span><br><span class="line"><span class="meta">#</span><span class="bash"> Certificate and key to install <span class="keyword">in</span> nginx <span class="keyword">for</span> the web UI and API</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> web_server_ssl_cert=/path/to/tower.cert</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> web_server_ssl_key=/path/to/tower.key</span></span><br><span class="line"><span class="meta"> </span></span><br><span class="line"><span class="meta">#</span><span class="bash"> Use SSL <span class="keyword">for</span> RabbitMQ inter-node communication.  Because RabbitMQ never</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> communicates outside the cluster, a private CA and certificates will be</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> created, and <span class="keyword">do</span> not need to be supplied.</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> rabbitmq_use_ssl=False</span></span><br><span class="line"><span class="meta"> </span></span><br><span class="line"><span class="meta">#</span><span class="bash"> Server-side SSL settings <span class="keyword">for</span> PostgreSQL (when we are installing it).</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> postgres_use_ssl=False</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> postgres_ssl_cert=/path/to/pgsql.crt</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> postgres_ssl_key=/path/to/pgsql.key</span></span><br></pre></td></tr></table></figure>
+
+<p>开始安装</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[root@mgmt2 ansible-tower-setup-bundle-3.6.2-1]# ./setup.sh</span><br></pre></td></tr></table></figure>
+
+<p>浏览器访问</p>
+<blockquote>
+<p><a href="https://192.168.101.200/">https://192.168.101.200</a></p>
+</blockquote>
+<p><img src="https://cdn.jsdelivr.net/gh/heyonggs/images@master/wp/2021/ansible/1.jpg" alt="ansible"></p>
+<p>登陆后这里需要认证</p>
+<p><img src="https://cdn.jsdelivr.net/gh/heyonggs/images@master/wp/2021/ansible/2.jpg" alt="ansible"></p>
+<h2 id="ansible-tower破解">1.3. ansible-tower破解</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[root@mgmt2 ~]# cd /var/lib/awx/venv/awx/lib/python3.6/site-packages/tower_license</span><br><span class="line">[root@mgmt2 tower_license]# ll</span><br><span class="line">total 8</span><br><span class="line">-rw-r--r-- 1 root root 7764 Dec 14  2019 __init__.pyc</span><br><span class="line">drwxr-xr-x 2 root root   37 Sep  8 16:06 __pycache__</span><br></pre></td></tr></table></figure>
+
+<p>安装pip</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[root@mgmt2 tower_license]# wget https://bootstrap.pypa.io/get-pip.py</span><br><span class="line">[root@mgmt2 tower_license]# python3 get-pip.py</span><br><span class="line">[root@mgmt2 tower_license]# pip -V</span><br><span class="line">pip 21.2.4 from /usr/local/lib/python3.6/site-packages/pip (python 3.6)</span><br><span class="line"></span><br><span class="line">[root@mgmt2 tower_license]# pip install uncompyle6</span><br></pre></td></tr></table></figure>
+
+<p>反汇编init.pyc</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[root@mgmt2 tower_license]# uncompyle6 __init__.pyc &gt;__init__.py</span><br><span class="line">[root@mgmt2 tower_license]# ll</span><br><span class="line">total 1932</span><br><span class="line">-rw-r--r-- 1 root root 1957374 Aug  6 19:15 get-pip.py</span><br><span class="line">-rw-r--r-- 1 root root   11453 Sep  9 09:45 __init__.py</span><br><span class="line">-rw-r--r-- 1 root root    7764 Dec 14  2019 __init__.pyc</span><br><span class="line">drwxr-xr-x 2 root root      37 Sep  8 16:06 __pycache__</span><br></pre></td></tr></table></figure>
+
+<p>修改__init__.py文件</p>
+<p>[root@mgmt2 tower_license]# vim <code>__init__</code>.py</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">_check_cloudforms_subscription</span>(<span class="params">self</span>):</span></span><br><span class="line">        <span class="keyword">return</span> <span class="literal">True</span>    <span class="comment">#添加这一行</span></span><br><span class="line">        <span class="keyword">if</span> os.path.exists(<span class="string">&#x27;/var/lib/awx/i18n.db&#x27;</span>):</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">True</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">if</span> os.path.isdir(<span class="string">&#x27;/opt/rh/cfme-appliance&#x27;</span>):</span><br><span class="line">                <span class="keyword">if</span> os.path.isdir(<span class="string">&#x27;/opt/rh/cfme-gemset&#x27;</span>):</span><br><span class="line">                    <span class="keyword">pass</span></span><br><span class="line">            <span class="keyword">try</span>:</span><br><span class="line">                has_rpms = subprocess.call([<span class="string">&#x27;rpm&#x27;</span>, <span class="string">&#x27;--quiet&#x27;</span>, <span class="string">&#x27;-q&#x27;</span>, <span class="string">&#x27;cfme&#x27;</span>, <span class="string">&#x27;cfme-appliance&#x27;</span>, <span class="string">&#x27;cfme-gemset&#x27;</span>])</span><br><span class="line">                <span class="keyword">if</span> has_rpms == <span class="number">0</span>:</span><br><span class="line">                    <span class="keyword">return</span> <span class="literal">True</span></span><br><span class="line">            <span class="keyword">except</span> OSError:</span><br><span class="line">                <span class="keyword">pass</span></span><br><span class="line"> </span><br><span class="line">            <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line">....</span><br><span class="line"></span><br><span class="line"><span class="comment"># 修改&quot;license_date=253370764800L&quot; 为 &quot;license_date=253370764800&quot;</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">_generate_cloudforms_subscription</span>(<span class="params">self</span>):</span></span><br><span class="line">        self._attrs.update(<span class="built_in">dict</span>(company_name=<span class="string">&#x27;Red Hat CloudForms License&#x27;</span>, instance_count=MAX_INSTANCES,</span><br><span class="line">          license_date=<span class="number">253370764800</span>,  <span class="comment">#修改</span></span><br><span class="line">          license_key=<span class="string">&#x27;xxxx&#x27;</span>,</span><br><span class="line">          license_type=<span class="string">&#x27;enterprise&#x27;</span>,</span><br><span class="line">          subscription_name=<span class="string">&#x27;Red Hat CloudForms License&#x27;</span>))</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+<p>修改完重新编译</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[root@mgmt2 tower_license]# python3 -m py_compile __init__.py</span><br><span class="line">[root@mgmt2 tower_license]# python3 -O -m py_compile __init__.py</span><br><span class="line">[root@mgmt2 tower_license]# ll</span><br><span class="line">total 1932</span><br><span class="line">-rw-r--r-- 1 root root 1957374 Aug  6 19:15 get-pip.py</span><br><span class="line">-rw-r--r-- 1 root root   11473 Sep  9 09:51 __init__.py</span><br><span class="line">-rw-r--r-- 1 root root    7764 Dec 14  2019 __init__.pyc</span><br><span class="line">drwxr-xr-x 2 root root      74 Sep  9 09:53 __pycache__</span><br></pre></td></tr></table></figure>
+
+<p>重启服务</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[root@mgmt2 tower_license]# ansible-tower-service restart</span><br><span class="line">Restarting Tower</span><br><span class="line">Redirecting to /bin/systemctl stop postgresql.service</span><br><span class="line">Redirecting to /bin/systemctl stop rabbitmq-server.service</span><br><span class="line">Redirecting to /bin/systemctl stop nginx.service</span><br><span class="line">Redirecting to /bin/systemctl stop supervisord.service</span><br><span class="line">Redirecting to /bin/systemctl start postgresql.service</span><br><span class="line">Redirecting to /bin/systemctl start rabbitmq-server.service</span><br><span class="line">Redirecting to /bin/systemctl start nginx.service</span><br><span class="line">Redirecting to /bin/systemctl start supervisord.service</span><br></pre></td></tr></table></figure>
+
+<p>再次访问</p>
+<blockquote>
+<p><a href="https://192.168.101.200/">https://192.168.101.200</a></p>
+</blockquote>
+<p><img src="https://cdn.jsdelivr.net/gh/heyonggs/images@master/wp/2021/ansible/3.jpg" alt="ansible"></p>
+<p><strong>另一种破解方法（未测试）</strong></p>
+<blockquote>
+<p> license 官方免费申请 <a href="https://www.ansible.com/license">https://www.ansible.com/license</a></p>
+</blockquote>
+<p>企业版无限node破解</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">先申请企业版使用30天license ,激活，再执行如下：</span><br><span class="line"> </span><br><span class="line">echo codyguo &gt; /var/lib/awx/i18n.db</span><br><span class="line">ansible-tower-service restart</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="面板介绍">1.4. 面板介绍</h2><table>
+<thead>
+<tr>
+<th># viewes</th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Dashboard</td>
+<td>仪表盘展示信息的</td>
+</tr>
+<tr>
+<td>Jobs</td>
+<td>跑过的任务记录</td>
+</tr>
+<tr>
+<td>Schedules</td>
+<td>计划任务</td>
+</tr>
+<tr>
+<td>My View</td>
+<td>查看用户的工作模版，和任务记录</td>
+</tr>
+<tr>
+<td><strong># resources</strong></td>
+<td></td>
+</tr>
+<tr>
+<td>Templates</td>
+<td>任务模版，配置调用playbook执行时的各种参数，  从此处添加计划任务</td>
+</tr>
+<tr>
+<td>Credentials</td>
+<td>配置连接 机器/云主机api Key/自定义的凭证类型  的账号密码等信息</td>
+</tr>
+<tr>
+<td>Projects</td>
+<td>这里配置项目对应的playbook，可以从Git上拉取  或从本地文件夹读取playbook</td>
+</tr>
+<tr>
+<td>Inventories</td>
+<td>资产清单</td>
+</tr>
+<tr>
+<td>Inventory Scripts</td>
+<td>自定义获取资产清单的脚本</td>
+</tr>
+<tr>
+<td><strong># access</strong></td>
+<td></td>
+</tr>
+<tr>
+<td>Organizations</td>
+<td>组织管理</td>
+</tr>
+<tr>
+<td>Users</td>
+<td>用户管理</td>
+</tr>
+<tr>
+<td>Teams</td>
+<td>用户组管理</td>
+</tr>
+<tr>
+<td><strong># Administration</strong></td>
+<td></td>
+</tr>
+<tr>
+<td>Credential Types</td>
+<td>自定义凭证类型，添加后可在Credentials中使用</td>
+</tr>
+<tr>
+<td>Notifications</td>
+<td>配置任务通知，支持电子邮件，Twillio电话等</td>
+</tr>
+<tr>
+<td>Management Jobs</td>
+<td>计划任务管理</td>
+</tr>
+<tr>
+<td>Instance Groups</td>
+<td>资产组管理</td>
+</tr>
+<tr>
+<td>Applications</td>
+<td>自定义应用</td>
+</tr>
+<tr>
+<td>Settings</td>
+<td>设置</td>
+</tr>
+</tbody></table>
+<h2 id="运行测试项目">1.5. 运行测试项目</h2><p>playbook将在github上创建，Ansible Tower拉取执行，Ansible Tower的playbook默认存在 /var/lib/awx/projects/</p>
+<p>创建host登录凭据</p>
+<p><img src="https://cdn.jsdelivr.net/gh/heyonggs/images@master/wp/2021/ansible/4.jpg" alt="ansible"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/heyonggs/images@master/wp/2021/ansible/5.jpg" alt="ansible"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/heyonggs/images@master/wp/2021/ansible/6.jpg" alt="ansible"></p>
+<p>使用gitlab添加playbook项目</p>
+<p><img src="https://cdn.jsdelivr.net/gh/heyonggs/images@master/wp/2021/ansible/7.jpg" alt="ansible"></p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="bullet">-</span> <span class="attr">hosts:</span> <span class="string">a</span></span><br><span class="line">  <span class="attr">remote_user:</span> <span class="string">root</span></span><br><span class="line">  <span class="attr">tasks:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">Check</span> <span class="string">the</span> <span class="string">date</span> <span class="string">on</span> <span class="string">the</span> <span class="string">server</span></span><br><span class="line">      <span class="attr">command:</span> <span class="string">date</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">Check</span> <span class="string">the</span> <span class="string">ip</span> <span class="string">on</span> <span class="string">the</span> <span class="string">server</span></span><br><span class="line">      <span class="attr">command:</span> <span class="string">ifconfig</span></span><br></pre></td></tr></table></figure>
+
+<p>在Ansible Tower添加拉取gitlab项目的凭据</p>
+<p><img src="https://cdn.jsdelivr.net/gh/heyonggs/images@master/wp/2021/ansible/8.jpg" alt="ansible"></p>
+<p>创建Projects</p>
+<p><img src="https://cdn.jsdelivr.net/gh/heyonggs/images@master/wp/2021/ansible/9.jpg" alt="ansible"></p>
+<p>保存后Ansilble Tower会自动运行一次Update，如果要手动运行，点击列表中的刷新按钮。当gitlab上yml文件被更新或者新增后需要点击一下刷新按钮，否则JOB执行得还是原来的yml</p>
+<p><img src="https://cdn.jsdelivr.net/gh/heyonggs/images@master/wp/2021/ansible/10.jpg" alt="ansible"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/heyonggs/images@master/wp/2021/ansible/11.jpg" alt="ansible"></p>
+<p>此时在Ansible Tower服务器的/var/lib/awx/projects/目录下已经有git拉下来的完整文件结构</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[root@mgmt2 tower_license]# cd /var/lib/awx/projects/</span><br><span class="line">[root@mgmt2 projects]# ll</span><br><span class="line">total 0</span><br><span class="line">drwxr-xr-x 3 awx awx 34 Sep  9 11:06 _8__pull_gitlab</span><br><span class="line">-rwxr-xr-x 1 awx awx  0 Sep  9 11:06 _8__pull_gitlab.lock</span><br><span class="line"></span><br><span class="line">[root@mgmt2 projects]# cd _8__pull_gitlab/</span><br><span class="line">[root@mgmt2 _8__pull_gitlab]# ll</span><br><span class="line">total 4</span><br><span class="line">-rw-r--r-- 1 awx awx 170 Sep  9 11:06 test.yml</span><br><span class="line"></span><br><span class="line">[root@mgmt2 _8__pull_gitlab]# cat test.yml </span><br><span class="line">---</span><br><span class="line">- hosts: test</span><br><span class="line">  remote_user: root</span><br><span class="line">  tasks:</span><br><span class="line">    - name: Check the date on the server</span><br><span class="line">      command: date</span><br><span class="line">    - name: Check the ip on the server</span><br><span class="line">      command: ifconfig</span><br></pre></td></tr></table></figure>
+
+<h2 id="创建主机清单">1.6. 创建主机清单</h2><p><img src="https://cdn.jsdelivr.net/gh/heyonggs/images@master/wp/2021/ansible/12.jpg" alt="ansible"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/heyonggs/images@master/wp/2021/ansible/13.jpg" alt="ansible"></p>
+<h2 id="创建任务模板">1.7. 创建任务模板</h2><p><img src="https://cdn.jsdelivr.net/gh/heyonggs/images@master/wp/2021/ansible/14.jpg" alt="ansible"></p>
+<p>运行模板</p>
+<p><img src="https://cdn.jsdelivr.net/gh/heyonggs/images@master/wp/2021/ansible/15.jpg" alt="ansible"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/heyonggs/images@master/wp/2021/ansible/16.jpg" alt="ansible"></p>
+<p>点击右侧日志中change几行可以看到详细信息</p>
+<p><img src="https://cdn.jsdelivr.net/gh/heyonggs/images@master/wp/2021/ansible/17.jpg" alt="ansible"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/heyonggs/images@master/wp/2021/ansible/18.jpg" alt="ansible"></p>
+]]></content>
+      <categories>
+        <category>ansible</category>
+      </categories>
+      <tags>
+        <tag>ansible</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>kubeadm修改证书时间为99年</title>
     <url>/p/23286.html</url>
     <content><![CDATA[<p><escape><span id="more"></span></escape></p>
@@ -2457,6 +2457,30 @@
       </categories>
       <tags>
         <tag>k8s</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>mysql导入数据慢解决方法</title>
+    <url>/p/1525.html</url>
+    <content><![CDATA[<p><escape><span id="more"></span></escape></p>
+<p>mysql导入慢，添加两个参数：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">max_allowed_packet   客户端/服务器之间通信的缓存区的最大大小</span><br><span class="line">net_buffer_length    TCP/IP和套接字通信缓冲区大小，创建长度达net_buffer_length行。</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>注：max_allowed_packet; net_buffer_length 这两个参数不能比目标数据度配置大，否则会报错。</p>
+</blockquote>
+<p>先查看目标库的参数值 如下：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">mysql&gt;</span><span class="bash"> show variables like <span class="string">&#x27;max_allowed_packet&#x27;</span>;</span></span><br><span class="line">+--------------------+----------+</span><br><span class="line">| Variable_name      | Value    |</span><br><span class="line">+--------------------+----------+</span><br><span class="line">| max_allowed_packet | 67108864 |</span><br><span class="line">+--------------------+----------+</span><br><span class="line">1 row in set (0.22 sec)</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">mysql&gt;</span><span class="bash"> show variables like <span class="string">&#x27;net_buffer_length&#x27;</span>;</span></span><br><span class="line">+-------------------+-------+</span><br><span class="line">| Variable_name     | Value |</span><br><span class="line">+-------------------+-------+</span><br><span class="line">| net_buffer_length | 16384 |</span><br><span class="line">+-------------------+-------+</span><br><span class="line">1 row in set (0.00 sec)</span><br></pre></td></tr></table></figure>
+
+<p>命令行加上两个参数执行</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">mysql -h127.0.0.1 -uroot -p&#x27;Pass!234&#x27; data_base_name --max_allowed_packet=67108864 --net_buffer_length=16384&lt;your_sql_script.sql</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>MySQL</category>
+      </categories>
+      <tags>
+        <tag>MySQL</tag>
       </tags>
   </entry>
   <entry>
@@ -2532,30 +2556,6 @@
       </categories>
       <tags>
         <tag>k8s</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>mysql导入数据慢解决方法</title>
-    <url>/p/1525.html</url>
-    <content><![CDATA[<p><escape><span id="more"></span></escape></p>
-<p>mysql导入慢，添加两个参数：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">max_allowed_packet   客户端/服务器之间通信的缓存区的最大大小</span><br><span class="line">net_buffer_length    TCP/IP和套接字通信缓冲区大小，创建长度达net_buffer_length行。</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>注：max_allowed_packet; net_buffer_length 这两个参数不能比目标数据度配置大，否则会报错。</p>
-</blockquote>
-<p>先查看目标库的参数值 如下：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">mysql&gt;</span><span class="bash"> show variables like <span class="string">&#x27;max_allowed_packet&#x27;</span>;</span></span><br><span class="line">+--------------------+----------+</span><br><span class="line">| Variable_name      | Value    |</span><br><span class="line">+--------------------+----------+</span><br><span class="line">| max_allowed_packet | 67108864 |</span><br><span class="line">+--------------------+----------+</span><br><span class="line">1 row in set (0.22 sec)</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">mysql&gt;</span><span class="bash"> show variables like <span class="string">&#x27;net_buffer_length&#x27;</span>;</span></span><br><span class="line">+-------------------+-------+</span><br><span class="line">| Variable_name     | Value |</span><br><span class="line">+-------------------+-------+</span><br><span class="line">| net_buffer_length | 16384 |</span><br><span class="line">+-------------------+-------+</span><br><span class="line">1 row in set (0.00 sec)</span><br></pre></td></tr></table></figure>
-
-<p>命令行加上两个参数执行</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">mysql -h127.0.0.1 -uroot -p&#x27;Pass!234&#x27; data_base_name --max_allowed_packet=67108864 --net_buffer_length=16384&lt;your_sql_script.sql</span><br></pre></td></tr></table></figure>
-
-]]></content>
-      <categories>
-        <category>MySQL</category>
-      </categories>
-      <tags>
-        <tag>MySQL</tag>
       </tags>
   </entry>
   <entry>
