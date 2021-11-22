@@ -249,6 +249,29 @@
   </entry>
   
   <entry>
+    <title>k8s中部署ingress-nginx</title>
+    <link href="https://heyonggs.github.io/p/58551.html"/>
+    <id>https://heyonggs.github.io/p/58551.html</id>
+    <published>2021-08-13T08:08:26.000Z</published>
+    <updated>2021-11-22T08:10:26.592Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;&lt;escape&gt;&lt;/escape&gt;&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="k8s" scheme="https://heyonggs.github.io/categories/k8s/"/>
+    
+    
+    <category term="k8s" scheme="https://heyonggs.github.io/tags/k8s/"/>
+    
+    <category term="Kubernetes" scheme="https://heyonggs.github.io/tags/Kubernetes/"/>
+    
+    <category term="helm" scheme="https://heyonggs.github.io/tags/helm/"/>
+    
+  </entry>
+  
+  <entry>
     <title>helm命令大全</title>
     <link href="https://heyonggs.github.io/p/60919.html"/>
     <id>https://heyonggs.github.io/p/60919.html</id>
@@ -388,29 +411,6 @@
     <category term="Kubernetes" scheme="https://heyonggs.github.io/tags/Kubernetes/"/>
     
     <category term="helm" scheme="https://heyonggs.github.io/tags/helm/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>jenkins连接k8s集群</title>
-    <link href="https://heyonggs.github.io/p/18125.html"/>
-    <id>https://heyonggs.github.io/p/18125.html</id>
-    <published>2020-10-15T08:44:40.000Z</published>
-    <updated>2021-10-15T08:47:59.790Z</updated>
-    
-    
-    <summary type="html">&lt;p&gt;&lt;escape&gt;&lt;/escape&gt;&lt;/p&gt;</summary>
-    
-    
-    
-    <category term="Kubernetes" scheme="https://heyonggs.github.io/categories/Kubernetes/"/>
-    
-    
-    <category term="k8s" scheme="https://heyonggs.github.io/tags/k8s/"/>
-    
-    <category term="Kubernetes" scheme="https://heyonggs.github.io/tags/Kubernetes/"/>
-    
-    <category term="jenkins" scheme="https://heyonggs.github.io/tags/jenkins/"/>
     
   </entry>
   

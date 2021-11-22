@@ -4500,4 +4500,85 @@
         <tag>helm</tag>
       </tags>
   </entry>
+  <entry>
+    <title>k8s中部署ingress-nginx</title>
+    <url>/p/58551.html</url>
+    <content><![CDATA[<p><escape><span id="more"></span></escape></p>
+<h1 id="ingress-nginx部署">1. ingress-nginx部署</h1><p>Ingress 资源随着时间的推移而发展。他们从 apiVersion: extensions/v1beta1 开始，然后转移到 apiVersion:network.k8s.io/v1beta1，最近又转移到 apiVersion:networks.k8s.io/v1。</p>
+<p>以下是 Kubernetes 支持这些 Ingress 版本的方式：</p>
+<ul>
+<li>在 Kubernetes 1.19 之前，仅支持 v1beta1 Ingress 资源 </li>
+<li>从 Kubernetes 1.19 到 1.21，同时支持 v1beta1 和 v1 Ingress 资源 </li>
+<li>在 Kubernetes 1.22 及更高版本中，仅支持 v1 Ingress 资源</li>
+</ul>
+<p>以下是 NGINX Ingress Controller 支持这些 Ingress 版本的方式： </p>
+<ul>
+<li>在 1.0 版之前，仅支持 v1beta1 Ingress 资源 </li>
+<li>在 1.0 及更高版本中，仅支持 v1 Ingress 资源</li>
+</ul>
+<p>因此，如果您运行 Kubernetes 1.19 或更高版本，您应该能够使用最新版本的 NGINX Ingress Controller；但是如果您使用的是旧版本的 Kubernetes（1.18 或更早版本），则必须使用 NGINX Ingress Controller 的 0.X 版（例如 0.49 版）。</p>
+<p>NGINX Ingress Controller 的 Helm chart 在chart的版本 4 中切换到版本 1。换句话说，如果您运行的是 Kubernetes 1.19 或更早版本，则应使用chart的 3.X 版本（这可以通过在 helm install 命令中添加 –version=’&lt;4’ 来完成）。</p>
+<h2 id="使用helm安装">1.1. 使用helm安装</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">helm upgrade --install ingress-nginx ingress-nginx \</span><br><span class="line">  --repo https://kubernetes.github.io/ingress-nginx \</span><br><span class="line">  --namespace ingress-nginx --create-namespace</span><br></pre></td></tr></table></figure>
+
+<p>它将在 ingress-nginx 命名空间中安装控制器，如果该命名空间尚不存在，则创建该命名空间。</p>
+<p>这个命令是幂等的： - 如果入口控制器没有安装，它会安装它， - 如果入口控制器已经安装，它会升级它。</p>
+<p>如果报错：Error: failed pre-install: timed out waiting for the condition，可按步骤分开部署</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx</span><br><span class="line">helm pull ingress-nginx/ingress-nginx</span><br><span class="line">tar xf ingress-nginx-4.0.9.tgz</span><br><span class="line">cd ingress-nginx/</span><br></pre></td></tr></table></figure>
+
+<p>修改values.yaml配置，这里我使用DaemonSet部署</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">controller:</span><br><span class="line">  name: controller</span><br><span class="line">  image:</span><br><span class="line">    registry: k8s.gcr.io</span><br><span class="line">    image: ingress-nginx/controller</span><br><span class="line">    tag: &quot;v1.0.5&quot;</span><br><span class="line">    digest: sha256:55a1fcda5b7657c372515fe402c3e39ad93aa59f6e4378e82acd99912fe6028d</span><br><span class="line">  dnsPolicy: ClusterFirst</span><br><span class="line">  hostNetwork: false</span><br><span class="line">  kind: Deployment</span><br><span class="line">  nodeSelector:</span><br><span class="line">    kubernetes.io/os: linux</span><br><span class="line">  type: LoadBalancer</span><br><span class="line">  patch:</span><br><span class="line">    enabled: true</span><br><span class="line">    image:</span><br><span class="line">      registry: k8s.gcr.io</span><br><span class="line">      image: ingress-nginx/kube-webhook-certgen</span><br><span class="line">      tag: v1.1.1</span><br><span class="line">      digest: sha256:64d8c73dca984af206adf9d6d7e46aa550362b1d7a01f3a0a91b20cc67868660</span><br><span class="line"></span><br><span class="line">    </span><br><span class="line">修改为</span><br><span class="line">controller:</span><br><span class="line">  name: controller</span><br><span class="line">  image:</span><br><span class="line">    registry: heyuze</span><br><span class="line">    image: ingress-nginx-controller</span><br><span class="line">    tag: &quot;v1.0.5&quot;</span><br><span class="line">  dnsPolicy: ClusterFirstWithHostNet</span><br><span class="line">  hostNetwork: true</span><br><span class="line">  kind: DaemonSet</span><br><span class="line">  nodeSelector:</span><br><span class="line">    kubernetes.io/os: linux</span><br><span class="line">    ingress: &quot;true&quot;</span><br><span class="line">  type: ClustertIP</span><br><span class="line">  patch:</span><br><span class="line">    enabled: true</span><br><span class="line">    image:</span><br><span class="line">      registry: heyuze</span><br><span class="line">      image: kube-webhook-certgen</span><br><span class="line">      tag: v1.1.1</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>注意：删除digest，</p>
+</blockquote>
+<p>部署</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">kubectl create ns ingress-nginx</span><br><span class="line"></span><br><span class="line"># 在部署的节点打个label</span><br><span class="line">kubectl label node k8s-master ingress=true</span><br><span class="line">kubectl label node k8s-node1 ingress=true</span><br><span class="line"></span><br><span class="line">helm install ingress-nginx -n ingress-nginx .</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>扩容ingress节点：kubectl label nodes k8s-node1 ingress=true</p>
+<p>缩容ingress节点：kubectl label nodes k8s-node1 ingress-</p>
+<p>查看所有节点labels：kubectl get pod -A –show-labels</p>
+</blockquote>
+<p>查看部署的ingress</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[root@k8s-master ingress-nginx]# kubectl get pod -n ingress-nginx -o wide</span><br><span class="line">NAME                             READY   STATUS    RESTARTS   AGE     IP                NODE        NOMINATED NODE   READINESS GATES</span><br><span class="line">ingress-nginx-controller-hw5pw   1/1     Running   0          2m29s   192.168.101.202   k8s-node1   &lt;none&gt;           &lt;none&gt;</span><br></pre></td></tr></table></figure>
+
+<p>注意：这里我在master节点上也打了标签，但是没有部署；原因很简单，我的master节点已经有了污点的标签，从亲和性上就已经不再容忍任何pod运行，所以只能部署到node节点。</p>
+<h2 id="使用yaml文件安装">1.2. 使用yaml文件安装</h2><p>如果您更喜欢使用 YAML 清单，则可以运行以下命令：</p>
+<p>在终端上运行命令之前，请确保在 Docker 设置中启用了 Kubernetes</p>
+<p>其中 YAML 清单是使用 helm 模板生成的，因此您最终将获得几乎与使用 Helm 安装控制器相同的资源。</p>
+<p>下载yaml文件</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">wget https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.0.5/deploy/static/provider/cloud/deploy.yaml</span><br></pre></td></tr></table></figure>
+
+<p>修改yaml文件</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># containers镜像地址</span><br><span class="line">heyuze/ingress-nginx-controller:v1.0.5</span><br><span class="line"></span><br><span class="line"># kube-webhook-certgen镜像地址</span><br><span class="line">heyuze/ingress-nginx/kube-webhook-certgen:v1.1.1</span><br></pre></td></tr></table></figure>
+
+<p>应用yaml文件</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[root@k8s-master ~]# kubectl apply -f deploy.yaml </span><br><span class="line">namespace/ingress-nginx created</span><br><span class="line">serviceaccount/ingress-nginx created</span><br><span class="line">configmap/ingress-nginx-controller created</span><br><span class="line">clusterrole.rbac.authorization.k8s.io/ingress-nginx created</span><br><span class="line">clusterrolebinding.rbac.authorization.k8s.io/ingress-nginx created</span><br><span class="line">role.rbac.authorization.k8s.io/ingress-nginx created</span><br><span class="line">rolebinding.rbac.authorization.k8s.io/ingress-nginx created</span><br><span class="line">service/ingress-nginx-controller-admission created</span><br><span class="line">service/ingress-nginx-controller created</span><br><span class="line">deployment.apps/ingress-nginx-controller created</span><br><span class="line">ingressclass.networking.k8s.io/nginx created</span><br><span class="line">validatingwebhookconfiguration.admissionregistration.k8s.io/ingress-nginx-admission created</span><br><span class="line">serviceaccount/ingress-nginx-admission created</span><br><span class="line">clusterrole.rbac.authorization.k8s.io/ingress-nginx-admission created</span><br><span class="line">clusterrolebinding.rbac.authorization.k8s.io/ingress-nginx-admission created</span><br><span class="line">role.rbac.authorization.k8s.io/ingress-nginx-admission created</span><br><span class="line">rolebinding.rbac.authorization.k8s.io/ingress-nginx-admission created</span><br><span class="line">job.batch/ingress-nginx-admission-create created</span><br><span class="line">job.batch/ingress-nginx-admission-patch created</span><br></pre></td></tr></table></figure>
+
+<p>如果您运行的是旧版本的 Kubernetes（1.18 或更早版本），请阅读<a href="https://kubernetes.github.io/ingress-nginx/deploy/#running-on-Kubernetes-versions-older-than-1.19">本段</a>以获取具体说明。</p>
+<h2 id="nginx-配置">1.3. nginx 配置</h2><p>自定义 NGINX 有以下三种方式：<br><a href="https://kubernetes.github.io/ingress-nginx/user-guide/nginx-configuration/configmap/">ConfigMap</a>：使用 Configmap 在 NGINX 中设置全局配置。<br><a href="https://kubernetes.github.io/ingress-nginx/user-guide/nginx-configuration/annotations/">Annotations</a>：如果您想要特定 Ingress 规则的特定配置，请使用此选项。<br><a href="https://kubernetes.github.io/ingress-nginx/user-guide/nginx-configuration/custom-template/">Custom template</a>：当需要更具体的设置时，如 <a href="http://nginx.org/en/docs/http/ngx_http_core_module.html#open_file_cache">open_file_cache</a>，将监听选项调整为 rcvbuf，或者当无法通过 ConfigMap 更改配置时。</p>
+<h2 id="案例测试">1.4. 案例测试</h2><p>创建deployment</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 创建模板</span><br><span class="line">kubectl create deployment nginx --image=nginx --dry-run -o yaml &gt; nginx-deploy.yaml</span><br><span class="line"></span><br><span class="line"># 查看deployment内容</span><br><span class="line">[root@k8s-master ~]# cat nginx-deploy.yaml </span><br><span class="line">apiVersion: apps/v1</span><br><span class="line">kind: Deployment</span><br><span class="line">metadata:</span><br><span class="line">  creationTimestamp: null</span><br><span class="line">  labels:</span><br><span class="line">    app: nginx</span><br><span class="line">  name: nginx</span><br><span class="line">spec:</span><br><span class="line">  replicas: 1</span><br><span class="line">  selector:</span><br><span class="line">    matchLabels:</span><br><span class="line">      app: nginx</span><br><span class="line">  strategy: &#123;&#125;</span><br><span class="line">  template:</span><br><span class="line">    metadata:</span><br><span class="line">      creationTimestamp: null</span><br><span class="line">      labels:</span><br><span class="line">        app: nginx</span><br><span class="line">    spec:</span><br><span class="line">      containers:</span><br><span class="line">      - image: nginx</span><br><span class="line">        name: nginx</span><br><span class="line">        resources: &#123;&#125;</span><br><span class="line">status: &#123;&#125;</span><br><span class="line"></span><br><span class="line"># 应用deployment并查看</span><br><span class="line">[root@k8s-master ~]# kubectl apply -f nginx-deploy.yaml </span><br><span class="line">deployment.apps/nginx created</span><br><span class="line"></span><br><span class="line">[root@k8s-master ~]# kubectl get pod</span><br><span class="line">NAME                     READY   STATUS    RESTARTS   AGE</span><br><span class="line">nginx-6799fc88d8-hfhwt   1/1     Running   0          3m40s</span><br></pre></td></tr></table></figure>
+
+<p>创建service</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 创建模板</span><br><span class="line">kubectl expose deployment nginx --port=8000 --target-port=80 --type=ClusterIP  --dry-run -o yaml &gt; nginx-svc.yaml</span><br><span class="line"></span><br><span class="line"># 查看模板</span><br><span class="line">[root@k8s-master ~]# cat nginx-svc.yaml </span><br><span class="line">apiVersion: v1</span><br><span class="line">kind: Service</span><br><span class="line">metadata:</span><br><span class="line">  creationTimestamp: null</span><br><span class="line">  labels:</span><br><span class="line">    app: nginx</span><br><span class="line">  name: nginx</span><br><span class="line">spec:</span><br><span class="line">  ports:</span><br><span class="line">  - port: 8000</span><br><span class="line">    protocol: TCP</span><br><span class="line">    targetPort: 80</span><br><span class="line">  selector:</span><br><span class="line">    app: nginx</span><br><span class="line">  type: ClusterIP</span><br><span class="line">status:</span><br><span class="line">  loadBalancer: &#123;&#125;</span><br><span class="line"></span><br><span class="line"># 创建service并查看</span><br><span class="line">[root@k8s-master ~]# kubectl apply -f nginx-svc.yaml </span><br><span class="line">service/nginx created</span><br><span class="line"></span><br><span class="line">[root@k8s-master ~]# kubectl get svc|grep nginx</span><br><span class="line">nginx        ClusterIP   10.103.198.110   &lt;none&gt;        8000/TCP   19s</span><br></pre></td></tr></table></figure>
+
+<p>测试访问</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[root@k8s-master ~]# curl 10.103.198.110:8000</span><br><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">&lt;title&gt;Welcome to nginx!&lt;/title&gt;</span><br><span class="line">&lt;style&gt;</span><br><span class="line">html &#123; color-scheme: light dark; &#125;</span><br><span class="line">body &#123; width: 35em; margin: 0 auto;</span><br><span class="line">font-family: Tahoma, Verdana, Arial, sans-serif; &#125;</span><br><span class="line">&lt;/style&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;h1&gt;Welcome to nginx!&lt;/h1&gt;</span><br><span class="line">&lt;p&gt;If you see this page, the nginx web server is successfully installed and</span><br><span class="line">working. Further configuration is required.&lt;/p&gt;</span><br><span class="line"></span><br><span class="line">&lt;p&gt;For online documentation and support please refer to</span><br><span class="line">&lt;a href=&quot;http://nginx.org/&quot;&gt;nginx.org&lt;/a&gt;.&lt;br/&gt;</span><br><span class="line">Commercial support is available at</span><br><span class="line">&lt;a href=&quot;http://nginx.com/&quot;&gt;nginx.com&lt;/a&gt;.&lt;/p&gt;</span><br><span class="line"></span><br><span class="line">&lt;p&gt;&lt;em&gt;Thank you for using nginx.&lt;/em&gt;&lt;/p&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+<p>创建ingress</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># [root@k8s-master ~]# vim nginx-ingress.yaml</span><br><span class="line"></span><br><span class="line">apiVersion: networking.k8s.io/v1</span><br><span class="line">kind: Ingress</span><br><span class="line">metadata:</span><br><span class="line">  name: nginx</span><br><span class="line">  annotations:</span><br><span class="line">    nginx.ingress.kubernetes.io/ingress.class: &#x27;nginx&#x27;</span><br><span class="line">  namespace: default</span><br><span class="line">spec:</span><br><span class="line">  ingressClassName: nginx</span><br><span class="line">  rules:</span><br><span class="line">  - host: test.kubelet.cn</span><br><span class="line">    http:</span><br><span class="line">      paths:</span><br><span class="line">      - path: /</span><br><span class="line">        pathType: Prefix</span><br><span class="line">        backend:</span><br><span class="line">          service:</span><br><span class="line">            name: nginx</span><br><span class="line">            port:</span><br><span class="line">              number: 8000</span><br></pre></td></tr></table></figure>
+
+<p>访问</p>
+<p><img src="https://cdn.jsdelivr.net/gh/heyonggs/images@master/wp/2021/k8s/202111221601300.png"></p>
+]]></content>
+      <categories>
+        <category>k8s</category>
+      </categories>
+      <tags>
+        <tag>k8s</tag>
+        <tag>Kubernetes</tag>
+        <tag>helm</tag>
+      </tags>
+  </entry>
 </search>
