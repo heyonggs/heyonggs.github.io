@@ -24,18 +24,18 @@
   </script>
 
   <meta property="og:type" content="article">
-<meta property="og:title" content="LVM扩容根目录（不新加磁盘）">
-<meta property="og:url" content="https://heyonggs.github.io/p/44212.html">
+<meta property="og:title" content="2021-11-10-kubeadm方式部署k8sV1.22.0版本">
+<meta property="og:url" content="https://heyonggs.github.io/p/20016.html">
 <meta property="og:site_name" content="何宇泽">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2018-04-11T05:59:16.000Z">
-<meta property="article:modified_time" content="2021-10-25T06:01:18.871Z">
+<meta property="article:published_time" content="2021-11-22T08:22:01.000Z">
+<meta property="article:modified_time" content="2021-11-22T08:23:26.539Z">
 <meta property="article:author" content="何宇泽">
-<meta property="article:tag" content="LVM">
-<meta property="article:tag" content="磁盘">
+<meta property="article:tag" content="k8s">
+<meta property="article:tag" content="Kubernetes">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="https://heyonggs.github.io/p/44212.html">
+<link rel="canonical" href="https://heyonggs.github.io/p/20016.html">
 
 
 <script id="page-configurations">
@@ -48,7 +48,7 @@
   };
 </script>
 
-  <title>LVM扩容根目录（不新加磁盘） | 何宇泽</title>
+  <title>2021-11-10-kubeadm方式部署k8sV1.22.0版本 | 何宇泽</title>
   
 
 
@@ -199,7 +199,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://heyonggs.github.io/p/44212.html">
+    <link itemprop="mainEntityOfPage" href="https://heyonggs.github.io/p/20016.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -212,7 +212,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          LVM扩容根目录（不新加磁盘）
+          2021-11-10-kubeadm方式部署k8sV1.22.0版本
         </h1>
 
         <div class="post-meta">
@@ -221,23 +221,17 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
+              
 
-              <time title="创建时间：2018-04-11 13:59:16" itemprop="dateCreated datePublished" datetime="2018-04-11T13:59:16+08:00">2018-04-11</time>
+              <time title="创建时间：2021-11-22 16:22:01 / 修改时间：16:23:26" itemprop="dateCreated datePublished" datetime="2021-11-22T16:22:01+08:00">2021-11-22</time>
             </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-10-25 14:01:18" itemprop="dateModified" datetime="2021-10-25T14:01:18+08:00">2021-10-25</time>
-              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/LVM/" itemprop="url" rel="index"><span itemprop="name">LVM</span></a>
+                  <a href="/categories/k8s/" itemprop="url" rel="index"><span itemprop="name">k8s</span></a>
                 </span>
             </span>
 
@@ -247,7 +241,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>4.1k</span>
+              <span>4k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -267,69 +261,92 @@
 
       
         <p><escape><span id="more"></span></escape></p>
-<h1 id="LVM扩容根目录（不用新添加磁盘）">1. LVM扩容根目录（不用新添加磁盘）</h1><blockquote>
-<p><a target="_blank" rel="noopener" href="https://computingforgeeks.com/how-to-extend-increase-kvm-virtual-machine-disk-size/">https://computingforgeeks.com/how-to-extend-increase-kvm-virtual-machine-disk-size/</a></p>
+<h1 id="kubeadm方式部署k8sV1-22-0集群版本">1. kubeadm方式部署k8sV1.22.0集群版本</h1><p>kubeadm是官方社区推出的一个用于快速部署kubernetes集群的工具。</p>
+<p>这个工具能通过两条指令完成一个kubernetes集群的部署：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># 创建一个 Master 节点</span><br><span class="line">$ kubeadm init</span><br><span class="line"></span><br><span class="line"># 将一个 Node 节点加入到当前集群中</span><br><span class="line">$ kubeadm join &lt;Master节点的IP和端口 &gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="安装要求">1.1. 安装要求</h2><p>在开始之前，部署Kubernetes集群机器需要满足以下几个条件：</p>
+<ul>
+<li>一台或多台机器，操作系统 CentOS7.x-86_x64</li>
+<li>硬件配置：2GB或更多RAM，2个CPU或更多CPU，硬盘30GB或更多</li>
+<li>可以访问外网，需要拉取镜像，如果服务器不能上网，需要提前下载镜像并导入节点</li>
+<li>禁止swap分区</li>
+</ul>
+<h2 id="准备环境">1.2. 准备环境</h2><table>
+<thead>
+<tr>
+<th>角色</th>
+<th>IP</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>k8s-master</td>
+<td>192.168.101.201</td>
+</tr>
+<tr>
+<td>k8s-node1</td>
+<td>192.168.101.202</td>
+</tr>
+<tr>
+<td>k8s-node2</td>
+<td>192.168.101.203</td>
+</tr>
+</tbody></table>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"># 关闭防火墙</span><br><span class="line">systemctl stop firewalld</span><br><span class="line">systemctl disable firewalld</span><br><span class="line"></span><br><span class="line"># 关闭selinux</span><br><span class="line">sed -i &#x27;s/enforcing/disabled/&#x27; /etc/selinux/config  # 永久</span><br><span class="line">setenforce 0  # 临时</span><br><span class="line"></span><br><span class="line"># 关闭swap</span><br><span class="line">swapoff -a  # 临时</span><br><span class="line">sed -ri &#x27;s/.*swap.*/#&amp;/&#x27; /etc/fstab    # 永久</span><br><span class="line"></span><br><span class="line"># 根据规划设置主机名</span><br><span class="line">hostnamectl set-hostname &lt;hostname&gt;</span><br><span class="line"></span><br><span class="line"># 在master添加hosts</span><br><span class="line">cat &gt;&gt; /etc/hosts &lt;&lt; EOF</span><br><span class="line">192.168.31.71 k8s-master</span><br><span class="line">192.168.31.72 k8s-node1</span><br><span class="line">192.168.31.73 k8s-node2</span><br><span class="line">EOF</span><br><span class="line"></span><br><span class="line"># 将桥接的IPv4流量传递到iptables的链</span><br><span class="line">cat &gt; /etc/sysctl.d/k8s.conf &lt;&lt; EOF</span><br><span class="line">net.bridge.bridge-nf-call-ip6tables = 1</span><br><span class="line">net.bridge.bridge-nf-call-iptables = 1</span><br><span class="line">EOF</span><br><span class="line">sysctl --system  # 生效</span><br><span class="line"></span><br><span class="line"># 时间同步</span><br><span class="line">yum install ntpdate -y</span><br><span class="line">ntpdate time.windows.com</span><br></pre></td></tr></table></figure>
+
+<h2 id="所有节点安装Docker-kubeadm-kubelet">1.3. 所有节点安装Docker/kubeadm/kubelet</h2><p>Kubernetes默认CRI（容器运行时）为Docker，因此先安装Docker。</p>
+<h3 id="安装Docker">1.3.1. 安装Docker</h3><blockquote>
+<p>下载地址：<a target="_blank" rel="noopener" href="https://download.docker.com/linux/static/stable/x86_64/docker-19.03.9.tgz">https://download.docker.com/linux/static/stable/x86_64/docker-19.03.9.tgz</a> </p>
 </blockquote>
-<p>如何在 KVM 中扩展/增加/增长虚拟磁盘？。我个人将 KVM 用于所有 Linux 虚拟化项目。有时，我需要为正在运行的 VM（来宾）扩展或添加磁盘空间以满足不断增长的软件需求。 KVM 使用 QEMU，它支持多种图像类型，其中包括 raw、cow、qcow、qcow2、vmdk、vdi 等。</p>
-<p>“原生”和最灵活的类型是 qcow2，它支持写入时复制、加密、压缩和 VM 快照。</p>
-<h2 id="关闭-KVM-上的虚拟机">1.1. 关闭 KVM 上的虚拟机</h2><p>在扩展来宾计算机虚拟磁盘之前，您需要先将其关闭。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ sudo virsh list</span><br><span class="line"> Id   Name    State</span><br><span class="line">-----------------------</span><br><span class="line"> 4    rhel8   running</span><br></pre></td></tr></table></figure>
+<p>以下在所有节点操作。这里采用二进制安装，用yum安装也一样。 </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget https://download.docker.com/linux/static/stable/x86_64/docker-19.03.9.tgz </span><br></pre></td></tr></table></figure>
 
-<p>如果您的来宾计算机处于运行状态，请使用其 ID 或名称将其关闭。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ sudo virsh shutdown rhel8</span><br><span class="line">Domain rhel8 is being shutdown</span><br></pre></td></tr></table></figure>
+<p> 解压二进制包</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">tar zxvf docker-19.03.9.tgz</span><br><span class="line">mv docker/* /usr/bin</span><br></pre></td></tr></table></figure>
 
-<p>在继续管理其磁盘之前确认它确实已关闭。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ sudo virsh list          </span><br><span class="line"> Id   Name   State</span><br><span class="line">--------------------</span><br></pre></td></tr></table></figure>
+<p>systemd管理docker</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">cat &gt; /usr/lib/systemd/system/docker.service &lt;&lt; EOF</span><br><span class="line">[Unit]</span><br><span class="line">Description=Docker Application Container Engine</span><br><span class="line">Documentation=https://docs.docker.com</span><br><span class="line">After=network-online.target firewalld.service</span><br><span class="line">Wants=network-online.target</span><br><span class="line">[Service]</span><br><span class="line">Type=notify</span><br><span class="line">ExecStart=/usr/bin/dockerd</span><br><span class="line">ExecReload=/bin/kill -s HUP $MAINPID</span><br><span class="line">LimitNOFILE=infinity</span><br><span class="line">LimitNPROC=infinity</span><br><span class="line">LimitCORE=infinity</span><br><span class="line">TimeoutStartSec=0</span><br><span class="line">Delegate=yes</span><br><span class="line">KillMode=process</span><br><span class="line">Restart=on-failure</span><br><span class="line">StartLimitBurst=3</span><br><span class="line">StartLimitInterval=60s</span><br><span class="line">[Install]</span><br><span class="line">WantedBy=multi-user.target</span><br><span class="line">EOF</span><br></pre></td></tr></table></figure>
 
-<h2 id="扩展您的-KVM-来宾操作系统磁盘">1.2. 扩展您的 KVM 来宾操作系统磁盘</h2><p>找到您的来宾操作系统磁盘路径。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">$ sudo virsh domblklist rhel8</span><br><span class="line"> Target   Source</span><br><span class="line">-----------------------------------------------</span><br><span class="line"> vda      /var/lib/libvirt/images/rhel8.qcow2</span><br><span class="line"> sda      -</span><br><span class="line"></span><br><span class="line">OR use:</span><br><span class="line"></span><br><span class="line">$ sudo virsh dumpxml rhel8 | egrep &#x27;disk type&#x27; -A 5</span><br><span class="line">    &lt;disk type=&#x27;file&#x27; device=&#x27;disk&#x27;&gt;</span><br><span class="line">      &lt;driver name=&#x27;qemu&#x27; type=&#x27;qcow2&#x27;/&gt;</span><br><span class="line">      &lt;source file=&#x27;/var/lib/libvirt/images/rhel8.qcow2&#x27;/&gt;</span><br><span class="line">      &lt;backingStore/&gt;</span><br><span class="line">      &lt;target dev=&#x27;vda&#x27; bus=&#x27;virtio&#x27;/&gt;</span><br><span class="line">      &lt;address type=&#x27;pci&#x27; domain=&#x27;0x0000&#x27; bus=&#x27;0x04&#x27; slot=&#x27;0x00&#x27; function=&#x27;0x0&#x27;/&gt;</span><br><span class="line">--</span><br><span class="line">    &lt;disk type=&#x27;file&#x27; device=&#x27;cdrom&#x27;&gt;</span><br><span class="line">      &lt;driver name=&#x27;qemu&#x27; type=&#x27;raw&#x27;/&gt;</span><br><span class="line">      &lt;target dev=&#x27;sda&#x27; bus=&#x27;sata&#x27;/&gt;</span><br><span class="line">      &lt;readonly/&gt;</span><br><span class="line">      &lt;address type=&#x27;drive&#x27; controller=&#x27;0&#x27; bus=&#x27;0&#x27; target=&#x27;0&#x27; unit=&#x27;0&#x27;/&gt;</span><br><span class="line">    &lt;/disk&gt;</span><br></pre></td></tr></table></figure>
+<p>配置docker镜像加速地址</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">mkdir /etc/docker</span><br><span class="line">cat &gt; /etc/docker/daemon.json &lt;&lt; EOF</span><br><span class="line">&#123;</span><br><span class="line">    &quot;registry-mirrors&quot;: [&quot;https://ms80kkz7.mirror.aliyuncs.com&quot;],</span><br><span class="line">    &quot;exec-opts&quot;: [&quot;native.cgroupdriver=systemd&quot;],</span><br><span class="line">    &quot;insecure-registries&quot;: [&quot;harbor.xxx.com&quot;]</span><br><span class="line">&#125;</span><br><span class="line">EOF</span><br></pre></td></tr></table></figure>
 
-<p>您可以从 Virtual Machine Manager GUI 获取相同的信息。我的虚拟机磁盘位于‘/var/lib/libvirt/images/rhel8.qcow2‘。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">$ sudo qemu-img info /var/lib/libvirt/images/rhel8.qcow2</span><br><span class="line">image: /var/lib/libvirt/images/rhel8.qcow2</span><br><span class="line">file format: qcow2</span><br><span class="line">virtual size: 30G (42949672960 bytes)</span><br><span class="line">disk size: 2.0G</span><br><span class="line">cluster_size: 65536</span><br><span class="line">Format specific information:</span><br><span class="line">    compat: 1.1</span><br><span class="line">    lazy refcounts: true</span><br><span class="line">    refcount bits: 16</span><br><span class="line">    corrupt: false</span><br></pre></td></tr></table></figure>
-
-<h2 id="扩展来宾-VM-磁盘">1.3. 扩展来宾 VM 磁盘</h2><p>由于我们知道我们的虚拟机磁盘的位置，让我们将其扩展到我们想要的容量。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo qemu-img resize /var/lib/libvirt/images/rhel8.qcow2 +10G</span><br></pre></td></tr></table></figure>
-
-<p>请注意 qemu-img 无法调整具有快照的图像的大小。您需要先删除所有 VM 快照。看这个例子：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">$ sudo virsh snapshot-list rhel8</span><br><span class="line"> Name        Creation Time               State</span><br><span class="line">--------------------------------------------------</span><br><span class="line"> snapshot1   2019-04-16 08:54:24 +0300   shutoff</span><br><span class="line"></span><br><span class="line">$ sudo virsh snapshot-delete --domain rhel8 --snapshotname snapshot1</span><br><span class="line">Domain snapshot snapshot1 deleted</span><br><span class="line"></span><br><span class="line">$ sudo virsh snapshot-list rhel8                                    </span><br><span class="line"> Name   Creation Time   State</span><br><span class="line">-------------------------------</span><br></pre></td></tr></table></figure>
-
-<p>然后使用磁盘容量前的“+”扩展磁盘。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ sudo qemu-img resize /var/lib/libvirt/images/rhel8.qcow2 +10G</span><br><span class="line">Image resized.</span><br></pre></td></tr></table></figure>
-
-<p>您还可以使用 virsh 命令调整大小。这需要域正在运行。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">$ sudo qemu-img info /var/lib/libvirt/images/rhel8.qcow2</span><br><span class="line"> image: /var/lib/libvirt/images/rhel8.qcow2</span><br><span class="line"> file format: qcow2</span><br><span class="line"> virtual size: 30G (42949672960 bytes)</span><br><span class="line"> disk size: 2.0G</span><br><span class="line"> cluster_size: 65536</span><br><span class="line"> Format specific information:</span><br><span class="line">     compat: 1.1</span><br><span class="line">     lazy refcounts: true</span><br><span class="line">     refcount bits: 16</span><br><span class="line">     corrupt: false</span><br><span class="line"></span><br><span class="line">$ sudo virsh start rhel8</span><br><span class="line">$ sudo virsh blockresize rhel8 /var/lib/libvirt/images/rhel8.qcow2 40G</span><br><span class="line">Block device &#x27;/var/lib/libvirt/images/rhel8.qcow2&#x27; is resized</span><br></pre></td></tr></table></figure>
-
-<p>使用 fdisk 命令确认磁盘大小。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ sudo fdisk -l /var/lib/libvirt/images/rhel8.qcow2      </span><br><span class="line">Disk /var/lib/libvirt/images/rhel8.qcow2: 30.2 GiB, 32399818752 bytes, 63280896 sectors</span><br><span class="line">Units: sectors of 1 * 512 = 512 bytes</span><br><span class="line">Sector size (logical/physical): 512 bytes / 512 bytes</span><br><span class="line">I/O size (minimum/optimal): 512 bytes / 512 bytes</span><br></pre></td></tr></table></figure>
-
-<h2 id="增加虚拟机分区">1.4. 增加虚拟机分区</h2><p>现在启动虚拟机</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ sudo virsh start rhel8</span><br><span class="line">Domain rhel8 started</span><br></pre></td></tr></table></figure>
-
-<p>以 root 用户身份或使用具有 sudo 的用户帐户通过 SSH 连接到您的 VM。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ ssh rhel8             </span><br><span class="line">Last login: Fri Apr 19 06:11:19 2019 from 192.168.122.1</span><br><span class="line">[jmutai@rhel8 ~]$ </span><br></pre></td></tr></table></figure>
-
-<p>检查您的新磁盘布局。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$ lsblk </span><br><span class="line"> NAME          MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT</span><br><span class="line"> sr0            11:0    1 1024M  0 rom  </span><br><span class="line"> vda           252:0    0   40G  0 disk </span><br><span class="line"> ├─vda1        252:1    0    1G  0 part /boot</span><br><span class="line"> └─vda2        252:2    0   29G  0 part </span><br><span class="line">   ├─rhel-root 253:0    0 26.9G  0 lvm  /</span><br><span class="line">   └─rhel-swap 253:1    0  2.1G  0 lvm  [SWAP]</span><br></pre></td></tr></table></figure>
-
-<p>我的 VM 总磁盘容量现在是 40GB，以前是 30GB。要扩展您的操作系统分区，请参阅以下指南。</p>
 <ul>
-<li><a target="_blank" rel="noopener" href="https://computingforgeeks.com/extending-root-filesystem-using-lvm-linux/">How to extend root filesystem using LVM in Linux</a></li>
-<li><a target="_blank" rel="noopener" href="https://computingforgeeks.com/resize-ext-and-xfs-root-partition-without-lvm/">How to resize an ext2/3/4 and XFS root partition without LVM</a></li>
+<li>registry-mirrors： 阿里云镜像加速器</li>
+<li>exec-opts： 修改docker的cgroup和k8s的一致</li>
+<li>insecure-registries：harbor地址</li>
 </ul>
-<h3 id="Recommended-Video-Courses-to-Learn-Linux-System-Administration">1.4.1. Recommended Video Courses to Learn Linux System Administration:</h3><ul>
-<li><a target="_blank" rel="noopener" href="https://click.linksynergy.com/deeplink?id=2sb89XJC/EQ&mid=39197&murl=https://www.udemy.com/course/linux-mastery/">Linux Mastery: Master the Linux Command Line in 11.5 Hours</a></li>
-<li><a target="_blank" rel="noopener" href="https://click.linksynergy.com/deeplink?id=2sb89XJC/EQ&mid=39197&murl=https://www.udemy.com/course/complete-linux-training-course-to-get-your-dream-it-job/">Complete Linux Training Course to Get Your Dream IT Job 2021</a></li>
-<li><a target="_blank" rel="noopener" href="https://click.linksynergy.com/deeplink?id=2sb89XJC/EQ&mid=39197&murl=https://www.udemy.com/course/learn-linux-in-5-days/">Learn Linux in 5 Days and Level Up Your Career</a></li>
-<li><a target="_blank" rel="noopener" href="https://click.linksynergy.com/deeplink?id=2sb89XJC/EQ&mid=39197&murl=https://www.udemy.com/course/linux-administration-bootcamp/">Linux Administration Bootcamp: Go from Beginner to Advanced</a></li>
-<li><a target="_blank" rel="noopener" href="https://click.linksynergy.com/deeplink?id=2sb89XJC/EQ&mid=39197&murl=https://www.udemy.com/course/linux-bash-shell-scripting-through-real-life-examples/">Complete Linux Bash Shell Scripting with Real Life Examples</a></li>
-<li><a target="_blank" rel="noopener" href="https://click.linksynergy.com/deeplink?id=2sb89XJC/EQ&mid=39197&murl=https://www.udemy.com/course/linux-shell-scripting-projects/">Linux Shell Scripting: A Project-Based Approach to Learning</a></li>
-</ul>
-<p>Other guides:</p>
-<ul>
-<li><a target="_blank" rel="noopener" href="https://computingforgeeks.com/how-to-extend-aws-ec2-instance-boot-file-system-without-rebooting/">How to extend EBS boot disk on AWS without an instance reboot</a></li>
-<li><a target="_blank" rel="noopener" href="https://computingforgeeks.com/how-to-create-disk-partitions-in-windows-using-diskpart-command/">How to create disk partitions in Windows using diskpart command</a></li>
-<li>[Working with qemu-img in Linux](</li>
-</ul>
+<p>启动并设置开机启动</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">systemctl daemon-reload</span><br><span class="line">systemctl start docker</span><br><span class="line">systemctl enable docker</span><br></pre></td></tr></table></figure>
+
+<p>3.2 添加阿里云YUM软件源</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">$ cat &gt; /etc/yum.repos.d/kubernetes.repo &lt;&lt; EOF</span><br><span class="line">[kubernetes]</span><br><span class="line">name=Kubernetes</span><br><span class="line">baseurl=https://mirrors.aliyun.com/kubernetes/yum/repos/kubernetes-el7-x86_64</span><br><span class="line">enabled=1</span><br><span class="line">gpgcheck=0</span><br><span class="line">repo_gpgcheck=0</span><br><span class="line">gpgkey=https://mirrors.aliyun.com/kubernetes/yum/doc/yum-key.gpg https://mirrors.aliyun.com/kubernetes/yum/doc/rpm-package-key.gpg</span><br><span class="line">EOF</span><br></pre></td></tr></table></figure>
+
+<h2 id="安装kubeadm，kubelet和kubectl">1.4. 安装kubeadm，kubelet和kubectl</h2><p>由于版本更新频繁，这里指定版本号部署：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ yum install -y kubelet-1.22.0 kubeadm-1.22.0 kubectl-1.22.0</span><br><span class="line">$ systemctl enable kubelet</span><br></pre></td></tr></table></figure>
+
+<h2 id="部署Kubernetes-Master">1.5. 部署Kubernetes Master</h2><p>在192.168.101.201（Master）执行。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ kubeadm init \</span><br><span class="line">  --apiserver-advertise-address=192.168.101.201 \</span><br><span class="line">  --image-repository registry.aliyuncs.com/google_containers \</span><br><span class="line">  --kubernetes-version v1.22.0 \</span><br><span class="line">  --service-cidr=10.96.0.0/12 \</span><br><span class="line">  --pod-network-cidr=10.244.0.0/16</span><br></pre></td></tr></table></figure>
+
+<p>由于默认拉取镜像地址k8s.gcr.io国内无法访问，这里指定阿里云镜像仓库地址。</p>
+<p>使用kubectl工具：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">mkdir -p <span class="variable">$HOME</span>/.kube</span><br><span class="line">sudo cp -i /etc/kubernetes/admin.conf <span class="variable">$HOME</span>/.kube/config</span><br><span class="line">sudo chown $(id -u):$(id -g) <span class="variable">$HOME</span>/.kube/config</span><br><span class="line">$ kubectl get nodes</span><br></pre></td></tr></table></figure>
+
+<h2 id="加入Kubernetes-Node">1.6. 加入Kubernetes Node</h2><p>在192.168.31.62/63（Node）执行。</p>
+<p>向集群添加新节点，执行在kubeadm init输出的kubeadm join命令：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ kubeadm join 192.168.101.201:6443 --token aw0wah.wf0ucozx0syqa58z     --discovery-token-ca-cert-hash sha256:5745909fd8cba0a6643060d19fb6b45a39b718cb39572727198f6ca0218ffe0b</span><br></pre></td></tr></table></figure>
+
+<p>默认token有效期为24小时，当过期之后，该token就不可用了。这时就需要重新创建token，操作如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubeadm token create --print-join-command</span><br></pre></td></tr></table></figure>
+
+<h2 id="部署CNI网络插件">1.7. 部署CNI网络插件</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml</span><br></pre></td></tr></table></figure>
+
+<p>默认镜像地址无法访问，sed命令修改为docker hub镜像仓库。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">kubectl apply -f kube-flannel.yml</span><br><span class="line"></span><br><span class="line">kubectl get pods -n kube-system</span><br><span class="line">NAME                          READY   STATUS    RESTARTS   AGE</span><br><span class="line">kube-flannel-ds-amd64-2pc95   1/1     Running   0          72s</span><br></pre></td></tr></table></figure>
+
+<h2 id="测试kubernetes集群">1.8. 测试kubernetes集群</h2><p>在Kubernetes集群中创建一个pod，验证是否正常运行：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl create deployment nginx --image=nginx</span><br><span class="line">$ kubectl expose deployment nginx --port=80 --type=NodePort</span><br><span class="line">$ kubectl get pod,svc</span><br></pre></td></tr></table></figure>
+
+<p>访问地址：<a href="http://NodeIP:Port">http://NodeIP:Port</a>  </p>
 
     </div>
 
@@ -356,7 +373,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="https://heyonggs.github.io/p/44212.html" title="LVM扩容根目录（不新加磁盘）">https://heyonggs.github.io/p/44212.html</a>
+    <a href="https://heyonggs.github.io/p/20016.html" title="2021-11-10-kubeadm方式部署k8sV1.22.0版本">https://heyonggs.github.io/p/20016.html</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh-CN" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
@@ -368,8 +385,8 @@
 
       <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/LVM/" rel="tag"><i class="fa fa-tag"></i> LVM</a>
-              <a href="/tags/%E7%A3%81%E7%9B%98/" rel="tag"><i class="fa fa-tag"></i> 磁盘</a>
+              <a href="/tags/k8s/" rel="tag"><i class="fa fa-tag"></i> k8s</a>
+              <a href="/tags/Kubernetes/" rel="tag"><i class="fa fa-tag"></i> Kubernetes</a>
           </div>
 
         
@@ -383,13 +400,10 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/p/42147.html" rel="prev" title="将新硬盘加入到根目录">
-      <i class="fa fa-chevron-left"></i> 将新硬盘加入到根目录
+    <a href="/p/39608.html" rel="prev" title="vnstat流量统计（新版2.8）">
+      <i class="fa fa-chevron-left"></i> vnstat流量统计（新版2.8）
     </a></div>
-      <div class="post-nav-item">
-    <a href="/p/59442.html" rel="next" title="SaltStack安装及使用">
-      SaltStack安装及使用 <i class="fa fa-chevron-right"></i>
-    </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -454,7 +468,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#LVM%E6%89%A9%E5%AE%B9%E6%A0%B9%E7%9B%AE%E5%BD%95%EF%BC%88%E4%B8%8D%E7%94%A8%E6%96%B0%E6%B7%BB%E5%8A%A0%E7%A3%81%E7%9B%98%EF%BC%89"><span class="nav-text">1. LVM扩容根目录（不用新添加磁盘）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B3%E9%97%AD-KVM-%E4%B8%8A%E7%9A%84%E8%99%9A%E6%8B%9F%E6%9C%BA"><span class="nav-text">1.1. 关闭 KVM 上的虚拟机</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%89%A9%E5%B1%95%E6%82%A8%E7%9A%84-KVM-%E6%9D%A5%E5%AE%BE%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%A3%81%E7%9B%98"><span class="nav-text">1.2. 扩展您的 KVM 来宾操作系统磁盘</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%89%A9%E5%B1%95%E6%9D%A5%E5%AE%BE-VM-%E7%A3%81%E7%9B%98"><span class="nav-text">1.3. 扩展来宾 VM 磁盘</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A2%9E%E5%8A%A0%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%88%86%E5%8C%BA"><span class="nav-text">1.4. 增加虚拟机分区</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Recommended-Video-Courses-to-Learn-Linux-System-Administration"><span class="nav-text">1.4.1. Recommended Video Courses to Learn Linux System Administration:</span></a></li></ol></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#kubeadm%E6%96%B9%E5%BC%8F%E9%83%A8%E7%BD%B2k8sV1-22-0%E9%9B%86%E7%BE%A4%E7%89%88%E6%9C%AC"><span class="nav-text">1. kubeadm方式部署k8sV1.22.0集群版本</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85%E8%A6%81%E6%B1%82"><span class="nav-text">1.1. 安装要求</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%87%86%E5%A4%87%E7%8E%AF%E5%A2%83"><span class="nav-text">1.2. 准备环境</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%89%80%E6%9C%89%E8%8A%82%E7%82%B9%E5%AE%89%E8%A3%85Docker-kubeadm-kubelet"><span class="nav-text">1.3. 所有节点安装Docker&#x2F;kubeadm&#x2F;kubelet</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%85Docker"><span class="nav-text">1.3.1. 安装Docker</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85kubeadm%EF%BC%8Ckubelet%E5%92%8Ckubectl"><span class="nav-text">1.4. 安装kubeadm，kubelet和kubectl</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%83%A8%E7%BD%B2Kubernetes-Master"><span class="nav-text">1.5. 部署Kubernetes Master</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8A%A0%E5%85%A5Kubernetes-Node"><span class="nav-text">1.6. 加入Kubernetes Node</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%83%A8%E7%BD%B2CNI%E7%BD%91%E7%BB%9C%E6%8F%92%E4%BB%B6"><span class="nav-text">1.7. 部署CNI网络插件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B5%8B%E8%AF%95kubernetes%E9%9B%86%E7%BE%A4"><span class="nav-text">1.8. 测试kubernetes集群</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
