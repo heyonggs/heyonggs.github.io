@@ -4582,7 +4582,7 @@
       </tags>
   </entry>
   <entry>
-    <title>2021-11-10-kubeadm方式部署k8sV1.22.0版本</title>
+    <title>kubeadm方式部署k8sV1.22.0版本</title>
     <url>/p/20016.html</url>
     <content><![CDATA[<p><escape><span id="more"></span></escape></p>
 <h1 id="kubeadm方式部署k8sV1-22-0集群版本">1. kubeadm方式部署k8sV1.22.0集群版本</h1><p>kubeadm是官方社区推出的一个用于快速部署kubernetes集群的工具。</p>
