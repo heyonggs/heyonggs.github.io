@@ -1,0 +1,1180 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+<meta name="google-site-verification" content="9txmeVmeJ6bMHjmAuOJ4jIB5_Oxio9bwz8neOVbFbe4" />
+<meta name="baidu-site-verification" content="code-mn6sfA1sqp" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/H-16x16.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/H-16x16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"heyonggs.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"onmobile":false,"b2t":true,"scrollpercent":true},"copycode":{"enable":true,"show_result":true,"style":"default"},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="本文介绍Next主题相关的一些配置">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hexo下Next博客配置">
+<meta property="og:url" content="https://heyonggs.github.io/p/40150.html">
+<meta property="og:site_name" content="何宇泽">
+<meta property="og:description" content="本文介绍Next主题相关的一些配置">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/heyonggs/images@master/wp/2021/hexo/202109231140681.png">
+<meta property="article:published_time" content="2019-04-12T07:27:53.000Z">
+<meta property="article:modified_time" content="2021-12-01T07:35:15.047Z">
+<meta property="article:author" content="何宇泽">
+<meta property="article:tag" content="Hexo">
+<meta property="article:tag" content="Next">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/heyonggs/images@master/wp/2021/hexo/202109231140681.png">
+
+<link rel="canonical" href="https://heyonggs.github.io/p/40150.html">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Hexo下Next博客配置 | 何宇泽</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="何宇泽" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">何宇泽</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-主页">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>主页</a>
+
+  </li>
+        <li class="menu-item menu-item-归档">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-分类">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-标签">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-关于">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-镜像">
+
+    <a href="/mirrors/" rel="section"><i class="fa fa-link fa-fw"></i>镜像</a>
+
+  </li>
+        <li class="menu-item menu-item-网址导航">
+
+    <a href="/webstack/" rel="section"><i class="fa fa-graduation-cap fa-fw"></i>网址导航</a>
+
+  </li>
+        <li class="menu-item menu-item-站点地图">
+
+    <a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>站点地图</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://heyonggs.github.io/p/40150.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="何宇泽">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="何宇泽">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Hexo下Next博客配置
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-04-12 15:27:53" itemprop="dateCreated datePublished" datetime="2019-04-12T15:27:53+08:00">2019-04-12</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-12-01 15:35:15" itemprop="dateModified" datetime="2021-12-01T15:35:15+08:00">2021-12-01</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Hexo/" itemprop="url" rel="index"><span itemprop="name">Hexo</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>37k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>34 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>本文介绍Next主题相关的一些配置</p>
+<p><escape><span id="more"></span></escape></p>
+<h1 id="常用命令">1. 常用命令</h1><figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">hexo <span class="keyword">new</span> <span class="string">&quot;postName&quot;</span> <span class="meta">#新建文章</span></span><br><span class="line">hexo <span class="keyword">new</span> page <span class="string">&quot;pageName&quot;</span> <span class="meta">#新建页面</span></span><br><span class="line">hexo generate <span class="meta">#生成静态页面至public目录</span></span><br><span class="line">hexo server <span class="meta">#开启预览访问端口（默认端口4000，&#x27;ctrl + c&#x27;关闭server）</span></span><br><span class="line">hexo deploy <span class="meta">#将.deploy目录部署到GitHub</span></span><br><span class="line">hexo help  <span class="meta">#查看帮助</span></span><br><span class="line">hexo version  <span class="meta">#查看Hexo的版本</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="live2d看板娘">2. live2d看板娘</h1><blockquote>
+<p><a target="_blank" rel="noopener" href="https://github.com/xiazeyu/live2d-widget-models">GitHub - xiazeyu/live2d-widget-models: The model library for live2d-widget.js</a></p>
+</blockquote>
+<p>安装模块</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install --save hexo-helper-live2d</span><br></pre></td></tr></table></figure>
+
+<p>安装模型</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install live2d-widget-model-hibiki</span><br></pre></td></tr></table></figure>
+
+<p>所有模型列表</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">live2d-widget-model-chitose</span><br><span class="line">live2d-widget-model-epsilon2_1</span><br><span class="line">live2d-widget-model-gf</span><br><span class="line">live2d-widget-model-haru/01 (use npm install --save live2d-widget-model-haru)</span><br><span class="line">live2d-widget-model-haru/02 (use npm install --save live2d-widget-model-haru)</span><br><span class="line">live2d-widget-model-haruto</span><br><span class="line">live2d-widget-model-hibiki</span><br><span class="line">live2d-widget-model-hijiki</span><br><span class="line">live2d-widget-model-izumi</span><br><span class="line">live2d-widget-model-koharu</span><br><span class="line">live2d-widget-model-miku</span><br><span class="line">live2d-widget-model-ni-j</span><br><span class="line">live2d-widget-model-nico</span><br><span class="line">live2d-widget-model-nietzsche</span><br><span class="line">live2d-widget-model-nipsilon</span><br><span class="line">live2d-widget-model-nito</span><br><span class="line">live2d-widget-model-shizuku</span><br><span class="line">live2d-widget-model-tororo</span><br><span class="line">live2d-widget-model-tsumiki</span><br><span class="line">live2d-widget-model-unitychan</span><br><span class="line">live2d-widget-model-wanko</span><br><span class="line">live2d-widget-model-z16</span><br></pre></td></tr></table></figure>
+
+<p>在主目录下新建一个live2d_models文件夹，将node_modules文件夹下live2d-widget-model-hibiki复制到live2d_models文件夹中</p>
+<p><img src="https://cdn.jsdelivr.net/gh/heyonggs/images@master/wp/2021/hexo/202109231140681.png"></p>
+<p>在主配置文件_config.yml添加配置</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"># 看板娘参数配置</span><br><span class="line">live2d:</span><br><span class="line">  enable: true</span><br><span class="line">  scriptFrom: local</span><br><span class="line">  pluginRootPath: live2dw/</span><br><span class="line">  pluginJsPath: lib/</span><br><span class="line">  pluginModelPath: assets/</span><br><span class="line">  tagMode: false</span><br><span class="line">  debug: false</span><br><span class="line">  model:</span><br><span class="line">    use: live2d-widget-model-hibiki   #下载模型参数</span><br><span class="line">  display:</span><br><span class="line">    position: right</span><br><span class="line">    width: 150</span><br><span class="line">    height: 300</span><br><span class="line">  mobile:</span><br><span class="line">    show: true</span><br></pre></td></tr></table></figure>
+
+<p>接着运行hexo s查看效果</p>
+<h1 id="hexo的next配置版权信息">3. hexo的next配置版权信息</h1><p>在每篇文章末尾默认增加文章作者、链接以及版权信息，是部分博主所需要的，而Hexo的next（v7.1.0）主题默认就集成了该功能，只需要在设置中启用即可。配置方式简要描述，实际效果与下面信息类似。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">本文作者： 何宇泽</span><br><span class="line">本文链接： https://heyonggs.github.io</span><br><span class="line">版权声明： 本博客所有文章除特别声明外，均采用 BY-NC-SA 许可协议。转载请注明出处！</span><br></pre></td></tr></table></figure>
+
+<p>配置步骤</p>
+<p>修改next主题的配置文件（./themes/next/_config.yml），搜索到<code>creative_commons:</code>标签， </p>
+<ul>
+<li>sidebar参数表示在侧边栏有一个版权的图片链接，</li>
+<li>post参数表示在每一篇文章末尾自动增加本文作者、本文链接、版权声明三个信息，</li>
+<li>language参数表示点击链接后显示的版权信息的语言。</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">creative_commons:</span><br><span class="line">  license: by-nc-sa</span><br><span class="line">  sidebar: true</span><br><span class="line">  post: true</span><br><span class="line">  language: deed.zh</span><br></pre></td></tr></table></figure>
+
+<p>如果想个性化配置版权信息，可修改配置文件(./themes/next/layout/_partials/post/post-copyright.swig)，如果想修改显示的样式可修改配置文件(./themes/next/source/css/_common/components/post/post-copyright.styl) 。</p>
+<h1 id="修改文章底部的那个带-号的标签">4. 修改文章底部的那个带#号的标签</h1><p>修改模板<code>/themes/next/layout/_macro/post.swig</code>，搜索 <code>rel=&quot;tag&quot;&gt;#</code>，将 # 换成<code> &lt;i class=&quot;fa fa-tag&quot;&gt;&lt;/i&gt;</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;div class=&quot;post-tags&quot;&gt;</span><br><span class="line">  &#123;%- for tag in post.tags.toArray() %&#125;</span><br><span class="line">     &lt;a href=&quot;&#123;&#123; url_for(tag.path) &#125;&#125;&quot; rel=&quot;tag&quot;&gt;&#123;&#123; tag_indicate &#125;&#125; &#123;&#123; tag.name &#125;&#125;&lt;/a&gt;</span><br><span class="line">  &#123;%- endfor %&#125;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+
+<p>修改为</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;div class=&quot;post-tags&quot;&gt;</span><br><span class="line">    &#123;% for tag in post.tags %&#125;</span><br><span class="line">       &lt;a href=&quot;&#123;&#123; url_for(tag.path) &#125;&#125;&quot; rel=&quot;tag&quot;&gt;&lt;i class=&quot;fa fa-tag&quot;&gt;&lt;/i&gt; &#123;&#123; tag.name &#125;&#125;&lt;/a&gt;</span><br><span class="line">    &#123;% endfor %&#125;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="右上角添加fork-me-on-github">5. 右上角添加fork me on github</h1><p>在主配置文件中打开github_banner配置，permalink修改为自己的github地址</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">github_banner:</span><br><span class="line">  enable: true</span><br><span class="line">  permalink: https://github.com/youname</span><br><span class="line">  title: Follow me on GitHub</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="Hexo为标题自动添加序号">6. Hexo为标题自动添加序号</h1><p>在 Hexo 中，使用了一个 hexo 的插件， Hexo 根目录执行下面的命令</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo-heading-index --save</span><br></pre></td></tr></table></figure>
+
+<p>然后在 Hexo 根目录的 _config.yml 最后加上下面的配置:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">heading_index:</span><br><span class="line">  enable: true</span><br><span class="line">  index_styles: &quot;&#123;1&#125; &#123;1&#125; &#123;1&#125; &#123;1&#125; &#123;1&#125; &#123;1&#125;&quot;</span><br><span class="line">  connector: &quot;.&quot;</span><br><span class="line">  global_prefix: &quot;&quot;</span><br><span class="line">  global_suffix: &quot;. &quot;</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="hexo-取消“文章目录”的自动编号">7. hexo 取消“文章目录”的自动编号</h1><p>修改主题配置文件那里的<code>number</code>为<code>false</code></p>
+<p>themes/next/_config.yml</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">toc:</span><br><span class="line">  enable: true</span><br><span class="line">  # Automatically add list number to toc.</span><br><span class="line">  number: false</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="短地址">8. 短地址</h1><p>每次从博客分享文章给别人都很苦恼，Hexo 默认生成的链接太长了，而且一旦文章名字改变，链接也跟着改变。有没有什么方法让地址尽量短小精悍，同时永久化呢？</p>
+<p>感谢 <a target="_blank" rel="noopener" href="https://github.com/rozbo/hexo-abbrlink">rozbo/hexo-abbrlink</a>，完美解决此痛点。</p>
+<p>使用方法也很简单：</p>
+<ol>
+<li>在 Hexo 博客根目录，执行 <code>npm install hexo-abbrlink --save</code></li>
+<li>在主配置文件 <code>_config.yml</code> 写入</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># 更改 permalink 值</span><br><span class="line">permalink: p/:abbrlink.html </span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="自动部署hexo博客到阿里云服务器">9. 自动部署hexo博客到阿里云服务器</h1><blockquote>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_33790053/article/details/91366365">https://blog.csdn.net/weixin_33790053/article/details/91366365</a></p>
+</blockquote>
+<p>之前博客是托管在GitHub Page，访问速度不太乐观，后来买了台阿里云ECS，把博客迁了过来，下面介绍如何将博客直接推送到阿里云ECS(CentOS系统)，实现自动部署。</p>
+<h2 id="环境">9.1. 环境</h2><ol>
+<li>博客网站在服务器上已经搭建好并且可以正常访问；</li>
+<li>服务器上已经安装git；</li>
+<li>本地hexo能够正常运行。</li>
+</ol>
+<h2 id="思路">9.2. 思路</h2><p>在阿里云服务器上搭建git仓库，本地博客目录下运行<code>hexo g -d</code>生成静态文件，并提交到git仓库，从而触发git hook，最后再执行bash命令将文件拷贝到博客网站目录。</p>
+<h2 id="创建仓库">9.3. 创建仓库</h2><p>在阿里云服务器上创建git仓库，注意不要漏掉<code>--bare</code>参数。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mkdir /www/blog.git &amp;&amp; cd /www/blog.git</span><br><span class="line">git init --bare</span><br></pre></td></tr></table></figure>
+
+<h2 id="Hexo配置">9.4. Hexo配置</h2><p>修改本地博客目录下的<code>_config.yml</code>配置，其中<code>xx.xxx.xx.xxx</code>是你的服务器ip地址，<code>/www/blog.git</code>是你上一步创建的git仓库路径，<code>master</code>是分支。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">deploy:</span><br><span class="line">  type: git</span><br><span class="line">  <span class="attr">message</span>: update</span><br><span class="line">  <span class="attr">repo</span>: root@xx.xxx.xx.xxx:<span class="regexp">/www/</span>blog.git,master</span><br></pre></td></tr></table></figure>
+
+<h2 id="插件安装">9.5. 插件安装</h2><p>此插件的作用是执行deploy时，将hexo生成的静态文件提交到<code>_config.yml</code>配置中的<code>deploy.repo</code>地址，即<code>root@xx.xxx.xx.xxx:/www/blog.git,master</code>。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo-deployer-git --save</span><br></pre></td></tr></table></figure>
+
+<h2 id="自动部署">9.6. 自动部署</h2><p>本地的deploy命令只是把静态文件提交到git仓库，既然有git hooks，那么我们可以在有文件提交上来时，再将文件拷贝到博客网站目录。 进入到git仓库hooks目录，并创建钩子<code>post-receive</code>。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cd /www/blog.git/hooks</span><br><span class="line">touch post-receive</span><br><span class="line">vim post-receive</span><br></pre></td></tr></table></figure>
+
+<p>然后输入下面脚本：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/bash -l</span><br><span class="line">GIT_REPO=/www/blog.git</span><br><span class="line">TMP_GIT_CLONE=/www/tmp/blog</span><br><span class="line">PUBLIC_WWW=/usr/share/nginx/html/</span><br><span class="line">rm -rf $&#123;TMP_GIT_CLONE&#125;</span><br><span class="line">git clone $GIT_REPO $TMP_GIT_CLONE</span><br><span class="line">rm -rf $&#123;PUBLIC_WWW&#125;/*</span><br><span class="line">cp -rf $&#123;TMP_GIT_CLONE&#125;/* $&#123;PUBLIC_WWW&#125;</span><br></pre></td></tr></table></figure>
+
+<p>其中<code>/www/blog.git</code>为仓库路径，<code>/www/blog</code>为你的博客网站路径，<code>/www/tmp/blog</code>是临时目录，git会先将文件拉到临时目录，然后再将所有文件拷贝到博客网站目录<code>/www/blog</code>。</p>
+<p>更改目录权限：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">chmod +x post-receive</span><br><span class="line">mkdir -p /www/tmp/blog</span><br><span class="line">chmod 777 -R /usr/share/nginx/html/</span><br><span class="line">chmod 777 -R /www/blo</span><br></pre></td></tr></table></figure>
+
+<h2 id="运行">9.7. 运行</h2><p>完成上述步骤之后，就可以测试一下了，在本地博客目录下运行<code>hexo g -d</code>，此时可能还需要输入服务器密码，最后输出以下结果说明部署成功：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line">INFO  Deploy <span class="keyword">done</span>: git</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="修改主题页面布局为圆角">10. 修改主题页面布局为圆角</h1><p>打开文件，路径：\themes\next\source\css_variables\Gemini.styl ，添加以下代码：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">// 修改主题页面布局为圆角</span><br><span class="line">$border-radius-inner = 15px 15px 15px 15px;</span><br><span class="line">$border-radius = 15px;</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="增加-canvas-粒子时钟">11. 增加 canvas 粒子时钟</h1><blockquote>
+<p><a target="_blank" rel="noopener" href="https://tding.top/archives/dd68b70.html">https://tding.top/archives/dd68b70.html</a></p>
+</blockquote>
+<p>在 <code>/themes/next/layout/_custom/</code> 目录下，新建 <code>clock.swig</code> 文件，内容如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br><span class="line">263</span><br><span class="line">264</span><br></pre></td><td class="code"><pre><span class="line">&lt;div style=&quot;&quot;&gt;</span><br><span class="line">  &lt;canvas id=&quot;canvas&quot; style=&quot;width:60%;&quot;&gt;当前浏览器不支持canvas，请更换浏览器后再试&lt;/canvas&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line">(function()&#123;</span><br><span class="line"></span><br><span class="line">   var digit=</span><br><span class="line">    [</span><br><span class="line">        [</span><br><span class="line">            [0,0,1,1,1,0,0],</span><br><span class="line">            [0,1,1,0,1,1,0],</span><br><span class="line">            [1,1,0,0,0,1,1],</span><br><span class="line">            [1,1,0,0,0,1,1],</span><br><span class="line">            [1,1,0,0,0,1,1],</span><br><span class="line">            [1,1,0,0,0,1,1],</span><br><span class="line">            [1,1,0,0,0,1,1],</span><br><span class="line">            [1,1,0,0,0,1,1],</span><br><span class="line">            [0,1,1,0,1,1,0],</span><br><span class="line">            [0,0,1,1,1,0,0]</span><br><span class="line">        ],//0</span><br><span class="line">        [</span><br><span class="line">            [0,0,0,1,1,0,0],</span><br><span class="line">            [0,1,1,1,1,0,0],</span><br><span class="line">            [0,0,0,1,1,0,0],</span><br><span class="line">            [0,0,0,1,1,0,0],</span><br><span class="line">            [0,0,0,1,1,0,0],</span><br><span class="line">            [0,0,0,1,1,0,0],</span><br><span class="line">            [0,0,0,1,1,0,0],</span><br><span class="line">            [0,0,0,1,1,0,0],</span><br><span class="line">            [0,0,0,1,1,0,0],</span><br><span class="line">            [1,1,1,1,1,1,1]</span><br><span class="line">        ],//1</span><br><span class="line">        [</span><br><span class="line">            [0,1,1,1,1,1,0],</span><br><span class="line">            [1,1,0,0,0,1,1],</span><br><span class="line">            [0,0,0,0,0,1,1],</span><br><span class="line">            [0,0,0,0,1,1,0],</span><br><span class="line">            [0,0,0,1,1,0,0],</span><br><span class="line">            [0,0,1,1,0,0,0],</span><br><span class="line">            [0,1,1,0,0,0,0],</span><br><span class="line">            [1,1,0,0,0,0,0],</span><br><span class="line">            [1,1,0,0,0,1,1],</span><br><span class="line">            [1,1,1,1,1,1,1]</span><br><span class="line">        ],//2</span><br><span class="line">        [</span><br><span class="line">            [1,1,1,1,1,1,1],</span><br><span class="line">            [0,0,0,0,0,1,1],</span><br><span class="line">            [0,0,0,0,1,1,0],</span><br><span class="line">            [0,0,0,1,1,0,0],</span><br><span class="line">            [0,0,1,1,1,0,0],</span><br><span class="line">            [0,0,0,0,1,1,0],</span><br><span class="line">            [0,0,0,0,0,1,1],</span><br><span class="line">            [0,0,0,0,0,1,1],</span><br><span class="line">            [1,1,0,0,0,1,1],</span><br><span class="line">            [0,1,1,1,1,1,0]</span><br><span class="line">        ],//3</span><br><span class="line">        [</span><br><span class="line">            [0,0,0,0,1,1,0],</span><br><span class="line">            [0,0,0,1,1,1,0],</span><br><span class="line">            [0,0,1,1,1,1,0],</span><br><span class="line">            [0,1,1,0,1,1,0],</span><br><span class="line">            [1,1,0,0,1,1,0],</span><br><span class="line">            [1,1,1,1,1,1,1],</span><br><span class="line">            [0,0,0,0,1,1,0],</span><br><span class="line">            [0,0,0,0,1,1,0],</span><br><span class="line">            [0,0,0,0,1,1,0],</span><br><span class="line">            [0,0,0,1,1,1,1]</span><br><span class="line">        ],//4</span><br><span class="line">        [</span><br><span class="line">            [1,1,1,1,1,1,1],</span><br><span class="line">            [1,1,0,0,0,0,0],</span><br><span class="line">            [1,1,0,0,0,0,0],</span><br><span class="line">            [1,1,1,1,1,1,0],</span><br><span class="line">            [0,0,0,0,0,1,1],</span><br><span class="line">            [0,0,0,0,0,1,1],</span><br><span class="line">            [0,0,0,0,0,1,1],</span><br><span class="line">            [0,0,0,0,0,1,1],</span><br><span class="line">            [1,1,0,0,0,1,1],</span><br><span class="line">            [0,1,1,1,1,1,0]</span><br><span class="line">        ],//5</span><br><span class="line">        [</span><br><span class="line">            [0,0,0,0,1,1,0],</span><br><span class="line">            [0,0,1,1,0,0,0],</span><br><span class="line">            [0,1,1,0,0,0,0],</span><br><span class="line">            [1,1,0,0,0,0,0],</span><br><span class="line">            [1,1,0,1,1,1,0],</span><br><span class="line">            [1,1,0,0,0,1,1],</span><br><span class="line">            [1,1,0,0,0,1,1],</span><br><span class="line">            [1,1,0,0,0,1,1],</span><br><span class="line">            [1,1,0,0,0,1,1],</span><br><span class="line">            [0,1,1,1,1,1,0]</span><br><span class="line">        ],//6</span><br><span class="line">        [</span><br><span class="line">            [1,1,1,1,1,1,1],</span><br><span class="line">            [1,1,0,0,0,1,1],</span><br><span class="line">            [0,0,0,0,1,1,0],</span><br><span class="line">            [0,0,0,0,1,1,0],</span><br><span class="line">            [0,0,0,1,1,0,0],</span><br><span class="line">            [0,0,0,1,1,0,0],</span><br><span class="line">            [0,0,1,1,0,0,0],</span><br><span class="line">            [0,0,1,1,0,0,0],</span><br><span class="line">            [0,0,1,1,0,0,0],</span><br><span class="line">            [0,0,1,1,0,0,0]</span><br><span class="line">        ],//7</span><br><span class="line">        [</span><br><span class="line">            [0,1,1,1,1,1,0],</span><br><span class="line">            [1,1,0,0,0,1,1],</span><br><span class="line">            [1,1,0,0,0,1,1],</span><br><span class="line">            [1,1,0,0,0,1,1],</span><br><span class="line">            [0,1,1,1,1,1,0],</span><br><span class="line">            [1,1,0,0,0,1,1],</span><br><span class="line">            [1,1,0,0,0,1,1],</span><br><span class="line">            [1,1,0,0,0,1,1],</span><br><span class="line">            [1,1,0,0,0,1,1],</span><br><span class="line">            [0,1,1,1,1,1,0]</span><br><span class="line">        ],//8</span><br><span class="line">        [</span><br><span class="line">            [0,1,1,1,1,1,0],</span><br><span class="line">            [1,1,0,0,0,1,1],</span><br><span class="line">            [1,1,0,0,0,1,1],</span><br><span class="line">            [1,1,0,0,0,1,1],</span><br><span class="line">            [0,1,1,1,0,1,1],</span><br><span class="line">            [0,0,0,0,0,1,1],</span><br><span class="line">            [0,0,0,0,0,1,1],</span><br><span class="line">            [0,0,0,0,1,1,0],</span><br><span class="line">            [0,0,0,1,1,0,0],</span><br><span class="line">            [0,1,1,0,0,0,0]</span><br><span class="line">        ],//9</span><br><span class="line">        [</span><br><span class="line">            [0,0,0,0,0,0,0],</span><br><span class="line">            [0,0,1,1,1,0,0],</span><br><span class="line">            [0,0,1,1,1,0,0],</span><br><span class="line">            [0,0,1,1,1,0,0],</span><br><span class="line">            [0,0,0,0,0,0,0],</span><br><span class="line">            [0,0,0,0,0,0,0],</span><br><span class="line">            [0,0,1,1,1,0,0],</span><br><span class="line">            [0,0,1,1,1,0,0],</span><br><span class="line">            [0,0,1,1,1,0,0],</span><br><span class="line">            [0,0,0,0,0,0,0]</span><br><span class="line">        ]//:</span><br><span class="line">    ];</span><br><span class="line"></span><br><span class="line">var canvas = document.getElementById(&#x27;canvas&#x27;);</span><br><span class="line"></span><br><span class="line">if(canvas.getContext)&#123;</span><br><span class="line">    var cxt = canvas.getContext(&#x27;2d&#x27;);</span><br><span class="line">    //声明canvas的宽高</span><br><span class="line">    var H = 100,W = 700;</span><br><span class="line">    canvas.height = H;</span><br><span class="line">    canvas.width = W;</span><br><span class="line">    cxt.fillStyle = &#x27;#f00&#x27;;</span><br><span class="line">    cxt.fillRect(10,10,50,50);</span><br><span class="line"></span><br><span class="line">    //存储时间数据</span><br><span class="line">    var data = [];</span><br><span class="line">    //存储运动的小球</span><br><span class="line">    var balls = [];</span><br><span class="line">    //设置粒子半径</span><br><span class="line">    var R = canvas.height/20-1;</span><br><span class="line">    (function()&#123;</span><br><span class="line">        var temp = /(\d)(\d):(\d)(\d):(\d)(\d)/.exec(new Date());</span><br><span class="line">        //存储时间数字，由十位小时、个位小时、冒号、十位分钟、个位分钟、冒号、十位秒钟、个位秒钟这7个数字组成</span><br><span class="line">        data.push(temp[1],temp[2],10,temp[3],temp[4],10,temp[5],temp[6]);</span><br><span class="line">    &#125;)();</span><br><span class="line"></span><br><span class="line">    /*生成点阵数字*/</span><br><span class="line">    function renderDigit(index,num)&#123;</span><br><span class="line">        for(var i = 0; i &lt; digit[num].length; i++)&#123;</span><br><span class="line">            for(var j = 0; j &lt; digit[num][i].length; j++)&#123;</span><br><span class="line">                if(digit[num][i][j] == 1)&#123;</span><br><span class="line">                    cxt.beginPath();</span><br><span class="line">                    cxt.arc(14*(R+2)*index + j*2*(R+1)+(R+1),i*2*(R+1)+(R+1),R,0,2*Math.PI);</span><br><span class="line">                    cxt.closePath();</span><br><span class="line">                    cxt.fill();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /*更新时钟*/</span><br><span class="line">    function updateDigitTime()&#123;</span><br><span class="line">        var changeNumArray = [];</span><br><span class="line">        var temp = /(\d)(\d):(\d)(\d):(\d)(\d)/.exec(new Date());</span><br><span class="line">        var NewData = [];</span><br><span class="line">        NewData.push(temp[1],temp[2],10,temp[3],temp[4],10,temp[5],temp[6]);</span><br><span class="line">        for(var i = data.length-1; i &gt;=0 ; i--)&#123;</span><br><span class="line">            //时间发生变化</span><br><span class="line">            if(NewData[i] !== data[i])&#123;</span><br><span class="line">                //将变化的数字值和在data数组中的索引存储在changeNumArray数组中</span><br><span class="line">                changeNumArray.push(i+&#x27;_&#x27;+(Number(data[i])+1)%10);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        //增加小球</span><br><span class="line">        for(var i = 0; i&lt; changeNumArray.length; i++)&#123;</span><br><span class="line">            addBalls.apply(this,changeNumArray[i].split(&#x27;_&#x27;));</span><br><span class="line">        &#125;</span><br><span class="line">        data = NewData.concat();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /*更新小球状态*/</span><br><span class="line">    function updateBalls()&#123;</span><br><span class="line">        for(var i = 0; i &lt; balls.length; i++)&#123;</span><br><span class="line">            balls[i].stepY += balls[i].disY;</span><br><span class="line">            balls[i].x += balls[i].stepX;</span><br><span class="line">            balls[i].y += balls[i].stepY;</span><br><span class="line">            if(balls[i].x &gt; W + R || balls[i].y &gt; H + R)&#123;</span><br><span class="line">                balls.splice(i,1);</span><br><span class="line">                i--;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /*增加要运动的小球*/</span><br><span class="line">    function addBalls(index,num)&#123;</span><br><span class="line">        var numArray = [1,2,3];</span><br><span class="line">        var colorArray =  [&quot;#3BE&quot;,&quot;#09C&quot;,&quot;#A6C&quot;,&quot;#93C&quot;,&quot;#9C0&quot;,&quot;#690&quot;,&quot;#FB3&quot;,&quot;#F80&quot;,&quot;#F44&quot;,&quot;#C00&quot;];</span><br><span class="line">        for(var i = 0; i &lt; digit[num].length; i++)&#123;</span><br><span class="line">            for(var j = 0; j &lt; digit[num][i].length; j++)&#123;</span><br><span class="line">                if(digit[num][i][j] == 1)&#123;</span><br><span class="line">                    var ball = &#123;</span><br><span class="line">                        x:14*(R+2)*index + j*2*(R+1)+(R+1),</span><br><span class="line">                        y:i*2*(R+1)+(R+1),</span><br><span class="line">                        stepX:Math.floor(Math.random() * 4 -2),</span><br><span class="line">                        stepY:-2*numArray[Math.floor(Math.random()*numArray.length)],</span><br><span class="line">                        color:colorArray[Math.floor(Math.random()*colorArray.length)],</span><br><span class="line">                        disY:1</span><br><span class="line">                    &#125;;</span><br><span class="line">                    balls.push(ball);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /*渲染*/</span><br><span class="line">    function render()&#123;</span><br><span class="line">        //重置画布宽度，达到清空画布的效果</span><br><span class="line">        canvas.height = 100;</span><br><span class="line">        //渲染时钟</span><br><span class="line">        for(var i = 0; i &lt; data.length; i++)&#123;</span><br><span class="line">            renderDigit(i,data[i]);</span><br><span class="line">        &#125;</span><br><span class="line">        //渲染小球</span><br><span class="line">        for(var i = 0; i &lt; balls.length; i++)&#123;</span><br><span class="line">            cxt.beginPath();</span><br><span class="line">            cxt.arc(balls[i].x,balls[i].y,R,0,2*Math.PI);</span><br><span class="line">            cxt.fillStyle = balls[i].color;</span><br><span class="line">            cxt.closePath();</span><br><span class="line">            cxt.fill();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    clearInterval(oTimer);</span><br><span class="line">    var oTimer = setInterval(function()&#123;</span><br><span class="line">        //更新时钟</span><br><span class="line">        updateDigitTime();</span><br><span class="line">        //更新小球状态</span><br><span class="line">        updateBalls();</span><br><span class="line">        //渲染</span><br><span class="line">        render();</span><br><span class="line">    &#125;,50);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#125;)();</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+<p>在 <code>/themes/next/layout/_custom/sidebar.swig</code> 中引入：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;% include &#x27;./clock.swig&#x27; %&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在 <code>/themes/next/layout/_macro/sidebar.swig</code> 中引入：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">      &lt;div class=&quot;site-overview-wrap sidebar-panel&#123;% if not display_toc or toc(page.content).length &lt;= 1 %&#125; sidebar-panel-active&#123;% endif %&#125;&quot;&gt;</span><br><span class="line">        &lt;div class=&quot;site-overview&quot;&gt;</span><br><span class="line">          </span><br><span class="line">          ...</span><br><span class="line"></span><br><span class="line">          &#123;% if theme.recent_posts %&#125;</span><br><span class="line">              &lt;div class=&quot;links-of-blogroll motion-element &#123;&#123; &quot;links-of-blogroll-&quot; + theme.recent_posts_layout  &#125;&#125;&quot;&gt;</span><br><span class="line">                &lt;div class=&quot;links-of-blogroll-title&quot;&gt;</span><br><span class="line">                  &lt;!-- modify icon to fire by szw --&gt;</span><br><span class="line">                  &lt;i class=&quot;fa fa-history fa-&#123;&#123; theme.recent_posts_icon | lower &#125;&#125;&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;</span><br><span class="line">                  &#123;&#123; theme.recent_posts_title &#125;&#125;</span><br><span class="line">                &lt;/div&gt;</span><br><span class="line">                &lt;ul class=&quot;links-of-blogroll-list&quot;&gt;</span><br><span class="line">                  &#123;% set posts = site.posts.sort(&#x27;-date&#x27;) %&#125;</span><br><span class="line">                  &#123;% for post in posts.slice(&#x27;0&#x27;, &#x27;5&#x27;) %&#125;</span><br><span class="line">                    &lt;li&gt;</span><br><span class="line">                      &lt;a href=&quot;&#123;&#123; url_for(post.path) &#125;&#125;&quot; title=&quot;&#123;&#123; post.title &#125;&#125;&quot; target=&quot;_blank&quot;&gt;&#123;&#123; post.title &#125;&#125;&lt;/a&gt;</span><br><span class="line">                    &lt;/li&gt;</span><br><span class="line">                  &#123;% endfor %&#125;</span><br><span class="line">                &lt;/ul&gt;</span><br><span class="line">              &lt;/div&gt;</span><br><span class="line">          &#123;% endif %&#125;</span><br><span class="line"></span><br><span class="line">+         &#123;% if theme.custom_file_path.sidebar %&#125;</span><br><span class="line">+           &#123;% set custom_sidebar = &#x27;../../../../&#x27; + theme.custom_file_path.sidebar %&#125;</span><br><span class="line">+         &#123;% else %&#125;</span><br><span class="line">+           &#123;% set custom_sidebar = &#x27;../_custom/sidebar.swig&#x27; %&#125;</span><br><span class="line">+         &#123;% endif %&#125;</span><br><span class="line">+         &#123;% include custom_sidebar %&#125;</span><br><span class="line">        &lt;/div&gt;</span><br><span class="line">      &lt;/div&gt;</span><br></pre></td></tr></table></figure>
+
+<p>这里我放在到顶部按钮上面</p>
+<p>canvas 粒子时钟样式</p>
+<p>在 <code>/themes/next/source/css/_custom/custom.styl</code> 添加：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">// 粒子时钟样式</span><br><span class="line">.site-overview &#123;</span><br><span class="line">  text-align: center;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">canvas#canvas &#123;</span><br><span class="line">  margin-top: 20px;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>注：另一款样式：<a target="_blank" rel="noopener" href="https://www.html5tricks.com/html5-canvas-dance-time.html">https://www.html5tricks.com/html5-canvas-dance-time.html</a></p>
+</blockquote>
+<h1 id="文章评分功能">12. 文章评分功能</h1><blockquote>
+<p>widgetpack：<a target="_blank" rel="noopener" href="https://widgetpack.com/">https://widgetpack.com/</a></p>
+</blockquote>
+<p>NexT主题中已经集成了widgetpack的星级评分功能，只需注册账号后，修改主题配置文件：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"># Star rating support to each article.</span><br><span class="line"># To get your ID visit https://widgetpack.com</span><br><span class="line">rating:</span><br><span class="line">  enable: true</span><br><span class="line">  id:  your id  #&lt;app_id&gt;</span><br><span class="line">  color:  ff9800</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="网站运行时间">13. 网站运行时间</h1><p>打开<code>.\themes\next\layout\_partials\footer.swig</code>并在最后面添加下列代码</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">&lt;div&gt;</span><br><span class="line">&lt;span id=&quot;timeDate&quot;&gt;载入天数...&lt;/span&gt;&lt;span id=&quot;times&quot;&gt;载入时分秒...&lt;/span&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line">    var now = new Date();</span><br><span class="line">    function createtime() &#123;</span><br><span class="line">        var grt= new Date(&quot;03/04/2015 00:00:00&quot;);</span><br><span class="line">        now.setTime(now.getTime()+250);</span><br><span class="line">        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);</span><br><span class="line">        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);</span><br><span class="line">        if(String(hnum).length ==1 )&#123;hnum = &quot;0&quot; + hnum;&#125; minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);</span><br><span class="line">        mnum = Math.floor(minutes); if(String(mnum).length ==1 )&#123;mnum = &quot;0&quot; + mnum;&#125;</span><br><span class="line">        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);</span><br><span class="line">        snum = Math.round(seconds); if(String(snum).length ==1 )&#123;snum = &quot;0&quot; + snum;&#125;</span><br><span class="line">        document.getElementById(&quot;timeDate&quot;).innerHTML = &quot;本站已安全运行 &quot;+dnum+&quot; 天 &quot;;</span><br><span class="line">        document.getElementById(&quot;times&quot;).innerHTML = hnum + &quot; 小时 &quot; + mnum + &quot; 分 &quot; + snum + &quot; 秒&quot;;</span><br><span class="line">    &#125;</span><br><span class="line">setInterval(&quot;createtime()&quot;,250);</span><br><span class="line">&lt;/script&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="阅读全文按钮开启">14. 阅读全文按钮开启</h1><p>我们首先找到在next主题下的<code>_config.yml</code>代码：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># Automatically Excerpt. Not recommand.</span><br><span class="line"># Please use &lt;!-- more --&gt; in the post to control excerpt accurately.</span><br><span class="line">auto_excerpt:</span><br><span class="line">  enable: false</span><br><span class="line">  length: 150</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>将false修改为true即可，length是显示摘要的长度。</p>
+<p>如过需要自动控制可在文章中输入<!-- more -->来控制，不生效可用<escape><!-- more --></escape>来控制。</p>
+</blockquote>
+<h1 id="配置实时聊天">15. 配置实时聊天</h1><blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.tidiochat.com/">https://www.tidiochat.com</a></p>
+</blockquote>
+<p>一个实时聊天客服系统tidio</p>
+<p>首先需要去tidio官网注册一个账户，注册地址：<a target="_blank" rel="noopener" href="https://www.tidio.com/panel/register">https://www.tidio.com/panel/register</a></p>
+<p>注册后填好网站，然后获取Public Key，获取地址：<a target="_blank" rel="noopener" href="https://www.tidiochat.com/panel/settings/developer">https://www.tidiochat.com/panel/settings/developer</a></p>
+<p>我们首先找到在next主题下的<code>_config.yml</code>代码：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">tidio:</span><br><span class="line">  enable: false</span><br><span class="line">  key: </span><br></pre></td></tr></table></figure>
+
+<p>将enable修改为true，然后输入tidio控制台获取的key</p>
+<h1 id="设置头像圆角及旋转">16. 设置头像圆角及旋转</h1><p>将头像图片放入目录：/themes/next/source/images</p>
+<p>重命名为：avatar.[格式]</p>
+<p>找到next主题配置文件<code>_config.yml</code>下的代码</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">avatar:</span><br><span class="line">  # Replace the default image and set the url here.</span><br><span class="line">  url: /images/avatar.jpg</span><br><span class="line">  # If true, the avatar will be dispalyed in circle.</span><br><span class="line">  rounded: false</span><br><span class="line">  # If true, the avatar will be rotated with the cursor.</span><br><span class="line">  rotated: false</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>url：头像图片路径</p>
+<p>rounded：头像显示圆圈配置</p>
+<p>rotated：头像随鼠标旋转</p>
+</blockquote>
+<h1 id="设置背景彩带">17. 设置背景彩带</h1><blockquote>
+<p><a target="_blank" rel="noopener" href="https://github.com/theme-next/theme-next-canvas-ribbon">https://github.com/theme-next/theme-next-canvas-ribbon</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/zproo/canvas-ribbon">https://github.com/zproo/canvas-ribbon</a></p>
+</blockquote>
+<h2 id="方法一">17.1. 方法一</h2><p>转到 NexT 目录</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ cd themes/next</span><br><span class="line">$ ls</span><br><span class="line">_config.yml  crowdin.yml  docs  gulpfile.js  languages  layout  LICENSE.md  package.json  README.md  scripts  source</span><br></pre></td></tr></table></figure>
+
+<p>获取模块</p>
+<p>将模块安装到 source/lib 目录：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git clone https://github.com/theme-next/theme-next-canvas-ribbon source/lib/canvas-ribbon</span><br></pre></td></tr></table></figure>
+
+<p>设置</p>
+<p>在 NexT _config.yml 文件中启用模块：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">canvas_ribbon:</span><br><span class="line">  enable: true</span><br><span class="line">  size: 90</span><br><span class="line">  alpha: 0.6</span><br><span class="line">  zIndex: -1</span><br></pre></td></tr></table></figure>
+
+<p>自定义背景彩带的宽度、透明度和z-index属性</p>
+<blockquote>
+<ul>
+<li><strong><code>size</code></strong>: 彩带宽度, 默认: <strong><code>90</code></strong>.</li>
+<li><strong><code>alpha</code></strong>: 彩带透明度, 默认: <strong><code>0.6</code></strong>.</li>
+<li><strong><code>zIndex</code></strong>: 彩带html标签的z-index属性, 默认: <strong><code>-1</code></strong>.</li>
+</ul>
+</blockquote>
+<h2 id="方法二">17.2. 方法二</h2><p>使用CDN的方式，在 NexT _config.yml 文件中启用canvas_ribbon链接：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">vendors:</span><br><span class="line">  ...</span><br><span class="line">  canvas_ribbon: //cdn.jsdelivr.net/gh/theme-next/theme-next-canvas-ribbon@1/canvas-ribbon.js</span><br></pre></td></tr></table></figure>
+
+<p>在 NexT _config.yml 文件中启用模块：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">canvas_ribbon:</span><br><span class="line">  enable: true</span><br><span class="line">  size: 9</span><br><span class="line">  alpha: 0.6</span><br><span class="line">  zIndex: -1</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="添加动态背景">18. 添加动态背景</h1><blockquote>
+<p><a target="_blank" rel="noopener" href="https://github.com/theme-next/theme-next-canvas-nest">https://github.com/theme-next/theme-next-canvas-nest</a></p>
+</blockquote>
+<p>在主题文件夹下 next/layout/_partials/footer.swig文件最后面添加</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;div&gt;</span><br><span class="line">&lt;script color=&quot;0,0,255&quot; opacity=&quot;0.5&quot; zIndex=&quot;-1&quot; count=&quot;99&quot; src=&quot;https://cdn.jsdelivr.net/npm/canvas-nest.js@1/dist/canvas-nest.js&quot;&gt;&lt;/script&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="设置代码块样式">19. 设置代码块样式</h1><p>代码块的行号显示在上面已经介绍了，位于站点配置文件，对于代码块的主题我么还能设置其背景，增加复制按钮等，可修改主题配置文件如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">codeblock:</span><br><span class="line">  # Code Highlight theme</span><br><span class="line">  # Available values: normal | night | night eighties | night blue | night bright | solarized | solarized dark | galactic</span><br><span class="line">  # See: https://github.com/chriskempson/tomorrow-theme</span><br><span class="line">  highlight_theme: night</span><br><span class="line">  # Add copy button on codeblock</span><br><span class="line">  copy_button:</span><br><span class="line">    enable: true</span><br><span class="line">    # Show text copy result.</span><br><span class="line">    show_result: true</span><br><span class="line">    # Available values: default | flat | mac</span><br><span class="line">    style: default</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="修改文章链接样式">20. 修改文章链接样式</h1><p>修改文件 themes\next\source\css_common\components\post\post.styl，在末尾添加如下css样式，：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">// 文章内链接文本样式</span><br><span class="line">.post-body p a&#123;</span><br><span class="line">  color: #0593d3;</span><br><span class="line">  border-bottom: none;</span><br><span class="line">  border-bottom: 1px solid #0593d3;</span><br><span class="line">  &amp;:hover &#123;</span><br><span class="line">    color: #fc6423;</span><br><span class="line">    border-bottom: none;</span><br><span class="line">    border-bottom: 1px solid #fc6423;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="鼠标点击特效">21. 鼠标点击特效</h1><p>下面是四个比较常用的鼠标点击特效脚本，我们可以把它们放置在 themes\next\source\js\cursor\ 目录下，创建fireworks.js文件：</p>
+<p>礼花特效代码：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br></pre></td><td class="code"><pre><span class="line">class Circle &#123;</span><br><span class="line">  constructor(&#123; origin, speed, color, angle, context &#125;) &#123;</span><br><span class="line">    this.origin = origin</span><br><span class="line">    this.position = &#123; ...this.origin &#125;</span><br><span class="line">    this.color = color</span><br><span class="line">    this.speed = speed</span><br><span class="line">    this.angle = angle</span><br><span class="line">    this.context = context</span><br><span class="line">    this.renderCount = 0</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  draw() &#123;</span><br><span class="line">    this.context.fillStyle = this.color</span><br><span class="line">    this.context.beginPath()</span><br><span class="line">    this.context.arc(this.position.x, this.position.y, 2, 0, Math.PI * 2)</span><br><span class="line">    this.context.fill()</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  move() &#123;</span><br><span class="line">    this.position.x = (Math.sin(this.angle) * this.speed) + this.position.x</span><br><span class="line">    this.position.y = (Math.cos(this.angle) * this.speed) + this.position.y + (this.renderCount * 0.3)</span><br><span class="line">    this.renderCount++</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class Boom &#123;</span><br><span class="line">  constructor (&#123; origin, context, circleCount = 16, area &#125;) &#123;</span><br><span class="line">    this.origin = origin</span><br><span class="line">    this.context = context</span><br><span class="line">    this.circleCount = circleCount</span><br><span class="line">    this.area = area</span><br><span class="line">    this.stop = false</span><br><span class="line">    this.circles = []</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  randomArray(range) &#123;</span><br><span class="line">    const length = range.length</span><br><span class="line">    const randomIndex = Math.floor(length * Math.random())</span><br><span class="line">    return range[randomIndex]</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  randomColor() &#123;</span><br><span class="line">    const range = [&#x27;8&#x27;, &#x27;9&#x27;, &#x27;A&#x27;, &#x27;B&#x27;, &#x27;C&#x27;, &#x27;D&#x27;, &#x27;E&#x27;, &#x27;F&#x27;]</span><br><span class="line">    return &#x27;#&#x27; + this.randomArray(range) + this.randomArray(range) + this.randomArray(range) + this.randomArray(range) + this.randomArray(range) + this.randomArray(range)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  randomRange(start, end) &#123;</span><br><span class="line">    return (end - start) * Math.random() + start</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  init() &#123;</span><br><span class="line">    for(let i = 0; i &lt; this.circleCount; i++) &#123;</span><br><span class="line">      const circle = new Circle(&#123;</span><br><span class="line">        context: this.context,</span><br><span class="line">        origin: this.origin,</span><br><span class="line">        color: this.randomColor(),</span><br><span class="line">        angle: this.randomRange(Math.PI - 1, Math.PI + 1),</span><br><span class="line">        speed: this.randomRange(1, 6)</span><br><span class="line">      &#125;)</span><br><span class="line">      this.circles.push(circle)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  move() &#123;</span><br><span class="line">    this.circles.forEach((circle, index) =&gt; &#123;</span><br><span class="line">      if (circle.position.x &gt; this.area.width || circle.position.y &gt; this.area.height) &#123;</span><br><span class="line">        return this.circles.splice(index, 1)</span><br><span class="line">      &#125;</span><br><span class="line">      circle.move()</span><br><span class="line">    &#125;)</span><br><span class="line">    if (this.circles.length == 0) &#123;</span><br><span class="line">      this.stop = true</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  draw() &#123;</span><br><span class="line">    this.circles.forEach(circle =&gt; circle.draw())</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class CursorSpecialEffects &#123;</span><br><span class="line">  constructor() &#123;</span><br><span class="line">    this.computerCanvas = document.createElement(&#x27;canvas&#x27;)</span><br><span class="line">    this.renderCanvas = document.createElement(&#x27;canvas&#x27;)</span><br><span class="line"></span><br><span class="line">    this.computerContext = this.computerCanvas.getContext(&#x27;2d&#x27;)</span><br><span class="line">    this.renderContext = this.renderCanvas.getContext(&#x27;2d&#x27;)</span><br><span class="line"></span><br><span class="line">    this.globalWidth = window.innerWidth</span><br><span class="line">    this.globalHeight = window.innerHeight</span><br><span class="line"></span><br><span class="line">    this.booms = []</span><br><span class="line">    this.running = false</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  handleMouseDown(e) &#123;</span><br><span class="line">    const boom = new Boom(&#123;</span><br><span class="line">      origin: &#123; x: e.clientX, y: e.clientY &#125;,</span><br><span class="line">      context: this.computerContext,</span><br><span class="line">      area: &#123;</span><br><span class="line">        width: this.globalWidth,</span><br><span class="line">        height: this.globalHeight</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">    boom.init()</span><br><span class="line">    this.booms.push(boom)</span><br><span class="line">    this.running || this.run()</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  handlePageHide() &#123;</span><br><span class="line">    this.booms = []</span><br><span class="line">    this.running = false</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  init() &#123;</span><br><span class="line">    const style = this.renderCanvas.style</span><br><span class="line">    style.position = &#x27;fixed&#x27;</span><br><span class="line">    style.top = style.left = 0</span><br><span class="line">    style.zIndex = &#x27;999999999999999999999999999999999999999999&#x27;</span><br><span class="line">    style.pointerEvents = &#x27;none&#x27;</span><br><span class="line"></span><br><span class="line">    style.width = this.renderCanvas.width = this.computerCanvas.width = this.globalWidth</span><br><span class="line">    style.height = this.renderCanvas.height = this.computerCanvas.height = this.globalHeight</span><br><span class="line"></span><br><span class="line">    document.body.append(this.renderCanvas)</span><br><span class="line"></span><br><span class="line">    window.addEventListener(&#x27;mousedown&#x27;, this.handleMouseDown.bind(this))</span><br><span class="line">    window.addEventListener(&#x27;pagehide&#x27;, this.handlePageHide.bind(this))</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  run() &#123;</span><br><span class="line">    this.running = true</span><br><span class="line">    if (this.booms.length == 0) &#123;</span><br><span class="line">      return this.running = false</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    requestAnimationFrame(this.run.bind(this))</span><br><span class="line"></span><br><span class="line">    this.computerContext.clearRect(0, 0, this.globalWidth, this.globalHeight)</span><br><span class="line">    this.renderContext.clearRect(0, 0, this.globalWidth, this.globalHeight)</span><br><span class="line"></span><br><span class="line">    this.booms.forEach((boom, index) =&gt; &#123;</span><br><span class="line">      if (boom.stop) &#123;</span><br><span class="line">        return this.booms.splice(index, 1)</span><br><span class="line">      &#125;</span><br><span class="line">      boom.move()</span><br><span class="line">      boom.draw()</span><br><span class="line">    &#125;)</span><br><span class="line">    this.renderContext.drawImage(this.computerCanvas, 0, 0, this.globalWidth, this.globalHeight)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">const cursorSpecialEffects = new CursorSpecialEffects()</span><br><span class="line">cursorSpecialEffects.init()</span><br></pre></td></tr></table></figure>
+
+<p>爆炸特效：</p>
+<p>explosion.min.js代码：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&quot;use strict&quot;;function updateCoords(e)&#123;pointerX=(e.clientX||e.touches[0].clientX)-canvasEl.getBoundingClientRect().left,pointerY=e.clientY||e.touches[0].clientY-canvasEl.getBoundingClientRect().top&#125;function setParticuleDirection(e)&#123;var t=anime.random(0,360)*Math.PI/180,a=anime.random(50,180),n=[-1,1][anime.random(0,1)]*a;return&#123;x:e.x+n*Math.cos(t),y:e.y+n*Math.sin(t)&#125;&#125;function createParticule(e,t)&#123;var a=&#123;&#125;;return a.x=e,a.y=t,a.color=colors[anime.random(0,colors.length-1)],a.radius=anime.random(16,32),a.endPos=setParticuleDirection(a),a.draw=function()&#123;ctx.beginPath(),ctx.arc(a.x,a.y,a.radius,0,2*Math.PI,!0),ctx.fillStyle=a.color,ctx.fill()&#125;,a&#125;function createCircle(e,t)&#123;var a=&#123;&#125;;return a.x=e,a.y=t,a.color=&quot;#F00&quot;,a.radius=.1,a.alpha=.5,a.lineWidth=6,a.draw=function()&#123;ctx.globalAlpha=a.alpha,ctx.beginPath(),ctx.arc(a.x,a.y,a.radius,0,2*Math.PI,!0),ctx.lineWidth=a.lineWidth,ctx.strokeStyle=a.color,ctx.stroke(),ctx.globalAlpha=1&#125;,a&#125;function renderParticule(e)&#123;for(var t=0;t&lt;e.animatables.length;t++)e.animatables[t].target.draw()&#125;function animateParticules(e,t)&#123;for(var a=createCircle(e,t),n=[],i=0;i&lt;numberOfParticules;i++)n.push(createParticule(e,t));anime.timeline().add(&#123;targets:n,x:function(e)&#123;return e.endPos.x&#125;,y:function(e)&#123;return e.endPos.y&#125;,radius:.1,duration:anime.random(1200,1800),easing:&quot;easeOutExpo&quot;,update:renderParticule&#125;).add(&#123;targets:a,radius:anime.random(80,160),lineWidth:0,alpha:&#123;value:0,easing:&quot;linear&quot;,duration:anime.random(600,800)&#125;,duration:anime.random(1200,1800),easing:&quot;easeOutExpo&quot;,update:renderParticule,offset:0&#125;)&#125;function debounce(e,t)&#123;var a;return function()&#123;var n=this,i=arguments;clearTimeout(a),a=setTimeout(function()&#123;e.apply(n,i)&#125;,t)&#125;&#125;var canvasEl=document.querySelector(&quot;.fireworks&quot;);if(canvasEl)&#123;var ctx=canvasEl.getContext(&quot;2d&quot;),numberOfParticules=30,pointerX=0,pointerY=0,tap=&quot;mousedown&quot;,colors=[&quot;#FF1461&quot;,&quot;#18FF92&quot;,&quot;#5A87FF&quot;,&quot;#FBF38C&quot;],setCanvasSize=debounce(function()&#123;canvasEl.width=2*window.innerWidth,canvasEl.height=2*window.innerHeight,canvasEl.style.width=window.innerWidth+&quot;px&quot;,canvasEl.style.height=window.innerHeight+&quot;px&quot;,canvasEl.getContext(&quot;2d&quot;).scale(2,2)&#125;,500),render=anime(&#123;duration:1/0,update:function()&#123;ctx.clearRect(0,0,canvasEl.width,canvasEl.height)&#125;&#125;);document.addEventListener(tap,function(e)&#123;&quot;sidebar&quot;!==e.target.id&amp;&amp;&quot;toggle-sidebar&quot;!==e.target.id&amp;&amp;&quot;A&quot;!==e.target.nodeName&amp;&amp;&quot;IMG&quot;!==e.target.nodeName&amp;&amp;(render.play(),updateCoords(e),animateParticules(pointerX,pointerY))&#125;,!1),setCanvasSize(),window.addEventListener(&quot;resize&quot;,setCanvasSize,!1)&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>浮出爱心特效</p>
+<p>love.min.js代码：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">!<span class="function"><span class="keyword">function</span>(<span class="params">e,t,a</span>)</span>&#123;<span class="function"><span class="keyword">function</span> <span class="title">n</span>(<span class="params"></span>)</span>&#123;c(<span class="string">&quot;.heart&#123;width: 10px;height: 10px;position: fixed;background: #f00;transform: rotate(45deg);-webkit-transform: rotate(45deg);-moz-transform: rotate(45deg);&#125;.heart:after,.heart:before&#123;content: &#x27;&#x27;;width: inherit;height: inherit;background: inherit;border-radius: 50%;-webkit-border-radius: 50%;-moz-border-radius: 50%;position: fixed;&#125;.heart:after&#123;top: -5px;&#125;.heart:before&#123;left: -5px;&#125;&quot;</span>),o(),r()&#125;<span class="function"><span class="keyword">function</span> <span class="title">r</span>(<span class="params"></span>)</span>&#123;<span class="keyword">for</span>(<span class="keyword">var</span> e=<span class="number">0</span>;e&lt;d.length;e++)d[e].alpha&lt;=<span class="number">0</span>?(t.body.removeChild(d[e].el),d.splice(e,<span class="number">1</span>)):(d[e].y--,d[e].scale+=<span class="number">.004</span>,d[e].alpha-=<span class="number">.013</span>,d[e].el.style.cssText=<span class="string">&quot;left:&quot;</span>+d[e].x+<span class="string">&quot;px;top:&quot;</span>+d[e].y+<span class="string">&quot;px;opacity:&quot;</span>+d[e].alpha+<span class="string">&quot;;transform:scale(&quot;</span>+d[e].scale+<span class="string">&quot;,&quot;</span>+d[e].scale+<span class="string">&quot;) rotate(45deg);background:&quot;</span>+d[e].color+<span class="string">&quot;;z-index:99999&quot;</span>);requestAnimationFrame(r)&#125;<span class="function"><span class="keyword">function</span> <span class="title">o</span>(<span class="params"></span>)</span>&#123;<span class="keyword">var</span> t=<span class="string">&quot;function&quot;</span>==<span class="keyword">typeof</span> e.onclick&amp;&amp;e.onclick;e.onclick=<span class="function"><span class="keyword">function</span>(<span class="params">e</span>)</span>&#123;t&amp;&amp;t(),i(e)&#125;&#125;<span class="function"><span class="keyword">function</span> <span class="title">i</span>(<span class="params">e</span>)</span>&#123;<span class="keyword">var</span> a=t.createElement(<span class="string">&quot;div&quot;</span>);a.className=<span class="string">&quot;heart&quot;</span>,d.push(&#123;<span class="attr">el</span>:a,<span class="attr">x</span>:e.clientX-<span class="number">5</span>,<span class="attr">y</span>:e.clientY-<span class="number">5</span>,<span class="attr">scale</span>:<span class="number">1</span>,<span class="attr">alpha</span>:<span class="number">1</span>,<span class="attr">color</span>:s()&#125;),t.body.appendChild(a)&#125;<span class="function"><span class="keyword">function</span> <span class="title">c</span>(<span class="params">e</span>)</span>&#123;<span class="keyword">var</span> a=t.createElement(<span class="string">&quot;style&quot;</span>);a.type=<span class="string">&quot;text/css&quot;</span>;<span class="keyword">try</span>&#123;a.appendChild(t.createTextNode(e))&#125;<span class="keyword">catch</span>(t)&#123;a.styleSheet.cssText=e&#125;t.getElementsByTagName(<span class="string">&quot;head&quot;</span>)[<span class="number">0</span>].appendChild(a)&#125;<span class="function"><span class="keyword">function</span> <span class="title">s</span>(<span class="params"></span>)</span>&#123;<span class="keyword">return</span><span class="string">&quot;rgb(&quot;</span>+~~(<span class="number">255</span>*<span class="built_in">Math</span>.random())+<span class="string">&quot;,&quot;</span>+~~(<span class="number">255</span>*<span class="built_in">Math</span>.random())+<span class="string">&quot;,&quot;</span>+~~(<span class="number">255</span>*<span class="built_in">Math</span>.random())+<span class="string">&quot;)&quot;</span>&#125;<span class="keyword">var</span> d=[];e.requestAnimationFrame=<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;<span class="keyword">return</span> e.requestAnimationFrame||e.webkitRequestAnimationFrame||e.mozRequestAnimationFrame||e.oRequestAnimationFrame||e.msRequestAnimationFrame||<span class="function"><span class="keyword">function</span>(<span class="params">e</span>)</span>&#123;<span class="built_in">setTimeout</span>(e,<span class="number">1e3</span>/<span class="number">60</span>)&#125;&#125;(),n()&#125;(<span class="built_in">window</span>,<span class="built_in">document</span>);</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>浮出文字特效</p>
+<p>text.js代码：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">var a_idx = 0;</span><br><span class="line">jQuery(document).ready(function($) &#123;</span><br><span class="line">  $(&quot;body&quot;).click(function(e) &#123;</span><br><span class="line">    var a = new Array(&quot;喜欢我&quot;, &quot;不喜欢我&quot;);</span><br><span class="line">    var $i = $(&quot;&lt;span/&gt;&quot;).text(a[a_idx]);</span><br><span class="line">    var x = e.pageX,</span><br><span class="line">    y = e.pageY;</span><br><span class="line">    $i.css(&#123;</span><br><span class="line">      &quot;z-index&quot;: 99999,</span><br><span class="line">      &quot;top&quot;: y - 28,</span><br><span class="line">      &quot;left&quot;: x - a[a_idx].length * 8,</span><br><span class="line">      &quot;position&quot;: &quot;absolute&quot;,</span><br><span class="line">      &quot;color&quot;: &quot;#ff7a45&quot;</span><br><span class="line">    &#125;);</span><br><span class="line">    $(&quot;body&quot;).append($i);</span><br><span class="line">    $i.animate(&#123;</span><br><span class="line">      &quot;top&quot;: y - 180,</span><br><span class="line">      &quot;opacity&quot;: 0</span><br><span class="line">    &#125;, 1500, function() &#123;</span><br><span class="line">      $i.remove();</span><br><span class="line">    &#125;);</span><br><span class="line">    a_idx = (a_idx + 1) % a.length;</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>然后我们在主题自定义布局文件 <code>themes\next\layout\_custom\custom.swig</code> 中添加以下代码：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&#123;# 鼠标点击特效 #&#125;</span><br><span class="line">&#123;% if theme.cursor_effect == &quot;fireworks&quot; %&#125;</span><br><span class="line">  &lt;script async src=&quot;/js/cursor/fireworks.js&quot;&gt;&lt;/script&gt;</span><br><span class="line">&#123;% elseif theme.cursor_effect == &quot;explosion&quot; %&#125;</span><br><span class="line">  &lt;canvas class=&quot;fireworks&quot; style=&quot;position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;&quot; &gt;&lt;/canvas&gt;</span><br><span class="line">  &lt;script src=&quot;//cdn.bootcss.com/animejs/2.2.0/anime.min.js&quot;&gt;&lt;/script&gt;</span><br><span class="line">  &lt;script async src=&quot;/js/cursor/explosion.min.js&quot;&gt;&lt;/script&gt;</span><br><span class="line">&#123;% elseif theme.cursor_effect == &quot;love&quot; %&#125;</span><br><span class="line">  &lt;script async src=&quot;/js/cursor/love.min.js&quot;&gt;&lt;/script&gt;</span><br><span class="line">&#123;% elseif theme.cursor_effect == &quot;text&quot; %&#125;</span><br><span class="line">  &lt;script async src=&quot;/js/cursor/text.js&quot;&gt;&lt;/script&gt;</span><br><span class="line">&#123;% endif %&#125;</span><br></pre></td></tr></table></figure>
+
+<p>如果 <code>custom.swig</code> 文件不存在，我们可以手动新建这个文件并在布局页面 <code>themes\next\layout\_layout.swig</code> 中 body 末尾引入：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">      ...</span><br><span class="line">      &#123;% include &#x27;_third-party/exturl.swig&#x27; %&#125;</span><br><span class="line">      &#123;% include &#x27;_third-party/bookmark.swig&#x27; %&#125;</span><br><span class="line">      &#123;% include &#x27;_third-party/copy-code.swig&#x27; %&#125;</span><br><span class="line"></span><br><span class="line">+     &#123;% include &#x27;_custom/custom.swig&#x27; %&#125;</span><br><span class="line">    &lt;/body&gt;</span><br><span class="line">  &lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+<p>然后我们在主题配置文件中添加以下代码：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># mouse click effect: fireworks | explosion | love | text</span><br><span class="line">cursor_effect: fireworks</span><br></pre></td></tr></table></figure>
+
+<p>这样即可在配置文件中一键快速切换鼠标点击特效。</p>
+<h1 id="打字特效">22. 打字特效</h1><p>我们需要添加下面这个脚本 <code>activate-power-mode.min.js</code>，然后放置在 <code>themes\next\source\js\</code> 目录下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(function webpackUniversalModuleDefinition(root,factory)&#123;if(typeof exports===&#x27;object&#x27;&amp;&amp;typeof module===&#x27;object&#x27;)module.exports=factory();else if(typeof define===&#x27;function&#x27;&amp;&amp;define.amd)define([],factory);else if(typeof exports===&#x27;object&#x27;)exports[&quot;POWERMODE&quot;]=factory();else root[&quot;POWERMODE&quot;]=factory()&#125;)(this,function()&#123;return(function(modules)&#123;var installedModules=&#123;&#125;;function __webpack_require__(moduleId)&#123;if(installedModules[moduleId])return installedModules[moduleId].exports;var module=installedModules[moduleId]=&#123;exports:&#123;&#125;,id:moduleId,loaded:false&#125;;modules[moduleId].call(module.exports,module,module.exports,__webpack_require__);module.loaded=true;return module.exports&#125;__webpack_require__.m=modules;__webpack_require__.c=installedModules;__webpack_require__.p=&quot;&quot;;return __webpack_require__(0)&#125;)([function(module,exports,__webpack_require__)&#123;&#x27;use strict&#x27;;var canvas=document.createElement(&#x27;canvas&#x27;);canvas.width=window.innerWidth;canvas.height=window.innerHeight;canvas.style.cssText=&#x27;position:fixed;top:0;left:0;pointer-events:none;z-index:999999&#x27;;window.addEventListener(&#x27;resize&#x27;,function()&#123;canvas.width=window.innerWidth;canvas.height=window.innerHeight&#125;);document.body.appendChild(canvas);var context=canvas.getContext(&#x27;2d&#x27;);var particles=[];var particlePointer=0;POWERMODE.shake=true;function getRandom(min,max)&#123;return Math.random()*(max-min)+min&#125;function getColor(el)&#123;if(POWERMODE.colorful)&#123;var u=getRandom(0,360);return&#x27;hsla(&#x27;+getRandom(u-10,u+10)+&#x27;, 100%, &#x27;+getRandom(50,80)+&#x27;%, &#x27;+1+&#x27;)&#x27;&#125;else&#123;return window.getComputedStyle(el).color&#125;&#125;function getCaret()&#123;var el=document.activeElement;var bcr;if(el.tagName===&#x27;TEXTAREA&#x27;||(el.tagName===&#x27;INPUT&#x27;&amp;&amp;el.getAttribute(&#x27;type&#x27;)===&#x27;text&#x27;))&#123;var offset=__webpack_require__(1)(el,el.selectionStart);bcr=el.getBoundingClientRect();return&#123;x:offset.left+bcr.left,y:offset.top+bcr.top,color:getColor(el)&#125;&#125;var selection=window.getSelection();if(selection.rangeCount)&#123;var range=selection.getRangeAt(0);var startNode=range.startContainer;if(startNode.nodeType===document.TEXT_NODE)&#123;startNode=startNode.parentNode&#125;bcr=range.getBoundingClientRect();return&#123;x:bcr.left,y:bcr.top,color:getColor(startNode)&#125;&#125;return&#123;x:0,y:0,color:&#x27;transparent&#x27;&#125;&#125;function createParticle(x,y,color)&#123;return&#123;x:x,y:y,alpha:1,color:color,velocity:&#123;x:-1+Math.random()*2,y:-3.5+Math.random()*2&#125;&#125;&#125;function POWERMODE()&#123;&#123;var caret=getCaret();var numParticles=5+Math.round(Math.random()*10);while(numParticles--)&#123;particles[particlePointer]=createParticle(caret.x,caret.y,caret.color);particlePointer=(particlePointer+1)%500&#125;&#125;&#123;if(POWERMODE.shake)&#123;var intensity=1+2*Math.random();var x=intensity*(Math.random()&gt;0.5?-1:1);var y=intensity*(Math.random()&gt;0.5?-1:1);document.body.style.marginLeft=x+&#x27;px&#x27;;document.body.style.marginTop=y+&#x27;px&#x27;;setTimeout(function()&#123;document.body.style.marginLeft=&#x27;&#x27;;document.body.style.marginTop=&#x27;&#x27;&#125;,75)&#125;&#125;&#125;;POWERMODE.colorful=false;function loop()&#123;requestAnimationFrame(loop);context.clearRect(0,0,canvas.width,canvas.height);for(var i=0;i&lt;particles.length;++i)&#123;var particle=particles[i];if(particle.alpha&lt;=0.1)continue;particle.velocity.y+=0.075;particle.x+=particle.velocity.x;particle.y+=particle.velocity.y;particle.alpha*=0.96;context.globalAlpha=particle.alpha;context.fillStyle=particle.color;context.fillRect(Math.round(particle.x-1.5),Math.round(particle.y-1.5),3,3)&#125;&#125;requestAnimationFrame(loop);module.exports=POWERMODE&#125;,function(module,exports)&#123;(function()&#123;var properties=[&#x27;direction&#x27;,&#x27;boxSizing&#x27;,&#x27;width&#x27;,&#x27;height&#x27;,&#x27;overflowX&#x27;,&#x27;overflowY&#x27;,&#x27;borderTopWidth&#x27;,&#x27;borderRightWidth&#x27;,&#x27;borderBottomWidth&#x27;,&#x27;borderLeftWidth&#x27;,&#x27;borderStyle&#x27;,&#x27;paddingTop&#x27;,&#x27;paddingRight&#x27;,&#x27;paddingBottom&#x27;,&#x27;paddingLeft&#x27;,&#x27;fontStyle&#x27;,&#x27;fontVariant&#x27;,&#x27;fontWeight&#x27;,&#x27;fontStretch&#x27;,&#x27;fontSize&#x27;,&#x27;fontSizeAdjust&#x27;,&#x27;lineHeight&#x27;,&#x27;fontFamily&#x27;,&#x27;textAlign&#x27;,&#x27;textTransform&#x27;,&#x27;textIndent&#x27;,&#x27;textDecoration&#x27;,&#x27;letterSpacing&#x27;,&#x27;wordSpacing&#x27;,&#x27;tabSize&#x27;,&#x27;MozTabSize&#x27;];var isFirefox=window.mozInnerScreenX!=null;function getCaretCoordinates(element,position,options)&#123;var debug=options&amp;&amp;options.debug||false;if(debug)&#123;var el=document.querySelector(&#x27;#input-textarea-caret-position-mirror-div&#x27;);if(el)&#123;el.parentNode.removeChild(el)&#125;&#125;var div=document.createElement(&#x27;div&#x27;);div.id=&#x27;input-textarea-caret-position-mirror-div&#x27;;document.body.appendChild(div);var style=div.style;var computed=window.getComputedStyle?getComputedStyle(element):element.currentStyle;style.whiteSpace=&#x27;pre-wrap&#x27;;if(element.nodeName!==&#x27;INPUT&#x27;)style.wordWrap=&#x27;break-word&#x27;;style.position=&#x27;absolute&#x27;;if(!debug)style.visibility=&#x27;hidden&#x27;;properties.forEach(function(prop)&#123;style[prop]=computed[prop]&#125;);if(isFirefox)&#123;if(element.scrollHeight&gt;parseInt(computed.height))style.overflowY=&#x27;scroll&#x27;&#125;else&#123;style.overflow=&#x27;hidden&#x27;&#125;div.textContent=element.value.substring(0,position);if(element.nodeName===&#x27;INPUT&#x27;)div.textContent=div.textContent.replace(/\s/g,&quot;\u00a0&quot;);var span=document.createElement(&#x27;span&#x27;);span.textContent=element.value.substring(position)||&#x27;.&#x27;;div.appendChild(span);var coordinates=&#123;top:span.offsetTop+parseInt(computed[&#x27;borderTopWidth&#x27;]),left:span.offsetLeft+parseInt(computed[&#x27;borderLeftWidth&#x27;])&#125;;if(debug)&#123;span.style.backgroundColor=&#x27;#aaa&#x27;&#125;else&#123;document.body.removeChild(div)&#125;return coordinates&#125;if(typeof module!=&quot;undefined&quot;&amp;&amp;typeof module.exports!=&quot;undefined&quot;)&#123;module.exports=getCaretCoordinates&#125;else&#123;window.getCaretCoordinates=getCaretCoordinates&#125;&#125;())&#125;])&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>在主题自定义布局文件 <code>themes\next\layout\_custom\custom.swig</code> 中添加以下代码：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&#123;# 打字特效 #&#125;</span><br><span class="line">&#123;% if theme.typing_effect %&#125;</span><br><span class="line">  &lt;script src=&quot;/js/activate-power-mode.min.js&quot;&gt;&lt;/script&gt;</span><br><span class="line">  &lt;script&gt;</span><br><span class="line">    POWERMODE.colorful = &#123;&#123; theme.typing_effect.colorful &#125;&#125;;</span><br><span class="line">    POWERMODE.shake = &#123;&#123; theme.typing_effect.shake &#125;&#125;;</span><br><span class="line">    document.body.addEventListener(&#x27;input&#x27;, POWERMODE);</span><br><span class="line">  &lt;/script&gt;</span><br><span class="line">&#123;% endif %&#125;</span><br></pre></td></tr></table></figure>
+
+<p>如果 <code>custom.swig</code> 文件不存在，我们可以手动新建这个文件并在布局页面 <code>themes\next\layout\_layout.swig</code> 中 body 末尾引入：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">      ...</span><br><span class="line">      &#123;% include &#x27;_third-party/exturl.swig&#x27; %&#125;</span><br><span class="line">      &#123;% include &#x27;_third-party/bookmark.swig&#x27; %&#125;</span><br><span class="line">      &#123;% include &#x27;_third-party/copy-code.swig&#x27; %&#125;</span><br><span class="line"></span><br><span class="line">+     &#123;% include &#x27;_custom/custom.swig&#x27; %&#125;</span><br><span class="line">    &lt;/body&gt;</span><br><span class="line">  &lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+<p>然后我们在主题配置文件中添加以下代码：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># typing effect</span><br><span class="line">typing_effect:</span><br><span class="line">  colorful: true  # 礼花特效</span><br><span class="line">  shake: false  # 震动特效</span><br></pre></td></tr></table></figure>
+
+<p>这样即可在配置文件中一键快速切换打字特效。</p>
+<p>参考：</p>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://tding.top/archives/58cff12b.html">https://tding.top/archives/58cff12b.html</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_40590778/article/details/104662040">https://blog.csdn.net/qq_40590778/article/details/104662040</a></p>
+</blockquote>
+<h1 id="字体调整">23. 字体调整</h1><p>Next主题自带的字体是较大的，我这里给出了一个比较合适的方案：<br>1.打开/blog/themes/next/source/css/_variables/base.styl文件，查找<strong>Font size</strong>字段，将**$font-size-large**参数由1.125em改为1.0em</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">// Font size</span><br><span class="line">$font-size-base           = (hexo-config(&#x27;font.enable&#x27;) and hexo-config(&#x27;font.global.size&#x27;) is a &#x27;unit&#x27;) ? unit(hexo-config(&#x27;font.global.size&#x27;), em) : 1em;</span><br><span class="line">$font-size-smallest       = .75em;</span><br><span class="line">$font-size-smaller        = .8125em;</span><br><span class="line">$font-size-small          = .875em;</span><br><span class="line">$font-size-medium         = 1em;</span><br><span class="line">$font-size-large          = 1.0em;</span><br><span class="line">$font-size-larger         = 1.25em;</span><br><span class="line">$font-size-largest        = 1.5em;</span><br></pre></td></tr></table></figure>
+
+<p>2.打开/blog/themes/next/_config.yml文件，查找<strong>Font Settings</strong>字段并修改如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"># ---------------------------------------------------------------</span><br><span class="line"># Font Settings</span><br><span class="line"># ---------------------------------------------------------------</span><br><span class="line"># Find fonts on Google Fonts (https://fonts.google.com)</span><br><span class="line"># All fonts set here will have the following styles:</span><br><span class="line">#   light | light italic | normal | normal italic | bold | bold italic</span><br><span class="line"># Be aware that setting too much fonts will cause site running slowly</span><br><span class="line"># ---------------------------------------------------------------</span><br><span class="line"># Web Safe fonts are recommended for `global` (and `title`):</span><br><span class="line"># Arial | Tahoma | Helvetica | Times New Roman | Courier New | Verdana | Georgia | Palatino | Garamond | Comic Sans MS | Trebuchet MS</span><br><span class="line"># ---------------------------------------------------------------</span><br><span class="line"></span><br><span class="line">font:</span><br><span class="line">  enable: true</span><br><span class="line"></span><br><span class="line">  # Uri of fonts host, e.g. https://fonts.googleapis.com (Default).</span><br><span class="line">  host:</span><br><span class="line"></span><br><span class="line">  # Font options:</span><br><span class="line">  # `external: true` will load this font family from `host` above.</span><br><span class="line">  # `family: Times New Roman`. Without any quotes.</span><br><span class="line">  # `size: x.x`. Use `em` as unit. Default: 1 (16px)</span><br><span class="line"></span><br><span class="line">  # Global font settings used for all elements inside &lt;body&gt;.</span><br><span class="line">  global:</span><br><span class="line">    external: true</span><br><span class="line">    family: Lato</span><br><span class="line">    size:</span><br><span class="line"></span><br><span class="line">  # Font settings for site title (.site-title).</span><br><span class="line">  title:</span><br><span class="line">    external: true</span><br><span class="line">    family:</span><br><span class="line">    size:</span><br><span class="line"></span><br><span class="line">  # Font settings for headlines (&lt;h1&gt; to &lt;h6&gt;).</span><br><span class="line">  headings:</span><br><span class="line">    external: true</span><br><span class="line">    family:</span><br><span class="line">    size:</span><br><span class="line"></span><br><span class="line">  # Font settings for posts (.post-body).</span><br><span class="line">  posts:</span><br><span class="line">    external: true</span><br><span class="line">    family:</span><br><span class="line">    size: 0.8125</span><br><span class="line"></span><br><span class="line">  # Font settings for &lt;code&gt; and code blocks.</span><br><span class="line">  codes:</span><br><span class="line">    external: true</span><br><span class="line">    family:</span><br><span class="line">    size:</span><br></pre></td></tr></table></figure>
+
+<p>参考</p>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.liaofuzhan.com/posts/2114475547.html">https://www.liaofuzhan.com/posts/2114475547.html</a></p>
+<p><a target="_blank" rel="noopener" href="https://tding.top/archives/2bd6d82.html">https://tding.top/archives/2bd6d82.html</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.simon96.online/2018/10/12/hexo-tutorial/">https://www.simon96.online/2018/10/12/hexo-tutorial/</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_44815733/article/details/88817220">https://blog.csdn.net/weixin_44815733/article/details/88817220</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_43971764/article/details/96754325">https://blog.csdn.net/weixin_43971764/article/details/96754325</a></p>
+</blockquote>
+
+    </div>
+
+    
+    
+    
+
+<div>
+  
+    <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+
+  
+</div>
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>何宇泽
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://heyonggs.github.io/p/40150.html" title="Hexo下Next博客配置">https://heyonggs.github.io/p/40150.html</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh-CN" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Hexo/" rel="tag"><i class="fa fa-tag"></i> Hexo</a>
+              <a href="/tags/Next/" rel="tag"><i class="fa fa-tag"></i> Next</a>
+          </div>
+
+        
+  <div class="post-widgets">
+    <div class="wp_rating">
+      <div id="wpac-rating"></div>
+    </div>
+  </div>
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/p/14331.html" rel="prev" title="Linux磁盘满了解决方案">
+      <i class="fa fa-chevron-left"></i> Linux磁盘满了解决方案
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/p/33227.html" rel="next" title="Pipeline详解">
+      Pipeline详解 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="lv-container" data-id="city" data-uid="MTAyMC81NDMyMS8zMDc5Mg=="></div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+<script type="text/javascript" id="clustrmaps" src="//clustrmaps.com/map_v2.js?d=PGYncUiSTnkUS8Nkg3hKuBb67df9OnAR0ugkllogplA&cl=ffffff&w=a"></script>
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4"><span class="nav-text">1. 常用命令</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#live2d%E7%9C%8B%E6%9D%BF%E5%A8%98"><span class="nav-text">2. live2d看板娘</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#hexo%E7%9A%84next%E9%85%8D%E7%BD%AE%E7%89%88%E6%9D%83%E4%BF%A1%E6%81%AF"><span class="nav-text">3. hexo的next配置版权信息</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%E6%96%87%E7%AB%A0%E5%BA%95%E9%83%A8%E7%9A%84%E9%82%A3%E4%B8%AA%E5%B8%A6-%E5%8F%B7%E7%9A%84%E6%A0%87%E7%AD%BE"><span class="nav-text">4. 修改文章底部的那个带#号的标签</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%B3%E4%B8%8A%E8%A7%92%E6%B7%BB%E5%8A%A0fork-me-on-github"><span class="nav-text">5. 右上角添加fork me on github</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Hexo%E4%B8%BA%E6%A0%87%E9%A2%98%E8%87%AA%E5%8A%A8%E6%B7%BB%E5%8A%A0%E5%BA%8F%E5%8F%B7"><span class="nav-text">6. Hexo为标题自动添加序号</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#hexo-%E5%8F%96%E6%B6%88%E2%80%9C%E6%96%87%E7%AB%A0%E7%9B%AE%E5%BD%95%E2%80%9D%E7%9A%84%E8%87%AA%E5%8A%A8%E7%BC%96%E5%8F%B7"><span class="nav-text">7. hexo 取消“文章目录”的自动编号</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%9F%AD%E5%9C%B0%E5%9D%80"><span class="nav-text">8. 短地址</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%87%AA%E5%8A%A8%E9%83%A8%E7%BD%B2hexo%E5%8D%9A%E5%AE%A2%E5%88%B0%E9%98%BF%E9%87%8C%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8"><span class="nav-text">9. 自动部署hexo博客到阿里云服务器</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%8E%AF%E5%A2%83"><span class="nav-text">9.1. 环境</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%9D%E8%B7%AF"><span class="nav-text">9.2. 思路</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E4%BB%93%E5%BA%93"><span class="nav-text">9.3. 创建仓库</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Hexo%E9%85%8D%E7%BD%AE"><span class="nav-text">9.4. Hexo配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8F%92%E4%BB%B6%E5%AE%89%E8%A3%85"><span class="nav-text">9.5. 插件安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%87%AA%E5%8A%A8%E9%83%A8%E7%BD%B2"><span class="nav-text">9.6. 自动部署</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%90%E8%A1%8C"><span class="nav-text">9.7. 运行</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%E4%B8%BB%E9%A2%98%E9%A1%B5%E9%9D%A2%E5%B8%83%E5%B1%80%E4%B8%BA%E5%9C%86%E8%A7%92"><span class="nav-text">10. 修改主题页面布局为圆角</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%A2%9E%E5%8A%A0-canvas-%E7%B2%92%E5%AD%90%E6%97%B6%E9%92%9F"><span class="nav-text">11. 增加 canvas 粒子时钟</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%96%87%E7%AB%A0%E8%AF%84%E5%88%86%E5%8A%9F%E8%83%BD"><span class="nav-text">12. 文章评分功能</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BD%91%E7%AB%99%E8%BF%90%E8%A1%8C%E6%97%B6%E9%97%B4"><span class="nav-text">13. 网站运行时间</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%98%85%E8%AF%BB%E5%85%A8%E6%96%87%E6%8C%89%E9%92%AE%E5%BC%80%E5%90%AF"><span class="nav-text">14. 阅读全文按钮开启</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E5%AE%9E%E6%97%B6%E8%81%8A%E5%A4%A9"><span class="nav-text">15. 配置实时聊天</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%AE%BE%E7%BD%AE%E5%A4%B4%E5%83%8F%E5%9C%86%E8%A7%92%E5%8F%8A%E6%97%8B%E8%BD%AC"><span class="nav-text">16. 设置头像圆角及旋转</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%AE%BE%E7%BD%AE%E8%83%8C%E6%99%AF%E5%BD%A9%E5%B8%A6"><span class="nav-text">17. 设置背景彩带</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%B9%E6%B3%95%E4%B8%80"><span class="nav-text">17.1. 方法一</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%B9%E6%B3%95%E4%BA%8C"><span class="nav-text">17.2. 方法二</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%B7%BB%E5%8A%A0%E5%8A%A8%E6%80%81%E8%83%8C%E6%99%AF"><span class="nav-text">18. 添加动态背景</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%AE%BE%E7%BD%AE%E4%BB%A3%E7%A0%81%E5%9D%97%E6%A0%B7%E5%BC%8F"><span class="nav-text">19. 设置代码块样式</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%E6%96%87%E7%AB%A0%E9%93%BE%E6%8E%A5%E6%A0%B7%E5%BC%8F"><span class="nav-text">20. 修改文章链接样式</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%BC%A0%E6%A0%87%E7%82%B9%E5%87%BB%E7%89%B9%E6%95%88"><span class="nav-text">21. 鼠标点击特效</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%89%93%E5%AD%97%E7%89%B9%E6%95%88"><span class="nav-text">22. 打字特效</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AD%97%E4%BD%93%E8%B0%83%E6%95%B4"><span class="nav-text">23. 字体调整</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="何宇泽"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">何宇泽</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">50</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+        <span class="site-state-item-count">22</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">31</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/heyonggs" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;heyonggs" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:heyonggs@gmail.com" title="E-Mail → mailto:heyonggs@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/heyong" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;heyong" rel="noopener" target="_blank"><i class="fab fa-weibo fa-fw"></i>Weibo</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://twitter.com/heyonggs" title="Twitter → https:&#x2F;&#x2F;twitter.com&#x2F;heyonggs" rel="noopener" target="_blank"><i class="fab fa-twitter fa-fw"></i>Twitter</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.facebook.com/heyonggs" title="FB Page → https:&#x2F;&#x2F;www.facebook.com&#x2F;heyonggs" rel="noopener" target="_blank"><i class="fab fa-facebook fa-fw"></i>FB Page</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://youtube.com/channel/UCbSvNdtoKf8hEBqHByZxikQ" title="YouTube → https:&#x2F;&#x2F;youtube.com&#x2F;channel&#x2F;UCbSvNdtoKf8hEBqHByZxikQ" rel="noopener" target="_blank"><i class="fab fa-youtube fa-fw"></i>YouTube</a>
+      </span>
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh-CN" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+      </div>
+
+         
+           
+         
+         <div style="">
+  <canvas id="canvas" style="width:60%;">当前浏览器不支持canvas，请更换浏览器后再试</canvas>
+</div>
+<script>
+(function(){
+
+   var digit=
+    [
+        [
+            [0,0,1,1,1,0,0],
+            [0,1,1,0,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,0,1,1,0],
+            [0,0,1,1,1,0,0]
+        ],//0
+        [
+            [0,0,0,1,1,0,0],
+            [0,1,1,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [1,1,1,1,1,1,1]
+        ],//1
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,0,0,0],
+            [0,1,1,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,0,0,0,1,1],
+            [1,1,1,1,1,1,1]
+        ],//2
+        [
+            [1,1,1,1,1,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//3
+        [
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,1,0],
+            [0,0,1,1,1,1,0],
+            [0,1,1,0,1,1,0],
+            [1,1,0,0,1,1,0],
+            [1,1,1,1,1,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,1,1]
+        ],//4
+        [
+            [1,1,1,1,1,1,1],
+            [1,1,0,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,1,1,1,1,0],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//5
+        [
+            [0,0,0,0,1,1,0],
+            [0,0,1,1,0,0,0],
+            [0,1,1,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,0,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//6
+        [
+            [1,1,1,1,1,1,1],
+            [1,1,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0]
+        ],//7
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//8
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,1,1,0,0,0,0]
+        ],//9
+        [
+            [0,0,0,0,0,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,0,0,0]
+        ]//:
+    ];
+
+var canvas = document.getElementById('canvas');
+
+if(canvas.getContext){
+    var cxt = canvas.getContext('2d');
+    //声明canvas的宽高
+    var H = 100,W = 700;
+    canvas.height = H;
+    canvas.width = W;
+    cxt.fillStyle = '#f00';
+    cxt.fillRect(10,10,50,50);
+
+    //存储时间数据
+    var data = [];
+    //存储运动的小球
+    var balls = [];
+    //设置粒子半径
+    var R = canvas.height/20-1;
+    (function(){
+        var temp = /(\d)(\d):(\d)(\d):(\d)(\d)/.exec(new Date());
+        //存储时间数字，由十位小时、个位小时、冒号、十位分钟、个位分钟、冒号、十位秒钟、个位秒钟这7个数字组成
+        data.push(temp[1],temp[2],10,temp[3],temp[4],10,temp[5],temp[6]);
+    })();
+
+    /*生成点阵数字*/
+    function renderDigit(index,num){
+        for(var i = 0; i < digit[num].length; i++){
+            for(var j = 0; j < digit[num][i].length; j++){
+                if(digit[num][i][j] == 1){
+                    cxt.beginPath();
+                    cxt.arc(14*(R+2)*index + j*2*(R+1)+(R+1),i*2*(R+1)+(R+1),R,0,2*Math.PI);
+                    cxt.closePath();
+                    cxt.fill();
+                }
+            }
+        }
+    }
+
+    /*更新时钟*/
+    function updateDigitTime(){
+        var changeNumArray = [];
+        var temp = /(\d)(\d):(\d)(\d):(\d)(\d)/.exec(new Date());
+        var NewData = [];
+        NewData.push(temp[1],temp[2],10,temp[3],temp[4],10,temp[5],temp[6]);
+        for(var i = data.length-1; i >=0 ; i--){
+            //时间发生变化
+            if(NewData[i] !== data[i]){
+                //将变化的数字值和在data数组中的索引存储在changeNumArray数组中
+                changeNumArray.push(i+'_'+(Number(data[i])+1)%10);
+            }
+        }
+        //增加小球
+        for(var i = 0; i< changeNumArray.length; i++){
+            addBalls.apply(this,changeNumArray[i].split('_'));
+        }
+        data = NewData.concat();
+    }
+
+    /*更新小球状态*/
+    function updateBalls(){
+        for(var i = 0; i < balls.length; i++){
+            balls[i].stepY += balls[i].disY;
+            balls[i].x += balls[i].stepX;
+            balls[i].y += balls[i].stepY;
+            if(balls[i].x > W + R || balls[i].y > H + R){
+                balls.splice(i,1);
+                i--;
+            }
+        }
+    }
+
+    /*增加要运动的小球*/
+    function addBalls(index,num){
+        var numArray = [1,2,3];
+        var colorArray =  ["#3BE","#09C","#A6C","#93C","#9C0","#690","#FB3","#F80","#F44","#C00"];
+        for(var i = 0; i < digit[num].length; i++){
+            for(var j = 0; j < digit[num][i].length; j++){
+                if(digit[num][i][j] == 1){
+                    var ball = {
+                        x:14*(R+2)*index + j*2*(R+1)+(R+1),
+                        y:i*2*(R+1)+(R+1),
+                        stepX:Math.floor(Math.random() * 4 -2),
+                        stepY:-2*numArray[Math.floor(Math.random()*numArray.length)],
+                        color:colorArray[Math.floor(Math.random()*colorArray.length)],
+                        disY:1
+                    };
+                    balls.push(ball);
+                }
+            }
+        }
+    }
+
+    /*渲染*/
+    function render(){
+        //重置画布宽度，达到清空画布的效果
+        canvas.height = 100;
+        //渲染时钟
+        for(var i = 0; i < data.length; i++){
+            renderDigit(i,data[i]);
+        }
+        //渲染小球
+        for(var i = 0; i < balls.length; i++){
+            cxt.beginPath();
+            cxt.arc(balls[i].x,balls[i].y,R,0,2*Math.PI);
+            cxt.fillStyle = balls[i].color;
+            cxt.closePath();
+            cxt.fill();
+        }
+    }
+
+    clearInterval(oTimer);
+    var oTimer = setInterval(function(){
+        //更新时钟
+        updateDigitTime();
+        //更新小球状态
+        updateBalls();
+        //渲染
+        render();
+    },50);
+}
+
+})();
+</script>
+
+
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        <div class="copyright">
+  
+  &copy; 2015 – 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">何宇泽</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">329k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">4:59</span>
+</div>
+  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">京ICP备19003190号-2 </a>
+      <img src="https://cdn.jsdelivr.net/gh/heyonggs/images@master/wp/2021/beian/202110221040632.png" style="display: inline-block;"><a href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=11010502047382" rel="noopener" target="_blank">京公网安备 11010502047382号 </a>
+  </div>
+
+<div>
+<span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
+<script>
+    var now = new Date();
+    function createtime() {
+        var grt= new Date("03/04/2015 00:00:00");
+        now.setTime(now.getTime()+250);
+        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
+        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
+        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
+        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
+        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
+        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;}
+        document.getElementById("timeDate").innerHTML = "本站已安全运行 "+dnum+" 天 ";
+        document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒";
+    }
+setInterval("createtime()",250);
+</script>
+</div>
+
+<div>
+<script color="0,0,255" opacity="0.5" zIndex="-1" count="99" src="https://cdn.jsdelivr.net/npm/canvas-nest.js@1/dist/canvas-nest.js"></script>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script size="90" alpha="0.6" zIndex="-1" src="//cdn.jsdelivr.net/gh/theme-next/theme-next-canvas-ribbon@1/canvas-ribbon.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+  <script>
+  if (CONFIG.page.isPost) {
+    wpac_init = window.wpac_init || [];
+    wpac_init.push({
+      widget: 'Rating',
+      id    : 32746,
+      el    : 'wpac-rating',
+      color : 'fc6423'
+    });
+    (function() {
+      if ('WIDGETPACK_LOADED' in window) return;
+      WIDGETPACK_LOADED = true;
+      var mc = document.createElement('script');
+      mc.type = 'text/javascript';
+      mc.async = true;
+      mc.src = '//embed.widgetpack.com/widget.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(mc, s.nextSibling);
+    })();
+  }
+  </script>
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+  <script src="//code.tidio.co/ydmelkili3xh6javnaa32izkywosrpbo.js"></script>
+
+
+
+
+
+
+
+  
+
+  
+
+<script>
+NexT.utils.loadComments(document.querySelector('#lv-container'), () => {
+  window.livereOptions = {
+    refer: location.pathname.replace(CONFIG.root, '').replace('index.html', '')
+  };
+  (function(d, s) {
+    var j, e = d.getElementsByTagName(s)[0];
+    if (typeof LivereTower === 'function') { return; }
+    j = d.createElement(s);
+    j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+    j.async = true;
+    e.parentNode.insertBefore(j, e);
+  })(document, 'script');
+});
+</script>
+
+
+  
+
+  <script async src="/js/cursor/fireworks.js"></script>
+
+
+
+<script src="/w/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"w/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/w/assets/assets/z16.model.json"},"display":{"position":"right","width":250,"height":500},"mobile":{"show":true},"log":false});</script></body>
+</html>
+
