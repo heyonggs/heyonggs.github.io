@@ -429,7 +429,7 @@ code {
   word-wrap: break-word;
 }
 .highlight *::selection {
-  background: #373b41;
+  background: #154487;
 }
 .highlight pre {
   border: 0;
@@ -1201,7 +1201,7 @@ pre .javascript .function {
 }
 .links-of-author a::before,
 .links-of-author span.exturl::before {
-  background: #e2ff3b;
+  background: #14ff7f;
   border-radius: 50%;
   content: ' ';
   display: inline-block;
@@ -1617,7 +1617,7 @@ pre .javascript .function {
   position: relative;
 }
 .posts-collapse .collection-year::before {
-  background: #bbb;
+  background: #107cde;
   border-radius: 50%;
   content: ' ';
   height: 8px;
@@ -1633,7 +1633,7 @@ pre .javascript .function {
   margin: 0 0 0 20px;
 }
 .posts-collapse .collection-header small {
-  color: #bbb;
+  color: #107cde;
   margin-left: 5px;
 }
 .posts-collapse .post-header {
@@ -1647,7 +1647,7 @@ pre .javascript .function {
   transition-timing-function: ease-in-out;
 }
 .posts-collapse .post-header::before {
-  background: #bbb;
+  background: #107cde;
   border: 1px solid #fff;
   border-radius: 50%;
   content: ' ';
@@ -2082,7 +2082,7 @@ pre .javascript .function {
   margin: 5px 10px;
 }
 .category-all-page .category-list-count {
-  color: #bbb;
+  color: #107cde;
 }
 .category-all-page .category-list-count::before {
   content: ' (';
@@ -2134,7 +2134,7 @@ pre .javascript .function {
   font-weight: 900;
 }
 .event-list .event .event-relative-time {
-  color: #bbb;
+  color: #107cde;
   display: inline-block;
   font-size: 12px;
   font-weight: normal;
@@ -2170,13 +2170,13 @@ pre .javascript .function {
 }
 .event-list .event-past .event-summary,
 .event-list .event-past .event-details {
-  color: #bbb;
+  color: #107cde;
   opacity: 0.9;
 }
 .event-list .event-past .event-summary::before,
 .event-list .event-past .event-details::before {
   animation: none;
-  color: #bbb;
+  color: #107cde;
 }
 @-moz-keyframes dot-flash {
   from {
@@ -2505,7 +2505,7 @@ ul.breadcrumb li + li:last-child {
   vertical-align: middle;
 }
 .main-menu .menu-item-active a::after {
-  background: #bbb;
+  background: #107cde;
   border-radius: 50%;
   content: ' ';
   height: 6px;
