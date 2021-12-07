@@ -6,7 +6,7 @@
   <link href="https://www.kubelet.cn/atom.xml" rel="self"/>
   
   <link href="https://www.kubelet.cn/"/>
-  <updated>2021-12-01T06:48:12.100Z</updated>
+  <updated>2021-12-07T03:56:42.529Z</updated>
   <id>https://www.kubelet.cn/</id>
   
   <author>
@@ -21,7 +21,7 @@
     <link href="https://www.kubelet.cn/p/39608.html"/>
     <id>https://www.kubelet.cn/p/39608.html</id>
     <published>2021-11-15T01:28:49.000Z</published>
-    <updated>2021-12-01T06:48:12.100Z</updated>
+    <updated>2021-12-07T03:56:42.529Z</updated>
     
     
     <summary type="html">&lt;p&gt;&lt;escape&gt;&lt;/escape&gt;&lt;/p&gt;</summary>
@@ -42,7 +42,7 @@
     <link href="https://www.kubelet.cn/p/20016.html"/>
     <id>https://www.kubelet.cn/p/20016.html</id>
     <published>2021-11-10T08:22:01.000Z</published>
-    <updated>2021-11-22T08:27:12.773Z</updated>
+    <updated>2021-12-07T03:55:08.925Z</updated>
     
     
     <summary type="html">&lt;p&gt;&lt;escape&gt;&lt;/escape&gt;&lt;/p&gt;</summary>
@@ -63,7 +63,7 @@
     <link href="https://www.kubelet.cn/p/34458.html"/>
     <id>https://www.kubelet.cn/p/34458.html</id>
     <published>2021-10-09T05:53:45.000Z</published>
-    <updated>2021-10-22T01:57:55.282Z</updated>
+    <updated>2021-12-07T03:57:01.507Z</updated>
     
     
     <summary type="html">&lt;p&gt;&lt;escape&gt;&lt;/escape&gt;&lt;/p&gt;</summary>
@@ -82,7 +82,7 @@
     <link href="https://www.kubelet.cn/p/39881.html"/>
     <id>https://www.kubelet.cn/p/39881.html</id>
     <published>2021-10-08T08:57:47.000Z</published>
-    <updated>2021-10-08T09:00:24.496Z</updated>
+    <updated>2021-12-07T03:55:00.748Z</updated>
     
     
     <summary type="html">&lt;p&gt;&lt;escape&gt;&lt;/escape&gt;&lt;/p&gt;</summary>
@@ -105,7 +105,7 @@
     <link href="https://www.kubelet.cn/p/22918.html"/>
     <id>https://www.kubelet.cn/p/22918.html</id>
     <published>2021-09-27T10:15:18.000Z</published>
-    <updated>2021-10-08T09:13:12.697Z</updated>
+    <updated>2021-12-07T03:54:28.804Z</updated>
     
     
     
@@ -118,7 +118,7 @@
     <link href="https://www.kubelet.cn/p/30035.html"/>
     <id>https://www.kubelet.cn/p/30035.html</id>
     <published>2021-09-27T06:52:47.000Z</published>
-    <updated>2021-09-28T02:18:06.164Z</updated>
+    <updated>2021-12-07T03:56:13.899Z</updated>
     
     
     <summary type="html">&lt;p&gt;&lt;escape&gt;&lt;/escape&gt;&lt;/p&gt;</summary>
@@ -133,7 +133,7 @@
     <link href="https://www.kubelet.cn/p/13297.html"/>
     <id>https://www.kubelet.cn/p/13297.html</id>
     <published>2021-09-26T09:04:20.000Z</published>
-    <updated>2021-10-08T09:13:30.064Z</updated>
+    <updated>2021-12-07T03:55:23.849Z</updated>
     
     
     <summary type="html">&lt;p&gt;&lt;escape&gt;&lt;/escape&gt;&lt;/p&gt;</summary>
@@ -154,7 +154,7 @@
     <link href="https://www.kubelet.cn/p/7496.html"/>
     <id>https://www.kubelet.cn/p/7496.html</id>
     <published>2021-09-26T03:36:11.000Z</published>
-    <updated>2021-09-26T07:26:59.830Z</updated>
+    <updated>2021-12-07T03:58:38.046Z</updated>
     
     
     <summary type="html">&lt;p&gt;&lt;escape&gt;&lt;/escape&gt;&lt;/p&gt;</summary>
@@ -175,7 +175,7 @@
     <link href="https://www.kubelet.cn/p/27615.html"/>
     <id>https://www.kubelet.cn/p/27615.html</id>
     <published>2021-09-24T08:56:14.000Z</published>
-    <updated>2021-11-04T09:25:05.211Z</updated>
+    <updated>2021-12-07T03:43:37.845Z</updated>
     
     
     <summary type="html">&lt;p&gt;&lt;escape&gt;&lt;/escape&gt;&lt;/p&gt;</summary>
@@ -187,9 +187,9 @@
     
     <category term="k8s" scheme="https://www.kubelet.cn/tags/k8s/"/>
     
-    <category term="容器" scheme="https://www.kubelet.cn/tags/%E5%AE%B9%E5%99%A8/"/>
-    
     <category term="Kubernetes" scheme="https://www.kubelet.cn/tags/Kubernetes/"/>
+    
+    <category term="容器" scheme="https://www.kubelet.cn/tags/%E5%AE%B9%E5%99%A8/"/>
     
   </entry>
   
@@ -198,7 +198,7 @@
     <link href="https://www.kubelet.cn/p/23481.html"/>
     <id>https://www.kubelet.cn/p/23481.html</id>
     <published>2021-09-24T02:30:51.000Z</published>
-    <updated>2021-09-24T02:40:38.634Z</updated>
+    <updated>2021-12-07T03:43:26.986Z</updated>
     
     
     <summary type="html">&lt;p&gt;&lt;escape&gt;&lt;/escape&gt;&lt;/p&gt;</summary>
@@ -217,7 +217,7 @@
     <link href="https://www.kubelet.cn/p/63588.html"/>
     <id>https://www.kubelet.cn/p/63588.html</id>
     <published>2021-09-18T09:40:04.000Z</published>
-    <updated>2021-09-24T02:43:45.462Z</updated>
+    <updated>2021-12-07T03:52:27.969Z</updated>
     
     
     <summary type="html">&lt;p&gt;&lt;escape&gt;&lt;/escape&gt;&lt;/p&gt;</summary>
@@ -236,7 +236,7 @@
     <link href="https://www.kubelet.cn/p/36110.html"/>
     <id>https://www.kubelet.cn/p/36110.html</id>
     <published>2021-09-18T02:42:02.000Z</published>
-    <updated>2021-09-26T01:58:30.251Z</updated>
+    <updated>2021-12-07T03:50:57.240Z</updated>
     
     
     <summary type="html">&lt;p&gt;&lt;escape&gt;&lt;/escape&gt;&lt;/p&gt;</summary>
@@ -255,7 +255,7 @@
     <link href="https://www.kubelet.cn/p/23286.html"/>
     <id>https://www.kubelet.cn/p/23286.html</id>
     <published>2021-09-10T02:27:40.000Z</published>
-    <updated>2021-09-24T02:56:09.760Z</updated>
+    <updated>2021-12-07T03:43:31.648Z</updated>
     
     
     <summary type="html">&lt;p&gt;&lt;escape&gt;&lt;/escape&gt;&lt;/p&gt;</summary>
@@ -274,7 +274,7 @@
     <link href="https://www.kubelet.cn/p/58551.html"/>
     <id>https://www.kubelet.cn/p/58551.html</id>
     <published>2021-08-13T08:08:26.000Z</published>
-    <updated>2021-11-22T08:10:43.887Z</updated>
+    <updated>2021-12-07T03:54:54.379Z</updated>
     
     
     <summary type="html">&lt;p&gt;&lt;escape&gt;&lt;/escape&gt;&lt;/p&gt;</summary>
@@ -297,7 +297,7 @@
     <link href="https://www.kubelet.cn/p/60919.html"/>
     <id>https://www.kubelet.cn/p/60919.html</id>
     <published>2021-05-19T06:47:16.000Z</published>
-    <updated>2021-09-26T07:26:59.837Z</updated>
+    <updated>2021-12-07T03:56:34.494Z</updated>
     
     
     <summary type="html">&lt;p&gt;&lt;escape&gt;&lt;/escape&gt;&lt;/p&gt;</summary>
@@ -320,7 +320,7 @@
     <link href="https://www.kubelet.cn/p/20278.html"/>
     <id>https://www.kubelet.cn/p/20278.html</id>
     <published>2021-03-10T08:59:21.000Z</published>
-    <updated>2021-10-12T03:07:10.310Z</updated>
+    <updated>2021-12-07T03:43:08.561Z</updated>
     
     
     <summary type="html">&lt;p&gt;&lt;escape&gt;&lt;/escape&gt;&lt;/p&gt;</summary>
@@ -339,7 +339,7 @@
     <link href="https://www.kubelet.cn/p/27338.html"/>
     <id>https://www.kubelet.cn/p/27338.html</id>
     <published>2021-02-26T01:40:57.000Z</published>
-    <updated>2021-11-11T03:09:48.219Z</updated>
+    <updated>2021-12-07T03:57:06.292Z</updated>
     
     
     <summary type="html">&lt;p&gt;&lt;escape&gt;&lt;/escape&gt;&lt;/p&gt;</summary>
@@ -358,7 +358,7 @@
     <link href="https://www.kubelet.cn/p/9854.html"/>
     <id>https://www.kubelet.cn/p/9854.html</id>
     <published>2021-02-22T09:03:45.000Z</published>
-    <updated>2021-09-23T10:29:38.343Z</updated>
+    <updated>2021-12-07T03:43:16.103Z</updated>
     
     
     <summary type="html">&lt;p&gt;&lt;escape&gt;&lt;/escape&gt;&lt;/p&gt;</summary>
@@ -377,7 +377,7 @@
     <link href="https://www.kubelet.cn/p/14759.html"/>
     <id>https://www.kubelet.cn/p/14759.html</id>
     <published>2021-02-12T07:42:26.000Z</published>
-    <updated>2021-09-26T07:53:31.483Z</updated>
+    <updated>2021-12-07T03:58:58.166Z</updated>
     
     
     <summary type="html">&lt;p&gt;&lt;escape&gt;&lt;/escape&gt;&lt;/p&gt;</summary>
@@ -396,7 +396,7 @@
     <link href="https://www.kubelet.cn/p/35694.html"/>
     <id>https://www.kubelet.cn/p/35694.html</id>
     <published>2021-01-08T02:53:56.000Z</published>
-    <updated>2021-10-12T03:46:55.049Z</updated>
+    <updated>2021-12-07T03:54:47.579Z</updated>
     
     
     <summary type="html">&lt;p&gt;&lt;escape&gt;&lt;/escape&gt;&lt;/p&gt;</summary>
