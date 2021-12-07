@@ -3,11 +3,11 @@
   <title>何宇泽</title>
   
   
-  <link href="https://heyonggs.github.io/atom.xml" rel="self"/>
+  <link href="https://www.kubelet.cn/atom.xml" rel="self"/>
   
-  <link href="https://heyonggs.github.io/"/>
+  <link href="https://www.kubelet.cn/"/>
   <updated>2021-12-01T06:48:12.100Z</updated>
-  <id>https://heyonggs.github.io/</id>
+  <id>https://www.kubelet.cn/</id>
   
   <author>
     <name>何宇泽</name>
@@ -18,8 +18,8 @@
   
   <entry>
     <title>vnstat流量统计（新版2.8）</title>
-    <link href="https://heyonggs.github.io/p/39608.html"/>
-    <id>https://heyonggs.github.io/p/39608.html</id>
+    <link href="https://www.kubelet.cn/p/39608.html"/>
+    <id>https://www.kubelet.cn/p/39608.html</id>
     <published>2021-11-15T01:28:49.000Z</published>
     <updated>2021-12-01T06:48:12.100Z</updated>
     
@@ -28,19 +28,19 @@
     
     
     
-    <category term="网络" scheme="https://heyonggs.github.io/categories/%E7%BD%91%E7%BB%9C/"/>
+    <category term="网络" scheme="https://www.kubelet.cn/categories/%E7%BD%91%E7%BB%9C/"/>
     
     
-    <category term="网络" scheme="https://heyonggs.github.io/tags/%E7%BD%91%E7%BB%9C/"/>
+    <category term="网络" scheme="https://www.kubelet.cn/tags/%E7%BD%91%E7%BB%9C/"/>
     
-    <category term="vnstat" scheme="https://heyonggs.github.io/tags/vnstat/"/>
+    <category term="vnstat" scheme="https://www.kubelet.cn/tags/vnstat/"/>
     
   </entry>
   
   <entry>
     <title>kubeadm方式部署k8sV1.22.0版本</title>
-    <link href="https://heyonggs.github.io/p/20016.html"/>
-    <id>https://heyonggs.github.io/p/20016.html</id>
+    <link href="https://www.kubelet.cn/p/20016.html"/>
+    <id>https://www.kubelet.cn/p/20016.html</id>
     <published>2021-11-10T08:22:01.000Z</published>
     <updated>2021-11-22T08:27:12.773Z</updated>
     
@@ -49,19 +49,19 @@
     
     
     
-    <category term="k8s" scheme="https://heyonggs.github.io/categories/k8s/"/>
+    <category term="k8s" scheme="https://www.kubelet.cn/categories/k8s/"/>
     
     
-    <category term="k8s" scheme="https://heyonggs.github.io/tags/k8s/"/>
+    <category term="k8s" scheme="https://www.kubelet.cn/tags/k8s/"/>
     
-    <category term="Kubernetes" scheme="https://heyonggs.github.io/tags/Kubernetes/"/>
+    <category term="Kubernetes" scheme="https://www.kubelet.cn/tags/Kubernetes/"/>
     
   </entry>
   
   <entry>
     <title>升级Windows11</title>
-    <link href="https://heyonggs.github.io/p/34458.html"/>
-    <id>https://heyonggs.github.io/p/34458.html</id>
+    <link href="https://www.kubelet.cn/p/34458.html"/>
+    <id>https://www.kubelet.cn/p/34458.html</id>
     <published>2021-10-09T05:53:45.000Z</published>
     <updated>2021-10-22T01:57:55.282Z</updated>
     
@@ -70,17 +70,17 @@
     
     
     
-    <category term="Windows" scheme="https://heyonggs.github.io/categories/Windows/"/>
+    <category term="Windows" scheme="https://www.kubelet.cn/categories/Windows/"/>
     
     
-    <category term="Windows" scheme="https://heyonggs.github.io/tags/Windows/"/>
+    <category term="Windows" scheme="https://www.kubelet.cn/tags/Windows/"/>
     
   </entry>
   
   <entry>
     <title>docker容器化搭建OpenLDAP</title>
-    <link href="https://heyonggs.github.io/p/39881.html"/>
-    <id>https://heyonggs.github.io/p/39881.html</id>
+    <link href="https://www.kubelet.cn/p/39881.html"/>
+    <id>https://www.kubelet.cn/p/39881.html</id>
     <published>2021-10-08T08:57:47.000Z</published>
     <updated>2021-10-08T09:00:24.496Z</updated>
     
@@ -89,21 +89,21 @@
     
     
     
-    <category term="LDAP" scheme="https://heyonggs.github.io/categories/LDAP/"/>
+    <category term="LDAP" scheme="https://www.kubelet.cn/categories/LDAP/"/>
     
     
-    <category term="Docker" scheme="https://heyonggs.github.io/tags/Docker/"/>
+    <category term="Docker" scheme="https://www.kubelet.cn/tags/Docker/"/>
     
-    <category term="LDAP" scheme="https://heyonggs.github.io/tags/LDAP/"/>
+    <category term="LDAP" scheme="https://www.kubelet.cn/tags/LDAP/"/>
     
-    <category term="OpenLDAP" scheme="https://heyonggs.github.io/tags/OpenLDAP/"/>
+    <category term="OpenLDAP" scheme="https://www.kubelet.cn/tags/OpenLDAP/"/>
     
   </entry>
   
   <entry>
     <title>k8s集群动态存储管理GlusterFS</title>
-    <link href="https://heyonggs.github.io/p/22918.html"/>
-    <id>https://heyonggs.github.io/p/22918.html</id>
+    <link href="https://www.kubelet.cn/p/22918.html"/>
+    <id>https://www.kubelet.cn/p/22918.html</id>
     <published>2021-09-27T10:15:18.000Z</published>
     <updated>2021-10-08T09:13:12.697Z</updated>
     
@@ -115,8 +115,8 @@
   
   <entry>
     <title>helm部署zookeeper和kafka集群</title>
-    <link href="https://heyonggs.github.io/p/30035.html"/>
-    <id>https://heyonggs.github.io/p/30035.html</id>
+    <link href="https://www.kubelet.cn/p/30035.html"/>
+    <id>https://www.kubelet.cn/p/30035.html</id>
     <published>2021-09-27T06:52:47.000Z</published>
     <updated>2021-09-28T02:18:06.164Z</updated>
     
@@ -130,8 +130,8 @@
   
   <entry>
     <title>使用Redis部署PHP留言板应用程序</title>
-    <link href="https://heyonggs.github.io/p/13297.html"/>
-    <id>https://heyonggs.github.io/p/13297.html</id>
+    <link href="https://www.kubelet.cn/p/13297.html"/>
+    <id>https://www.kubelet.cn/p/13297.html</id>
     <published>2021-09-26T09:04:20.000Z</published>
     <updated>2021-10-08T09:13:30.064Z</updated>
     
@@ -140,19 +140,19 @@
     
     
     
-    <category term="Kubernetes" scheme="https://heyonggs.github.io/categories/Kubernetes/"/>
+    <category term="Kubernetes" scheme="https://www.kubelet.cn/categories/Kubernetes/"/>
     
     
-    <category term="k8s" scheme="https://heyonggs.github.io/tags/k8s/"/>
+    <category term="k8s" scheme="https://www.kubelet.cn/tags/k8s/"/>
     
-    <category term="Kubernetes" scheme="https://heyonggs.github.io/tags/Kubernetes/"/>
+    <category term="Kubernetes" scheme="https://www.kubelet.cn/tags/Kubernetes/"/>
     
   </entry>
   
   <entry>
     <title>使用frp实现内网穿透</title>
-    <link href="https://heyonggs.github.io/p/7496.html"/>
-    <id>https://heyonggs.github.io/p/7496.html</id>
+    <link href="https://www.kubelet.cn/p/7496.html"/>
+    <id>https://www.kubelet.cn/p/7496.html</id>
     <published>2021-09-26T03:36:11.000Z</published>
     <updated>2021-09-26T07:26:59.830Z</updated>
     
@@ -161,19 +161,19 @@
     
     
     
-    <category term="网络" scheme="https://heyonggs.github.io/categories/%E7%BD%91%E7%BB%9C/"/>
+    <category term="网络" scheme="https://www.kubelet.cn/categories/%E7%BD%91%E7%BB%9C/"/>
     
     
-    <category term="网络" scheme="https://heyonggs.github.io/tags/%E7%BD%91%E7%BB%9C/"/>
+    <category term="网络" scheme="https://www.kubelet.cn/tags/%E7%BD%91%E7%BB%9C/"/>
     
-    <category term="FRP" scheme="https://heyonggs.github.io/tags/FRP/"/>
+    <category term="FRP" scheme="https://www.kubelet.cn/tags/FRP/"/>
     
   </entry>
   
   <entry>
     <title>Kubernetes桌面客户端Lens</title>
-    <link href="https://heyonggs.github.io/p/27615.html"/>
-    <id>https://heyonggs.github.io/p/27615.html</id>
+    <link href="https://www.kubelet.cn/p/27615.html"/>
+    <id>https://www.kubelet.cn/p/27615.html</id>
     <published>2021-09-24T08:56:14.000Z</published>
     <updated>2021-11-04T09:25:05.211Z</updated>
     
@@ -182,21 +182,21 @@
     
     
     
-    <category term="Kubernetes" scheme="https://heyonggs.github.io/categories/Kubernetes/"/>
+    <category term="Kubernetes" scheme="https://www.kubelet.cn/categories/Kubernetes/"/>
     
     
-    <category term="容器" scheme="https://heyonggs.github.io/tags/%E5%AE%B9%E5%99%A8/"/>
+    <category term="k8s" scheme="https://www.kubelet.cn/tags/k8s/"/>
     
-    <category term="k8s" scheme="https://heyonggs.github.io/tags/k8s/"/>
+    <category term="容器" scheme="https://www.kubelet.cn/tags/%E5%AE%B9%E5%99%A8/"/>
     
-    <category term="Kubernetes" scheme="https://heyonggs.github.io/tags/Kubernetes/"/>
+    <category term="Kubernetes" scheme="https://www.kubelet.cn/tags/Kubernetes/"/>
     
   </entry>
   
   <entry>
     <title>kubeadm平滑升级集群</title>
-    <link href="https://heyonggs.github.io/p/23481.html"/>
-    <id>https://heyonggs.github.io/p/23481.html</id>
+    <link href="https://www.kubelet.cn/p/23481.html"/>
+    <id>https://www.kubelet.cn/p/23481.html</id>
     <published>2021-09-24T02:30:51.000Z</published>
     <updated>2021-09-24T02:40:38.634Z</updated>
     
@@ -205,17 +205,17 @@
     
     
     
-    <category term="k8s" scheme="https://heyonggs.github.io/categories/k8s/"/>
+    <category term="k8s" scheme="https://www.kubelet.cn/categories/k8s/"/>
     
     
-    <category term="k8s" scheme="https://heyonggs.github.io/tags/k8s/"/>
+    <category term="k8s" scheme="https://www.kubelet.cn/tags/k8s/"/>
     
   </entry>
   
   <entry>
     <title>Nginx更换SSL证书</title>
-    <link href="https://heyonggs.github.io/p/63588.html"/>
-    <id>https://heyonggs.github.io/p/63588.html</id>
+    <link href="https://www.kubelet.cn/p/63588.html"/>
+    <id>https://www.kubelet.cn/p/63588.html</id>
     <published>2021-09-18T09:40:04.000Z</published>
     <updated>2021-09-24T02:43:45.462Z</updated>
     
@@ -224,17 +224,17 @@
     
     
     
-    <category term="Nginx" scheme="https://heyonggs.github.io/categories/Nginx/"/>
+    <category term="Nginx" scheme="https://www.kubelet.cn/categories/Nginx/"/>
     
     
-    <category term="Nginx" scheme="https://heyonggs.github.io/tags/Nginx/"/>
+    <category term="Nginx" scheme="https://www.kubelet.cn/tags/Nginx/"/>
     
   </entry>
   
   <entry>
     <title>Centos查看系统 CPU 个数、核心数、线程数</title>
-    <link href="https://heyonggs.github.io/p/36110.html"/>
-    <id>https://heyonggs.github.io/p/36110.html</id>
+    <link href="https://www.kubelet.cn/p/36110.html"/>
+    <id>https://www.kubelet.cn/p/36110.html</id>
     <published>2021-09-18T02:42:02.000Z</published>
     <updated>2021-09-26T01:58:30.251Z</updated>
     
@@ -243,17 +243,17 @@
     
     
     
-    <category term="System,cpu" scheme="https://heyonggs.github.io/categories/System-cpu/"/>
+    <category term="System,cpu" scheme="https://www.kubelet.cn/categories/System-cpu/"/>
     
     
-    <category term="System,cpu" scheme="https://heyonggs.github.io/tags/System-cpu/"/>
+    <category term="System,cpu" scheme="https://www.kubelet.cn/tags/System-cpu/"/>
     
   </entry>
   
   <entry>
     <title>kubeadm修改证书时间为99年</title>
-    <link href="https://heyonggs.github.io/p/23286.html"/>
-    <id>https://heyonggs.github.io/p/23286.html</id>
+    <link href="https://www.kubelet.cn/p/23286.html"/>
+    <id>https://www.kubelet.cn/p/23286.html</id>
     <published>2021-09-10T02:27:40.000Z</published>
     <updated>2021-09-24T02:56:09.760Z</updated>
     
@@ -262,17 +262,17 @@
     
     
     
-    <category term="k8s" scheme="https://heyonggs.github.io/categories/k8s/"/>
+    <category term="k8s" scheme="https://www.kubelet.cn/categories/k8s/"/>
     
     
-    <category term="k8s" scheme="https://heyonggs.github.io/tags/k8s/"/>
+    <category term="k8s" scheme="https://www.kubelet.cn/tags/k8s/"/>
     
   </entry>
   
   <entry>
     <title>k8s中部署ingress-nginx</title>
-    <link href="https://heyonggs.github.io/p/58551.html"/>
-    <id>https://heyonggs.github.io/p/58551.html</id>
+    <link href="https://www.kubelet.cn/p/58551.html"/>
+    <id>https://www.kubelet.cn/p/58551.html</id>
     <published>2021-08-13T08:08:26.000Z</published>
     <updated>2021-11-22T08:10:43.887Z</updated>
     
@@ -281,21 +281,21 @@
     
     
     
-    <category term="k8s" scheme="https://heyonggs.github.io/categories/k8s/"/>
+    <category term="k8s" scheme="https://www.kubelet.cn/categories/k8s/"/>
     
     
-    <category term="k8s" scheme="https://heyonggs.github.io/tags/k8s/"/>
+    <category term="k8s" scheme="https://www.kubelet.cn/tags/k8s/"/>
     
-    <category term="Kubernetes" scheme="https://heyonggs.github.io/tags/Kubernetes/"/>
+    <category term="Kubernetes" scheme="https://www.kubelet.cn/tags/Kubernetes/"/>
     
-    <category term="helm" scheme="https://heyonggs.github.io/tags/helm/"/>
+    <category term="helm" scheme="https://www.kubelet.cn/tags/helm/"/>
     
   </entry>
   
   <entry>
     <title>helm命令大全</title>
-    <link href="https://heyonggs.github.io/p/60919.html"/>
-    <id>https://heyonggs.github.io/p/60919.html</id>
+    <link href="https://www.kubelet.cn/p/60919.html"/>
+    <id>https://www.kubelet.cn/p/60919.html</id>
     <published>2021-05-19T06:47:16.000Z</published>
     <updated>2021-09-26T07:26:59.837Z</updated>
     
@@ -304,21 +304,21 @@
     
     
     
-    <category term="helm" scheme="https://heyonggs.github.io/categories/helm/"/>
+    <category term="helm" scheme="https://www.kubelet.cn/categories/helm/"/>
     
     
-    <category term="k8s" scheme="https://heyonggs.github.io/tags/k8s/"/>
+    <category term="k8s" scheme="https://www.kubelet.cn/tags/k8s/"/>
     
-    <category term="Kubernetes" scheme="https://heyonggs.github.io/tags/Kubernetes/"/>
+    <category term="Kubernetes" scheme="https://www.kubelet.cn/tags/Kubernetes/"/>
     
-    <category term="helm" scheme="https://heyonggs.github.io/tags/helm/"/>
+    <category term="helm" scheme="https://www.kubelet.cn/tags/helm/"/>
     
   </entry>
   
   <entry>
     <title>k8s部署nacos集群</title>
-    <link href="https://heyonggs.github.io/p/20278.html"/>
-    <id>https://heyonggs.github.io/p/20278.html</id>
+    <link href="https://www.kubelet.cn/p/20278.html"/>
+    <id>https://www.kubelet.cn/p/20278.html</id>
     <published>2021-03-10T08:59:21.000Z</published>
     <updated>2021-10-12T03:07:10.310Z</updated>
     
@@ -327,17 +327,17 @@
     
     
     
-    <category term="k8s" scheme="https://heyonggs.github.io/categories/k8s/"/>
+    <category term="k8s" scheme="https://www.kubelet.cn/categories/k8s/"/>
     
     
-    <category term="k8s" scheme="https://heyonggs.github.io/tags/k8s/"/>
+    <category term="k8s" scheme="https://www.kubelet.cn/tags/k8s/"/>
     
   </entry>
   
   <entry>
     <title>解决电脑无法访问个别网站</title>
-    <link href="https://heyonggs.github.io/p/27338.html"/>
-    <id>https://heyonggs.github.io/p/27338.html</id>
+    <link href="https://www.kubelet.cn/p/27338.html"/>
+    <id>https://www.kubelet.cn/p/27338.html</id>
     <published>2021-02-26T01:40:57.000Z</published>
     <updated>2021-11-11T03:09:48.219Z</updated>
     
@@ -346,17 +346,17 @@
     
     
     
-    <category term="故障" scheme="https://heyonggs.github.io/categories/%E6%95%85%E9%9A%9C/"/>
+    <category term="故障" scheme="https://www.kubelet.cn/categories/%E6%95%85%E9%9A%9C/"/>
     
     
-    <category term="操作系统" scheme="https://heyonggs.github.io/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/"/>
+    <category term="操作系统" scheme="https://www.kubelet.cn/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/"/>
     
   </entry>
   
   <entry>
     <title>k8s部署treafik2.x</title>
-    <link href="https://heyonggs.github.io/p/9854.html"/>
-    <id>https://heyonggs.github.io/p/9854.html</id>
+    <link href="https://www.kubelet.cn/p/9854.html"/>
+    <id>https://www.kubelet.cn/p/9854.html</id>
     <published>2021-02-22T09:03:45.000Z</published>
     <updated>2021-09-23T10:29:38.343Z</updated>
     
@@ -365,17 +365,17 @@
     
     
     
-    <category term="k8s" scheme="https://heyonggs.github.io/categories/k8s/"/>
+    <category term="k8s" scheme="https://www.kubelet.cn/categories/k8s/"/>
     
     
-    <category term="k8s" scheme="https://heyonggs.github.io/tags/k8s/"/>
+    <category term="k8s" scheme="https://www.kubelet.cn/tags/k8s/"/>
     
   </entry>
   
   <entry>
     <title>转载&#39;OpenSSL SSL_connect Connection was reset in connection to github.com 443&#39;</title>
-    <link href="https://heyonggs.github.io/p/14759.html"/>
-    <id>https://heyonggs.github.io/p/14759.html</id>
+    <link href="https://www.kubelet.cn/p/14759.html"/>
+    <id>https://www.kubelet.cn/p/14759.html</id>
     <published>2021-02-12T07:42:26.000Z</published>
     <updated>2021-09-26T07:53:31.483Z</updated>
     
@@ -384,17 +384,17 @@
     
     
     
-    <category term="git" scheme="https://heyonggs.github.io/categories/git/"/>
+    <category term="git" scheme="https://www.kubelet.cn/categories/git/"/>
     
     
-    <category term="git" scheme="https://heyonggs.github.io/tags/git/"/>
+    <category term="git" scheme="https://www.kubelet.cn/tags/git/"/>
     
   </entry>
   
   <entry>
     <title>k8s部署eureka集群</title>
-    <link href="https://heyonggs.github.io/p/35694.html"/>
-    <id>https://heyonggs.github.io/p/35694.html</id>
+    <link href="https://www.kubelet.cn/p/35694.html"/>
+    <id>https://www.kubelet.cn/p/35694.html</id>
     <published>2021-01-08T02:53:56.000Z</published>
     <updated>2021-10-12T03:46:55.049Z</updated>
     
@@ -403,12 +403,12 @@
     
     
     
-    <category term="Kubernetes" scheme="https://heyonggs.github.io/categories/Kubernetes/"/>
+    <category term="Kubernetes" scheme="https://www.kubelet.cn/categories/Kubernetes/"/>
     
     
-    <category term="k8s" scheme="https://heyonggs.github.io/tags/k8s/"/>
+    <category term="k8s" scheme="https://www.kubelet.cn/tags/k8s/"/>
     
-    <category term="Kubernetes" scheme="https://heyonggs.github.io/tags/Kubernetes/"/>
+    <category term="Kubernetes" scheme="https://www.kubelet.cn/tags/Kubernetes/"/>
     
   </entry>
   
