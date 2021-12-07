@@ -1,41 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>优秀文章及网站收藏</title>
-    <url>/p/42568.html</url>
-    <content><![CDATA[<p><escape><span id="more"></span></escape></p>
-<h1 id="优秀文章及网站收藏">1. 优秀文章及网站收藏</h1><h2 id="榜单网站">1.1. 榜单网站</h2><h3 id="Oracle全球技术专家头衔列表">1.1.1. Oracle全球技术专家头衔列表</h3><p>Find Oracle ACEs, Groundbreaker Ambassadors and Java Champions in our Groundbreakers directory.</p>
-<blockquote>
-<p><a href="https://apexapps.oracle.com/pls/apex/f?p=119297:3">https://apexapps.oracle.com/pls/apex/f?p=119297:3</a>::::::</p>
-</blockquote>
-<p>编程网站排行榜</p>
-<blockquote>
-<p><a href="https://www.tiobe.com/tiobe-index/">https://www.tiobe.com/tiobe-index/</a></p>
-</blockquote>
-<p>SQL Relay</p>
-<blockquote>
-<p><a href="http://sqlrelay.sourceforge.net/">http://sqlrelay.sourceforge.net/</a></p>
-</blockquote>
-<p>3D js库</p>
-<p>市面上几乎所有3D js库, 不仅有开源协议、文件大小、迭代版本号等信息, 还分别使用每一种库写了4个demo</p>
-<blockquote>
-<p><a href="https://qiita.com/cx20/items/0fa19c96aa6470d98807">https://qiita.com/cx20/items/0fa19c96aa6470d98807</a></p>
-</blockquote>
-<h2 id="产品与设计">1.2. 产品与设计</h2><h3 id="即时原型">1.2.1. 即时原型</h3><p>产品原型设计与团队实时协作平台</p>
-<blockquote>
-<p><a href="https://www.xiaopiu.com/">https://www.xiaopiu.com/</a></p>
-</blockquote>
-<h3 id="即时设计">1.2.2. 即时设计</h3><p>专业级在线UI设计工具</p>
-<blockquote>
-<p><a href="https://js.design/">https://js.design</a></p>
-</blockquote>
-<h3 id="arco-design">1.2.3. arco.design</h3><p>字节跳动GIP UED团队与架构前端团队联合推出的企业级设计系统</p>
-<blockquote>
-<p><a href="https://arco.design/">https://arco.design/</a></p>
-</blockquote>
-]]></content>
-  </entry>
-  <entry>
     <title>Nginx配置清单</title>
     <url>/p/38836.html</url>
     <content><![CDATA[<p><escape><span id="more"></span></escape></p>
@@ -167,63 +132,6 @@
       </tags>
   </entry>
   <entry>
-    <title>将新硬盘加入到根目录</title>
-    <url>/p/42147.html</url>
-    <content><![CDATA[<p><escape><span id="more"></span></escape></p>
-<h1 id="将新硬盘加入到根目录（逻辑卷LVM）">1. 将新硬盘加入到根目录（逻辑卷LVM）</h1><p>安装系统时采用了LVM分区，根目录只有9.7G</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[root@edgex ~]# df -h</span><br><span class="line">Filesystem               Size  Used Avail Use% Mounted on</span><br><span class="line">devtmpfs                 1.9G     0  1.9G   0% /dev</span><br><span class="line">tmpfs                    1.9G     0  1.9G   0% /dev/shm</span><br><span class="line">tmpfs                    1.9G  8.6M  1.9G   1% /run</span><br><span class="line">tmpfs                    1.9G     0  1.9G   0% /sys/fs/cgroup</span><br><span class="line">/dev/mapper/centos-root  8.0G  8.0G   67M 100% /</span><br><span class="line">/dev/sda1               1014M  275M  740M  28% /boot</span><br><span class="line">tmpfs                    379M     0  379M   0% /run/user/0</span><br></pre></td></tr></table></figure>
-
-<p>查看目前虚拟机的磁盘情况，看到新增磁盘：/dev/sdb1 50G</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[root@edgex ~]# fdisk -l</span><br><span class="line"></span><br><span class="line">Disk /dev/sda: 10.7 GB, 10737418240 bytes, 20971520 sectors</span><br><span class="line">Units = sectors of 1 * 512 = 512 bytes</span><br><span class="line">Sector size (logical/physical): 512 bytes / 512 bytes</span><br><span class="line">I/O size (minimum/optimal): 512 bytes / 512 bytes</span><br><span class="line">Disk label type: dos</span><br><span class="line">Disk identifier: 0x000beec6</span><br><span class="line"></span><br><span class="line">   Device Boot      Start         End      Blocks   Id  System</span><br><span class="line">/dev/sda1   *        2048     2099199     1048576   83  Linux</span><br><span class="line">/dev/sda2         2099200    20971519     9436160   8e  Linux LVM</span><br><span class="line"></span><br><span class="line">Disk /dev/sdb: 53.7 GB, 53687091200 bytes, 104857600 sectors</span><br><span class="line">Units = sectors of 1 * 512 = 512 bytes</span><br><span class="line">Sector size (logical/physical): 512 bytes / 512 bytes</span><br><span class="line">I/O size (minimum/optimal): 512 bytes / 512 bytes</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Disk /dev/mapper/centos-root: 8585 MB, 8585740288 bytes, 16769024 sectors</span><br><span class="line">Units = sectors of 1 * 512 = 512 bytes</span><br><span class="line">Sector size (logical/physical): 512 bytes / 512 bytes</span><br><span class="line">I/O size (minimum/optimal): 512 bytes / 512 bytes</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Disk /dev/mapper/centos-swap: 1073 MB, 1073741824 bytes, 2097152 sectors</span><br><span class="line">Units = sectors of 1 * 512 = 512 bytes</span><br><span class="line">Sector size (logical/physical): 512 bytes / 512 bytes</span><br><span class="line">I/O size (minimum/optimal): 512 bytes / 512 bytes</span><br></pre></td></tr></table></figure>
-
-<p>初始化</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[root@edgex ~]# fdisk /dev/sdb</span><br><span class="line">Welcome to fdisk (util-linux 2.23.2).</span><br><span class="line"></span><br><span class="line">Changes will remain in memory only, until you decide to write them.</span><br><span class="line">Be careful before using the write command.</span><br><span class="line"></span><br><span class="line">Device does not contain a recognized partition table</span><br><span class="line">Building a new DOS disklabel with disk identifier 0x795ab816.</span><br><span class="line"></span><br><span class="line">Command (m for help): o</span><br><span class="line">Building a new DOS disklabel with disk identifier 0x51f639a5.</span><br><span class="line"></span><br><span class="line">Command (m for help): n</span><br><span class="line">Partition type:</span><br><span class="line">   p   primary (0 primary, 0 extended, 4 free)</span><br><span class="line">   e   extended</span><br><span class="line">Select (default p): p</span><br><span class="line">Partition number (1-4, default 1): </span><br><span class="line">First sector (2048-104857599, default 2048): </span><br><span class="line">Using default value 2048</span><br><span class="line">Last sector, +sectors or +size&#123;K,M,G&#125; (2048-104857599, default 104857599): </span><br><span class="line">Using default value 104857599</span><br><span class="line">Partition 1 of type Linux and of size 50 GiB is set</span><br><span class="line"></span><br><span class="line">Command (m for help): t</span><br><span class="line">Selected partition 1</span><br><span class="line">Hex code (type L to list all codes): 8e</span><br><span class="line">Changed type of partition &#x27;Linux&#x27; to &#x27;Linux LVM&#x27;</span><br><span class="line"></span><br><span class="line">Command (m for help): w</span><br><span class="line">The partition table has been altered!</span><br><span class="line"></span><br><span class="line">Calling ioctl() to re-read partition table.</span><br><span class="line">Syncing disks.</span><br></pre></td></tr></table></figure>
-
-<p>创建pv ,通过pvcreate命令将磁盘/dev/sdb1创建为一个系统PV</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[root@edgex ~]# pvcreate /dev/sdb1 </span><br><span class="line">  Physical volume &quot;/dev/sdb1&quot; successfully created.</span><br></pre></td></tr></table></figure>
-
-<p>查看pv</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[root@edgex ~]# pvscan</span><br><span class="line">  PV /dev/sda2   VG centos          lvm2 [&lt;9.00 GiB / 0    free]</span><br><span class="line">  PV /dev/sdb1                      lvm2 [&lt;50.00 GiB]</span><br><span class="line">  Total: 2 [&lt;59.00 GiB] / in use: 1 [&lt;9.00 GiB] / in no VG: 1 [&lt;50.00 GiB]</span><br></pre></td></tr></table></figure>
-
-<p>查看vg</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[root@edgex ~]# vgs</span><br><span class="line">  VG     #PV #LV #SN Attr   VSize  VFree</span><br><span class="line">  centos   1   2   0 wz--n- &lt;9.00g    0 </span><br></pre></td></tr></table></figure>
-
-<p>将 PV /dev/sdb1添加到卷组centos中</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[root@edgex ~]# vgextend centos /dev/sdb1</span><br><span class="line">  Volume group &quot;centos&quot; successfully extended</span><br></pre></td></tr></table></figure>
-
-<p>查看vg，已经增加为58G</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[root@edgex ~]# vgs</span><br><span class="line">  VG     #PV #LV #SN Attr   VSize  VFree  </span><br><span class="line">  centos   2   2   0 wz--n- 58.99g &lt;50.00g</span><br></pre></td></tr></table></figure>
-
-<p>为根目录添加20G的空间。通过df -h查看根目录的lv名称为 /dev/mapper/centos-root</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[root@edgex ~]# df -h</span><br><span class="line">Filesystem               Size  Used Avail Use% Mounted on</span><br><span class="line">devtmpfs                 1.9G     0  1.9G   0% /dev</span><br><span class="line">tmpfs                    1.9G     0  1.9G   0% /dev/shm</span><br><span class="line">tmpfs                    1.9G  8.6M  1.9G   1% /run</span><br><span class="line">tmpfs                    1.9G     0  1.9G   0% /sys/fs/cgroup</span><br><span class="line">/dev/mapper/centos-root  8.0G  8.0G   67M 100% /</span><br><span class="line">/dev/sda1               1014M  275M  740M  28% /boot</span><br><span class="line">tmpfs                    379M     0  379M   0% /run/user/0</span><br></pre></td></tr></table></figure>
-
-<p>增加</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[root@edgex ~]# lvextend -L +50G -n /dev/mapper/centos-root</span><br><span class="line">  Insufficient free space: 12800 extents needed, but only 12799 available</span><br></pre></td></tr></table></figure>
-
-<p>发现报错了，空间不够，所以 降低1G输入如下命令：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[root@edgex ~]# lvextend -L +49G -n /dev/mapper/centos-root</span><br><span class="line">  Size of logical volume centos/root changed from &lt;8.00 GiB (2047 extents) to &lt;57.00 GiB (14591 extents).</span><br><span class="line">  Logical volume centos/root successfully resized.</span><br></pre></td></tr></table></figure>
-
-<p>逻辑卷扩展后并不会马上生效，需要使用“resize2fs”命令重新加载逻辑卷的大小</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[root@edgex ~]# resize2fs /dev/mapper/centos-root</span><br><span class="line">resize2fs 1.42.9 (28-Dec-2013)</span><br><span class="line">resize2fs: Bad magic number in super-block while trying to open /dev/mapper/centos-root</span><br><span class="line">Couldn&#x27;t find valid filesystem superblock.</span><br></pre></td></tr></table></figure>
-
-<p>使用 resize2fs时，提示错误，了解后发现，xfs格式的文件扩充需要使用 xfs_growfs</p>
-<p>查看/dev/mapper/centos-root的格式</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[root@edgex ~]# df -hT</span><br><span class="line">Filesystem              Type      Size  Used Avail Use% Mounted on</span><br><span class="line">devtmpfs                devtmpfs  1.9G     0  1.9G   0% /dev</span><br><span class="line">tmpfs                   tmpfs     1.9G     0  1.9G   0% /dev/shm</span><br><span class="line">tmpfs                   tmpfs     1.9G  8.6M  1.9G   1% /run</span><br><span class="line">tmpfs                   tmpfs     1.9G     0  1.9G   0% /sys/fs/cgroup</span><br><span class="line">/dev/mapper/centos-root xfs        8.0G  8.0G   67M  100% /</span><br><span class="line">/dev/sda1               xfs      1014M  275M  740M  28% /boot</span><br><span class="line">tmpfs                   tmpfs     379M     0  379M   0% /run/user/0</span><br></pre></td></tr></table></figure>
-
-<p>查看得知为xfs，使用xfs_growfs扩充</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[root@edgex ~]# xfs_growfs /dev/mapper/centos-root </span><br><span class="line">meta-data=/dev/mapper/centos-root isize=512    agcount=4, agsize=524032 blks</span><br><span class="line">         =                       sectsz=512   attr=2, projid32bit=1</span><br><span class="line">         =                       crc=1        finobt=0 spinodes=0</span><br><span class="line">data     =                       bsize=4096   blocks=2096128, imaxpct=25</span><br><span class="line">         =                       sunit=0      swidth=0 blks</span><br><span class="line">naming   =version 2              bsize=4096   ascii-ci=0 ftype=1</span><br><span class="line">log      =internal               bsize=4096   blocks=2560, version=2</span><br><span class="line">         =                       sectsz=512   sunit=0 blks, lazy-count=1</span><br><span class="line">realtime =none                   extsz=4096   blocks=0, rtextents=0</span><br><span class="line">data blocks changed from 2096128 to 14941184</span><br></pre></td></tr></table></figure>
-
-<p>至此扩充完毕。</p>
-]]></content>
-      <categories>
-        <category>LVM</category>
-      </categories>
-      <tags>
-        <tag>LVM</tag>
-        <tag>磁盘</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>LVM创建及管理</title>
     <url>/p/29253.html</url>
     <content><![CDATA[<p><escape><span id="more"></span></escape></p>
@@ -295,6 +203,98 @@
         <tag>LVM</tag>
         <tag>磁盘</tag>
       </tags>
+  </entry>
+  <entry>
+    <title>将新硬盘加入到根目录</title>
+    <url>/p/42147.html</url>
+    <content><![CDATA[<p><escape><span id="more"></span></escape></p>
+<h1 id="将新硬盘加入到根目录（逻辑卷LVM）">1. 将新硬盘加入到根目录（逻辑卷LVM）</h1><p>安装系统时采用了LVM分区，根目录只有9.7G</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[root@edgex ~]# df -h</span><br><span class="line">Filesystem               Size  Used Avail Use% Mounted on</span><br><span class="line">devtmpfs                 1.9G     0  1.9G   0% /dev</span><br><span class="line">tmpfs                    1.9G     0  1.9G   0% /dev/shm</span><br><span class="line">tmpfs                    1.9G  8.6M  1.9G   1% /run</span><br><span class="line">tmpfs                    1.9G     0  1.9G   0% /sys/fs/cgroup</span><br><span class="line">/dev/mapper/centos-root  8.0G  8.0G   67M 100% /</span><br><span class="line">/dev/sda1               1014M  275M  740M  28% /boot</span><br><span class="line">tmpfs                    379M     0  379M   0% /run/user/0</span><br></pre></td></tr></table></figure>
+
+<p>查看目前虚拟机的磁盘情况，看到新增磁盘：/dev/sdb1 50G</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[root@edgex ~]# fdisk -l</span><br><span class="line"></span><br><span class="line">Disk /dev/sda: 10.7 GB, 10737418240 bytes, 20971520 sectors</span><br><span class="line">Units = sectors of 1 * 512 = 512 bytes</span><br><span class="line">Sector size (logical/physical): 512 bytes / 512 bytes</span><br><span class="line">I/O size (minimum/optimal): 512 bytes / 512 bytes</span><br><span class="line">Disk label type: dos</span><br><span class="line">Disk identifier: 0x000beec6</span><br><span class="line"></span><br><span class="line">   Device Boot      Start         End      Blocks   Id  System</span><br><span class="line">/dev/sda1   *        2048     2099199     1048576   83  Linux</span><br><span class="line">/dev/sda2         2099200    20971519     9436160   8e  Linux LVM</span><br><span class="line"></span><br><span class="line">Disk /dev/sdb: 53.7 GB, 53687091200 bytes, 104857600 sectors</span><br><span class="line">Units = sectors of 1 * 512 = 512 bytes</span><br><span class="line">Sector size (logical/physical): 512 bytes / 512 bytes</span><br><span class="line">I/O size (minimum/optimal): 512 bytes / 512 bytes</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Disk /dev/mapper/centos-root: 8585 MB, 8585740288 bytes, 16769024 sectors</span><br><span class="line">Units = sectors of 1 * 512 = 512 bytes</span><br><span class="line">Sector size (logical/physical): 512 bytes / 512 bytes</span><br><span class="line">I/O size (minimum/optimal): 512 bytes / 512 bytes</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Disk /dev/mapper/centos-swap: 1073 MB, 1073741824 bytes, 2097152 sectors</span><br><span class="line">Units = sectors of 1 * 512 = 512 bytes</span><br><span class="line">Sector size (logical/physical): 512 bytes / 512 bytes</span><br><span class="line">I/O size (minimum/optimal): 512 bytes / 512 bytes</span><br></pre></td></tr></table></figure>
+
+<p>初始化</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[root@edgex ~]# fdisk /dev/sdb</span><br><span class="line">Welcome to fdisk (util-linux 2.23.2).</span><br><span class="line"></span><br><span class="line">Changes will remain in memory only, until you decide to write them.</span><br><span class="line">Be careful before using the write command.</span><br><span class="line"></span><br><span class="line">Device does not contain a recognized partition table</span><br><span class="line">Building a new DOS disklabel with disk identifier 0x795ab816.</span><br><span class="line"></span><br><span class="line">Command (m for help): o</span><br><span class="line">Building a new DOS disklabel with disk identifier 0x51f639a5.</span><br><span class="line"></span><br><span class="line">Command (m for help): n</span><br><span class="line">Partition type:</span><br><span class="line">   p   primary (0 primary, 0 extended, 4 free)</span><br><span class="line">   e   extended</span><br><span class="line">Select (default p): p</span><br><span class="line">Partition number (1-4, default 1): </span><br><span class="line">First sector (2048-104857599, default 2048): </span><br><span class="line">Using default value 2048</span><br><span class="line">Last sector, +sectors or +size&#123;K,M,G&#125; (2048-104857599, default 104857599): </span><br><span class="line">Using default value 104857599</span><br><span class="line">Partition 1 of type Linux and of size 50 GiB is set</span><br><span class="line"></span><br><span class="line">Command (m for help): t</span><br><span class="line">Selected partition 1</span><br><span class="line">Hex code (type L to list all codes): 8e</span><br><span class="line">Changed type of partition &#x27;Linux&#x27; to &#x27;Linux LVM&#x27;</span><br><span class="line"></span><br><span class="line">Command (m for help): w</span><br><span class="line">The partition table has been altered!</span><br><span class="line"></span><br><span class="line">Calling ioctl() to re-read partition table.</span><br><span class="line">Syncing disks.</span><br></pre></td></tr></table></figure>
+
+<p>创建pv ,通过pvcreate命令将磁盘/dev/sdb1创建为一个系统PV</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[root@edgex ~]# pvcreate /dev/sdb1 </span><br><span class="line">  Physical volume &quot;/dev/sdb1&quot; successfully created.</span><br></pre></td></tr></table></figure>
+
+<p>查看pv</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[root@edgex ~]# pvscan</span><br><span class="line">  PV /dev/sda2   VG centos          lvm2 [&lt;9.00 GiB / 0    free]</span><br><span class="line">  PV /dev/sdb1                      lvm2 [&lt;50.00 GiB]</span><br><span class="line">  Total: 2 [&lt;59.00 GiB] / in use: 1 [&lt;9.00 GiB] / in no VG: 1 [&lt;50.00 GiB]</span><br></pre></td></tr></table></figure>
+
+<p>查看vg</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[root@edgex ~]# vgs</span><br><span class="line">  VG     #PV #LV #SN Attr   VSize  VFree</span><br><span class="line">  centos   1   2   0 wz--n- &lt;9.00g    0 </span><br></pre></td></tr></table></figure>
+
+<p>将 PV /dev/sdb1添加到卷组centos中</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[root@edgex ~]# vgextend centos /dev/sdb1</span><br><span class="line">  Volume group &quot;centos&quot; successfully extended</span><br></pre></td></tr></table></figure>
+
+<p>查看vg，已经增加为58G</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[root@edgex ~]# vgs</span><br><span class="line">  VG     #PV #LV #SN Attr   VSize  VFree  </span><br><span class="line">  centos   2   2   0 wz--n- 58.99g &lt;50.00g</span><br></pre></td></tr></table></figure>
+
+<p>为根目录添加20G的空间。通过df -h查看根目录的lv名称为 /dev/mapper/centos-root</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[root@edgex ~]# df -h</span><br><span class="line">Filesystem               Size  Used Avail Use% Mounted on</span><br><span class="line">devtmpfs                 1.9G     0  1.9G   0% /dev</span><br><span class="line">tmpfs                    1.9G     0  1.9G   0% /dev/shm</span><br><span class="line">tmpfs                    1.9G  8.6M  1.9G   1% /run</span><br><span class="line">tmpfs                    1.9G     0  1.9G   0% /sys/fs/cgroup</span><br><span class="line">/dev/mapper/centos-root  8.0G  8.0G   67M 100% /</span><br><span class="line">/dev/sda1               1014M  275M  740M  28% /boot</span><br><span class="line">tmpfs                    379M     0  379M   0% /run/user/0</span><br></pre></td></tr></table></figure>
+
+<p>增加</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[root@edgex ~]# lvextend -L +50G -n /dev/mapper/centos-root</span><br><span class="line">  Insufficient free space: 12800 extents needed, but only 12799 available</span><br></pre></td></tr></table></figure>
+
+<p>发现报错了，空间不够，所以 降低1G输入如下命令：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[root@edgex ~]# lvextend -L +49G -n /dev/mapper/centos-root</span><br><span class="line">  Size of logical volume centos/root changed from &lt;8.00 GiB (2047 extents) to &lt;57.00 GiB (14591 extents).</span><br><span class="line">  Logical volume centos/root successfully resized.</span><br></pre></td></tr></table></figure>
+
+<p>逻辑卷扩展后并不会马上生效，需要使用“resize2fs”命令重新加载逻辑卷的大小</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[root@edgex ~]# resize2fs /dev/mapper/centos-root</span><br><span class="line">resize2fs 1.42.9 (28-Dec-2013)</span><br><span class="line">resize2fs: Bad magic number in super-block while trying to open /dev/mapper/centos-root</span><br><span class="line">Couldn&#x27;t find valid filesystem superblock.</span><br></pre></td></tr></table></figure>
+
+<p>使用 resize2fs时，提示错误，了解后发现，xfs格式的文件扩充需要使用 xfs_growfs</p>
+<p>查看/dev/mapper/centos-root的格式</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[root@edgex ~]# df -hT</span><br><span class="line">Filesystem              Type      Size  Used Avail Use% Mounted on</span><br><span class="line">devtmpfs                devtmpfs  1.9G     0  1.9G   0% /dev</span><br><span class="line">tmpfs                   tmpfs     1.9G     0  1.9G   0% /dev/shm</span><br><span class="line">tmpfs                   tmpfs     1.9G  8.6M  1.9G   1% /run</span><br><span class="line">tmpfs                   tmpfs     1.9G     0  1.9G   0% /sys/fs/cgroup</span><br><span class="line">/dev/mapper/centos-root xfs        8.0G  8.0G   67M  100% /</span><br><span class="line">/dev/sda1               xfs      1014M  275M  740M  28% /boot</span><br><span class="line">tmpfs                   tmpfs     379M     0  379M   0% /run/user/0</span><br></pre></td></tr></table></figure>
+
+<p>查看得知为xfs，使用xfs_growfs扩充</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[root@edgex ~]# xfs_growfs /dev/mapper/centos-root </span><br><span class="line">meta-data=/dev/mapper/centos-root isize=512    agcount=4, agsize=524032 blks</span><br><span class="line">         =                       sectsz=512   attr=2, projid32bit=1</span><br><span class="line">         =                       crc=1        finobt=0 spinodes=0</span><br><span class="line">data     =                       bsize=4096   blocks=2096128, imaxpct=25</span><br><span class="line">         =                       sunit=0      swidth=0 blks</span><br><span class="line">naming   =version 2              bsize=4096   ascii-ci=0 ftype=1</span><br><span class="line">log      =internal               bsize=4096   blocks=2560, version=2</span><br><span class="line">         =                       sectsz=512   sunit=0 blks, lazy-count=1</span><br><span class="line">realtime =none                   extsz=4096   blocks=0, rtextents=0</span><br><span class="line">data blocks changed from 2096128 to 14941184</span><br></pre></td></tr></table></figure>
+
+<p>至此扩充完毕。</p>
+]]></content>
+      <categories>
+        <category>LVM</category>
+      </categories>
+      <tags>
+        <tag>LVM</tag>
+        <tag>磁盘</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>优秀文章及网站收藏</title>
+    <url>/p/42568.html</url>
+    <content><![CDATA[<p><escape><span id="more"></span></escape></p>
+<h1 id="优秀文章及网站收藏">1. 优秀文章及网站收藏</h1><h2 id="榜单网站">1.1. 榜单网站</h2><h3 id="Oracle全球技术专家头衔列表">1.1.1. Oracle全球技术专家头衔列表</h3><p>Find Oracle ACEs, Groundbreaker Ambassadors and Java Champions in our Groundbreakers directory.</p>
+<blockquote>
+<p><a href="https://apexapps.oracle.com/pls/apex/f?p=119297:3">https://apexapps.oracle.com/pls/apex/f?p=119297:3</a>::::::</p>
+</blockquote>
+<p>编程网站排行榜</p>
+<blockquote>
+<p><a href="https://www.tiobe.com/tiobe-index/">https://www.tiobe.com/tiobe-index/</a></p>
+</blockquote>
+<p>SQL Relay</p>
+<blockquote>
+<p><a href="http://sqlrelay.sourceforge.net/">http://sqlrelay.sourceforge.net/</a></p>
+</blockquote>
+<p>3D js库</p>
+<p>市面上几乎所有3D js库, 不仅有开源协议、文件大小、迭代版本号等信息, 还分别使用每一种库写了4个demo</p>
+<blockquote>
+<p><a href="https://qiita.com/cx20/items/0fa19c96aa6470d98807">https://qiita.com/cx20/items/0fa19c96aa6470d98807</a></p>
+</blockquote>
+<h2 id="产品与设计">1.2. 产品与设计</h2><h3 id="即时原型">1.2.1. 即时原型</h3><p>产品原型设计与团队实时协作平台</p>
+<blockquote>
+<p><a href="https://www.xiaopiu.com/">https://www.xiaopiu.com/</a></p>
+</blockquote>
+<h3 id="即时设计">1.2.2. 即时设计</h3><p>专业级在线UI设计工具</p>
+<blockquote>
+<p><a href="https://js.design/">https://js.design</a></p>
+</blockquote>
+<h3 id="arco-design">1.2.3. arco.design</h3><p>字节跳动GIP UED团队与架构前端团队联合推出的企业级设计系统</p>
+<blockquote>
+<p><a href="https://arco.design/">https://arco.design/</a></p>
+</blockquote>
+]]></content>
   </entry>
   <entry>
     <title>LVM扩容根目录（不新加磁盘）</title>
@@ -378,40 +378,6 @@
     <content><![CDATA[]]></content>
   </entry>
   <entry>
-    <title>修改docker数据目录位置</title>
-    <url>/p/23817.html</url>
-    <content><![CDATA[<p><escape><span id="more"></span></escape></p>
-<h1 id="修改docker数据目录位置">1. 修改docker数据目录位置</h1><blockquote>
-<p><a href="http://www.manongjc.com/article/35399.html">http://www.manongjc.com/article/35399.html</a></p>
-</blockquote>
-<p>查看当前目录</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker info</span><br><span class="line"># 当前数据目录</span><br><span class="line">Docker Root Dir: /var/lib/docker</span><br></pre></td></tr></table></figure>
-
-<p>停止docker</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">systemctl stop docker.service</span><br></pre></td></tr></table></figure>
-
-<p>将当前Docker存储目录复制到/data目录下</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">cp -R /var/lib/docker/ /data</span><br></pre></td></tr></table></figure>
-
-<p>修改docker.service配置文件，在EXECStart的后面增加 –graph=/data/docker(修改后的docker存储路径)。</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[root@T ~]# vim /usr/lib/systemd/system/docker.service</span><br><span class="line">......</span><br><span class="line">ExecStart=/usr/bin/dockerd --graph=/data/docker</span><br><span class="line">......</span><br></pre></td></tr></table></figure>
-
-<p>执行下列命令然后重启docker</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">systemctl daemon-reload</span><br><span class="line">systemctl disable docker.service</span><br><span class="line">systemctl enable docker.service</span><br><span class="line">systemctl start docker.service</span><br></pre></td></tr></table></figure>
-
-<p>docker info 检验</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Docker Root Dir: /data/docker</span><br></pre></td></tr></table></figure>
-
-]]></content>
-      <categories>
-        <category>Docker</category>
-      </categories>
-      <tags>
-        <tag>Docker</tag>
-        <tag>容器</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>安装docker和docker-compose</title>
     <url>/p/35698.html</url>
     <content><![CDATA[<p><escape><span id="more"></span></escape></p>
@@ -480,74 +446,37 @@
       </tags>
   </entry>
   <entry>
-    <title>SonarQube安装部署</title>
-    <url>/p/12102.html</url>
+    <title>修改docker数据目录位置</title>
+    <url>/p/23817.html</url>
     <content><![CDATA[<p><escape><span id="more"></span></escape></p>
-<h1 id="SonarQube安装部署">1. SonarQube安装部署</h1><p>SonarQube是一个用于管理代码质量的开放平台，可以快速的定位代码中潜在的或者明显的错误。目前<br>支持java,C#,C/C++,Python,PL/SQL,Cobol,JavaScrip,Groovy等二十几种编程语言的代码质量管理与检<br>测。<br>官网：<a href="https://www.sonarqube.org/">https://www.sonarqube.org/</a></p>
-<h2 id="环境要求">1.1. 环境要求</h2><ul>
-<li>jdk </li>
-<li>maven </li>
-<li>mysql 5.7</li>
-</ul>
-<p>下载</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">wget https://binaries.sonarsource.com/Distribution/sonarqube/sonarqube-7.8.zip</span><br></pre></td></tr></table></figure>
+<h1 id="修改docker数据目录位置">1. 修改docker数据目录位置</h1><blockquote>
+<p><a href="http://www.manongjc.com/article/35399.html">http://www.manongjc.com/article/35399.html</a></p>
+</blockquote>
+<p>查看当前目录</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker info</span><br><span class="line"># 当前数据目录</span><br><span class="line">Docker Root Dir: /var/lib/docker</span><br></pre></td></tr></table></figure>
 
-<h2 id="安装mysql5-7">1.2. 安装mysql5.7</h2><p>下载并安装MySQL官方的 Yum Repository</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">wget -i -c http://dev.mysql.com/get/mysql57-community-release-el7-10.noarch.rpm</span><br></pre></td></tr></table></figure>
+<p>停止docker</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">systemctl stop docker.service</span><br></pre></td></tr></table></figure>
 
-<p>安装</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">yum -y install mysql57-community-release-el7-10.noarch.rpm</span><br><span class="line">yum -y install mysql-community-server</span><br></pre></td></tr></table></figure>
+<p>将当前Docker存储目录复制到/data目录下</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">cp -R /var/lib/docker/ /data</span><br></pre></td></tr></table></figure>
 
-<p>启动</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">systemctl start  mysqld.service</span><br></pre></td></tr></table></figure>
+<p>修改docker.service配置文件，在EXECStart的后面增加 –graph=/data/docker(修改后的docker存储路径)。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[root@T ~]# vim /usr/lib/systemd/system/docker.service</span><br><span class="line">......</span><br><span class="line">ExecStart=/usr/bin/dockerd --graph=/data/docker</span><br><span class="line">......</span><br></pre></td></tr></table></figure>
 
-<p>查看状态</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">systemctl status mysqld.service</span><br></pre></td></tr></table></figure>
+<p>执行下列命令然后重启docker</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">systemctl daemon-reload</span><br><span class="line">systemctl disable docker.service</span><br><span class="line">systemctl enable docker.service</span><br><span class="line">systemctl start docker.service</span><br></pre></td></tr></table></figure>
 
-<p>查看密码</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">grep &quot;password&quot; /var/log/mysqld.log</span><br><span class="line">pe9jD62)fQmb</span><br></pre></td></tr></table></figure>
-
-<p>登陆修改密码</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">mysql -uroot -p</span><br><span class="line"></span><br><span class="line">ALTER USER &#x27;root&#x27;@&#x27;localhost&#x27; IDENTIFIED BY &#x27;Mysqldb@12&#x27;;</span><br></pre></td></tr></table></figure>
-
-
-
-<h2 id="安装sonarqube">1.3. 安装sonarqube</h2><p>解压sonar，并设置权限</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">yum install -y unzip</span><br></pre></td></tr></table></figure>
-
-<p>解压</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">unzip sonarqube-7.8.zip</span><br><span class="line"></span><br><span class="line"># 创建目录</span><br><span class="line">mkdir /data/aimm/sonar -p</span><br><span class="line"></span><br><span class="line"># 移动文件</span><br><span class="line">mv sonarqube-7.8/* /data/aimm/sonar/</span><br><span class="line"></span><br><span class="line"># 创建sonar用户</span><br><span class="line">useradd sonar</span><br><span class="line"></span><br><span class="line"># 更改sonar目录权限</span><br><span class="line">chown -R sonar. /data/aimm/sonar/</span><br></pre></td></tr></table></figure>
-
-<h2 id="配置">1.4. 配置</h2><p>修改sonar配置文件</p>
-<p>vim /data/aimm/sonar/conf/sonar.properties</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sonar.jdbc.username=root</span><br><span class="line">sonar.jdbc.password=Mysqldb@12</span><br><span class="line">sonar.jdbc.url=jdbc:mysql://192.168.1.221:3306/sonar?useUnicode=true&amp;characterEncoding=utf8&amp;rewriteBatchedStatements=true&amp;useConfigs=maxPerformance&amp;useSSL=false</span><br></pre></td></tr></table></figure>
-
-<p>sonar常用命令</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 启动</span><br><span class="line">su sonar /data/aimm/sonar/bin/linux-x86-64/sonar.sh start</span><br><span class="line"></span><br><span class="line"># 查看状态</span><br><span class="line">su sonar /data/aimm/sonar/bin/linux-x86-64/sonar.sh status </span><br><span class="line"></span><br><span class="line"># 停止</span><br><span class="line">su sonar /data/aimm/sonar/bin/linux-x86-64/sonar.sh stop</span><br><span class="line"></span><br><span class="line"># 查看日志</span><br><span class="line">tail -f /data/aimm/sonar/logs/sonar.logs</span><br></pre></td></tr></table></figure>
-
-<p>访问sonar</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">http://192.168.1.210:9000</span><br></pre></td></tr></table></figure>
-
-<p>默认账户</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">admin/admin </span><br></pre></td></tr></table></figure>
-
-<h2 id="汉化">1.5. 汉化</h2><p>下载汉化包</p>
-<p><a href="https://github.com/SonarQubeCommunity/sonar-l10n-zh/releases">https://github.com/SonarQubeCommunity/sonar-l10n-zh/releases</a></p>
-<p>把jar包放在：/data/aimm/sonar/extensions/plugins</p>
-<p>然后重启</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">su sonar /data/aimm/sonar/bin/linux-x86-64/sonar.sh restart</span><br></pre></td></tr></table></figure>
-
-<p>创建token</p>
-<p>我的账号-安全-生成令牌</p>
-<p>令牌名称：admin</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">4de2152c178d7b6809791ffb0fbb187329a4c1b2</span><br></pre></td></tr></table></figure>
+<p>docker info 检验</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Docker Root Dir: /data/docker</span><br></pre></td></tr></table></figure>
 
 ]]></content>
       <categories>
-        <category>SonarQube</category>
+        <category>Docker</category>
       </categories>
       <tags>
-        <tag>SonarQube</tag>
+        <tag>Docker</tag>
+        <tag>容器</tag>
       </tags>
   </entry>
   <entry>
@@ -607,7 +536,7 @@
 
 <blockquote>
 <p>注意：这里默认生成的secrets只能在default工作空间使用，如果需要在指定的工作空间创建，需要加：-n参数指定工作空间</p>
-<p>例如：kubectl create secret docker-registry harbor-registry –docker-server=harbor.xxx.com –docker-username=admin –docker-password=Harbor12345 --docker-email=<a href="mailto:&#x68;&#x65;&#121;&#117;&#x7a;&#x65;&#64;&#49;&#x36;&#x33;&#46;&#99;&#x6f;&#109;">&#x68;&#x65;&#121;&#117;&#x7a;&#x65;&#64;&#49;&#x36;&#x33;&#46;&#99;&#x6f;&#109;</a> -n test</p>
+<p>例如：kubectl create secret docker-registry harbor-registry –docker-server=harbor.xxx.com –docker-username=admin –docker-password=Harbor12345 --docker-email=<a href="mailto:&#x68;&#x65;&#121;&#117;&#x7a;&#101;&#x40;&#x31;&#x36;&#51;&#x2e;&#x63;&#111;&#109;">&#x68;&#x65;&#121;&#117;&#x7a;&#101;&#x40;&#x31;&#x36;&#51;&#x2e;&#x63;&#111;&#109;</a> -n test</p>
 </blockquote>
 <p>配置yaml，通过secret获取images</p>
 <figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line">[<span class="string">root@master1</span> <span class="string">machine-tool</span>]<span class="comment"># vi nginx.yaml</span></span><br><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Pod</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">nginx</span></span><br><span class="line">  <span class="attr">namespace:</span> <span class="string">default</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">containers:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">nginx</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">harbor.xxx.com/test/ssh-centos7:latest</span></span><br><span class="line">    <span class="attr">command:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">top</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&#x27;-b&#x27;</span></span><br><span class="line">  <span class="attr">imagePullSecrets:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">harbor-registry</span></span><br></pre></td></tr></table></figure>
@@ -682,6 +611,77 @@
         <tag>容器</tag>
         <tag>k8s</tag>
         <tag>Kubernetes</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>SonarQube安装部署</title>
+    <url>/p/12102.html</url>
+    <content><![CDATA[<p><escape><span id="more"></span></escape></p>
+<h1 id="SonarQube安装部署">1. SonarQube安装部署</h1><p>SonarQube是一个用于管理代码质量的开放平台，可以快速的定位代码中潜在的或者明显的错误。目前<br>支持java,C#,C/C++,Python,PL/SQL,Cobol,JavaScrip,Groovy等二十几种编程语言的代码质量管理与检<br>测。<br>官网：<a href="https://www.sonarqube.org/">https://www.sonarqube.org/</a></p>
+<h2 id="环境要求">1.1. 环境要求</h2><ul>
+<li>jdk </li>
+<li>maven </li>
+<li>mysql 5.7</li>
+</ul>
+<p>下载</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">wget https://binaries.sonarsource.com/Distribution/sonarqube/sonarqube-7.8.zip</span><br></pre></td></tr></table></figure>
+
+<h2 id="安装mysql5-7">1.2. 安装mysql5.7</h2><p>下载并安装MySQL官方的 Yum Repository</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">wget -i -c http://dev.mysql.com/get/mysql57-community-release-el7-10.noarch.rpm</span><br></pre></td></tr></table></figure>
+
+<p>安装</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">yum -y install mysql57-community-release-el7-10.noarch.rpm</span><br><span class="line">yum -y install mysql-community-server</span><br></pre></td></tr></table></figure>
+
+<p>启动</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">systemctl start  mysqld.service</span><br></pre></td></tr></table></figure>
+
+<p>查看状态</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">systemctl status mysqld.service</span><br></pre></td></tr></table></figure>
+
+<p>查看密码</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">grep &quot;password&quot; /var/log/mysqld.log</span><br><span class="line">pe9jD62)fQmb</span><br></pre></td></tr></table></figure>
+
+<p>登陆修改密码</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">mysql -uroot -p</span><br><span class="line"></span><br><span class="line">ALTER USER &#x27;root&#x27;@&#x27;localhost&#x27; IDENTIFIED BY &#x27;Mysqldb@12&#x27;;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="安装sonarqube">1.3. 安装sonarqube</h2><p>解压sonar，并设置权限</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">yum install -y unzip</span><br></pre></td></tr></table></figure>
+
+<p>解压</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">unzip sonarqube-7.8.zip</span><br><span class="line"></span><br><span class="line"># 创建目录</span><br><span class="line">mkdir /data/aimm/sonar -p</span><br><span class="line"></span><br><span class="line"># 移动文件</span><br><span class="line">mv sonarqube-7.8/* /data/aimm/sonar/</span><br><span class="line"></span><br><span class="line"># 创建sonar用户</span><br><span class="line">useradd sonar</span><br><span class="line"></span><br><span class="line"># 更改sonar目录权限</span><br><span class="line">chown -R sonar. /data/aimm/sonar/</span><br></pre></td></tr></table></figure>
+
+<h2 id="配置">1.4. 配置</h2><p>修改sonar配置文件</p>
+<p>vim /data/aimm/sonar/conf/sonar.properties</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sonar.jdbc.username=root</span><br><span class="line">sonar.jdbc.password=Mysqldb@12</span><br><span class="line">sonar.jdbc.url=jdbc:mysql://192.168.1.221:3306/sonar?useUnicode=true&amp;characterEncoding=utf8&amp;rewriteBatchedStatements=true&amp;useConfigs=maxPerformance&amp;useSSL=false</span><br></pre></td></tr></table></figure>
+
+<p>sonar常用命令</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 启动</span><br><span class="line">su sonar /data/aimm/sonar/bin/linux-x86-64/sonar.sh start</span><br><span class="line"></span><br><span class="line"># 查看状态</span><br><span class="line">su sonar /data/aimm/sonar/bin/linux-x86-64/sonar.sh status </span><br><span class="line"></span><br><span class="line"># 停止</span><br><span class="line">su sonar /data/aimm/sonar/bin/linux-x86-64/sonar.sh stop</span><br><span class="line"></span><br><span class="line"># 查看日志</span><br><span class="line">tail -f /data/aimm/sonar/logs/sonar.logs</span><br></pre></td></tr></table></figure>
+
+<p>访问sonar</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">http://192.168.1.210:9000</span><br></pre></td></tr></table></figure>
+
+<p>默认账户</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">admin/admin </span><br></pre></td></tr></table></figure>
+
+<h2 id="汉化">1.5. 汉化</h2><p>下载汉化包</p>
+<p><a href="https://github.com/SonarQubeCommunity/sonar-l10n-zh/releases">https://github.com/SonarQubeCommunity/sonar-l10n-zh/releases</a></p>
+<p>把jar包放在：/data/aimm/sonar/extensions/plugins</p>
+<p>然后重启</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">su sonar /data/aimm/sonar/bin/linux-x86-64/sonar.sh restart</span><br></pre></td></tr></table></figure>
+
+<p>创建token</p>
+<p>我的账号-安全-生成令牌</p>
+<p>令牌名称：admin</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">4de2152c178d7b6809791ffb0fbb187329a4c1b2</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>SonarQube</category>
+      </categories>
+      <tags>
+        <tag>SonarQube</tag>
       </tags>
   </entry>
   <entry>
@@ -894,38 +894,6 @@
       </tags>
   </entry>
   <entry>
-    <title>helm部署zookeeper和kafka集群</title>
-    <url>/p/30035.html</url>
-    <content><![CDATA[<p><escape><span id="more"></span></escape></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[root@k8s-master ~]# helm search repo zookeeper</span><br><span class="line">NAME                    	CHART VERSION	APP VERSION	DESCRIPTION                                       </span><br><span class="line">bitnami/zookeeper       	7.4.2        	3.7.0      	A centralized service for maintaining configura...</span><br><span class="line">bitnami/dataplatform-bp1	7.0.0        	1.0.0      	OCTO Data platform Kafka-Spark-Solr Helm Chart    </span><br><span class="line">bitnami/dataplatform-bp2	5.0.0        	1.0.0      	OCTO Data platform Kafka-Spark-Elasticsearch He...</span><br><span class="line">bitnami/kafka           	14.0.5       	2.8.0      	Apache Kafka is a distributed streaming platform. </span><br><span class="line">bitnami/solr            	2.0.3        	8.9.0      	Apache Solr is an open source enterprise search...</span><br></pre></td></tr></table></figure>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-]]></content>
-  </entry>
-  <entry>
     <title>RTNETLINK answers No such file or directory</title>
     <url>/p/42234.html</url>
     <content><![CDATA[<p><escape><span id="more"></span></escape></p>
@@ -960,6 +928,43 @@
       </tags>
   </entry>
   <entry>
+    <title>helm部署zookeeper和kafka集群</title>
+    <url>/p/30035.html</url>
+    <content><![CDATA[<p><escape><span id="more"></span></escape></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[root@k8s-master ~]# helm search repo zookeeper</span><br><span class="line">NAME                    	CHART VERSION	APP VERSION	DESCRIPTION                                       </span><br><span class="line">bitnami/zookeeper       	7.4.2        	3.7.0      	A centralized service for maintaining configura...</span><br><span class="line">bitnami/dataplatform-bp1	7.0.0        	1.0.0      	OCTO Data platform Kafka-Spark-Solr Helm Chart    </span><br><span class="line">bitnami/dataplatform-bp2	5.0.0        	1.0.0      	OCTO Data platform Kafka-Spark-Elasticsearch He...</span><br><span class="line">bitnami/kafka           	14.0.5       	2.8.0      	Apache Kafka is a distributed streaming platform. </span><br><span class="line">bitnami/solr            	2.0.3        	8.9.0      	Apache Solr is an open source enterprise search...</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+]]></content>
+  </entry>
+  <entry>
+    <title>k8s集群动态存储管理GlusterFS</title>
+    <url>/p/22918.html</url>
+    <content><![CDATA[]]></content>
+  </entry>
+  <entry>
     <title>docker部署nacos</title>
     <url>/p/43577.html</url>
     <content><![CDATA[<p><escape><span id="more"></span></escape></p>
@@ -992,6 +997,66 @@
       <tags>
         <tag>Docker</tag>
         <tag>容器</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>k8s部署eureka集群</title>
+    <url>/p/35694.html</url>
+    <content><![CDATA[<p><escape><span id="more"></span></escape></p>
+<h1 id="k8s部署eureka集群">1. k8s部署eureka集群</h1><p>主要是用到了StatefulSet和headless service这两个k8s对象</p>
+<h2 id="StatefulSet">1.1. StatefulSet</h2><p>StatefulSet是为了解决有状态服务的问题（对应Deployments和ReplicaSets是为无状态服务而设计），其应用场景包括：</p>
+<p>1.稳定的持久化存储，即Pod重新调度后还是能访问到相同的持久化数据，基于PVC来实现；</p>
+<p>2.稳定的网络标志，即Pod重新调度后其PodName和HostName不变，基于Headless Service（即没有Cluster IP的Service）来实现；</p>
+<p>3.有序部署，有序扩展，即Pod是有顺序的，在部署或者扩展的时候要依据定义的顺序依次依次进行（即从0到N-1，在下一个Pod运行之前所有之前的Pod必须都是Running和Ready状态），基于init containers来实现；</p>
+<p>4.有序收缩，有序删除（即从N-1到0）；</p>
+<p>StatefulSet中每个Pod的DNS格式为：</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">statefulSetName-&#123;<span class="number">0.</span>.N<span class="number">-1</span>&#125;.serviceName.<span class="keyword">namespace</span>.svc.cluster.local</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>serviceName为Headless Service的名字<br>0..N-1为Pod所在的序号，从0开始到N-1<br>statefulSetName为StatefulSet的名字<br>namespace为服务所在的namespace，Headless Service和StatefulSet必须在相同的namespace<br>cluster.local为Cluster Domain</p>
+</blockquote>
+<h2 id="Headless-Service">1.2. Headless Service</h2><p>Headless Service 和普通service的一个显著的区别是，Headless Service的对应的每一个Endpoints，即每一个Pod，都会有对应的DNS域名<br> 例如：我们可以用过这种域名来访问某个具体的pod：</p>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line">statefulSetName-<span class="number">0</span><span class="selector-class">.serviceName</span><span class="selector-class">.namespace</span><span class="selector-class">.svc</span><span class="selector-class">.cluster</span><span class="selector-class">.local</span></span><br></pre></td></tr></table></figure>
+
+<p>在实际使用中，将service的clusterIP设置成None，就表明这个service是一个Headless Service。</p>
+<h2 id="StatefulSet和Headless-Service的结合">1.3. StatefulSet和Headless Service的结合</h2><p>通过 StatefulSet，我们得到了一些列pod，每个pod的name为statefulSetName-{0..N-1}， 加入我们创建了一个名称叫eureka的StatefulSet，并且设置replicas =3，那么部署到k8s后，k8s会为我们生成三个名称依次为eureka-0，eureka-1，eureka-2的pod。<br> 通过Headless Service，我们可以通过pod名称来访问某个pod，</p>
+<p>例如，我们在namespace=test的命名空间下创建了一个名称为register-server的service，并且关联了之前StatefulSet创建的pod，那么我们可以在集群内任意地方通过eureka-0.register-server.test.svc.cluster.local这个域名访问到eureka-0这个pod。</p>
+<h3 id="搭建：">1.3.1. 搭建：</h3><p>有了前面的基础，现在部署eureka集群的方式就逐渐清晰了。</p>
+<p>首先明确部署eureka的关键点：需要让每个eureka注册到另外的eureka上。<br> 也就是eureka.client.serviceUrl.defaultZone这个配置，是一组eureka的地址。<br> 通过StatefulSet，我们可以明确知道生成的每个eureka的名称，<br> 通过Headless Service，我们又可以访问到每个eureka，所以eureka.client.serviceUrl.defaultZone的值就是</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="string">&quot;http://eureka-0.register-server:8000/eureka/,http://eureka-1.register-server:8000/eureka/,http://eureka-2.register-server:8000/eureka/&quot;</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>由于这三个pod在同一个命名空间内，可以省略.namespace.svc.cluster.local</p>
+</blockquote>
+<h2 id="创建StatefulSet-yaml">1.4. 创建StatefulSet.yaml</h2><p>vim eureka-StatefulSet.yaml</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">apiVersion: apps/v1</span><br><span class="line">kind: StatefulSet</span><br><span class="line">metadata:</span><br><span class="line">  namespace: wise</span><br><span class="line">  name: register-server</span><br><span class="line">  labels:</span><br><span class="line">    service: register-server</span><br><span class="line">spec:</span><br><span class="line">  replicas: 3</span><br><span class="line">  serviceName: register-server</span><br><span class="line">  selector:</span><br><span class="line">    matchLabels:</span><br><span class="line">      service: register-server</span><br><span class="line">  template:</span><br><span class="line">    metadata:</span><br><span class="line">      labels:</span><br><span class="line">        service: register-server</span><br><span class="line">      annotations:</span><br><span class="line">        service: register-server</span><br><span class="line">    spec:</span><br><span class="line">      containers:</span><br><span class="line">        - name: register-server</span><br><span class="line">          image: codewjy/eureka:0.1.0</span><br><span class="line">          imagePullPolicy: Always</span><br><span class="line">          env:</span><br><span class="line">          - name: MY_POD_NAME</span><br><span class="line">            valueFrom:</span><br><span class="line">              fieldRef:</span><br><span class="line">                fieldPath: metadata.name</span><br><span class="line">          ports:</span><br><span class="line">            - name: http</span><br><span class="line">              containerPort: 8000</span><br><span class="line">              protocol: TCP</span><br><span class="line">          readinessProbe:</span><br><span class="line">            httpGet:</span><br><span class="line">              path: /actuator/health</span><br><span class="line">              port: 8001</span><br><span class="line">              scheme: HTTP</span><br><span class="line">            failureThreshold: 3</span><br><span class="line">            initialDelaySeconds: 60</span><br><span class="line">            periodSeconds: 10</span><br><span class="line">            successThreshold: 1</span><br><span class="line">            timeoutSeconds: 10</span><br><span class="line">          resources:</span><br><span class="line">            limits:</span><br><span class="line">              # cpu: 100m</span><br><span class="line">              memory: 1.7Gi</span><br><span class="line">            requests:</span><br><span class="line">                # cpu: 100m</span><br><span class="line">              memory: 1.2Gi</span><br><span class="line">          volumeMounts:</span><br><span class="line">          - mountPath: /Charts</span><br><span class="line">            name: data</span><br><span class="line">      volumes:</span><br><span class="line">      - name: data</span><br><span class="line">  podManagementPolicy: &quot;Parallel&quot;</span><br></pre></td></tr></table></figure>
+
+<p>创建并查看</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[root@k8s-master eureka]# kubectl apply -f StatefulSet.yaml </span><br><span class="line">statefulset.apps/register-server created</span><br><span class="line"></span><br><span class="line">[root@k8s-master eureka]# kubectl get pods -n wise|grep register-server</span><br><span class="line">register-server-0                   1/1     Running   0          29m</span><br><span class="line">register-server-1                   1/1     Running   0          29m</span><br><span class="line">register-server-2                   1/1     Running   0          29m</span><br></pre></td></tr></table></figure>
+
+<h2 id="创建service">1.5. 创建service</h2><p>vim eureka-service.yaml</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">apiVersion: v1</span><br><span class="line">kind: Service</span><br><span class="line">metadata:</span><br><span class="line">  namespace: wise</span><br><span class="line">  name: register-server</span><br><span class="line">  labels:</span><br><span class="line">    service: register-server</span><br><span class="line">spec:</span><br><span class="line">  clusterIP: None</span><br><span class="line">  type: ClusterIP</span><br><span class="line">  ports:</span><br><span class="line">    - port: 8000</span><br><span class="line">      targetPort: http</span><br><span class="line">      protocol: TCP</span><br><span class="line">      name: http</span><br><span class="line">  selector:</span><br><span class="line">    service: register-server</span><br></pre></td></tr></table></figure>
+
+<p>创建并查看</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[root@k8s-master eureka]# kubectl apply -f service.yaml </span><br><span class="line">service/register-server created</span><br><span class="line"></span><br><span class="line">[root@k8s-master eureka]# kubectl get pods -n wise|grep register-server</span><br><span class="line">register-server-0                   1/1     Running   0          29m</span><br><span class="line">register-server-1                   1/1     Running   0          29m</span><br><span class="line">register-server-2                   1/1     Running   0          29m</span><br><span class="line"></span><br><span class="line">[root@k8s-master eureka]# kubectl get svc -n wise|grep register-server</span><br><span class="line">register-server   ClusterIP   None             &lt;none&gt;        8000/TCP       30m</span><br></pre></td></tr></table></figure>
+
+<h2 id="创建ingress">1.6. 创建ingress</h2><p>vim eureka-ingress.yaml</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">---</span><br><span class="line">apiVersion: extensions/v1beta1</span><br><span class="line">kind: Ingress</span><br><span class="line">metadata:</span><br><span class="line">  annotations:</span><br><span class="line">  name: register-server</span><br><span class="line">  namespace: wise</span><br><span class="line">  annotations:</span><br><span class="line">    kubernetes.io/ingress.class: traefik-v2.3</span><br><span class="line">spec:</span><br><span class="line">  rules:</span><br><span class="line">  - host: eureka.heyonggs.com</span><br><span class="line">    http:</span><br><span class="line">      paths:</span><br><span class="line">      - backend:</span><br><span class="line">          serviceName: register-server</span><br><span class="line">          servicePort: 8000</span><br></pre></td></tr></table></figure>
+
+<p>创建并查看</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[root@k8s-master eureka]# kubectl apply -f ingress.yaml </span><br><span class="line">ingress.extensions/register-server created</span><br><span class="line"></span><br><span class="line">[root@k8s-master eureka]# kubectl get ingress -n wise|grep register-server</span><br><span class="line">register-server   &lt;none&gt;   eureka.heyonggs.com             80      21m</span><br></pre></td></tr></table></figure>
+
+<h2 id="访问">1.7. 访问</h2><p>先做域名解析在访问查看集群：http://域名</p>
+<p><img src="https://cdn.jsdelivr.net/gh/heyonggs/images@master/wp/2021/eureka/202110121114492.png"></p>
+<p><strong>参考：</strong></p>
+<p><a href="https://www.jianshu.com/p/a3829851a97d">https://www.jianshu.com/p/a3829851a97d</a></p>
+]]></content>
+      <categories>
+        <category>Kubernetes</category>
+      </categories>
+      <tags>
+        <tag>k8s</tag>
+        <tag>Kubernetes</tag>
       </tags>
   </entry>
   <entry>
@@ -1089,9 +1154,39 @@
       </tags>
   </entry>
   <entry>
-    <title>k8s集群动态存储管理GlusterFS</title>
-    <url>/p/22918.html</url>
-    <content><![CDATA[]]></content>
+    <title>转载&#39;OpenSSL SSL_connect Connection was reset in connection to github.com 443&#39;</title>
+    <url>/p/14759.html</url>
+    <content><![CDATA[<p><escape><span id="more"></span></escape></p>
+<h1 id="OpenSSL-SSL-connect-Connection-was-reset-in-connection-to-github-com-443">1. OpenSSL SSL_connect: Connection was reset in connection to github.com:443</h1><p>使用github的push和pull时报错如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">fatal: unable to access &#x27;https://github.com/heyonggs/heyonggs.github.io.git/&#x27;: OpenSSL SSL_connect: Connection was reset in connection to github.com:443</span><br></pre></td></tr></table></figure>
+
+<h2 id="方案一">1.1. 方案一</h2><p>在git bash命令行中依次输入以下命令：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git config --global http.sslBackend &quot;openssl&quot;</span><br><span class="line">git config --global http.sslCAInfo &quot;C:\Program Files\Git\mingw64\ssl\cert.pem&quot;</span><br></pre></td></tr></table></figure>
+
+<p>注意上面第二个命令，路径要换成git安装的路径。</p>
+<h2 id="方案二">1.2. 方案二</h2><p>如果你开启了VPN，很可能是因为代理的问题，这时候设置一下http.proxy就可以了。</p>
+<p>一定要查看自己的VPN端口号，假如你的端口号是7890，在git bash命令行中输入以下命令即可：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git config --global http.proxy 127.0.0.1:7890</span><br><span class="line">git config --global https.proxy 127.0.0.1:7890</span><br></pre></td></tr></table></figure>
+
+<p>如果你之前git中已经设置过上述配置，则使用如下命令取消再进行配置即可：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git config --global --unset http.proxy</span><br><span class="line">git config --global --unset https.proxy</span><br></pre></td></tr></table></figure>
+
+<p>下面是几个常用的git配置查看命令：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git config --global http.proxy #查看git的http代理配置</span><br><span class="line">git config --global https.proxy #查看git的https代理配置</span><br><span class="line">git config --global -l #查看git的所有配置</span><br></pre></td></tr></table></figure>
+
+<h2 id="方案三">1.3. 方案三</h2><p>还有一个情况，是你的VNP代理服务器节点有问题，有时候更换一个结点就好了。当然，也可以使用自己搭建的代理服务器。</p>
+<p>博主提示，一定要科学上网，合理上网。</p>
+<h2 id="方案四">1.4. 方案四</h2><p>打开一个新的git bash终端，就没问题了。这个可能是当前git的会话有关。</p>
+<blockquote>
+<p>原文链接：<a href="https://blog.csdn.net/qq_37555071/article/details/114260533">https://blog.csdn.net/qq_37555071/article/details/114260533</a></p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>git</category>
+      </categories>
+      <tags>
+        <tag>git</tag>
+      </tags>
   </entry>
   <entry>
     <title>harbor管理helm-charts</title>
@@ -1137,101 +1232,6 @@
       </tags>
   </entry>
   <entry>
-    <title>k8s部署eureka集群</title>
-    <url>/p/35694.html</url>
-    <content><![CDATA[<p><escape><span id="more"></span></escape></p>
-<h1 id="k8s部署eureka集群">1. k8s部署eureka集群</h1><p>主要是用到了StatefulSet和headless service这两个k8s对象</p>
-<h2 id="StatefulSet">1.1. StatefulSet</h2><p>StatefulSet是为了解决有状态服务的问题（对应Deployments和ReplicaSets是为无状态服务而设计），其应用场景包括：</p>
-<p>1.稳定的持久化存储，即Pod重新调度后还是能访问到相同的持久化数据，基于PVC来实现；</p>
-<p>2.稳定的网络标志，即Pod重新调度后其PodName和HostName不变，基于Headless Service（即没有Cluster IP的Service）来实现；</p>
-<p>3.有序部署，有序扩展，即Pod是有顺序的，在部署或者扩展的时候要依据定义的顺序依次依次进行（即从0到N-1，在下一个Pod运行之前所有之前的Pod必须都是Running和Ready状态），基于init containers来实现；</p>
-<p>4.有序收缩，有序删除（即从N-1到0）；</p>
-<p>StatefulSet中每个Pod的DNS格式为：</p>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">statefulSetName-&#123;<span class="number">0.</span>.N<span class="number">-1</span>&#125;.serviceName.<span class="keyword">namespace</span>.svc.cluster.local</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>serviceName为Headless Service的名字<br>0..N-1为Pod所在的序号，从0开始到N-1<br>statefulSetName为StatefulSet的名字<br>namespace为服务所在的namespace，Headless Service和StatefulSet必须在相同的namespace<br>cluster.local为Cluster Domain</p>
-</blockquote>
-<h2 id="Headless-Service">1.2. Headless Service</h2><p>Headless Service 和普通service的一个显著的区别是，Headless Service的对应的每一个Endpoints，即每一个Pod，都会有对应的DNS域名<br> 例如：我们可以用过这种域名来访问某个具体的pod：</p>
-<figure class="highlight css"><table><tr><td class="code"><pre><span class="line">statefulSetName-<span class="number">0</span><span class="selector-class">.serviceName</span><span class="selector-class">.namespace</span><span class="selector-class">.svc</span><span class="selector-class">.cluster</span><span class="selector-class">.local</span></span><br></pre></td></tr></table></figure>
-
-<p>在实际使用中，将service的clusterIP设置成None，就表明这个service是一个Headless Service。</p>
-<h2 id="StatefulSet和Headless-Service的结合">1.3. StatefulSet和Headless Service的结合</h2><p>通过 StatefulSet，我们得到了一些列pod，每个pod的name为statefulSetName-{0..N-1}， 加入我们创建了一个名称叫eureka的StatefulSet，并且设置replicas =3，那么部署到k8s后，k8s会为我们生成三个名称依次为eureka-0，eureka-1，eureka-2的pod。<br> 通过Headless Service，我们可以通过pod名称来访问某个pod，</p>
-<p>例如，我们在namespace=test的命名空间下创建了一个名称为register-server的service，并且关联了之前StatefulSet创建的pod，那么我们可以在集群内任意地方通过eureka-0.register-server.test.svc.cluster.local这个域名访问到eureka-0这个pod。</p>
-<h3 id="搭建：">1.3.1. 搭建：</h3><p>有了前面的基础，现在部署eureka集群的方式就逐渐清晰了。</p>
-<p>首先明确部署eureka的关键点：需要让每个eureka注册到另外的eureka上。<br> 也就是eureka.client.serviceUrl.defaultZone这个配置，是一组eureka的地址。<br> 通过StatefulSet，我们可以明确知道生成的每个eureka的名称，<br> 通过Headless Service，我们又可以访问到每个eureka，所以eureka.client.serviceUrl.defaultZone的值就是</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="string">&quot;http://eureka-0.register-server:8000/eureka/,http://eureka-1.register-server:8000/eureka/,http://eureka-2.register-server:8000/eureka/&quot;</span></span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>由于这三个pod在同一个命名空间内，可以省略.namespace.svc.cluster.local</p>
-</blockquote>
-<h2 id="创建StatefulSet-yaml">1.4. 创建StatefulSet.yaml</h2><p>vim eureka-StatefulSet.yaml</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">apiVersion: apps/v1</span><br><span class="line">kind: StatefulSet</span><br><span class="line">metadata:</span><br><span class="line">  namespace: wise</span><br><span class="line">  name: register-server</span><br><span class="line">  labels:</span><br><span class="line">    service: register-server</span><br><span class="line">spec:</span><br><span class="line">  replicas: 3</span><br><span class="line">  serviceName: register-server</span><br><span class="line">  selector:</span><br><span class="line">    matchLabels:</span><br><span class="line">      service: register-server</span><br><span class="line">  template:</span><br><span class="line">    metadata:</span><br><span class="line">      labels:</span><br><span class="line">        service: register-server</span><br><span class="line">      annotations:</span><br><span class="line">        service: register-server</span><br><span class="line">    spec:</span><br><span class="line">      containers:</span><br><span class="line">        - name: register-server</span><br><span class="line">          image: codewjy/eureka:0.1.0</span><br><span class="line">          imagePullPolicy: Always</span><br><span class="line">          env:</span><br><span class="line">          - name: MY_POD_NAME</span><br><span class="line">            valueFrom:</span><br><span class="line">              fieldRef:</span><br><span class="line">                fieldPath: metadata.name</span><br><span class="line">          ports:</span><br><span class="line">            - name: http</span><br><span class="line">              containerPort: 8000</span><br><span class="line">              protocol: TCP</span><br><span class="line">          readinessProbe:</span><br><span class="line">            httpGet:</span><br><span class="line">              path: /actuator/health</span><br><span class="line">              port: 8001</span><br><span class="line">              scheme: HTTP</span><br><span class="line">            failureThreshold: 3</span><br><span class="line">            initialDelaySeconds: 60</span><br><span class="line">            periodSeconds: 10</span><br><span class="line">            successThreshold: 1</span><br><span class="line">            timeoutSeconds: 10</span><br><span class="line">          resources:</span><br><span class="line">            limits:</span><br><span class="line">              # cpu: 100m</span><br><span class="line">              memory: 1.7Gi</span><br><span class="line">            requests:</span><br><span class="line">                # cpu: 100m</span><br><span class="line">              memory: 1.2Gi</span><br><span class="line">          volumeMounts:</span><br><span class="line">          - mountPath: /Charts</span><br><span class="line">            name: data</span><br><span class="line">      volumes:</span><br><span class="line">      - name: data</span><br><span class="line">  podManagementPolicy: &quot;Parallel&quot;</span><br></pre></td></tr></table></figure>
-
-<p>创建并查看</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[root@k8s-master eureka]# kubectl apply -f StatefulSet.yaml </span><br><span class="line">statefulset.apps/register-server created</span><br><span class="line"></span><br><span class="line">[root@k8s-master eureka]# kubectl get pods -n wise|grep register-server</span><br><span class="line">register-server-0                   1/1     Running   0          29m</span><br><span class="line">register-server-1                   1/1     Running   0          29m</span><br><span class="line">register-server-2                   1/1     Running   0          29m</span><br></pre></td></tr></table></figure>
-
-<h2 id="创建service">1.5. 创建service</h2><p>vim eureka-service.yaml</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">apiVersion: v1</span><br><span class="line">kind: Service</span><br><span class="line">metadata:</span><br><span class="line">  namespace: wise</span><br><span class="line">  name: register-server</span><br><span class="line">  labels:</span><br><span class="line">    service: register-server</span><br><span class="line">spec:</span><br><span class="line">  clusterIP: None</span><br><span class="line">  type: ClusterIP</span><br><span class="line">  ports:</span><br><span class="line">    - port: 8000</span><br><span class="line">      targetPort: http</span><br><span class="line">      protocol: TCP</span><br><span class="line">      name: http</span><br><span class="line">  selector:</span><br><span class="line">    service: register-server</span><br></pre></td></tr></table></figure>
-
-<p>创建并查看</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[root@k8s-master eureka]# kubectl apply -f service.yaml </span><br><span class="line">service/register-server created</span><br><span class="line"></span><br><span class="line">[root@k8s-master eureka]# kubectl get pods -n wise|grep register-server</span><br><span class="line">register-server-0                   1/1     Running   0          29m</span><br><span class="line">register-server-1                   1/1     Running   0          29m</span><br><span class="line">register-server-2                   1/1     Running   0          29m</span><br><span class="line"></span><br><span class="line">[root@k8s-master eureka]# kubectl get svc -n wise|grep register-server</span><br><span class="line">register-server   ClusterIP   None             &lt;none&gt;        8000/TCP       30m</span><br></pre></td></tr></table></figure>
-
-<h2 id="创建ingress">1.6. 创建ingress</h2><p>vim eureka-ingress.yaml</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">---</span><br><span class="line">apiVersion: extensions/v1beta1</span><br><span class="line">kind: Ingress</span><br><span class="line">metadata:</span><br><span class="line">  annotations:</span><br><span class="line">  name: register-server</span><br><span class="line">  namespace: wise</span><br><span class="line">  annotations:</span><br><span class="line">    kubernetes.io/ingress.class: traefik-v2.3</span><br><span class="line">spec:</span><br><span class="line">  rules:</span><br><span class="line">  - host: eureka.heyonggs.com</span><br><span class="line">    http:</span><br><span class="line">      paths:</span><br><span class="line">      - backend:</span><br><span class="line">          serviceName: register-server</span><br><span class="line">          servicePort: 8000</span><br></pre></td></tr></table></figure>
-
-<p>创建并查看</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[root@k8s-master eureka]# kubectl apply -f ingress.yaml </span><br><span class="line">ingress.extensions/register-server created</span><br><span class="line"></span><br><span class="line">[root@k8s-master eureka]# kubectl get ingress -n wise|grep register-server</span><br><span class="line">register-server   &lt;none&gt;   eureka.heyonggs.com             80      21m</span><br></pre></td></tr></table></figure>
-
-<h2 id="访问">1.7. 访问</h2><p>先做域名解析在访问查看集群：http://域名</p>
-<p><img src="https://cdn.jsdelivr.net/gh/heyonggs/images@master/wp/2021/eureka/202110121114492.png"></p>
-<p><strong>参考：</strong></p>
-<p><a href="https://www.jianshu.com/p/a3829851a97d">https://www.jianshu.com/p/a3829851a97d</a></p>
-]]></content>
-      <categories>
-        <category>Kubernetes</category>
-      </categories>
-      <tags>
-        <tag>k8s</tag>
-        <tag>Kubernetes</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>转载&#39;OpenSSL SSL_connect Connection was reset in connection to github.com 443&#39;</title>
-    <url>/p/14759.html</url>
-    <content><![CDATA[<p><escape><span id="more"></span></escape></p>
-<h1 id="OpenSSL-SSL-connect-Connection-was-reset-in-connection-to-github-com-443">1. OpenSSL SSL_connect: Connection was reset in connection to github.com:443</h1><p>使用github的push和pull时报错如下：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">fatal: unable to access &#x27;https://github.com/heyonggs/heyonggs.github.io.git/&#x27;: OpenSSL SSL_connect: Connection was reset in connection to github.com:443</span><br></pre></td></tr></table></figure>
-
-<h2 id="方案一">1.1. 方案一</h2><p>在git bash命令行中依次输入以下命令：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git config --global http.sslBackend &quot;openssl&quot;</span><br><span class="line">git config --global http.sslCAInfo &quot;C:\Program Files\Git\mingw64\ssl\cert.pem&quot;</span><br></pre></td></tr></table></figure>
-
-<p>注意上面第二个命令，路径要换成git安装的路径。</p>
-<h2 id="方案二">1.2. 方案二</h2><p>如果你开启了VPN，很可能是因为代理的问题，这时候设置一下http.proxy就可以了。</p>
-<p>一定要查看自己的VPN端口号，假如你的端口号是7890，在git bash命令行中输入以下命令即可：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git config --global http.proxy 127.0.0.1:7890</span><br><span class="line">git config --global https.proxy 127.0.0.1:7890</span><br></pre></td></tr></table></figure>
-
-<p>如果你之前git中已经设置过上述配置，则使用如下命令取消再进行配置即可：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git config --global --unset http.proxy</span><br><span class="line">git config --global --unset https.proxy</span><br></pre></td></tr></table></figure>
-
-<p>下面是几个常用的git配置查看命令：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git config --global http.proxy #查看git的http代理配置</span><br><span class="line">git config --global https.proxy #查看git的https代理配置</span><br><span class="line">git config --global -l #查看git的所有配置</span><br></pre></td></tr></table></figure>
-
-<h2 id="方案三">1.3. 方案三</h2><p>还有一个情况，是你的VNP代理服务器节点有问题，有时候更换一个结点就好了。当然，也可以使用自己搭建的代理服务器。</p>
-<p>博主提示，一定要科学上网，合理上网。</p>
-<h2 id="方案四">1.4. 方案四</h2><p>打开一个新的git bash终端，就没问题了。这个可能是当前git的会话有关。</p>
-<blockquote>
-<p>原文链接：<a href="https://blog.csdn.net/qq_37555071/article/details/114260533">https://blog.csdn.net/qq_37555071/article/details/114260533</a></p>
-</blockquote>
-]]></content>
-      <categories>
-        <category>git</category>
-      </categories>
-      <tags>
-        <tag>git</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>解决电脑无法访问个别网站</title>
     <url>/p/27338.html</url>
     <content><![CDATA[<p><escape><span id="more"></span></escape></p>
@@ -1254,6 +1254,40 @@
       </categories>
       <tags>
         <tag>操作系统</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>使用frp实现内网穿透</title>
+    <url>/p/7496.html</url>
+    <content><![CDATA[<p><escape><span id="more"></span></escape></p>
+<p>使用frp实现内网穿透</p>
+<blockquote>
+<p>官网：<a href="https://gofrp.org/">https://gofrp.org/</a></p>
+</blockquote>
+<p>frp 主要由 <strong>客户端(frpc)</strong> 和 <strong>服务端(frps)</strong> 组成，服务端通常部署在具有公网 IP 的机器上，客户端通常部署在需要穿透的内网服务所在的机器上。</p>
+<p>安装</p>
+<p>我这里公网使用阿里云Ubuntu系统，内网使用CentOS7.</p>
+<p>安装包下载地址</p>
+<blockquote>
+<p><a href="https://github.com/fatedier/frp/releases/download/v0.37.1/frp_0.37.1_linux_amd64.tar.gz">https://github.com/fatedier/frp/releases/download/v0.37.1/frp_0.37.1_linux_amd64.tar.gz</a></p>
+</blockquote>
+<p>配置服务端</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 下载</span><br><span class="line">wget https://github.com/fatedier/frp/releases/download/v0.37.1/frp_0.37.1_linux_amd64.tar.gz</span><br><span class="line"></span><br><span class="line"># 解压</span><br><span class="line">tar -zxvf frp_0.37.1_linux_amd64.tar.gz</span><br><span class="line">cd frp_0.37.1_linux_amd64/ </span><br></pre></td></tr></table></figure>
+
+<p>这里主要关注4个文件，分别是frpc、frpc.ini和frps、frps.ini，前者两个文件是客户端的文件，后者两个文件是服务端的文件。</p>
+<p>编辑frps.ini文件</p>
+<p>vim frps.ini</p>
+<figure class="highlight ini"><table><tr><td class="code"><pre><span class="line"><span class="section">[common]</span></span><br><span class="line"><span class="attr">bind_port</span> = <span class="number">7000</span>           <span class="comment">#与客户端绑定的进行通信的端口</span></span><br><span class="line"><span class="attr">vhost_http_port</span> = <span class="number">6081</span>     <span class="comment">#访问客户端web服务自定义的端口号</span></span><br></pre></td></tr></table></figure>
+
+<p>保存然后启动服务./frps -c ./frps.ini，这是前台启动，后台启动命令为nohup ./frps -c ./frps.ini &amp;</p>
+<p>配置客服端</p>
+]]></content>
+      <categories>
+        <category>网络</category>
+      </categories>
+      <tags>
+        <tag>网络</tag>
+        <tag>FRP</tag>
       </tags>
   </entry>
   <entry>
@@ -1338,37 +1372,48 @@
       </tags>
   </entry>
   <entry>
-    <title>使用frp实现内网穿透</title>
-    <url>/p/7496.html</url>
+    <title>升级Windows11</title>
+    <url>/p/34458.html</url>
     <content><![CDATA[<p><escape><span id="more"></span></escape></p>
-<p>使用frp实现内网穿透</p>
+<h1 id="升级Windows11">1. 升级Windows11</h1><p>下载win11检测工具</p>
+<p>先使用 Win11 检测工具（PC Health Check）看是否支持 Win11 系统</p>
 <blockquote>
-<p>官网：<a href="https://gofrp.org/">https://gofrp.org/</a></p>
+<p>下载地址：<a href="https://aka.ms/GetPCHealthCheckApp">https://aka.ms/GetPCHealthCheckApp</a></p>
 </blockquote>
-<p>frp 主要由 <strong>客户端(frpc)</strong> 和 <strong>服务端(frps)</strong> 组成，服务端通常部署在具有公网 IP 的机器上，客户端通常部署在需要穿透的内网服务所在的机器上。</p>
-<p>安装</p>
-<p>我这里公网使用阿里云Ubuntu系统，内网使用CentOS7.</p>
-<p>安装包下载地址</p>
+<p>也可以进入官网使用下载按钮下载</p>
 <blockquote>
-<p><a href="https://github.com/fatedier/frp/releases/download/v0.37.1/frp_0.37.1_linux_amd64.tar.gz">https://github.com/fatedier/frp/releases/download/v0.37.1/frp_0.37.1_linux_amd64.tar.gz</a></p>
+<p>链接：<a href="https://www.microsoft.com/zh-cn/windows/windows-11">https://www.microsoft.com/zh-cn/windows/windows-11</a></p>
 </blockquote>
-<p>配置服务端</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 下载</span><br><span class="line">wget https://github.com/fatedier/frp/releases/download/v0.37.1/frp_0.37.1_linux_amd64.tar.gz</span><br><span class="line"></span><br><span class="line"># 解压</span><br><span class="line">tar -zxvf frp_0.37.1_linux_amd64.tar.gz</span><br><span class="line">cd frp_0.37.1_linux_amd64/ </span><br></pre></td></tr></table></figure>
+<p><img src="https://cdn.jsdelivr.net/gh/heyonggs/images@master/wp/2021/windows/202110111401352.png" alt="windows"></p>
+<p>升级Windows11</p>
+<p>通过微软提供的升级页面选择符合自己的方式进行升级。</p>
+<blockquote>
+<p><a href="https://www.microsoft.com/zh-cn/software-download/windows11">https://www.microsoft.com/zh-cn/software-download/windows11</a></p>
+</blockquote>
+<img src="https://cdn.jsdelivr.net/gh/heyonggs/images@master/wp/2021/windows/202110111405130.png" width="100%">
 
-<p>这里主要关注4个文件，分别是frpc、frpc.ini和frps、frps.ini，前者两个文件是客户端的文件，后者两个文件是服务端的文件。</p>
-<p>编辑frps.ini文件</p>
-<p>vim frps.ini</p>
-<figure class="highlight ini"><table><tr><td class="code"><pre><span class="line"><span class="section">[common]</span></span><br><span class="line"><span class="attr">bind_port</span> = <span class="number">7000</span>           <span class="comment">#与客户端绑定的进行通信的端口</span></span><br><span class="line"><span class="attr">vhost_http_port</span> = <span class="number">6081</span>     <span class="comment">#访问客户端web服务自定义的端口号</span></span><br></pre></td></tr></table></figure>
 
-<p>保存然后启动服务./frps -c ./frps.ini，这是前台启动，后台启动命令为nohup ./frps -c ./frps.ini &amp;</p>
-<p>配置客服端</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ]]></content>
       <categories>
-        <category>网络</category>
+        <category>Windows</category>
       </categories>
       <tags>
-        <tag>网络</tag>
-        <tag>FRP</tag>
+        <tag>Windows</tag>
       </tags>
   </entry>
   <entry>
@@ -1469,150 +1514,6 @@
         <tag>Docker</tag>
         <tag>LDAP</tag>
         <tag>OpenLDAP</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>kubeadm方式部署k8sV1.22.0版本</title>
-    <url>/p/20016.html</url>
-    <content><![CDATA[<p><escape><span id="more"></span></escape></p>
-<h1 id="kubeadm方式部署k8sV1-22-0集群版本">1. kubeadm方式部署k8sV1.22.0集群版本</h1><p>kubeadm是官方社区推出的一个用于快速部署kubernetes集群的工具。</p>
-<p>这个工具能通过两条指令完成一个kubernetes集群的部署：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 创建一个 Master 节点</span><br><span class="line">$ kubeadm init</span><br><span class="line"></span><br><span class="line"># 将一个 Node 节点加入到当前集群中</span><br><span class="line">$ kubeadm join &lt;Master节点的IP和端口 &gt;</span><br></pre></td></tr></table></figure>
-
-<h2 id="安装要求">1.1. 安装要求</h2><p>在开始之前，部署Kubernetes集群机器需要满足以下几个条件：</p>
-<ul>
-<li>一台或多台机器，操作系统 CentOS7.x-86_x64</li>
-<li>硬件配置：2GB或更多RAM，2个CPU或更多CPU，硬盘30GB或更多</li>
-<li>可以访问外网，需要拉取镜像，如果服务器不能上网，需要提前下载镜像并导入节点</li>
-<li>禁止swap分区</li>
-</ul>
-<h2 id="准备环境">1.2. 准备环境</h2><table>
-<thead>
-<tr>
-<th>角色</th>
-<th>IP</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>k8s-master</td>
-<td>192.168.101.201</td>
-</tr>
-<tr>
-<td>k8s-node1</td>
-<td>192.168.101.202</td>
-</tr>
-<tr>
-<td>k8s-node2</td>
-<td>192.168.101.203</td>
-</tr>
-</tbody></table>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 关闭防火墙</span><br><span class="line">systemctl stop firewalld</span><br><span class="line">systemctl disable firewalld</span><br><span class="line"></span><br><span class="line"># 关闭selinux</span><br><span class="line">sed -i &#x27;s/enforcing/disabled/&#x27; /etc/selinux/config  # 永久</span><br><span class="line">setenforce 0  # 临时</span><br><span class="line"></span><br><span class="line"># 关闭swap</span><br><span class="line">swapoff -a  # 临时</span><br><span class="line">sed -ri &#x27;s/.*swap.*/#&amp;/&#x27; /etc/fstab    # 永久</span><br><span class="line"></span><br><span class="line"># 根据规划设置主机名</span><br><span class="line">hostnamectl set-hostname &lt;hostname&gt;</span><br><span class="line"></span><br><span class="line"># 在master添加hosts</span><br><span class="line">cat &gt;&gt; /etc/hosts &lt;&lt; EOF</span><br><span class="line">192.168.101.201 k8s-master</span><br><span class="line">192.168.101.202 k8s-node1</span><br><span class="line">192.168.101.203 k8s-node2</span><br><span class="line">EOF</span><br><span class="line"></span><br><span class="line"># 将桥接的IPv4流量传递到iptables的链</span><br><span class="line">cat &gt; /etc/sysctl.d/k8s.conf &lt;&lt; EOF</span><br><span class="line">net.bridge.bridge-nf-call-ip6tables = 1</span><br><span class="line">net.bridge.bridge-nf-call-iptables = 1</span><br><span class="line">EOF</span><br><span class="line">sysctl --system  # 生效</span><br><span class="line"></span><br><span class="line"># 时间同步</span><br><span class="line">yum install ntpdate -y</span><br><span class="line">ntpdate time.windows.com</span><br></pre></td></tr></table></figure>
-
-<h2 id="所有节点安装Docker-kubeadm-kubelet">1.3. 所有节点安装Docker/kubeadm/kubelet</h2><p>Kubernetes默认CRI（容器运行时）为Docker，因此先安装Docker。</p>
-<h3 id="安装Docker">1.3.1. 安装Docker</h3><blockquote>
-<p>下载地址：<a href="https://download.docker.com/linux/static/stable/x86_64/docker-19.03.9.tgz">https://download.docker.com/linux/static/stable/x86_64/docker-19.03.9.tgz</a> </p>
-</blockquote>
-<p>以下在所有节点操作。这里采用二进制安装，用yum安装也一样。 </p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">wget https://download.docker.com/linux/static/stable/x86_64/docker-19.03.9.tgz </span><br></pre></td></tr></table></figure>
-
-<p> 解压二进制包</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">tar zxvf docker-19.03.9.tgz</span><br><span class="line">mv docker/* /usr/bin</span><br></pre></td></tr></table></figure>
-
-<p>systemd管理docker</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">cat &gt; /usr/lib/systemd/system/docker.service &lt;&lt; EOF</span><br><span class="line">[Unit]</span><br><span class="line">Description=Docker Application Container Engine</span><br><span class="line">Documentation=https://docs.docker.com</span><br><span class="line">After=network-online.target firewalld.service</span><br><span class="line">Wants=network-online.target</span><br><span class="line">[Service]</span><br><span class="line">Type=notify</span><br><span class="line">ExecStart=/usr/bin/dockerd</span><br><span class="line">ExecReload=/bin/kill -s HUP $MAINPID</span><br><span class="line">LimitNOFILE=infinity</span><br><span class="line">LimitNPROC=infinity</span><br><span class="line">LimitCORE=infinity</span><br><span class="line">TimeoutStartSec=0</span><br><span class="line">Delegate=yes</span><br><span class="line">KillMode=process</span><br><span class="line">Restart=on-failure</span><br><span class="line">StartLimitBurst=3</span><br><span class="line">StartLimitInterval=60s</span><br><span class="line">[Install]</span><br><span class="line">WantedBy=multi-user.target</span><br><span class="line">EOF</span><br></pre></td></tr></table></figure>
-
-<p>配置docker镜像加速地址</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">mkdir /etc/docker</span><br><span class="line">cat &gt; /etc/docker/daemon.json &lt;&lt; EOF</span><br><span class="line">&#123;</span><br><span class="line">    &quot;registry-mirrors&quot;: [&quot;https://ms80kkz7.mirror.aliyuncs.com&quot;],</span><br><span class="line">    &quot;exec-opts&quot;: [&quot;native.cgroupdriver=systemd&quot;],</span><br><span class="line">    &quot;insecure-registries&quot;: [&quot;harbor.xxx.com&quot;]</span><br><span class="line">&#125;</span><br><span class="line">EOF</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>registry-mirrors： 阿里云镜像加速器</li>
-<li>exec-opts： 修改docker的cgroup和k8s的一致</li>
-<li>insecure-registries：harbor地址</li>
-</ul>
-<p>启动并设置开机启动</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">systemctl daemon-reload</span><br><span class="line">systemctl start docker</span><br><span class="line">systemctl enable docker</span><br></pre></td></tr></table></figure>
-
-<p>3.2 添加阿里云YUM软件源</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ cat &gt; /etc/yum.repos.d/kubernetes.repo &lt;&lt; EOF</span><br><span class="line">[kubernetes]</span><br><span class="line">name=Kubernetes</span><br><span class="line">baseurl=https://mirrors.aliyun.com/kubernetes/yum/repos/kubernetes-el7-x86_64</span><br><span class="line">enabled=1</span><br><span class="line">gpgcheck=0</span><br><span class="line">repo_gpgcheck=0</span><br><span class="line">gpgkey=https://mirrors.aliyun.com/kubernetes/yum/doc/yum-key.gpg https://mirrors.aliyun.com/kubernetes/yum/doc/rpm-package-key.gpg</span><br><span class="line">EOF</span><br></pre></td></tr></table></figure>
-
-<h2 id="安装kubeadm，kubelet和kubectl">1.4. 安装kubeadm，kubelet和kubectl</h2><p>由于版本更新频繁，这里指定版本号部署：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ yum install -y kubelet-1.22.0 kubeadm-1.22.0 kubectl-1.22.0</span><br><span class="line">$ systemctl enable kubelet</span><br></pre></td></tr></table></figure>
-
-<h2 id="部署Kubernetes-Master">1.5. 部署Kubernetes Master</h2><p>在192.168.101.201（Master）执行。</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ kubeadm init \</span><br><span class="line">  --apiserver-advertise-address=192.168.101.201 \</span><br><span class="line">  --image-repository registry.aliyuncs.com/google_containers \</span><br><span class="line">  --kubernetes-version v1.22.0 \</span><br><span class="line">  --service-cidr=10.96.0.0/12 \</span><br><span class="line">  --pod-network-cidr=10.244.0.0/16</span><br></pre></td></tr></table></figure>
-
-<p>由于默认拉取镜像地址k8s.gcr.io国内无法访问，这里指定阿里云镜像仓库地址。</p>
-<p>使用kubectl工具：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">mkdir -p <span class="variable">$HOME</span>/.kube</span><br><span class="line">sudo cp -i /etc/kubernetes/admin.conf <span class="variable">$HOME</span>/.kube/config</span><br><span class="line">sudo chown $(id -u):$(id -g) <span class="variable">$HOME</span>/.kube/config</span><br><span class="line">$ kubectl get nodes</span><br></pre></td></tr></table></figure>
-
-<h2 id="加入Kubernetes-Node">1.6. 加入Kubernetes Node</h2><p>在192.168.101.202/203（Node）执行。</p>
-<p>向集群添加新节点，执行在kubeadm init输出的kubeadm join命令：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ kubeadm join 192.168.101.201:6443 --token aw0wah.wf0ucozx0syqa58z     --discovery-token-ca-cert-hash sha256:5745909fd8cba0a6643060d19fb6b45a39b718cb39572727198f6ca0218ffe0b</span><br></pre></td></tr></table></figure>
-
-<p>默认token有效期为24小时，当过期之后，该token就不可用了。这时就需要重新创建token，操作如下：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">kubeadm token create --print-join-command</span><br></pre></td></tr></table></figure>
-
-<h2 id="部署CNI网络插件">1.7. 部署CNI网络插件</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">wget https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml</span><br></pre></td></tr></table></figure>
-
-<p>默认镜像地址无法访问，sed命令修改为docker hub镜像仓库。</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">kubectl apply -f kube-flannel.yml</span><br><span class="line"></span><br><span class="line">kubectl get pods -n kube-system</span><br><span class="line">NAME                          READY   STATUS    RESTARTS   AGE</span><br><span class="line">kube-flannel-ds-amd64-2pc95   1/1     Running   0          72s</span><br></pre></td></tr></table></figure>
-
-<h2 id="测试kubernetes集群">1.8. 测试kubernetes集群</h2><p>在Kubernetes集群中创建一个pod，验证是否正常运行：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ kubectl create deployment nginx --image=nginx</span><br><span class="line">$ kubectl expose deployment nginx --port=80 --type=NodePort</span><br><span class="line">$ kubectl get pod,svc</span><br></pre></td></tr></table></figure>
-
-<p>访问地址：<a href="http://NodeIP:Port">http://NodeIP:Port</a>  </p>
-]]></content>
-      <categories>
-        <category>k8s</category>
-      </categories>
-      <tags>
-        <tag>k8s</tag>
-        <tag>Kubernetes</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>升级Windows11</title>
-    <url>/p/34458.html</url>
-    <content><![CDATA[<p><escape><span id="more"></span></escape></p>
-<h1 id="升级Windows11">1. 升级Windows11</h1><p>下载win11检测工具</p>
-<p>先使用 Win11 检测工具（PC Health Check）看是否支持 Win11 系统</p>
-<blockquote>
-<p>下载地址：<a href="https://aka.ms/GetPCHealthCheckApp">https://aka.ms/GetPCHealthCheckApp</a></p>
-</blockquote>
-<p>也可以进入官网使用下载按钮下载</p>
-<blockquote>
-<p>链接：<a href="https://www.microsoft.com/zh-cn/windows/windows-11">https://www.microsoft.com/zh-cn/windows/windows-11</a></p>
-</blockquote>
-<p><img src="https://cdn.jsdelivr.net/gh/heyonggs/images@master/wp/2021/windows/202110111401352.png" alt="windows"></p>
-<p>升级Windows11</p>
-<p>通过微软提供的升级页面选择符合自己的方式进行升级。</p>
-<blockquote>
-<p><a href="https://www.microsoft.com/zh-cn/software-download/windows11">https://www.microsoft.com/zh-cn/software-download/windows11</a></p>
-</blockquote>
-<img src="https://cdn.jsdelivr.net/gh/heyonggs/images@master/wp/2021/windows/202110111405130.png" width="100%">
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-]]></content>
-      <categories>
-        <category>Windows</category>
-      </categories>
-      <tags>
-        <tag>Windows</tag>
       </tags>
   </entry>
   <entry>
@@ -1776,44 +1677,102 @@
       </tags>
   </entry>
   <entry>
-    <title>Centos查看系统 CPU 个数、核心数、线程数</title>
-    <url>/p/36110.html</url>
+    <title>kubeadm方式部署k8sV1.22.0版本</title>
+    <url>/p/20016.html</url>
     <content><![CDATA[<p><escape><span id="more"></span></escape></p>
-<h1 id="Centos查看系统-CPU-个数、核心数、线程数">1. Centos查看系统 CPU 个数、核心数、线程数</h1><p>CPU的核数表示CPU可以同时执行的任务数量，在支持超线程情况下，同时执行的任务数翻倍。CPU的线程数表示CPU可以同时执行的任务数量。两者的联系分两种：CPU支持超线程技术，那么线程数＝核心数＊2；不支持超线程，线程数＝核心数。</p>
-<p>线程数和超线程技术是两个概念，线程数是实际存在的，而超线程是CPU的技术标准。</p>
-<h2 id="优缺点">1.1. 优缺点</h2><h3 id="优点">1.1.1. 优点</h3><p>1、可以同时进行多任务处理工作，软件可以享有由超线程技术带来的性能提升；</p>
-<p>2、用户同时运行两个以上软件的时候，可以充分发挥超线程技术的效率优势。</p>
-<h3 id="缺点">1.1.2. 缺点</h3><p>1、运行单线程软件时，超线程技术会降低系统性能；</p>
-<p>2、因为很多工作站软件为Windows2000操作系统进行过优化，所以使用Windows2000的工作站无法完全利用超线程技术的优势；</p>
-<p>3、当两个线程同时需要某个资源时，其中一个线程必须让出资源暂时挂起，直到这些资源空闲以后才能继续。因此，超线程的性能并不等于两个CPU的性能。</p>
-<h2 id="查看-CPU-物理个数">1.2. 查看 CPU 物理个数</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cat /proc/cpuinfo | grep &quot;physical id&quot; | sort | uniq | wc -l</span><br><span class="line">或者</span><br><span class="line">grep &#x27;physical id&#x27; /proc/cpuinfo | sort -u | wc -l</span><br></pre></td></tr></table></figure>
+<h1 id="kubeadm方式部署k8sV1-22-0集群版本">1. kubeadm方式部署k8sV1.22.0集群版本</h1><p>kubeadm是官方社区推出的一个用于快速部署kubernetes集群的工具。</p>
+<p>这个工具能通过两条指令完成一个kubernetes集群的部署：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 创建一个 Master 节点</span><br><span class="line">$ kubeadm init</span><br><span class="line"></span><br><span class="line"># 将一个 Node 节点加入到当前集群中</span><br><span class="line">$ kubeadm join &lt;Master节点的IP和端口 &gt;</span><br></pre></td></tr></table></figure>
 
-<h2 id="查看-CPU-核心数量">1.3. 查看 CPU 核心数量</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cat /proc/cpuinfo | grep &quot;core id&quot; | sort | uniq | wc -l</span><br><span class="line">或者</span><br><span class="line">grep &#x27;core id&#x27; /proc/cpuinfo | sort -u | wc -l</span><br></pre></td></tr></table></figure>
+<h2 id="安装要求">1.1. 安装要求</h2><p>在开始之前，部署Kubernetes集群机器需要满足以下几个条件：</p>
+<ul>
+<li>一台或多台机器，操作系统 CentOS7.x-86_x64</li>
+<li>硬件配置：2GB或更多RAM，2个CPU或更多CPU，硬盘30GB或更多</li>
+<li>可以访问外网，需要拉取镜像，如果服务器不能上网，需要提前下载镜像并导入节点</li>
+<li>禁止swap分区</li>
+</ul>
+<h2 id="准备环境">1.2. 准备环境</h2><table>
+<thead>
+<tr>
+<th>角色</th>
+<th>IP</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>k8s-master</td>
+<td>192.168.101.201</td>
+</tr>
+<tr>
+<td>k8s-node1</td>
+<td>192.168.101.202</td>
+</tr>
+<tr>
+<td>k8s-node2</td>
+<td>192.168.101.203</td>
+</tr>
+</tbody></table>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 关闭防火墙</span><br><span class="line">systemctl stop firewalld</span><br><span class="line">systemctl disable firewalld</span><br><span class="line"></span><br><span class="line"># 关闭selinux</span><br><span class="line">sed -i &#x27;s/enforcing/disabled/&#x27; /etc/selinux/config  # 永久</span><br><span class="line">setenforce 0  # 临时</span><br><span class="line"></span><br><span class="line"># 关闭swap</span><br><span class="line">swapoff -a  # 临时</span><br><span class="line">sed -ri &#x27;s/.*swap.*/#&amp;/&#x27; /etc/fstab    # 永久</span><br><span class="line"></span><br><span class="line"># 根据规划设置主机名</span><br><span class="line">hostnamectl set-hostname &lt;hostname&gt;</span><br><span class="line"></span><br><span class="line"># 在master添加hosts</span><br><span class="line">cat &gt;&gt; /etc/hosts &lt;&lt; EOF</span><br><span class="line">192.168.101.201 k8s-master</span><br><span class="line">192.168.101.202 k8s-node1</span><br><span class="line">192.168.101.203 k8s-node2</span><br><span class="line">EOF</span><br><span class="line"></span><br><span class="line"># 将桥接的IPv4流量传递到iptables的链</span><br><span class="line">cat &gt; /etc/sysctl.d/k8s.conf &lt;&lt; EOF</span><br><span class="line">net.bridge.bridge-nf-call-ip6tables = 1</span><br><span class="line">net.bridge.bridge-nf-call-iptables = 1</span><br><span class="line">EOF</span><br><span class="line">sysctl --system  # 生效</span><br><span class="line"></span><br><span class="line"># 时间同步</span><br><span class="line">yum install ntpdate -y</span><br><span class="line">ntpdate time.windows.com</span><br></pre></td></tr></table></figure>
 
-<h2 id="查看-CPU-线程数">1.4. 查看 CPU 线程数</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cat /proc/cpuinfo | grep &quot;processor&quot; | sort | uniq | wc -l</span><br><span class="line">或者</span><br><span class="line">grep &#x27;processor&#x27; /proc/cpuinfo | sort -u | wc -l</span><br></pre></td></tr></table></figure>
+<h2 id="所有节点安装Docker-kubeadm-kubelet">1.3. 所有节点安装Docker/kubeadm/kubelet</h2><p>Kubernetes默认CRI（容器运行时）为Docker，因此先安装Docker。</p>
+<h3 id="安装Docker">1.3.1. 安装Docker</h3><blockquote>
+<p>下载地址：<a href="https://download.docker.com/linux/static/stable/x86_64/docker-19.03.9.tgz">https://download.docker.com/linux/static/stable/x86_64/docker-19.03.9.tgz</a> </p>
+</blockquote>
+<p>以下在所有节点操作。这里采用二进制安装，用yum安装也一样。 </p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">wget https://download.docker.com/linux/static/stable/x86_64/docker-19.03.9.tgz </span><br></pre></td></tr></table></figure>
 
-<h2 id="查看-CPU-型号">1.5. 查看 CPU 型号</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cat /proc/cpuinfo | grep name | sort | uniq</span><br><span class="line">或者</span><br><span class="line">dmidecode -s processor-version</span><br></pre></td></tr></table></figure>
+<p> 解压二进制包</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">tar zxvf docker-19.03.9.tgz</span><br><span class="line">mv docker/* /usr/bin</span><br></pre></td></tr></table></figure>
 
-<h2 id="查看-CPU-的详细信息：">1.6. 查看 CPU 的详细信息：</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cat /proc/cpuinfo</span><br></pre></td></tr></table></figure>
+<p>systemd管理docker</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">cat &gt; /usr/lib/systemd/system/docker.service &lt;&lt; EOF</span><br><span class="line">[Unit]</span><br><span class="line">Description=Docker Application Container Engine</span><br><span class="line">Documentation=https://docs.docker.com</span><br><span class="line">After=network-online.target firewalld.service</span><br><span class="line">Wants=network-online.target</span><br><span class="line">[Service]</span><br><span class="line">Type=notify</span><br><span class="line">ExecStart=/usr/bin/dockerd</span><br><span class="line">ExecReload=/bin/kill -s HUP $MAINPID</span><br><span class="line">LimitNOFILE=infinity</span><br><span class="line">LimitNPROC=infinity</span><br><span class="line">LimitCORE=infinity</span><br><span class="line">TimeoutStartSec=0</span><br><span class="line">Delegate=yes</span><br><span class="line">KillMode=process</span><br><span class="line">Restart=on-failure</span><br><span class="line">StartLimitBurst=3</span><br><span class="line">StartLimitInterval=60s</span><br><span class="line">[Install]</span><br><span class="line">WantedBy=multi-user.target</span><br><span class="line">EOF</span><br></pre></td></tr></table></figure>
 
+<p>配置docker镜像加速地址</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">mkdir /etc/docker</span><br><span class="line">cat &gt; /etc/docker/daemon.json &lt;&lt; EOF</span><br><span class="line">&#123;</span><br><span class="line">    &quot;registry-mirrors&quot;: [&quot;https://ms80kkz7.mirror.aliyuncs.com&quot;],</span><br><span class="line">    &quot;exec-opts&quot;: [&quot;native.cgroupdriver=systemd&quot;],</span><br><span class="line">    &quot;insecure-registries&quot;: [&quot;harbor.xxx.com&quot;]</span><br><span class="line">&#125;</span><br><span class="line">EOF</span><br></pre></td></tr></table></figure>
 
+<ul>
+<li>registry-mirrors： 阿里云镜像加速器</li>
+<li>exec-opts： 修改docker的cgroup和k8s的一致</li>
+<li>insecure-registries：harbor地址</li>
+</ul>
+<p>启动并设置开机启动</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">systemctl daemon-reload</span><br><span class="line">systemctl start docker</span><br><span class="line">systemctl enable docker</span><br></pre></td></tr></table></figure>
 
+<p>3.2 添加阿里云YUM软件源</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ cat &gt; /etc/yum.repos.d/kubernetes.repo &lt;&lt; EOF</span><br><span class="line">[kubernetes]</span><br><span class="line">name=Kubernetes</span><br><span class="line">baseurl=https://mirrors.aliyun.com/kubernetes/yum/repos/kubernetes-el7-x86_64</span><br><span class="line">enabled=1</span><br><span class="line">gpgcheck=0</span><br><span class="line">repo_gpgcheck=0</span><br><span class="line">gpgkey=https://mirrors.aliyun.com/kubernetes/yum/doc/yum-key.gpg https://mirrors.aliyun.com/kubernetes/yum/doc/rpm-package-key.gpg</span><br><span class="line">EOF</span><br></pre></td></tr></table></figure>
 
+<h2 id="安装kubeadm，kubelet和kubectl">1.4. 安装kubeadm，kubelet和kubectl</h2><p>由于版本更新频繁，这里指定版本号部署：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ yum install -y kubelet-1.22.0 kubeadm-1.22.0 kubectl-1.22.0</span><br><span class="line">$ systemctl enable kubelet</span><br></pre></td></tr></table></figure>
 
+<h2 id="部署Kubernetes-Master">1.5. 部署Kubernetes Master</h2><p>在192.168.101.201（Master）执行。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ kubeadm init \</span><br><span class="line">  --apiserver-advertise-address=192.168.101.201 \</span><br><span class="line">  --image-repository registry.aliyuncs.com/google_containers \</span><br><span class="line">  --kubernetes-version v1.22.0 \</span><br><span class="line">  --service-cidr=10.96.0.0/12 \</span><br><span class="line">  --pod-network-cidr=10.244.0.0/16</span><br></pre></td></tr></table></figure>
 
+<p>由于默认拉取镜像地址k8s.gcr.io国内无法访问，这里指定阿里云镜像仓库地址。</p>
+<p>使用kubectl工具：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">mkdir -p <span class="variable">$HOME</span>/.kube</span><br><span class="line">sudo cp -i /etc/kubernetes/admin.conf <span class="variable">$HOME</span>/.kube/config</span><br><span class="line">sudo chown $(id -u):$(id -g) <span class="variable">$HOME</span>/.kube/config</span><br><span class="line">$ kubectl get nodes</span><br></pre></td></tr></table></figure>
 
+<h2 id="加入Kubernetes-Node">1.6. 加入Kubernetes Node</h2><p>在192.168.101.202/203（Node）执行。</p>
+<p>向集群添加新节点，执行在kubeadm init输出的kubeadm join命令：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ kubeadm join 192.168.101.201:6443 --token aw0wah.wf0ucozx0syqa58z     --discovery-token-ca-cert-hash sha256:5745909fd8cba0a6643060d19fb6b45a39b718cb39572727198f6ca0218ffe0b</span><br></pre></td></tr></table></figure>
 
+<p>默认token有效期为24小时，当过期之后，该token就不可用了。这时就需要重新创建token，操作如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">kubeadm token create --print-join-command</span><br></pre></td></tr></table></figure>
 
+<h2 id="部署CNI网络插件">1.7. 部署CNI网络插件</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">wget https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml</span><br></pre></td></tr></table></figure>
 
+<p>默认镜像地址无法访问，sed命令修改为docker hub镜像仓库。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">kubectl apply -f kube-flannel.yml</span><br><span class="line"></span><br><span class="line">kubectl get pods -n kube-system</span><br><span class="line">NAME                          READY   STATUS    RESTARTS   AGE</span><br><span class="line">kube-flannel-ds-amd64-2pc95   1/1     Running   0          72s</span><br></pre></td></tr></table></figure>
 
+<h2 id="测试kubernetes集群">1.8. 测试kubernetes集群</h2><p>在Kubernetes集群中创建一个pod，验证是否正常运行：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ kubectl create deployment nginx --image=nginx</span><br><span class="line">$ kubectl expose deployment nginx --port=80 --type=NodePort</span><br><span class="line">$ kubectl get pod,svc</span><br></pre></td></tr></table></figure>
 
-
+<p>访问地址：<a href="http://NodeIP:Port">http://NodeIP:Port</a>  </p>
 ]]></content>
       <categories>
-        <category>System,cpu</category>
+        <category>k8s</category>
       </categories>
       <tags>
-        <tag>System,cpu</tag>
+        <tag>k8s</tag>
+        <tag>Kubernetes</tag>
       </tags>
   </entry>
   <entry>
@@ -2002,6 +1961,47 @@
       </categories>
       <tags>
         <tag>ansible</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Centos查看系统 CPU 个数、核心数、线程数</title>
+    <url>/p/36110.html</url>
+    <content><![CDATA[<p><escape><span id="more"></span></escape></p>
+<h1 id="Centos查看系统-CPU-个数、核心数、线程数">1. Centos查看系统 CPU 个数、核心数、线程数</h1><p>CPU的核数表示CPU可以同时执行的任务数量，在支持超线程情况下，同时执行的任务数翻倍。CPU的线程数表示CPU可以同时执行的任务数量。两者的联系分两种：CPU支持超线程技术，那么线程数＝核心数＊2；不支持超线程，线程数＝核心数。</p>
+<p>线程数和超线程技术是两个概念，线程数是实际存在的，而超线程是CPU的技术标准。</p>
+<h2 id="优缺点">1.1. 优缺点</h2><h3 id="优点">1.1.1. 优点</h3><p>1、可以同时进行多任务处理工作，软件可以享有由超线程技术带来的性能提升；</p>
+<p>2、用户同时运行两个以上软件的时候，可以充分发挥超线程技术的效率优势。</p>
+<h3 id="缺点">1.1.2. 缺点</h3><p>1、运行单线程软件时，超线程技术会降低系统性能；</p>
+<p>2、因为很多工作站软件为Windows2000操作系统进行过优化，所以使用Windows2000的工作站无法完全利用超线程技术的优势；</p>
+<p>3、当两个线程同时需要某个资源时，其中一个线程必须让出资源暂时挂起，直到这些资源空闲以后才能继续。因此，超线程的性能并不等于两个CPU的性能。</p>
+<h2 id="查看-CPU-物理个数">1.2. 查看 CPU 物理个数</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cat /proc/cpuinfo | grep &quot;physical id&quot; | sort | uniq | wc -l</span><br><span class="line">或者</span><br><span class="line">grep &#x27;physical id&#x27; /proc/cpuinfo | sort -u | wc -l</span><br></pre></td></tr></table></figure>
+
+<h2 id="查看-CPU-核心数量">1.3. 查看 CPU 核心数量</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cat /proc/cpuinfo | grep &quot;core id&quot; | sort | uniq | wc -l</span><br><span class="line">或者</span><br><span class="line">grep &#x27;core id&#x27; /proc/cpuinfo | sort -u | wc -l</span><br></pre></td></tr></table></figure>
+
+<h2 id="查看-CPU-线程数">1.4. 查看 CPU 线程数</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cat /proc/cpuinfo | grep &quot;processor&quot; | sort | uniq | wc -l</span><br><span class="line">或者</span><br><span class="line">grep &#x27;processor&#x27; /proc/cpuinfo | sort -u | wc -l</span><br></pre></td></tr></table></figure>
+
+<h2 id="查看-CPU-型号">1.5. 查看 CPU 型号</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cat /proc/cpuinfo | grep name | sort | uniq</span><br><span class="line">或者</span><br><span class="line">dmidecode -s processor-version</span><br></pre></td></tr></table></figure>
+
+<h2 id="查看-CPU-的详细信息：">1.6. 查看 CPU 的详细信息：</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cat /proc/cpuinfo</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+
+
+
+
+
+
+]]></content>
+      <categories>
+        <category>System,cpu</category>
+      </categories>
+      <tags>
+        <tag>System,cpu</tag>
       </tags>
   </entry>
   <entry>
@@ -2478,80 +2478,6 @@
       </tags>
   </entry>
   <entry>
-    <title>kubeadm修改证书时间为99年</title>
-    <url>/p/23286.html</url>
-    <content><![CDATA[<p><escape><span id="more"></span></escape></p>
-<h1 id="kubeadm修改证书时间为99年">1. kubeadm修改证书时间为99年</h1><h2 id="查看当前证书时间">1.1. 查看当前证书时间</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[root@k8s-master ~]# kubeadm alpha certs check-expiration</span><br><span class="line">[check-expiration] Reading configuration from the cluster...</span><br><span class="line">[check-expiration] FYI: You can look at this config file with &#x27;kubectl -n kube-system get cm kubeadm-config -oyaml&#x27;</span><br><span class="line"></span><br><span class="line">CERTIFICATE                EXPIRES                  RESIDUAL TIME   CERTIFICATE AUTHORITY   EXTERNALLY MANAGED</span><br><span class="line">admin.conf                 Aug 30, 2022 07:53 UTC   363d                                    no      </span><br><span class="line">apiserver                  Aug 30, 2022 07:52 UTC   363d            ca                      no      </span><br><span class="line">apiserver-etcd-client      Aug 30, 2022 07:53 UTC   363d            etcd-ca                 no      </span><br><span class="line">apiserver-kubelet-client   Aug 30, 2022 07:52 UTC   363d            ca                      no      </span><br><span class="line">controller-manager.conf    Aug 30, 2022 07:53 UTC   363d                                    no      </span><br><span class="line">etcd-healthcheck-client    Aug 30, 2022 07:53 UTC   363d            etcd-ca                 no      </span><br><span class="line">etcd-peer                  Aug 30, 2022 07:53 UTC   363d            etcd-ca                 no      </span><br><span class="line">etcd-server                Aug 30, 2022 07:53 UTC   363d            etcd-ca                 no      </span><br><span class="line">front-proxy-client         Aug 30, 2022 07:53 UTC   363d            front-proxy-ca          no      </span><br><span class="line">scheduler.conf             Aug 30, 2022 07:53 UTC   363d                                    no      </span><br><span class="line"></span><br><span class="line">CERTIFICATE AUTHORITY   EXPIRES                  RESIDUAL TIME   EXTERNALLY MANAGED</span><br><span class="line">ca                      Aug 28, 2031 07:52 UTC   9y              no      </span><br><span class="line">etcd-ca                 Aug 28, 2031 07:53 UTC   9y              no      </span><br><span class="line">front-proxy-ca          Aug 28, 2031 07:53 UTC   9y              no      </span><br></pre></td></tr></table></figure>
-
-<p>可以看到正常只有一年时间。</p>
-<h2 id="下载源码">1.2. 下载源码</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">git clone https://github.com/kubernetes/kubernetes.git</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>注意：如果github下载慢可以用gitee下载地址：<a href="https://gitee.com/mirrors/Kubernetes.git">https://gitee.com/mirrors/Kubernetes.git</a></p>
-</blockquote>
-<p>查看k8s版本</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[root@k8s-master ~]# kubectl version</span><br><span class="line">Client Version: version.Info&#123;Major:&quot;1&quot;, Minor:&quot;18&quot;, GitVersion:&quot;v1.18.0&quot;, GitCommit:&quot;9e991415386e4cf155a24b1da15becaa390438d8&quot;, GitTreeState:&quot;clean&quot;, BuildDate:&quot;2020-03-25T14:58:59Z&quot;, GoVersion:&quot;go1.13.8&quot;, Compiler:&quot;gc&quot;, Platform:&quot;linux/amd64&quot;&#125;</span><br><span class="line">Server Version: version.Info&#123;Major:&quot;1&quot;, Minor:&quot;18&quot;, GitVersion:&quot;v1.18.0&quot;, GitCommit:&quot;9e991415386e4cf155a24b1da15becaa390438d8&quot;, GitTreeState:&quot;clean&quot;, BuildDate:&quot;2020-03-25T14:50:46Z&quot;, GoVersion:&quot;go1.13.8&quot;, Compiler:&quot;gc&quot;, Platform:&quot;linux/amd64&quot;&#125;</span><br></pre></td></tr></table></figure>
-
-<p>切换到自己的版本，修改源码，比如我的是v1.18.0版本</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cd kubernetes</span><br><span class="line">git checkout v1.18.0</span><br></pre></td></tr></table></figure>
-
-<p>vim cmd/kubeadm/app/constants/constants.go，找到CertificateValidity，修改如下</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">....</span><br><span class="line">const (</span><br><span class="line">        // KubernetesDir is the directory Kubernetes owns for storing various configuration files</span><br><span class="line">        KubernetesDir = &quot;/etc/kubernetes&quot;</span><br><span class="line">        // ManifestsSubDirName defines directory name to store manifests</span><br><span class="line">        ManifestsSubDirName = &quot;manifests&quot;</span><br><span class="line">        // TempDirForKubeadm defines temporary directory for kubeadm</span><br><span class="line">        // should be joined with KubernetesDir.</span><br><span class="line">        TempDirForKubeadm = &quot;tmp&quot;</span><br><span class="line"></span><br><span class="line">        // CertificateValidity defines the validity for all the signed certificates generated by kubeadm</span><br><span class="line">        CertificateValidity = time.Hour * 24 * 365 * 100</span><br><span class="line">....</span><br></pre></td></tr></table></figure>
-
-<h2 id="安装编译软件">1.3. 安装编译软件</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">yum -y install gcc automake autoconf libtool make</span><br></pre></td></tr></table></figure>
-
-<p>安装go编译环境，这里就直接使用yum安装</p>
-<p>查看go是否安装过</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[root@k8s-master kubernetes]# go env</span><br><span class="line">-bash: go: command not found</span><br></pre></td></tr></table></figure>
-
-<p>查看yum的Golang</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[root@k8s-master kubernetes]# yum info golang</span><br><span class="line">Last metadata expiration check: 0:06:47 ago on Wed 01 Sep 2021 10:07:23 AM CST.</span><br><span class="line">Available Packages</span><br><span class="line">Name         : golang</span><br><span class="line">Version      : 1.15.14</span><br><span class="line">Release      : 1.module_el8.4.0+882+ab13bcd9</span><br><span class="line">Architecture : x86_64</span><br><span class="line">Size         : 708 k</span><br><span class="line">Source       : golang-1.15.14-1.module_el8.4.0+882+ab13bcd9.src.rpm</span><br><span class="line">Repository   : AppStream</span><br><span class="line">Summary      : The Go Programming Language</span><br><span class="line">URL          : http://golang.org/</span><br><span class="line">License      : BSD and Public Domain</span><br><span class="line">Description  : The Go Programming Language.</span><br></pre></td></tr></table></figure>
-
-<p>安装golang</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">yum install -y golang</span><br></pre></td></tr></table></figure>
-
-<p>再次查看go环境变量</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[root@k8s-master kubernetes]# go env</span><br><span class="line">GO111MODULE=&quot;&quot;</span><br><span class="line">GOARCH=&quot;amd64&quot;</span><br><span class="line">GOBIN=&quot;&quot;</span><br><span class="line">GOCACHE=&quot;/root/.cache/go-build&quot;</span><br><span class="line">GOENV=&quot;/root/.config/go/env&quot;</span><br><span class="line">GOEXE=&quot;&quot;</span><br><span class="line">GOFLAGS=&quot;&quot;</span><br><span class="line">GOHOSTARCH=&quot;amd64&quot;</span><br><span class="line">GOHOSTOS=&quot;linux&quot;</span><br><span class="line">GOINSECURE=&quot;&quot;</span><br><span class="line">GOMODCACHE=&quot;/root/go/pkg/mod&quot;</span><br><span class="line">GONOPROXY=&quot;&quot;</span><br><span class="line">GONOSUMDB=&quot;&quot;</span><br><span class="line">GOOS=&quot;linux&quot;</span><br><span class="line">GOPATH=&quot;/root/go&quot;</span><br><span class="line">GOPRIVATE=&quot;&quot;</span><br><span class="line">GOPROXY=&quot;https://proxy.golang.org,direct&quot;</span><br><span class="line">GOROOT=&quot;/usr/lib/golang&quot;</span><br><span class="line">GOSUMDB=&quot;sum.golang.org&quot;</span><br><span class="line">GOTMPDIR=&quot;&quot;</span><br><span class="line">GOTOOLDIR=&quot;/usr/lib/golang/pkg/tool/linux_amd64&quot;</span><br><span class="line">GCCGO=&quot;gccgo&quot;</span><br><span class="line">AR=&quot;ar&quot;</span><br><span class="line">CC=&quot;gcc&quot;</span><br><span class="line">CXX=&quot;g++&quot;</span><br><span class="line">CGO_ENABLED=&quot;1&quot;</span><br><span class="line">GOMOD=&quot;/root/kubernetes/go.mod&quot;</span><br><span class="line">CGO_CFLAGS=&quot;-g -O2&quot;</span><br><span class="line">CGO_CPPFLAGS=&quot;&quot;</span><br><span class="line">CGO_CXXFLAGS=&quot;-g -O2&quot;</span><br><span class="line">CGO_FFLAGS=&quot;-g -O2&quot;</span><br><span class="line">CGO_LDFLAGS=&quot;-g -O2&quot;</span><br><span class="line">PKG_CONFIG=&quot;pkg-config&quot;</span><br><span class="line">GOGCCFLAGS=&quot;-fPIC -m64 -pthread -fmessage-length=0 -fdebug-prefix-map=/tmp/go-build406782294=/tmp/go-build -gno-record-gcc-switches&quot;</span><br></pre></td></tr></table></figure>
-
-<h2 id="执行make-WHAT-cmd-kubeadm编译">1.4. 执行make WHAT=cmd/kubeadm编译</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[root@k8s-master kubernetes]# make WHAT=cmd/kubeadm</span><br><span class="line">+++ [0901 10:20:55] Building go targets for linux/amd64:</span><br><span class="line">    ./vendor/k8s.io/code-generator/cmd/deepcopy-gen</span><br><span class="line">+++ [0901 10:21:08] Building go targets for linux/amd64:</span><br><span class="line">    ./vendor/k8s.io/code-generator/cmd/defaulter-gen</span><br><span class="line">+++ [0901 10:21:18] Building go targets for linux/amd64:</span><br><span class="line">    ./vendor/k8s.io/code-generator/cmd/conversion-gen</span><br><span class="line">+++ [0901 10:21:37] Building go targets for linux/amd64:</span><br><span class="line">    ./vendor/k8s.io/kube-openapi/cmd/openapi-gen</span><br><span class="line">+++ [0901 10:21:53] Building go targets for linux/amd64:</span><br><span class="line">    ./vendor/github.com/go-bindata/go-bindata/go-bindata</span><br><span class="line">warning: ignoring symlink /root/kubernetes/_output/local/go/src/k8s.io/kubernetes</span><br><span class="line">go: warning: &quot;k8s.io/kubernetes/vendor/github.com/go-bindata/go-bindata/...&quot; matched no packages</span><br><span class="line">+++ [0901 10:21:55] Building go targets for linux/amd64:</span><br><span class="line">    cmd/kubeadm</span><br></pre></td></tr></table></figure>
-
-<p>编译完生成如下目录和二进制文件</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[root@k8s-master kubernetes]# ll _output/bin/</span><br><span class="line">total 70380</span><br><span class="line">-rwxr-xr-x 1 root root  6242304 Sep  1 10:21 conversion-gen</span><br><span class="line">-rwxr-xr-x 1 root root  6234112 Sep  1 10:20 deepcopy-gen</span><br><span class="line">-rwxr-xr-x 1 root root  6205440 Sep  1 10:21 defaulter-gen</span><br><span class="line">-rwxr-xr-x 1 root root  3688610 Sep  1 10:20 go2make</span><br><span class="line">-rwxr-xr-x 1 root root  2023424 Sep  1 10:21 go-bindata</span><br><span class="line">-rwxr-xr-x 1 root root 37076992 Sep  1 10:23 kubeadm</span><br><span class="line">-rwxr-xr-x 1 root root 10596352 Sep  1 10:21 openapi-gen</span><br></pre></td></tr></table></figure>
-
-<p>备份原kubeadm和证书文件</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cp /usr/bin/kubeadm&#123;,.bak20210901&#125;</span><br><span class="line">cp -r /etc/kubernetes/pki&#123;,.bak20210901&#125;</span><br></pre></td></tr></table></figure>
-
-<p>将新生成的kubeadm进行替换</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cp _output/bin/kubeadm /usr/bin/kubeadm</span><br></pre></td></tr></table></figure>
-
-<p>生成新的证书</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cd /etc/kubernetes/pki</span><br><span class="line">kubeadm alpha certs renew all</span><br></pre></td></tr></table></figure>
-
-<p>输出如下</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[root@k8s-master kubernetes]# cd /etc/kubernetes/pki</span><br><span class="line">[root@k8s-master pki]# kubeadm alpha certs renew all</span><br><span class="line">[renew] Reading configuration from the cluster...</span><br><span class="line">[renew] FYI: You can look at this config file with &#x27;kubectl -n kube-system get cm kubeadm-config -oyaml&#x27;</span><br><span class="line"></span><br><span class="line">certificate embedded in the kubeconfig file for the admin to use and for kubeadm itself renewed</span><br><span class="line">certificate for serving the Kubernetes API renewed</span><br><span class="line">certificate the apiserver uses to access etcd renewed</span><br><span class="line">certificate for the API server to connect to kubelet renewed</span><br><span class="line">certificate embedded in the kubeconfig file for the controller manager to use renewed</span><br><span class="line">certificate for liveness probes to healthcheck etcd renewed</span><br><span class="line">certificate for etcd nodes to communicate with each other renewed</span><br><span class="line">certificate for serving etcd renewed</span><br><span class="line">certificate for the front proxy client renewed</span><br><span class="line">certificate embedded in the kubeconfig file for the scheduler manager to use renewed</span><br></pre></td></tr></table></figure>
-
-<p>验证结果</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">kubeadm alpha certs check-expiration</span><br></pre></td></tr></table></figure>
-
-<p>输出如下</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[root@k8s-master pki]# kubeadm alpha certs check-expiration</span><br><span class="line">[check-expiration] Reading configuration from the cluster...</span><br><span class="line">[check-expiration] FYI: You can look at this config file with &#x27;kubectl -n kube-system get cm kubeadm-config -oyaml&#x27;</span><br><span class="line"></span><br><span class="line">CERTIFICATE                EXPIRES                  RESIDUAL TIME   CERTIFICATE AUTHORITY   EXTERNALLY MANAGED</span><br><span class="line">admin.conf                 Aug 08, 2121 02:32 UTC   99y                                     no      </span><br><span class="line">apiserver                  Aug 08, 2121 02:32 UTC   99y             ca                      no      </span><br><span class="line">apiserver-etcd-client      Aug 08, 2121 02:32 UTC   99y             etcd-ca                 no      </span><br><span class="line">apiserver-kubelet-client   Aug 08, 2121 02:32 UTC   99y             ca                      no      </span><br><span class="line">controller-manager.conf    Aug 08, 2121 02:32 UTC   99y                                     no      </span><br><span class="line">etcd-healthcheck-client    Aug 08, 2121 02:32 UTC   99y             etcd-ca                 no      </span><br><span class="line">etcd-peer                  Aug 08, 2121 02:32 UTC   99y             etcd-ca                 no      </span><br><span class="line">etcd-server                Aug 08, 2121 02:32 UTC   99y             etcd-ca                 no      </span><br><span class="line">front-proxy-client         Aug 08, 2121 02:32 UTC   99y             front-proxy-ca          no      </span><br><span class="line">scheduler.conf             Aug 08, 2121 02:32 UTC   99y                                     no      </span><br><span class="line"></span><br><span class="line">CERTIFICATE AUTHORITY   EXPIRES                  RESIDUAL TIME   EXTERNALLY MANAGED</span><br><span class="line">ca                      Aug 28, 2031 07:52 UTC   9y              no      </span><br><span class="line">etcd-ca                 Aug 28, 2031 07:53 UTC   9y              no      </span><br><span class="line">front-proxy-ca          Aug 28, 2031 07:53 UTC   9y              no      </span><br></pre></td></tr></table></figure>
-
-<p>查看集群状态是否OK。</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[root@k8s-master pki]# kubectl get node</span><br><span class="line">NAME         STATUS   ROLES    AGE   VERSION</span><br><span class="line">k8s-master   Ready    master   42h   v1.18.0</span><br><span class="line">k8s-node1    Ready    &lt;none&gt;   42h   v1.18.0</span><br><span class="line">k8s-node2    Ready    &lt;none&gt;   42h   v1.18.0</span><br></pre></td></tr></table></figure>
-
-<p>查看pod</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[root@k8s-master pki]# kubectl get pod -n kube-system</span><br><span class="line">NAME                                 READY   STATUS    RESTARTS   AGE</span><br><span class="line">coredns-7ff77c879f-6pwrg             1/1     Running   1          42h</span><br><span class="line">coredns-7ff77c879f-d6s95             1/1     Running   2          42h</span><br><span class="line">etcd-k8s-master                      1/1     Running   3          42h</span><br><span class="line">kube-apiserver-k8s-master            1/1     Running   2          42h</span><br><span class="line">kube-controller-manager-k8s-master   1/1     Running   3          42h</span><br><span class="line">kube-flannel-ds-fs8dj                1/1     Running   3          42h</span><br><span class="line">kube-flannel-ds-g6d4l                1/1     Running   2          42h</span><br><span class="line">kube-flannel-ds-tnrzq                1/1     Running   1          42h</span><br><span class="line">kube-proxy-dngh8                     1/1     Running   1          42h</span><br><span class="line">kube-proxy-nxb5q                     1/1     Running   2          42h</span><br><span class="line">kube-proxy-zz5xn                     1/1     Running   3          42h</span><br><span class="line">kube-scheduler-k8s-master            1/1     Running   2          42h</span><br></pre></td></tr></table></figure>
-
-<p>如看到上面的Ready和Running，即表示证书修改成功。</p>
-]]></content>
-      <categories>
-        <category>k8s</category>
-      </categories>
-      <tags>
-        <tag>k8s</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>k8s部署nacos集群</title>
     <url>/p/20278.html</url>
     <content><![CDATA[<p><escape><span id="more"></span></escape></p>
@@ -2682,6 +2608,104 @@
       </tags>
   </entry>
   <entry>
+    <title>kubeadm修改证书时间为99年</title>
+    <url>/p/23286.html</url>
+    <content><![CDATA[<p><escape><span id="more"></span></escape></p>
+<h1 id="kubeadm修改证书时间为99年">1. kubeadm修改证书时间为99年</h1><h2 id="查看当前证书时间">1.1. 查看当前证书时间</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[root@k8s-master ~]# kubeadm alpha certs check-expiration</span><br><span class="line">[check-expiration] Reading configuration from the cluster...</span><br><span class="line">[check-expiration] FYI: You can look at this config file with &#x27;kubectl -n kube-system get cm kubeadm-config -oyaml&#x27;</span><br><span class="line"></span><br><span class="line">CERTIFICATE                EXPIRES                  RESIDUAL TIME   CERTIFICATE AUTHORITY   EXTERNALLY MANAGED</span><br><span class="line">admin.conf                 Aug 30, 2022 07:53 UTC   363d                                    no      </span><br><span class="line">apiserver                  Aug 30, 2022 07:52 UTC   363d            ca                      no      </span><br><span class="line">apiserver-etcd-client      Aug 30, 2022 07:53 UTC   363d            etcd-ca                 no      </span><br><span class="line">apiserver-kubelet-client   Aug 30, 2022 07:52 UTC   363d            ca                      no      </span><br><span class="line">controller-manager.conf    Aug 30, 2022 07:53 UTC   363d                                    no      </span><br><span class="line">etcd-healthcheck-client    Aug 30, 2022 07:53 UTC   363d            etcd-ca                 no      </span><br><span class="line">etcd-peer                  Aug 30, 2022 07:53 UTC   363d            etcd-ca                 no      </span><br><span class="line">etcd-server                Aug 30, 2022 07:53 UTC   363d            etcd-ca                 no      </span><br><span class="line">front-proxy-client         Aug 30, 2022 07:53 UTC   363d            front-proxy-ca          no      </span><br><span class="line">scheduler.conf             Aug 30, 2022 07:53 UTC   363d                                    no      </span><br><span class="line"></span><br><span class="line">CERTIFICATE AUTHORITY   EXPIRES                  RESIDUAL TIME   EXTERNALLY MANAGED</span><br><span class="line">ca                      Aug 28, 2031 07:52 UTC   9y              no      </span><br><span class="line">etcd-ca                 Aug 28, 2031 07:53 UTC   9y              no      </span><br><span class="line">front-proxy-ca          Aug 28, 2031 07:53 UTC   9y              no      </span><br></pre></td></tr></table></figure>
+
+<p>可以看到正常只有一年时间。</p>
+<h2 id="下载源码">1.2. 下载源码</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">git clone https://github.com/kubernetes/kubernetes.git</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>注意：如果github下载慢可以用gitee下载地址：<a href="https://gitee.com/mirrors/Kubernetes.git">https://gitee.com/mirrors/Kubernetes.git</a></p>
+</blockquote>
+<p>查看k8s版本</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[root@k8s-master ~]# kubectl version</span><br><span class="line">Client Version: version.Info&#123;Major:&quot;1&quot;, Minor:&quot;18&quot;, GitVersion:&quot;v1.18.0&quot;, GitCommit:&quot;9e991415386e4cf155a24b1da15becaa390438d8&quot;, GitTreeState:&quot;clean&quot;, BuildDate:&quot;2020-03-25T14:58:59Z&quot;, GoVersion:&quot;go1.13.8&quot;, Compiler:&quot;gc&quot;, Platform:&quot;linux/amd64&quot;&#125;</span><br><span class="line">Server Version: version.Info&#123;Major:&quot;1&quot;, Minor:&quot;18&quot;, GitVersion:&quot;v1.18.0&quot;, GitCommit:&quot;9e991415386e4cf155a24b1da15becaa390438d8&quot;, GitTreeState:&quot;clean&quot;, BuildDate:&quot;2020-03-25T14:50:46Z&quot;, GoVersion:&quot;go1.13.8&quot;, Compiler:&quot;gc&quot;, Platform:&quot;linux/amd64&quot;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>切换到自己的版本，修改源码，比如我的是v1.18.0版本</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cd kubernetes</span><br><span class="line">git checkout v1.18.0</span><br></pre></td></tr></table></figure>
+
+<p>vim cmd/kubeadm/app/constants/constants.go，找到CertificateValidity，修改如下</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">....</span><br><span class="line">const (</span><br><span class="line">        // KubernetesDir is the directory Kubernetes owns for storing various configuration files</span><br><span class="line">        KubernetesDir = &quot;/etc/kubernetes&quot;</span><br><span class="line">        // ManifestsSubDirName defines directory name to store manifests</span><br><span class="line">        ManifestsSubDirName = &quot;manifests&quot;</span><br><span class="line">        // TempDirForKubeadm defines temporary directory for kubeadm</span><br><span class="line">        // should be joined with KubernetesDir.</span><br><span class="line">        TempDirForKubeadm = &quot;tmp&quot;</span><br><span class="line"></span><br><span class="line">        // CertificateValidity defines the validity for all the signed certificates generated by kubeadm</span><br><span class="line">        CertificateValidity = time.Hour * 24 * 365 * 100</span><br><span class="line">....</span><br></pre></td></tr></table></figure>
+
+<h2 id="安装编译软件">1.3. 安装编译软件</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">yum -y install gcc automake autoconf libtool make</span><br></pre></td></tr></table></figure>
+
+<p>安装go编译环境，这里就直接使用yum安装</p>
+<p>查看go是否安装过</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[root@k8s-master kubernetes]# go env</span><br><span class="line">-bash: go: command not found</span><br></pre></td></tr></table></figure>
+
+<p>查看yum的Golang</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[root@k8s-master kubernetes]# yum info golang</span><br><span class="line">Last metadata expiration check: 0:06:47 ago on Wed 01 Sep 2021 10:07:23 AM CST.</span><br><span class="line">Available Packages</span><br><span class="line">Name         : golang</span><br><span class="line">Version      : 1.15.14</span><br><span class="line">Release      : 1.module_el8.4.0+882+ab13bcd9</span><br><span class="line">Architecture : x86_64</span><br><span class="line">Size         : 708 k</span><br><span class="line">Source       : golang-1.15.14-1.module_el8.4.0+882+ab13bcd9.src.rpm</span><br><span class="line">Repository   : AppStream</span><br><span class="line">Summary      : The Go Programming Language</span><br><span class="line">URL          : http://golang.org/</span><br><span class="line">License      : BSD and Public Domain</span><br><span class="line">Description  : The Go Programming Language.</span><br></pre></td></tr></table></figure>
+
+<p>安装golang</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">yum install -y golang</span><br></pre></td></tr></table></figure>
+
+<p>再次查看go环境变量</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[root@k8s-master kubernetes]# go env</span><br><span class="line">GO111MODULE=&quot;&quot;</span><br><span class="line">GOARCH=&quot;amd64&quot;</span><br><span class="line">GOBIN=&quot;&quot;</span><br><span class="line">GOCACHE=&quot;/root/.cache/go-build&quot;</span><br><span class="line">GOENV=&quot;/root/.config/go/env&quot;</span><br><span class="line">GOEXE=&quot;&quot;</span><br><span class="line">GOFLAGS=&quot;&quot;</span><br><span class="line">GOHOSTARCH=&quot;amd64&quot;</span><br><span class="line">GOHOSTOS=&quot;linux&quot;</span><br><span class="line">GOINSECURE=&quot;&quot;</span><br><span class="line">GOMODCACHE=&quot;/root/go/pkg/mod&quot;</span><br><span class="line">GONOPROXY=&quot;&quot;</span><br><span class="line">GONOSUMDB=&quot;&quot;</span><br><span class="line">GOOS=&quot;linux&quot;</span><br><span class="line">GOPATH=&quot;/root/go&quot;</span><br><span class="line">GOPRIVATE=&quot;&quot;</span><br><span class="line">GOPROXY=&quot;https://proxy.golang.org,direct&quot;</span><br><span class="line">GOROOT=&quot;/usr/lib/golang&quot;</span><br><span class="line">GOSUMDB=&quot;sum.golang.org&quot;</span><br><span class="line">GOTMPDIR=&quot;&quot;</span><br><span class="line">GOTOOLDIR=&quot;/usr/lib/golang/pkg/tool/linux_amd64&quot;</span><br><span class="line">GCCGO=&quot;gccgo&quot;</span><br><span class="line">AR=&quot;ar&quot;</span><br><span class="line">CC=&quot;gcc&quot;</span><br><span class="line">CXX=&quot;g++&quot;</span><br><span class="line">CGO_ENABLED=&quot;1&quot;</span><br><span class="line">GOMOD=&quot;/root/kubernetes/go.mod&quot;</span><br><span class="line">CGO_CFLAGS=&quot;-g -O2&quot;</span><br><span class="line">CGO_CPPFLAGS=&quot;&quot;</span><br><span class="line">CGO_CXXFLAGS=&quot;-g -O2&quot;</span><br><span class="line">CGO_FFLAGS=&quot;-g -O2&quot;</span><br><span class="line">CGO_LDFLAGS=&quot;-g -O2&quot;</span><br><span class="line">PKG_CONFIG=&quot;pkg-config&quot;</span><br><span class="line">GOGCCFLAGS=&quot;-fPIC -m64 -pthread -fmessage-length=0 -fdebug-prefix-map=/tmp/go-build406782294=/tmp/go-build -gno-record-gcc-switches&quot;</span><br></pre></td></tr></table></figure>
+
+<h2 id="执行make-WHAT-cmd-kubeadm编译">1.4. 执行make WHAT=cmd/kubeadm编译</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[root@k8s-master kubernetes]# make WHAT=cmd/kubeadm</span><br><span class="line">+++ [0901 10:20:55] Building go targets for linux/amd64:</span><br><span class="line">    ./vendor/k8s.io/code-generator/cmd/deepcopy-gen</span><br><span class="line">+++ [0901 10:21:08] Building go targets for linux/amd64:</span><br><span class="line">    ./vendor/k8s.io/code-generator/cmd/defaulter-gen</span><br><span class="line">+++ [0901 10:21:18] Building go targets for linux/amd64:</span><br><span class="line">    ./vendor/k8s.io/code-generator/cmd/conversion-gen</span><br><span class="line">+++ [0901 10:21:37] Building go targets for linux/amd64:</span><br><span class="line">    ./vendor/k8s.io/kube-openapi/cmd/openapi-gen</span><br><span class="line">+++ [0901 10:21:53] Building go targets for linux/amd64:</span><br><span class="line">    ./vendor/github.com/go-bindata/go-bindata/go-bindata</span><br><span class="line">warning: ignoring symlink /root/kubernetes/_output/local/go/src/k8s.io/kubernetes</span><br><span class="line">go: warning: &quot;k8s.io/kubernetes/vendor/github.com/go-bindata/go-bindata/...&quot; matched no packages</span><br><span class="line">+++ [0901 10:21:55] Building go targets for linux/amd64:</span><br><span class="line">    cmd/kubeadm</span><br></pre></td></tr></table></figure>
+
+<p>编译完生成如下目录和二进制文件</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[root@k8s-master kubernetes]# ll _output/bin/</span><br><span class="line">total 70380</span><br><span class="line">-rwxr-xr-x 1 root root  6242304 Sep  1 10:21 conversion-gen</span><br><span class="line">-rwxr-xr-x 1 root root  6234112 Sep  1 10:20 deepcopy-gen</span><br><span class="line">-rwxr-xr-x 1 root root  6205440 Sep  1 10:21 defaulter-gen</span><br><span class="line">-rwxr-xr-x 1 root root  3688610 Sep  1 10:20 go2make</span><br><span class="line">-rwxr-xr-x 1 root root  2023424 Sep  1 10:21 go-bindata</span><br><span class="line">-rwxr-xr-x 1 root root 37076992 Sep  1 10:23 kubeadm</span><br><span class="line">-rwxr-xr-x 1 root root 10596352 Sep  1 10:21 openapi-gen</span><br></pre></td></tr></table></figure>
+
+<p>备份原kubeadm和证书文件</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cp /usr/bin/kubeadm&#123;,.bak20210901&#125;</span><br><span class="line">cp -r /etc/kubernetes/pki&#123;,.bak20210901&#125;</span><br></pre></td></tr></table></figure>
+
+<p>将新生成的kubeadm进行替换</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cp _output/bin/kubeadm /usr/bin/kubeadm</span><br></pre></td></tr></table></figure>
+
+<p>生成新的证书</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cd /etc/kubernetes/pki</span><br><span class="line">kubeadm alpha certs renew all</span><br></pre></td></tr></table></figure>
+
+<p>输出如下</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[root@k8s-master kubernetes]# cd /etc/kubernetes/pki</span><br><span class="line">[root@k8s-master pki]# kubeadm alpha certs renew all</span><br><span class="line">[renew] Reading configuration from the cluster...</span><br><span class="line">[renew] FYI: You can look at this config file with &#x27;kubectl -n kube-system get cm kubeadm-config -oyaml&#x27;</span><br><span class="line"></span><br><span class="line">certificate embedded in the kubeconfig file for the admin to use and for kubeadm itself renewed</span><br><span class="line">certificate for serving the Kubernetes API renewed</span><br><span class="line">certificate the apiserver uses to access etcd renewed</span><br><span class="line">certificate for the API server to connect to kubelet renewed</span><br><span class="line">certificate embedded in the kubeconfig file for the controller manager to use renewed</span><br><span class="line">certificate for liveness probes to healthcheck etcd renewed</span><br><span class="line">certificate for etcd nodes to communicate with each other renewed</span><br><span class="line">certificate for serving etcd renewed</span><br><span class="line">certificate for the front proxy client renewed</span><br><span class="line">certificate embedded in the kubeconfig file for the scheduler manager to use renewed</span><br></pre></td></tr></table></figure>
+
+<p>验证结果</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">kubeadm alpha certs check-expiration</span><br></pre></td></tr></table></figure>
+
+<p>输出如下</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[root@k8s-master pki]# kubeadm alpha certs check-expiration</span><br><span class="line">[check-expiration] Reading configuration from the cluster...</span><br><span class="line">[check-expiration] FYI: You can look at this config file with &#x27;kubectl -n kube-system get cm kubeadm-config -oyaml&#x27;</span><br><span class="line"></span><br><span class="line">CERTIFICATE                EXPIRES                  RESIDUAL TIME   CERTIFICATE AUTHORITY   EXTERNALLY MANAGED</span><br><span class="line">admin.conf                 Aug 08, 2121 02:32 UTC   99y                                     no      </span><br><span class="line">apiserver                  Aug 08, 2121 02:32 UTC   99y             ca                      no      </span><br><span class="line">apiserver-etcd-client      Aug 08, 2121 02:32 UTC   99y             etcd-ca                 no      </span><br><span class="line">apiserver-kubelet-client   Aug 08, 2121 02:32 UTC   99y             ca                      no      </span><br><span class="line">controller-manager.conf    Aug 08, 2121 02:32 UTC   99y                                     no      </span><br><span class="line">etcd-healthcheck-client    Aug 08, 2121 02:32 UTC   99y             etcd-ca                 no      </span><br><span class="line">etcd-peer                  Aug 08, 2121 02:32 UTC   99y             etcd-ca                 no      </span><br><span class="line">etcd-server                Aug 08, 2121 02:32 UTC   99y             etcd-ca                 no      </span><br><span class="line">front-proxy-client         Aug 08, 2121 02:32 UTC   99y             front-proxy-ca          no      </span><br><span class="line">scheduler.conf             Aug 08, 2121 02:32 UTC   99y                                     no      </span><br><span class="line"></span><br><span class="line">CERTIFICATE AUTHORITY   EXPIRES                  RESIDUAL TIME   EXTERNALLY MANAGED</span><br><span class="line">ca                      Aug 28, 2031 07:52 UTC   9y              no      </span><br><span class="line">etcd-ca                 Aug 28, 2031 07:53 UTC   9y              no      </span><br><span class="line">front-proxy-ca          Aug 28, 2031 07:53 UTC   9y              no      </span><br></pre></td></tr></table></figure>
+
+<p>查看集群状态是否OK。</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[root@k8s-master pki]# kubectl get node</span><br><span class="line">NAME         STATUS   ROLES    AGE   VERSION</span><br><span class="line">k8s-master   Ready    master   42h   v1.18.0</span><br><span class="line">k8s-node1    Ready    &lt;none&gt;   42h   v1.18.0</span><br><span class="line">k8s-node2    Ready    &lt;none&gt;   42h   v1.18.0</span><br></pre></td></tr></table></figure>
+
+<p>查看pod</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[root@k8s-master pki]# kubectl get pod -n kube-system</span><br><span class="line">NAME                                 READY   STATUS    RESTARTS   AGE</span><br><span class="line">coredns-7ff77c879f-6pwrg             1/1     Running   1          42h</span><br><span class="line">coredns-7ff77c879f-d6s95             1/1     Running   2          42h</span><br><span class="line">etcd-k8s-master                      1/1     Running   3          42h</span><br><span class="line">kube-apiserver-k8s-master            1/1     Running   2          42h</span><br><span class="line">kube-controller-manager-k8s-master   1/1     Running   3          42h</span><br><span class="line">kube-flannel-ds-fs8dj                1/1     Running   3          42h</span><br><span class="line">kube-flannel-ds-g6d4l                1/1     Running   2          42h</span><br><span class="line">kube-flannel-ds-tnrzq                1/1     Running   1          42h</span><br><span class="line">kube-proxy-dngh8                     1/1     Running   1          42h</span><br><span class="line">kube-proxy-nxb5q                     1/1     Running   2          42h</span><br><span class="line">kube-proxy-zz5xn                     1/1     Running   3          42h</span><br><span class="line">kube-scheduler-k8s-master            1/1     Running   2          42h</span><br></pre></td></tr></table></figure>
+
+<p>如看到上面的Ready和Running，即表示证书修改成功。</p>
+]]></content>
+      <categories>
+        <category>k8s</category>
+      </categories>
+      <tags>
+        <tag>k8s</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>mysql导入数据慢解决方法</title>
+    <url>/p/1525.html</url>
+    <content><![CDATA[<p><escape><span id="more"></span></escape></p>
+<p>mysql导入慢，添加两个参数：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">max_allowed_packet   客户端/服务器之间通信的缓存区的最大大小</span><br><span class="line">net_buffer_length    TCP/IP和套接字通信缓冲区大小，创建长度达net_buffer_length行。</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>注：max_allowed_packet; net_buffer_length 这两个参数不能比目标数据度配置大，否则会报错。</p>
+</blockquote>
+<p>先查看目标库的参数值 如下：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">mysql&gt;</span><span class="bash"> show variables like <span class="string">&#x27;max_allowed_packet&#x27;</span>;</span></span><br><span class="line">+--------------------+----------+</span><br><span class="line">| Variable_name      | Value    |</span><br><span class="line">+--------------------+----------+</span><br><span class="line">| max_allowed_packet | 67108864 |</span><br><span class="line">+--------------------+----------+</span><br><span class="line">1 row in set (0.22 sec)</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">mysql&gt;</span><span class="bash"> show variables like <span class="string">&#x27;net_buffer_length&#x27;</span>;</span></span><br><span class="line">+-------------------+-------+</span><br><span class="line">| Variable_name     | Value |</span><br><span class="line">+-------------------+-------+</span><br><span class="line">| net_buffer_length | 16384 |</span><br><span class="line">+-------------------+-------+</span><br><span class="line">1 row in set (0.00 sec)</span><br></pre></td></tr></table></figure>
+
+<p>命令行加上两个参数执行</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">mysql -h127.0.0.1 -uroot -p&#x27;Pass!234&#x27; data_base_name --max_allowed_packet=67108864 --net_buffer_length=16384&lt;your_sql_script.sql</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>MySQL</category>
+      </categories>
+      <tags>
+        <tag>MySQL</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>kubeadm平滑升级集群</title>
     <url>/p/23481.html</url>
     <content><![CDATA[<p><escape><span id="more"></span></escape></p>
@@ -2754,30 +2778,6 @@
       </categories>
       <tags>
         <tag>k8s</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>mysql导入数据慢解决方法</title>
-    <url>/p/1525.html</url>
-    <content><![CDATA[<p><escape><span id="more"></span></escape></p>
-<p>mysql导入慢，添加两个参数：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">max_allowed_packet   客户端/服务器之间通信的缓存区的最大大小</span><br><span class="line">net_buffer_length    TCP/IP和套接字通信缓冲区大小，创建长度达net_buffer_length行。</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>注：max_allowed_packet; net_buffer_length 这两个参数不能比目标数据度配置大，否则会报错。</p>
-</blockquote>
-<p>先查看目标库的参数值 如下：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">mysql&gt;</span><span class="bash"> show variables like <span class="string">&#x27;max_allowed_packet&#x27;</span>;</span></span><br><span class="line">+--------------------+----------+</span><br><span class="line">| Variable_name      | Value    |</span><br><span class="line">+--------------------+----------+</span><br><span class="line">| max_allowed_packet | 67108864 |</span><br><span class="line">+--------------------+----------+</span><br><span class="line">1 row in set (0.22 sec)</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">mysql&gt;</span><span class="bash"> show variables like <span class="string">&#x27;net_buffer_length&#x27;</span>;</span></span><br><span class="line">+-------------------+-------+</span><br><span class="line">| Variable_name     | Value |</span><br><span class="line">+-------------------+-------+</span><br><span class="line">| net_buffer_length | 16384 |</span><br><span class="line">+-------------------+-------+</span><br><span class="line">1 row in set (0.00 sec)</span><br></pre></td></tr></table></figure>
-
-<p>命令行加上两个参数执行</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">mysql -h127.0.0.1 -uroot -p&#x27;Pass!234&#x27; data_base_name --max_allowed_packet=67108864 --net_buffer_length=16384&lt;your_sql_script.sql</span><br></pre></td></tr></table></figure>
-
-]]></content>
-      <categories>
-        <category>MySQL</category>
-      </categories>
-      <tags>
-        <tag>MySQL</tag>
       </tags>
   </entry>
   <entry>
@@ -3425,7 +3425,7 @@
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">// Font size</span><br><span class="line">$font-size-base           = (hexo-config(&#x27;font.enable&#x27;) and hexo-config(&#x27;font.global.size&#x27;) is a &#x27;unit&#x27;) ? unit(hexo-config(&#x27;font.global.size&#x27;), em) : 1em;</span><br><span class="line">$font-size-smallest       = .75em;</span><br><span class="line">$font-size-smaller        = .8125em;</span><br><span class="line">$font-size-small          = .875em;</span><br><span class="line">$font-size-medium         = 1em;</span><br><span class="line">$font-size-large          = 1.0em;</span><br><span class="line">$font-size-larger         = 1.25em;</span><br><span class="line">$font-size-largest        = 1.5em;</span><br></pre></td></tr></table></figure>
 
 <p>2.打开/blog/themes/next/_config.yml文件，查找<strong>Font Settings</strong>字段并修改如下：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># ---------------------------------------------------------------</span><br><span class="line"># Font Settings</span><br><span class="line"># ---------------------------------------------------------------</span><br><span class="line"># Find fonts on Google Fonts (https://fonts.google.com)</span><br><span class="line"># All fonts set here will have the following styles:</span><br><span class="line">#   light | light italic | normal | normal italic | bold | bold italic</span><br><span class="line"># Be aware that setting too much fonts will cause site running slowly</span><br><span class="line"># ---------------------------------------------------------------</span><br><span class="line"># Web Safe fonts are recommended for `global` (and `title`):</span><br><span class="line"># Arial | Tahoma | Helvetica | Times New Roman | Courier New | Verdana | Georgia | Palatino | Garamond | Comic Sans MS | Trebuchet MS</span><br><span class="line"># ---------------------------------------------------------------</span><br><span class="line"></span><br><span class="line">font:</span><br><span class="line">  enable: true</span><br><span class="line"></span><br><span class="line">  # Uri of fonts host, e.g. https://fonts.googleapis.com (Default).</span><br><span class="line">  host:</span><br><span class="line"></span><br><span class="line">  # Font options:</span><br><span class="line">  # `external: true` will load this font family from `host` above.</span><br><span class="line">  # `family: Times New Roman`. Without any quotes.</span><br><span class="line">  # `size: x.x`. Use `em` as unit. Default: 1 (16px)</span><br><span class="line"></span><br><span class="line">  # Global font settings used for all elements inside &lt;body&gt;.</span><br><span class="line">  global:</span><br><span class="line">    external: true</span><br><span class="line">    family: Lato</span><br><span class="line">    size:</span><br><span class="line"></span><br><span class="line">  # Font settings for site title (.site-title).</span><br><span class="line">  title:</span><br><span class="line">    external: true</span><br><span class="line">    family:</span><br><span class="line">    size:</span><br><span class="line"></span><br><span class="line">  # Font settings for headlines (&lt;h1&gt; to &lt;h6&gt;).</span><br><span class="line">  headings:</span><br><span class="line">    external: true</span><br><span class="line">    family:</span><br><span class="line">    size:</span><br><span class="line"></span><br><span class="line">  # Font settings for posts (.post-body).</span><br><span class="line">  posts:</span><br><span class="line">    external: true</span><br><span class="line">    family:</span><br><span class="line">    size: 0.8125</span><br><span class="line"></span><br><span class="line">  # Font settings for &lt;code&gt; and code blocks.</span><br><span class="line">  codes:</span><br><span class="line">    external: true</span><br><span class="line">    family:</span><br><span class="line">    size:</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># ---------------------------------------------------------------</span><br><span class="line"># Font Settings</span><br><span class="line"># ---------------------------------------------------------------</span><br><span class="line"># Find fonts on Google Fonts (https://fonts.google.com)</span><br><span class="line"># All fonts set here will have the following styles:</span><br><span class="line">#   light | light italic | normal | normal italic | bold | bold italic</span><br><span class="line"># Be aware that setting too much fonts will cause site running slowly</span><br><span class="line"># ---------------------------------------------------------------</span><br><span class="line"># Web Safe fonts are recommended for `global` (and `title`):</span><br><span class="line"># Arial | Tahoma | Helvetica | Times New Roman | Courier New | Verdana | Georgia | Palatino | Garamond | Comic Sans MS | Trebuchet MS</span><br><span class="line"># ---------------------------------------------------------------</span><br><span class="line"></span><br><span class="line">font:</span><br><span class="line">  enable: true</span><br><span class="line"></span><br><span class="line">  # Uri of fonts host, e.g. https://fonts.loli.net (Default).</span><br><span class="line">  host:</span><br><span class="line"></span><br><span class="line">  # Font options:</span><br><span class="line">  # `external: true` will load this font family from `host` above.</span><br><span class="line">  # `family: Times New Roman`. Without any quotes.</span><br><span class="line">  # `size: x.x`. Use `em` as unit. Default: 1 (16px)</span><br><span class="line"></span><br><span class="line">  # Global font settings used for all elements inside &lt;body&gt;.</span><br><span class="line">  global:</span><br><span class="line">    external: true</span><br><span class="line">    family: Lato</span><br><span class="line">    size:</span><br><span class="line"></span><br><span class="line">  # Font settings for site title (.site-title).</span><br><span class="line">  title:</span><br><span class="line">    external: true</span><br><span class="line">    family:</span><br><span class="line">    size:</span><br><span class="line"></span><br><span class="line">  # Font settings for headlines (&lt;h1&gt; to &lt;h6&gt;).</span><br><span class="line">  headings:</span><br><span class="line">    external: true</span><br><span class="line">    family:</span><br><span class="line">    size:</span><br><span class="line"></span><br><span class="line">  # Font settings for posts (.post-body).</span><br><span class="line">  posts:</span><br><span class="line">    external: true</span><br><span class="line">    family:</span><br><span class="line">    size: 0.8125</span><br><span class="line"></span><br><span class="line">  # Font settings for &lt;code&gt; and code blocks.</span><br><span class="line">  codes:</span><br><span class="line">    external: true</span><br><span class="line">    family:</span><br><span class="line">    size:</span><br></pre></td></tr></table></figure>
 
 <p>参考</p>
 <blockquote>
