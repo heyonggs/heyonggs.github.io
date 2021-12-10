@@ -2972,7 +2972,7 @@
   </entry>
   <entry>
     <title>Istio安装配置及使用</title>
-    <url>/p/28124.html</url>
+    <url>/p/46059.html</url>
     <content><![CDATA[<p><escape><span id="more"></span></escape></p>
 <p>Istio是一个开放平台，提供统一的方法来集成微服务、管理跨微服务的交通流、执行政策和聚合遥测数据。Istio的控制平面在底层的集群管理平台(如Kubernetes)上提供了一个抽象层。</p>
 <h1 id="k8s安装Istio">1. k8s安装Istio</h1><p>软件下载地址：<a href="https://github.com/istio/istio/">https://github.com/istio/istio/</a></p>
