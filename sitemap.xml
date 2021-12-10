@@ -410,20 +410,6 @@
 
   
   <url>
-    <loc>https://www.kubelet.cn/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/</loc>
-    <lastmod>2021-12-10</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.kubelet.cn/tags/Windows/</loc>
-    <lastmod>2021-12-10</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://www.kubelet.cn/tags/System-cpu/</loc>
     <lastmod>2021-12-10</lastmod>
     <changefreq>daily</changefreq>
@@ -452,6 +438,20 @@
   </url>
   
   <url>
+    <loc>https://www.kubelet.cn/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/</loc>
+    <lastmod>2021-12-10</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.kubelet.cn/tags/Windows/</loc>
+    <lastmod>2021-12-10</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://www.kubelet.cn/tags/%E5%B7%A5%E5%85%B7/</loc>
     <lastmod>2021-12-10</lastmod>
     <changefreq>daily</changefreq>
@@ -466,13 +466,6 @@
   </url>
   
   <url>
-    <loc>https://www.kubelet.cn/tags/FRP/</loc>
-    <lastmod>2021-12-10</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://www.kubelet.cn/tags/vnstat/</loc>
     <lastmod>2021-12-10</lastmod>
     <changefreq>daily</changefreq>
@@ -480,7 +473,7 @@
   </url>
   
   <url>
-    <loc>https://www.kubelet.cn/tags/git/</loc>
+    <loc>https://www.kubelet.cn/tags/FRP/</loc>
     <lastmod>2021-12-10</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -494,21 +487,14 @@
   </url>
   
   <url>
+    <loc>https://www.kubelet.cn/tags/git/</loc>
+    <lastmod>2021-12-10</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://www.kubelet.cn/tags/Nginx/</loc>
-    <lastmod>2021-12-10</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.kubelet.cn/tags/SaltStack/</loc>
-    <lastmod>2021-12-10</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.kubelet.cn/tags/SonarQube/</loc>
     <lastmod>2021-12-10</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -529,7 +515,14 @@
   </url>
   
   <url>
-    <loc>https://www.kubelet.cn/tags/Superset/</loc>
+    <loc>https://www.kubelet.cn/tags/SonarQube/</loc>
+    <lastmod>2021-12-10</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.kubelet.cn/tags/SaltStack/</loc>
     <lastmod>2021-12-10</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -551,6 +544,13 @@
   
   <url>
     <loc>https://www.kubelet.cn/tags/Docker-Compose/</loc>
+    <lastmod>2021-12-10</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.kubelet.cn/tags/Superset/</loc>
     <lastmod>2021-12-10</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -592,14 +592,14 @@
   </url>
   
   <url>
-    <loc>https://www.kubelet.cn/tags/MySQL/</loc>
+    <loc>https://www.kubelet.cn/tags/Redis/</loc>
     <lastmod>2021-12-10</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>https://www.kubelet.cn/tags/Redis/</loc>
+    <loc>https://www.kubelet.cn/tags/Istio/</loc>
     <lastmod>2021-12-10</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -613,7 +613,7 @@
   </url>
   
   <url>
-    <loc>https://www.kubelet.cn/tags/Istio/</loc>
+    <loc>https://www.kubelet.cn/tags/MySQL/</loc>
     <lastmod>2021-12-10</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -634,20 +634,6 @@
   </url>
   
 
-  
-  <url>
-    <loc>https://www.kubelet.cn/categories/%E6%95%85%E9%9A%9C/</loc>
-    <lastmod>2021-12-10</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.kubelet.cn/categories/Windows/</loc>
-    <lastmod>2021-12-10</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
   
   <url>
     <loc>https://www.kubelet.cn/categories/System-cpu/</loc>
@@ -678,6 +664,20 @@
   </url>
   
   <url>
+    <loc>https://www.kubelet.cn/categories/%E6%95%85%E9%9A%9C/</loc>
+    <lastmod>2021-12-10</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.kubelet.cn/categories/Windows/</loc>
+    <lastmod>2021-12-10</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://www.kubelet.cn/categories/%E5%B7%A5%E5%85%B7/</loc>
     <lastmod>2021-12-10</lastmod>
     <changefreq>daily</changefreq>
@@ -692,14 +692,14 @@
   </url>
   
   <url>
-    <loc>https://www.kubelet.cn/categories/git/</loc>
+    <loc>https://www.kubelet.cn/categories/ansible/</loc>
     <lastmod>2021-12-10</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>https://www.kubelet.cn/categories/ansible/</loc>
+    <loc>https://www.kubelet.cn/categories/git/</loc>
     <lastmod>2021-12-10</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -713,7 +713,7 @@
   </url>
   
   <url>
-    <loc>https://www.kubelet.cn/categories/SaltStack/</loc>
+    <loc>https://www.kubelet.cn/categories/LVM/</loc>
     <lastmod>2021-12-10</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -727,14 +727,7 @@
   </url>
   
   <url>
-    <loc>https://www.kubelet.cn/categories/LVM/</loc>
-    <lastmod>2021-12-10</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.kubelet.cn/categories/Superset/</loc>
+    <loc>https://www.kubelet.cn/categories/SaltStack/</loc>
     <lastmod>2021-12-10</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -742,6 +735,13 @@
   
   <url>
     <loc>https://www.kubelet.cn/categories/Docker/</loc>
+    <lastmod>2021-12-10</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.kubelet.cn/categories/Superset/</loc>
     <lastmod>2021-12-10</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -762,14 +762,14 @@
   </url>
   
   <url>
-    <loc>https://www.kubelet.cn/categories/MySQL/</loc>
+    <loc>https://www.kubelet.cn/categories/Kubernetes/</loc>
     <lastmod>2021-12-10</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>https://www.kubelet.cn/categories/Kubernetes/</loc>
+    <loc>https://www.kubelet.cn/categories/Istio/</loc>
     <lastmod>2021-12-10</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -783,7 +783,7 @@
   </url>
   
   <url>
-    <loc>https://www.kubelet.cn/categories/Istio/</loc>
+    <loc>https://www.kubelet.cn/categories/MySQL/</loc>
     <lastmod>2021-12-10</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
