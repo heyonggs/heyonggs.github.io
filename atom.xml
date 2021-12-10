@@ -6,7 +6,7 @@
   <link href="https://www.kubelet.cn/atom.xml" rel="self"/>
   
   <link href="https://www.kubelet.cn/"/>
-  <updated>2021-12-07T03:56:42.529Z</updated>
+  <updated>2021-12-10T03:35:40.290Z</updated>
   <id>https://www.kubelet.cn/</id>
   
   <author>
@@ -15,6 +15,29 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Istio安装配置及使用</title>
+    <link href="https://www.kubelet.cn/p/28124.html"/>
+    <id>https://www.kubelet.cn/p/28124.html</id>
+    <published>2021-11-15T03:04:34.000Z</published>
+    <updated>2021-12-10T03:35:40.290Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;&lt;escape&gt;&lt;/escape&gt;&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="Istio" scheme="https://www.kubelet.cn/categories/Istio/"/>
+    
+    
+    <category term="k8s" scheme="https://www.kubelet.cn/tags/k8s/"/>
+    
+    <category term="Kubernetes" scheme="https://www.kubelet.cn/tags/Kubernetes/"/>
+    
+    <category term="Istio" scheme="https://www.kubelet.cn/tags/Istio/"/>
+    
+  </entry>
   
   <entry>
     <title>vnstat流量统计（新版2.8）</title>
@@ -185,11 +208,11 @@
     <category term="Kubernetes" scheme="https://www.kubelet.cn/categories/Kubernetes/"/>
     
     
+    <category term="容器" scheme="https://www.kubelet.cn/tags/%E5%AE%B9%E5%99%A8/"/>
+    
     <category term="k8s" scheme="https://www.kubelet.cn/tags/k8s/"/>
     
     <category term="Kubernetes" scheme="https://www.kubelet.cn/tags/Kubernetes/"/>
-    
-    <category term="容器" scheme="https://www.kubelet.cn/tags/%E5%AE%B9%E5%99%A8/"/>
     
   </entry>
   
@@ -388,27 +411,6 @@
     
     
     <category term="git" scheme="https://www.kubelet.cn/tags/git/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>k8s部署eureka集群</title>
-    <link href="https://www.kubelet.cn/p/35694.html"/>
-    <id>https://www.kubelet.cn/p/35694.html</id>
-    <published>2021-01-08T02:53:56.000Z</published>
-    <updated>2021-12-07T03:54:47.579Z</updated>
-    
-    
-    <summary type="html">&lt;p&gt;&lt;escape&gt;&lt;/escape&gt;&lt;/p&gt;</summary>
-    
-    
-    
-    <category term="Kubernetes" scheme="https://www.kubelet.cn/categories/Kubernetes/"/>
-    
-    
-    <category term="k8s" scheme="https://www.kubelet.cn/tags/k8s/"/>
-    
-    <category term="Kubernetes" scheme="https://www.kubelet.cn/tags/Kubernetes/"/>
     
   </entry>
   
