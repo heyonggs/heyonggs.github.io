@@ -5170,4 +5170,85 @@
         <tag>helm</tag>
       </tags>
   </entry>
+  <entry>
+    <title>CentOS8安装Zabbix5.4</title>
+    <url>/p/65518.html</url>
+    <content><![CDATA[<p><escape><span id="more"></span></escape></p>
+<h1 id="环境准备">1. 环境准备</h1><h2 id="基本信息">1.1. 基本信息</h2><p>系统：CentOS Linux release 8.2.2004 (Core)</p>
+<p>CPU ：2核</p>
+<p>内存 ：4G</p>
+<p>磁盘 ：20G</p>
+<p>Zabbix ：5.4</p>
+<h2 id="关闭防火墙">1.2. 关闭防火墙</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">systemctl stop firewalld.service</span><br><span class="line">systemctl disable firewalld.service</span><br></pre></td></tr></table></figure>
+
+<h2 id="关闭SElinux">1.3. 关闭SElinux</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">setenforce 0</span><br><span class="line">vi /etc/selinux/config</span><br><span class="line">#把SELNUX=enforcing换成</span><br><span class="line">SELINUX=disabled</span><br></pre></td></tr></table></figure>
+
+<h1 id="配置yum源">2. 配置yum源</h1><blockquote>
+<p>zabbix官方网站：<a href="https://www.zabbix.com/">https://www.zabbix.com</a></p>
+<p>zabbix官方镜像网站:<a href="https://repo.zabbix.com/">https://repo.zabbix.com</a></p>
+<p>zabbix下载：<a href="https://www.zabbix.com/cn/download">https://www.zabbix.com/cn/download</a></p>
+</blockquote>
+<p>选择需要安装的版本</p>
+<p><img src="https://cdn.jsdelivr.net/gh/heyonggs/images@master/wp/2021/zabbix/202112131454531.png"></p>
+<p>选择好版本后下载：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">wget https://repo.zabbix.com/zabbix/5.4/rhel/8/x86_64/zabbix-release-5.4-1.el8.noarch.rpm</span><br><span class="line"></span><br><span class="line">rpm -ivh zabbix-release-5.4-1.el8.noarch.rpm</span><br><span class="line"></span><br><span class="line">dnf clean all</span><br></pre></td></tr></table></figure>
+
+<h1 id="安装">3. 安装</h1><p>安装Zabbix server，Web前端，agent</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">dnf install -y zabbix-server-mysql zabbix-web-mysql zabbix-nginx-conf zabbix-sql-scripts zabbix-agent</span><br></pre></td></tr></table></figure>
+
+<p>查看安装后的包</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[root@zabbix ~]# rpm -qa|grep zabbix</span><br><span class="line"></span><br><span class="line">zabbix-web-deps-5.4.8-1.el8.noarch</span><br><span class="line">zabbix-agent-5.4.8-1.el8.x86_64</span><br><span class="line">zabbix-web-5.4.8-1.el8.noarch</span><br><span class="line">zabbix-web-mysql-5.4.8-1.el8.noarch</span><br><span class="line">zabbix-nginx-conf-5.4.8-1.el8.noarch</span><br><span class="line">zabbix-sql-scripts-5.4.8-1.el8.noarch</span><br><span class="line">zabbix-server-mysql-5.4.8-1.el8.x86_64</span><br><span class="line">zabbix-release-5.4-1.el8.noarch</span><br></pre></td></tr></table></figure>
+
+<p>安装配置数据库</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 安装</span><br><span class="line">dnf install -y mysql-server mysql-devel mysql-libs</span><br><span class="line"></span><br><span class="line"># 启动</span><br><span class="line">systemctl start mysqld</span><br><span class="line"></span><br><span class="line">#加入开机启动</span><br><span class="line">systemctl enable mysqld.service</span><br><span class="line"></span><br><span class="line"># 初始化</span><br><span class="line">mysql_secure_installation</span><br><span class="line"></span><br><span class="line"># mysql -uroot -p</span><br><span class="line">password</span><br><span class="line">mysql&gt; create database zabbix character set utf8 collate utf8_bin;</span><br><span class="line">mysql&gt; create user zabbix@localhost identified by &#x27;password&#x27;;</span><br><span class="line">mysql&gt; grant all privileges on zabbix.* to zabbix@localhost;</span><br><span class="line">mysql&gt; quit;</span><br><span class="line"></span><br><span class="line"># 导入</span><br><span class="line">zcat /usr/share/doc/zabbix-sql-scripts/mysql/create.sql.gz | mysql -uzabbix -p zabbix</span><br></pre></td></tr></table></figure>
+
+<p>为zabbix server配置数据库</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 连接数据库</span><br><span class="line">vim /etc/zabbix/zabbix_server.conf</span><br><span class="line"></span><br><span class="line">DBPassword=password</span><br></pre></td></tr></table></figure>
+
+<p>为zabbix前端配置PHP，取消注释并设置“listen”和“server_name”</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">vim /etc/nginx/conf.d/zabbix.conf</span><br><span class="line"> </span><br><span class="line">listen 80;</span><br><span class="line">server_name example.com;</span><br></pre></td></tr></table></figure>
+
+<p>nginx配置文件内容</p>
+<p>/etc/nginx/conf.d/zabbix.conf</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">server &#123;</span><br><span class="line">        listen          80;</span><br><span class="line">        server_name     zabbix.example.com;</span><br><span class="line"></span><br><span class="line">        root    /usr/share/zabbix;</span><br><span class="line"></span><br><span class="line">        index   index.php;</span><br><span class="line"></span><br><span class="line">        location = /favicon.ico &#123;</span><br><span class="line">                log_not_found   off;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        location / &#123;</span><br><span class="line">                try_files       $uri $uri/ =404;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        location /assets &#123;</span><br><span class="line">                access_log      off;</span><br><span class="line">                expires         10d;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        location ~ /\.ht &#123;</span><br><span class="line">                deny            all;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        location ~ /(api\/|conf[^\.]|include|locale|vendor) &#123;</span><br><span class="line">                deny            all;</span><br><span class="line">                return          404;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        location ~ [^/]\.php(/|$) &#123;</span><br><span class="line">                fastcgi_pass    unix:/run/php-fpm/zabbix.sock;</span><br><span class="line">                fastcgi_split_path_info ^(.+\.php)(/.+)$;</span><br><span class="line">                fastcgi_index   index.php;</span><br><span class="line"></span><br><span class="line">                fastcgi_param   DOCUMENT_ROOT   /usr/share/zabbix;</span><br><span class="line">                fastcgi_param   SCRIPT_FILENAME /usr/share/zabbix$fastcgi_script_name;</span><br><span class="line">                fastcgi_param   PATH_TRANSLATED /usr/share/zabbix$fastcgi_script_name;</span><br><span class="line"></span><br><span class="line">                include fastcgi_params;</span><br><span class="line">                fastcgi_param   QUERY_STRING    $query_string;</span><br><span class="line">                fastcgi_param   REQUEST_METHOD  $request_method;</span><br><span class="line">                fastcgi_param   CONTENT_TYPE    $content_type;</span><br><span class="line">                fastcgi_param   CONTENT_LENGTH  $content_length;</span><br><span class="line"></span><br><span class="line">                fastcgi_intercept_errors        on;</span><br><span class="line">                fastcgi_ignore_client_abort     off;</span><br><span class="line">                fastcgi_connect_timeout         60;</span><br><span class="line">                fastcgi_send_timeout            180;</span><br><span class="line">                fastcgi_read_timeout            180;</span><br><span class="line">                fastcgi_buffer_size             128k;</span><br><span class="line">                fastcgi_buffers                 4 256k;</span><br><span class="line">                fastcgi_busy_buffers_size       256k;</span><br><span class="line">                fastcgi_temp_file_write_size    256k;</span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="启动Zabbix-server和agent进程">4. 启动Zabbix server和agent进程</h1><p>启动Zabbix server和agent进程，并为它们设置开机自启：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">systemctl restart zabbix-server zabbix-agent nginx php-fpm</span><br><span class="line">systemctl enable zabbix-server zabbix-agent nginx php-fpm</span><br></pre></td></tr></table></figure>
+
+<p>卸载zabbix</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 停止</span><br><span class="line">systemctl stop zabbix-server zabbix-agent nginx php-fpm</span><br><span class="line"></span><br><span class="line"># 查看安装的zabbix</span><br><span class="line">[root@zabbix ~]# rpm -qa|grep zabbix</span><br><span class="line">zabbix-web-deps-5.4.8-1.el8.noarch</span><br><span class="line">zabbix-agent-5.4.8-1.el8.x86_64</span><br><span class="line">zabbix-web-5.4.8-1.el8.noarch</span><br><span class="line">zabbix-web-mysql-5.4.8-1.el8.noarch</span><br><span class="line">zabbix-nginx-conf-5.4.8-1.el8.noarch</span><br><span class="line">zabbix-sql-scripts-5.4.8-1.el8.noarch</span><br><span class="line">zabbix-server-mysql-5.4.8-1.el8.x86_64</span><br><span class="line">zabbix-release-5.4-1.el8.noarch</span><br><span class="line"></span><br><span class="line"># 使用yum remove卸载</span><br><span class="line">yum remove zabbix-web-deps-5.4.8-1.el8.noarch zabbix-agent-5.4.8-1.el8.x86_64 zabbix-web-5.4.8-1.el8.noarch zabbix-web-mysql-5.4.8-1.el8.noarch zabbix-nginx-conf-5.4.8-1.el8.noarch zabbix-sql-scripts-5.4.8-1.el8.noarch zabbix-server-mysql-5.4.8-1.el8.x86_64 zabbix-release-5.4-1.el8.noarch</span><br><span class="line"></span><br><span class="line"># 这里也可以使用rpm -e或者rpm -e --nodeps来卸载</span><br><span class="line"># 普通删除</span><br><span class="line">rpm -e zabbix-(根据实际包名删除)</span><br><span class="line"></span><br><span class="line"># 强力删除，如果上面命令删除不了</span><br><span class="line"> rpm -e --nodeps zabbix-(根据实际包名删除)</span><br><span class="line"> </span><br><span class="line"># 查找zabbix目录删除</span><br><span class="line">find / -name zabbix</span><br></pre></td></tr></table></figure>
+
+<p>配置前端</p>
+<blockquote>
+<p>官方文档：<a href="https://www.zabbix.com/documentation/current/manual/installation/frontend">https://www.zabbix.com/documentation/current/manual/installation/frontend</a></p>
+</blockquote>
+<p>浏览器访问：<a href="http://ip/">http://ip/</a> 或者 http://域名/</p>
+<p>成功访问后可以看到如下页面，这里修改默认语言为中文</p>
+<p><img src="https://cdn.jsdelivr.net/gh/heyonggs/images@master/wp/2021/zabbix/202112131614299.png"></p>
+<p>检查先决条件，确保满足所有软件先决条件：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/heyonggs/images@master/wp/2021/zabbix/202112131616560.png"></p>
+<p>配置数据库连接：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/heyonggs/images@master/wp/2021/zabbix/202112131617622.png"></p>
+<p>输入zabbix服务器信息：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/heyonggs/images@master/wp/2021/zabbix/202112131621540.png"></p>
+<p>设置前端默认时区和主题：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/heyonggs/images@master/wp/2021/zabbix/202112131624546.png"></p>
+<p>最后两项直接通过就行</p>
+<p><img src="https://cdn.jsdelivr.net/gh/heyonggs/images@master/wp/2021/zabbix/202112131626677.png"></p>
+<p>登录：</p>
+<blockquote>
+<p>用户名：Admin</p>
+<p>密码：zabbix</p>
+</blockquote>
+<p><img src="https://cdn.jsdelivr.net/gh/heyonggs/images@master/wp/2021/zabbix/202112131630634.png"></p>
+]]></content>
+      <categories>
+        <category>Zabbix</category>
+      </categories>
+      <tags>
+        <tag>Zabbix</tag>
+      </tags>
+  </entry>
 </search>
