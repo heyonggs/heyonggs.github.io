@@ -5243,6 +5243,46 @@
 <p>密码：zabbix</p>
 </blockquote>
 <p><img src="https://cdn.jsdelivr.net/gh/heyonggs/images@master/wp/2021/zabbix/202112131630634.png"></p>
+<h1 id="配置中文界面">5. 配置中文界面</h1><h2 id="手动安装中文语言包">5.1. 手动安装中文语言包</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">dnf install langpacks-zh_CN.noarch</span><br></pre></td></tr></table></figure>
+
+<p>安装glibc-common实现对语言包的识别:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">dnf install glibc-common</span><br></pre></td></tr></table></figure>
+
+<p>如果已安装过，需要重新安装，用reinstall</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">dnf reinstall glibc-common</span><br></pre></td></tr></table></figure>
+
+<p>检测是否安装成功：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">locale -a | grep zh_CN</span><br></pre></td></tr></table></figure>
+
+<h2 id="解决中文乱码">5.2. 解决中文乱码</h2><p>zabbix默认的字体文件不支持中文，所以中文字符的显示成了乱码；</p>
+<p>在windows的C:\Windows\Fonts目录下复制想要的字体(.ttf)到服务器的/usr/share/zabbix/assets/fonts目录下，注意大写的字体名要改为小写的，</p>
+<p>修改配置文件：</p>
+<p> vim /usr/share/zabbix/include/defines.inc.php</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">define(&#x27;ZBX_GRAPH_FONT_NAME&#x27;,           &#x27;graphfont&#x27;);</span><br><span class="line"></span><br><span class="line">修改为</span><br><span class="line"></span><br><span class="line">define(&#x27;ZBX_GRAPH_FONT_NAME&#x27;,           &#x27;这里写你的字体名称&#x27;);</span><br></pre></td></tr></table></figure>
+
+<p>把graphfont更改为你的字体名称即可，位置在78行。</p>
+<h1 id="安装zabbix-agent">6. 安装zabbix agent</h1><p>agent为centos8系统</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">rpm -Uvh https://repo.zabbix.com/zabbix/5.4/rhel/8/x86_64/zabbix-release-5.4-1.el8.noarch.rpm</span><br><span class="line">dnf clean all</span><br><span class="line">dnf install -y zabbix-agent</span><br></pre></td></tr></table></figure>
+
+<p>agent为centos7系统</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">rpm -Uvh https://repo.zabbix.com/zabbix/5.4/rhel/7/x86_64/zabbix-release-5.4-1.el7.noarch.rpm</span><br><span class="line">yum clean all</span><br><span class="line">yum install -y zabbix-agent</span><br></pre></td></tr></table></figure>
+
+<p>修改配置文件</p>
+<p>vim /etc/zabbix/zabbix_agentd.conf</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Server=127.0.0.1</span><br><span class="line">ServerActive=127.0.0.1</span><br><span class="line">Hostname=Zabbix server</span><br><span class="line"></span><br><span class="line">修改为</span><br><span class="line"></span><br><span class="line">Server=&lt;zbx-server的ip&gt;</span><br><span class="line">ServerActive=&lt;zbx-server的ip&gt;</span><br><span class="line">Hostname=&lt;本机的名字&gt;</span><br></pre></td></tr></table></figure>
+
+<p>启动</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">systemctl restart zabbix-agent</span><br><span class="line">systemctl enable zabbix-agent</span><br></pre></td></tr></table></figure>
+
+<p>启动之后到zabbix server界面创建主机</p>
+<p>配置 - 主机 - 创建主机</p>
+<p><img src="https://cdn.jsdelivr.net/gh/heyonggs/images@master/wp/2021/zabbix/202112131735506.png"></p>
+<p>填写主机信息</p>
+<p><img src="https://cdn.jsdelivr.net/gh/heyonggs/images@master/wp/2021/zabbix/202112131758873.png"></p>
+<p>模板这里选择Templates/Operating systems - Linux by Zabbix agent</p>
+<p><img src="https://cdn.jsdelivr.net/gh/heyonggs/images@master/wp/2021/zabbix/202112131801530.png"></p>
+<p>添加完成后过一会儿即可看到主机可用性中“ZBX”变成绿色，表示与客户端zabbix agent 连接正常，可以获取到agent数据</p>
+<p><img src="https://cdn.jsdelivr.net/gh/heyonggs/images@master/wp/2021/zabbix/202112131805341.png"></p>
 ]]></content>
       <categories>
         <category>Zabbix</category>
