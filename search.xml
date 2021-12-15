@@ -1363,24 +1363,79 @@
 <p>检查您的新磁盘布局。</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ lsblk </span><br><span class="line"> NAME          MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT</span><br><span class="line"> sr0            11:0    1 1024M  0 rom  </span><br><span class="line"> vda           252:0    0   40G  0 disk </span><br><span class="line"> ├─vda1        252:1    0    1G  0 part /boot</span><br><span class="line"> └─vda2        252:2    0   29G  0 part </span><br><span class="line">   ├─rhel-root 253:0    0 26.9G  0 lvm  /</span><br><span class="line">   └─rhel-swap 253:1    0  2.1G  0 lvm  [SWAP]</span><br></pre></td></tr></table></figure>
 
-<p>我的 VM 总磁盘容量现在是 40GB，以前是 30GB。要扩展您的操作系统分区，请参阅以下指南。</p>
+<p>我的 VM 总磁盘容量现在是 40GB，以前是 30GB。扩展虚拟机根磁盘</p>
+<h2 id="安装growpart命令">1.5. 安装growpart命令</h2><p>Ubuntu / Debian安装</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo apt install cloud-guest-utils</span><br></pre></td></tr></table></figure>
+
+<p>CentOS安装</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo yum -y install cloud-utils-growpart</span><br></pre></td></tr></table></figure>
+
+<p>可以通过传递 -h 参数来查看帮助页面</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ growpart -h</span><br><span class="line">growpart disk partition</span><br><span class="line">   rewrite partition table so that partition takes up all the space it can</span><br><span class="line">   options:</span><br><span class="line">    -h | --help       print Usage and exit</span><br><span class="line">         --fudge F    if part could be resized, but change would be</span><br><span class="line">                      less than &#x27;F&#x27; bytes, do not resize (default: 1048576)</span><br><span class="line">    -N | --dry-run    only report what would be done, show new &#x27;sfdisk -d&#x27;</span><br><span class="line">    -v | --verbose    increase verbosity / debug</span><br><span class="line">    -u | --update  R  update the the kernel partition table info after growing</span><br><span class="line">                      this requires kernel support and &#x27;partx --update&#x27;</span><br><span class="line">                      R is one of:</span><br><span class="line">                       - &#x27;auto&#x27;  : [default] update partition if possible</span><br><span class="line">                       - &#x27;force&#x27; : try despite sanity checks (fail on failure)</span><br><span class="line">                       - &#x27;off&#x27;   : do not attempt</span><br><span class="line">                       - &#x27;on&#x27;    : fail if sanity checks indicate no support</span><br><span class="line"></span><br><span class="line">   Example:</span><br><span class="line">    - growpart /dev/sda 1</span><br><span class="line">      Resize partition 1 on /dev/sda</span><br></pre></td></tr></table></figure>
+
+<p>现在使用growpart 扩展您的分区。在此示例中，我们将扩展磁盘 /dev/vda 中的分区 2。用正确的值替换 2 和 /dev/vda。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ sudo growpart /dev/vda 2</span><br><span class="line">CHANGED: partition=2 start=2099200 old: size=18872320 end=20971520 new: size=60815327,end=62914527</span><br></pre></td></tr></table></figure>
+
+<p>确认更改是否成功</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ lsblk </span><br><span class="line"> NAME          MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT</span><br><span class="line"> sr0            11:0    1 1024M  0 rom  </span><br><span class="line"> vda           252:0    0   40G  0 disk </span><br><span class="line"> ├─vda1        252:1    0    1G  0 part /boot</span><br><span class="line"> └─vda2        252:2    0   39G  0 part </span><br><span class="line">   ├─rhel-root 253:0    0 26.9G  0 lvm  /</span><br><span class="line">   └─rhel-swap 253:1    0  2.1G  0 lvm  [SWAP]</span><br></pre></td></tr></table></figure>
+
+<h2 id="调整根逻辑卷的大小以占用所有空间">1.6. 调整根逻辑卷的大小以占用所有空间</h2><p>调整物理卷大小</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ sudo pvresize /dev/vda2</span><br><span class="line">  Physical volume &quot;/dev/vda2&quot; changed</span><br><span class="line">  1 physical volume(s) resized or updated / 0 physical volume(s) not resized</span><br><span class="line"></span><br><span class="line">$ sudo pvs</span><br><span class="line">  PV         VG   Fmt  Attr PSize   PFree </span><br><span class="line">  /dev/vda2  rhel lvm2 a--  &lt;39.00g 10.00g</span><br></pre></td></tr></table></figure>
+
+<p>检查配置的卷组的大小</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ sudo vgs</span><br><span class="line">   VG   #PV #LV #SN Attr   VSize   VFree </span><br><span class="line">   rhel   1   2   0 wz--n- &lt;39.00g 10.00g</span><br></pre></td></tr></table></figure>
+
+<p>然后使用扩展卷组调整根文件系统使用的逻辑卷的大小：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo lvextend -r -l +100%FREE /dev/name-of-volume-group/root</span><br></pre></td></tr></table></figure>
+
+<p>这将扩展逻辑卷以使用卷组中的所有可用容量。使用 + 符号将值添加到逻辑卷的实际大小。</p>
+<p>使用的命令选项：</p>
+<ul>
+<li><strong>-l</strong> – 以逻辑盘区为单位扩展或设置逻辑卷大小</li>
+<li><strong>-r</strong> – 与逻辑卷一起调整底层文件系统的大小</li>
+</ul>
+<p>这是我的安装文件系统扩展的示例：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ df -hT | grep mapper</span><br><span class="line"> /dev/mapper/rhel-root xfs        27G  1.9G   26G   8% /</span><br><span class="line"></span><br><span class="line">$ sudo lvextend -r -l +100%FREE /dev/mapper/rhel-root</span><br><span class="line">Size of logical volume rhel/root changed from &lt;26.93 GiB (6893 extents) to &lt;36.93 GiB (9453 extents).</span><br><span class="line">Logical volume rhel/root successfully resized.</span><br></pre></td></tr></table></figure>
+
+<p>如果您更喜欢手动设置要扩展的大小，请使用命令选项：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">-L, --size [+]LogicalVolumeSize[bBsSkKmMgGtTpPeE]</span><br></pre></td></tr></table></figure>
+
+<p>更多选项如下:</p>
+<blockquote>
+<ul>
+<li><strong>M</strong> for megabytes</li>
+<li><strong>G</strong> for gigabytes</li>
+<li><strong>T</strong> for terabytes</li>
+<li><strong>P</strong> for petabytes</li>
+<li><strong>E</strong> for exabytes</li>
+</ul>
+</blockquote>
+<p>如果没有 + 符号，则该值被视为绝对值。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># Add 20 gigabytes to the current logical volume size</span><br><span class="line">$ sudo lvextend -r -L +20G /dev/name-of-volume-group/root</span><br></pre></td></tr></table></figure>
+
+<h2 id="更新文件系统上的更改（如果您没有在第-3-步中使用-r-选项）">1.7. 更新文件系统上的更改（如果您没有在第 3 步中使用 -r 选项）</h2><p>您的根文件系统仍将显示旧大小。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ df -hT | grep mapper</span><br><span class="line"> /dev/mapper/rhel-root xfs        27G  1.9G   26G   8% /</span><br></pre></td></tr></table></figure>
+
+<p>让我们让文件系统报告实际大小，包括扩展。</p>
+<p>对于 ext4 文件系统</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo resize2fs /dev/name-of-volume-group/root</span><br></pre></td></tr></table></figure>
+
+<p>对于 xfs 文件系统</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ sudo xfs_growfs /</span><br><span class="line"> meta-data=/dev/mapper/rhel-root  isize=512    agcount=4, agsize=1764608 blks</span><br><span class="line">          =                       sectsz=512   attr=2, projid32bit=1</span><br><span class="line">          =                       crc=1        finobt=1, sparse=1, rmapbt=0</span><br><span class="line">          =                       reflink=1</span><br><span class="line"> data     =                       bsize=4096   blocks=7058432, imaxpct=25</span><br><span class="line">          =                       sunit=0      swidth=0 blks</span><br><span class="line"> naming   =version 2              bsize=4096   ascii-ci=0, ftype=1</span><br><span class="line"> log      =internal log           bsize=4096   blocks=3446, version=2</span><br><span class="line">          =                       sectsz=512   sunit=0 blks, lazy-count=1</span><br><span class="line"> realtime =none                   extsz=4096   blocks=0, rtextents=0</span><br><span class="line"> data blocks changed from 7058432 to 9679872</span><br></pre></td></tr></table></figure>
+
+<p>参考：</p>
 <ul>
 <li><a href="https://computingforgeeks.com/extending-root-filesystem-using-lvm-linux/">How to extend root filesystem using LVM in Linux</a></li>
 <li><a href="https://computingforgeeks.com/resize-ext-and-xfs-root-partition-without-lvm/">How to resize an ext2/3/4 and XFS root partition without LVM</a></li>
 </ul>
-<h3 id="Recommended-Video-Courses-to-Learn-Linux-System-Administration">1.4.1. Recommended Video Courses to Learn Linux System Administration:</h3><ul>
-<li><a href="https://click.linksynergy.com/deeplink?id=2sb89XJC/EQ&mid=39197&murl=https://www.udemy.com/course/linux-mastery/">Linux Mastery: Master the Linux Command Line in 11.5 Hours</a></li>
-<li><a href="https://click.linksynergy.com/deeplink?id=2sb89XJC/EQ&mid=39197&murl=https://www.udemy.com/course/complete-linux-training-course-to-get-your-dream-it-job/">Complete Linux Training Course to Get Your Dream IT Job 2021</a></li>
-<li><a href="https://click.linksynergy.com/deeplink?id=2sb89XJC/EQ&mid=39197&murl=https://www.udemy.com/course/learn-linux-in-5-days/">Learn Linux in 5 Days and Level Up Your Career</a></li>
-<li><a href="https://click.linksynergy.com/deeplink?id=2sb89XJC/EQ&mid=39197&murl=https://www.udemy.com/course/linux-administration-bootcamp/">Linux Administration Bootcamp: Go from Beginner to Advanced</a></li>
-<li><a href="https://click.linksynergy.com/deeplink?id=2sb89XJC/EQ&mid=39197&murl=https://www.udemy.com/course/linux-bash-shell-scripting-through-real-life-examples/">Complete Linux Bash Shell Scripting with Real Life Examples</a></li>
-<li><a href="https://click.linksynergy.com/deeplink?id=2sb89XJC/EQ&mid=39197&murl=https://www.udemy.com/course/linux-shell-scripting-projects/">Linux Shell Scripting: A Project-Based Approach to Learning</a></li>
-</ul>
 <p>Other guides:</p>
 <ul>
-<li><a href="https://computingforgeeks.com/how-to-extend-aws-ec2-instance-boot-file-system-without-rebooting/">How to extend EBS boot disk on AWS without an instance reboot</a></li>
-<li><a href="https://computingforgeeks.com/how-to-create-disk-partitions-in-windows-using-diskpart-command/">How to create disk partitions in Windows using diskpart command</a></li>
-<li>[Working with qemu-img in Linux](</li>
+<li><p><a href="https://computingforgeeks.com/how-to-extend-aws-ec2-instance-boot-file-system-without-rebooting/">How to extend EBS boot disk on AWS without an instance reboot</a></p>
+</li>
+<li><p><a href="https://computingforgeeks.com/how-to-create-disk-partitions-in-windows-using-diskpart-command/">How to create disk partitions in Windows using diskpart command</a></p>
+</li>
+<li><p><a href="https://computingforgeeks.com/working-with-qemu-img/">Working with qemu-img in Linux</a></p>
+</li>
 </ul>
 ]]></content>
       <categories>
@@ -1500,7 +1555,27 @@
 <p>默认账户</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">admin/admin </span><br></pre></td></tr></table></figure>
 
-<h2 id="汉化">1.5. 汉化</h2><p>下载汉化包</p>
+<h2 id="配置开机启动">1.5. 配置开机启动</h2><p>编写开机启动脚本</p>
+<p>vim /etc/systemd/system/sonarqube.service</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[Unit]</span><br><span class="line">Description=SonarQube service</span><br><span class="line">After=syslog.target network.target</span><br><span class="line"></span><br><span class="line">[Service]</span><br><span class="line">Type=forking</span><br><span class="line">ExecStart=/opt/sonarqube/bin/linux-x86-64/sonar.sh start</span><br><span class="line">ExecStop=/opt/sonarqube/bin/linux-x86-64/sonar.sh stop</span><br><span class="line">User=sonar_user</span><br><span class="line">Group=sonar_user</span><br><span class="line">Restart=always</span><br><span class="line">LimitNOFILE=65536</span><br><span class="line">LimitNPROC=10240</span><br><span class="line"></span><br><span class="line">[Install]</span><br><span class="line">WantedBy=multi-user.target</span><br></pre></td></tr></table></figure>
+
+<p>加入开机启动</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">systemctl enable sonarqube.service</span><br></pre></td></tr></table></figure>
+
+<p>启动</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">systemctl start sonarqube.service</span><br></pre></td></tr></table></figure>
+
+<p><strong>报错解决</strong></p>
+<p>报错信息如下</p>
+<p>tail -f sonar/logs/sonar.log</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">--&gt; Wrapper Started as Daemon</span><br><span class="line">Launching a JVM...</span><br><span class="line">Unable to start JVM: No such file or directory (2)</span><br><span class="line">JVM exited while loading the application.</span><br><span class="line">JVM Restarts disabled.  Shutting down.</span><br><span class="line">&lt;-- Wrapper Stopped</span><br></pre></td></tr></table></figure>
+
+<p>这是因为JVM参数没有配置</p>
+<p>sonar/conf/wrapper.conf 中配置</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">wrapper.java.command=/usr/java/jdk-11.0.5+10/bin/java</span><br></pre></td></tr></table></figure>
+
+<p>配置完成再次重启即可</p>
+<h2 id="汉化">1.6. 汉化</h2><p>下载汉化包</p>
 <p><a href="https://github.com/SonarQubeCommunity/sonar-l10n-zh/releases">https://github.com/SonarQubeCommunity/sonar-l10n-zh/releases</a></p>
 <p>把jar包放在：/data/aimm/sonar/extensions/plugins</p>
 <p>然后重启</p>
@@ -5262,7 +5337,7 @@
 
 <p>把graphfont更改为你的字体名称即可，位置在78行。</p>
 <h1 id="安装zabbix-agent">6. 安装zabbix agent</h1><p>agent为centos8系统</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">rpm -Uvh https://repo.zabbix.com/zabbix/5.4/rhel/8/x86_64/zabbix-release-5.4-1.el8.noarch.rpm</span><br><span class="line">dnf clean all</span><br><span class="line">dnf install -y zabbix-agent</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">rpm -Uvh https://repo.zabbix.com/zabbix/5.4/rhel/8/x86_64/zabbix-release-5.4-1.el8.noarch.rpm</span><br><span class="line">dnf clean all</span><br><span class="line">dnf install -y zabbix-agent	</span><br></pre></td></tr></table></figure>
 
 <p>agent为centos7系统</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">rpm -Uvh https://repo.zabbix.com/zabbix/5.4/rhel/7/x86_64/zabbix-release-5.4-1.el7.noarch.rpm</span><br><span class="line">yum clean all</span><br><span class="line">yum install -y zabbix-agent</span><br></pre></td></tr></table></figure>
@@ -5283,6 +5358,29 @@
 <p><img src="https://cdn.jsdelivr.net/gh/heyonggs/images@master/wp/2021/zabbix/202112131801530.png"></p>
 <p>添加完成后过一会儿即可看到主机可用性中“ZBX”变成绿色，表示与客户端zabbix agent 连接正常，可以获取到agent数据</p>
 <p><img src="https://cdn.jsdelivr.net/gh/heyonggs/images@master/wp/2021/zabbix/202112131805341.png"></p>
+<h1 id="监控MySQL8-0">7. 监控MySQL8.0</h1><p>前提在MySQL服务器上安装好zabbix agent</p>
+<p>在MySQL服务器上拷贝Zabbix监控MySQL的模板文件并授权</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">cp /usr/share/doc/zabbix-agent-5.4.8/userparameter_mysql.conf /etc/zabbix/zabbix_agentd.d/</span><br><span class="line">chown -R zabbix:zabbix /etc/zabbix/zabbix_agentd.d/userparameter_mysql.conf</span><br></pre></td></tr></table></figure>
+
+<p>模板文件内容</p>
+<p>cat /etc/zabbix/zabbix_agentd.d/userparameter_mysql.conf</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#template_db_mysql.conf created by Zabbix for &quot;Template DB MySQL&quot; and Zabbix 4.2</span><br><span class="line">#For OS Linux: You need create .my.cnf in zabbix-agent home directory (/var/lib/zabbix by default) </span><br><span class="line">#For OS Windows: You need add PATH to mysql and mysqladmin and create my.cnf in %WINDIR%\my.cnf,C:\my.cnf,BASEDIR\my.cnf https://dev.mysql.com/doc/refman/5.7/en/option-files.html</span><br><span class="line">#The file must have three strings:</span><br><span class="line">#[client]</span><br><span class="line">#user=zbx_monitor</span><br><span class="line">#password=&lt;password&gt;</span><br><span class="line">#</span><br><span class="line">UserParameter=mysql.ping[*], mysqladmin -h&quot;$1&quot; -P&quot;$2&quot; ping</span><br><span class="line">UserParameter=mysql.get_status_variables[*], mysql -h&quot;$1&quot; -P&quot;$2&quot; -sNX -e &quot;show global status&quot;</span><br><span class="line">UserParameter=mysql.version[*], mysqladmin -s -h&quot;$1&quot; -P&quot;$2&quot; version</span><br><span class="line">UserParameter=mysql.db.discovery[*], mysql -h&quot;$1&quot; -P&quot;$2&quot; -sN -e &quot;show databases&quot;</span><br><span class="line">UserParameter=mysql.dbsize[*], mysql -h&quot;$1&quot; -P&quot;$2&quot; -sN -e &quot;SELECT SUM(DATA_LENGTH + INDEX_LENGTH) FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA=&#x27;$3&#x27;&quot;</span><br><span class="line">UserParameter=mysql.replication.discovery[*], mysql -h&quot;$1&quot; -P&quot;$2&quot; -sNX -e &quot;show slave status&quot;</span><br><span class="line">UserParameter=mysql.slave_status[*], mysql -h&quot;$1&quot; -P&quot;$2&quot; -sNX -e &quot;show slave status&quot;</span><br></pre></td></tr></table></figure>
+
+<p>由配置文件可以知道，在Linux系统中需要在zabbix-agent home目录中创建.my.cnf(默认情况下为/var/lib/zabbix)，并且文件必须以下有三个字符串：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[client]</span><br><span class="line">user=zbx_monitor</span><br><span class="line">password=&lt;password&gt;</span><br></pre></td></tr></table></figure>
+
+<p>创建监控需要的用户并赋权:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">mysql -uroot -p&#x27;password&#x27;</span><br><span class="line"></span><br><span class="line"># 创建监控需要的用户并赋权</span><br><span class="line">create user zabbix@&#x27;%&#x27; identified by &#x27;&#x27;;</span><br><span class="line">grant all privileges on . to zabbixr@&#x27;%&#x27;;</span><br><span class="line"></span><br><span class="line"># 修改mysql密码加密方式为mysql_native_password</span><br><span class="line">alter user zabbix@&#x27;%&#x27; identified with mysql_native_password by &#x27;&#x27;;</span><br><span class="line"></span><br><span class="line"># 刷新权限</span><br><span class="line">flush privileges;</span><br><span class="line">exit</span><br></pre></td></tr></table></figure>
+
+<p>在/var/lib/zabbix目录下创建 <code>.my.cnf</code> 文件</p>
+<p>mkdir /var/lib/zabbix</p>
+<p>vim /var/lib/zabbix/.my.cnf</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[client]</span><br><span class="line">user=&#x27;zabbix&#x27;</span><br><span class="line">password=&#x27;password&#x27; #password为其密码</span><br></pre></td></tr></table></figure>
+
+<p>重启zabbix agent服务</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">systemctl restart zabbix-agent</span><br></pre></td></tr></table></figure>
+
+<p>在zabbix的web界面中添加 Template DB MySQL.</p>
 ]]></content>
       <categories>
         <category>Zabbix</category>

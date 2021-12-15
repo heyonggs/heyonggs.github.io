@@ -29,7 +29,7 @@
 <meta property="og:site_name" content="何宇泽">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2018-04-11T05:59:16.000Z">
-<meta property="article:modified_time" content="2021-12-07T03:47:23.381Z">
+<meta property="article:modified_time" content="2021-12-15T04:02:53.516Z">
 <meta property="article:author" content="何宇泽">
 <meta property="article:tag" content="LVM">
 <meta property="article:tag" content="磁盘">
@@ -239,7 +239,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-12-07 11:47:23" itemprop="dateModified" datetime="2021-12-07T11:47:23+08:00">2021-12-07</time>
+                <time title="修改时间：2021-12-15 12:02:53" itemprop="dateModified" datetime="2021-12-15T12:02:53+08:00">2021-12-15</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -257,14 +257,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>4.1k</span>
+              <span>6.5k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>4 分钟</span>
+              <span>6 分钟</span>
             </span>
 
         </div>
@@ -321,24 +321,79 @@
 <p>检查您的新磁盘布局。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$ lsblk </span><br><span class="line"> NAME          MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT</span><br><span class="line"> sr0            11:0    1 1024M  0 rom  </span><br><span class="line"> vda           252:0    0   40G  0 disk </span><br><span class="line"> ├─vda1        252:1    0    1G  0 part /boot</span><br><span class="line"> └─vda2        252:2    0   29G  0 part </span><br><span class="line">   ├─rhel-root 253:0    0 26.9G  0 lvm  /</span><br><span class="line">   └─rhel-swap 253:1    0  2.1G  0 lvm  [SWAP]</span><br></pre></td></tr></table></figure>
 
-<p>我的 VM 总磁盘容量现在是 40GB，以前是 30GB。要扩展您的操作系统分区，请参阅以下指南。</p>
+<p>我的 VM 总磁盘容量现在是 40GB，以前是 30GB。扩展虚拟机根磁盘</p>
+<h2 id="安装growpart命令">1.5. 安装growpart命令</h2><p>Ubuntu / Debian安装</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install cloud-guest-utils</span><br></pre></td></tr></table></figure>
+
+<p>CentOS安装</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo yum -y install cloud-utils-growpart</span><br></pre></td></tr></table></figure>
+
+<p>可以通过传递 -h 参数来查看帮助页面</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">$ growpart -h</span><br><span class="line">growpart disk partition</span><br><span class="line">   rewrite partition table so that partition takes up all the space it can</span><br><span class="line">   options:</span><br><span class="line">    -h | --help       print Usage and exit</span><br><span class="line">         --fudge F    if part could be resized, but change would be</span><br><span class="line">                      less than &#x27;F&#x27; bytes, do not resize (default: 1048576)</span><br><span class="line">    -N | --dry-run    only report what would be done, show new &#x27;sfdisk -d&#x27;</span><br><span class="line">    -v | --verbose    increase verbosity / debug</span><br><span class="line">    -u | --update  R  update the the kernel partition table info after growing</span><br><span class="line">                      this requires kernel support and &#x27;partx --update&#x27;</span><br><span class="line">                      R is one of:</span><br><span class="line">                       - &#x27;auto&#x27;  : [default] update partition if possible</span><br><span class="line">                       - &#x27;force&#x27; : try despite sanity checks (fail on failure)</span><br><span class="line">                       - &#x27;off&#x27;   : do not attempt</span><br><span class="line">                       - &#x27;on&#x27;    : fail if sanity checks indicate no support</span><br><span class="line"></span><br><span class="line">   Example:</span><br><span class="line">    - growpart /dev/sda 1</span><br><span class="line">      Resize partition 1 on /dev/sda</span><br></pre></td></tr></table></figure>
+
+<p>现在使用growpart 扩展您的分区。在此示例中，我们将扩展磁盘 /dev/vda 中的分区 2。用正确的值替换 2 和 /dev/vda。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ sudo growpart /dev/vda 2</span><br><span class="line">CHANGED: partition=2 start=2099200 old: size=18872320 end=20971520 new: size=60815327,end=62914527</span><br></pre></td></tr></table></figure>
+
+<p>确认更改是否成功</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$ lsblk </span><br><span class="line"> NAME          MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT</span><br><span class="line"> sr0            11:0    1 1024M  0 rom  </span><br><span class="line"> vda           252:0    0   40G  0 disk </span><br><span class="line"> ├─vda1        252:1    0    1G  0 part /boot</span><br><span class="line"> └─vda2        252:2    0   39G  0 part </span><br><span class="line">   ├─rhel-root 253:0    0 26.9G  0 lvm  /</span><br><span class="line">   └─rhel-swap 253:1    0  2.1G  0 lvm  [SWAP]</span><br></pre></td></tr></table></figure>
+
+<h2 id="调整根逻辑卷的大小以占用所有空间">1.6. 调整根逻辑卷的大小以占用所有空间</h2><p>调整物理卷大小</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ sudo pvresize /dev/vda2</span><br><span class="line">  Physical volume &quot;/dev/vda2&quot; changed</span><br><span class="line">  1 physical volume(s) resized or updated / 0 physical volume(s) not resized</span><br><span class="line"></span><br><span class="line">$ sudo pvs</span><br><span class="line">  PV         VG   Fmt  Attr PSize   PFree </span><br><span class="line">  /dev/vda2  rhel lvm2 a--  &lt;39.00g 10.00g</span><br></pre></td></tr></table></figure>
+
+<p>检查配置的卷组的大小</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ sudo vgs</span><br><span class="line">   VG   #PV #LV #SN Attr   VSize   VFree </span><br><span class="line">   rhel   1   2   0 wz--n- &lt;39.00g 10.00g</span><br></pre></td></tr></table></figure>
+
+<p>然后使用扩展卷组调整根文件系统使用的逻辑卷的大小：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo lvextend -r -l +100%FREE /dev/name-of-volume-group/root</span><br></pre></td></tr></table></figure>
+
+<p>这将扩展逻辑卷以使用卷组中的所有可用容量。使用 + 符号将值添加到逻辑卷的实际大小。</p>
+<p>使用的命令选项：</p>
+<ul>
+<li><strong>-l</strong> – 以逻辑盘区为单位扩展或设置逻辑卷大小</li>
+<li><strong>-r</strong> – 与逻辑卷一起调整底层文件系统的大小</li>
+</ul>
+<p>这是我的安装文件系统扩展的示例：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ df -hT | grep mapper</span><br><span class="line"> /dev/mapper/rhel-root xfs        27G  1.9G   26G   8% /</span><br><span class="line"></span><br><span class="line">$ sudo lvextend -r -l +100%FREE /dev/mapper/rhel-root</span><br><span class="line">Size of logical volume rhel/root changed from &lt;26.93 GiB (6893 extents) to &lt;36.93 GiB (9453 extents).</span><br><span class="line">Logical volume rhel/root successfully resized.</span><br></pre></td></tr></table></figure>
+
+<p>如果您更喜欢手动设置要扩展的大小，请使用命令选项：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-L, --size [+]LogicalVolumeSize[bBsSkKmMgGtTpPeE]</span><br></pre></td></tr></table></figure>
+
+<p>更多选项如下:</p>
+<blockquote>
+<ul>
+<li><strong>M</strong> for megabytes</li>
+<li><strong>G</strong> for gigabytes</li>
+<li><strong>T</strong> for terabytes</li>
+<li><strong>P</strong> for petabytes</li>
+<li><strong>E</strong> for exabytes</li>
+</ul>
+</blockquote>
+<p>如果没有 + 符号，则该值被视为绝对值。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># Add 20 gigabytes to the current logical volume size</span><br><span class="line">$ sudo lvextend -r -L +20G /dev/name-of-volume-group/root</span><br></pre></td></tr></table></figure>
+
+<h2 id="更新文件系统上的更改（如果您没有在第-3-步中使用-r-选项）">1.7. 更新文件系统上的更改（如果您没有在第 3 步中使用 -r 选项）</h2><p>您的根文件系统仍将显示旧大小。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ df -hT | grep mapper</span><br><span class="line"> /dev/mapper/rhel-root xfs        27G  1.9G   26G   8% /</span><br></pre></td></tr></table></figure>
+
+<p>让我们让文件系统报告实际大小，包括扩展。</p>
+<p>对于 ext4 文件系统</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo resize2fs /dev/name-of-volume-group/root</span><br></pre></td></tr></table></figure>
+
+<p>对于 xfs 文件系统</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">$ sudo xfs_growfs /</span><br><span class="line"> meta-data=/dev/mapper/rhel-root  isize=512    agcount=4, agsize=1764608 blks</span><br><span class="line">          =                       sectsz=512   attr=2, projid32bit=1</span><br><span class="line">          =                       crc=1        finobt=1, sparse=1, rmapbt=0</span><br><span class="line">          =                       reflink=1</span><br><span class="line"> data     =                       bsize=4096   blocks=7058432, imaxpct=25</span><br><span class="line">          =                       sunit=0      swidth=0 blks</span><br><span class="line"> naming   =version 2              bsize=4096   ascii-ci=0, ftype=1</span><br><span class="line"> log      =internal log           bsize=4096   blocks=3446, version=2</span><br><span class="line">          =                       sectsz=512   sunit=0 blks, lazy-count=1</span><br><span class="line"> realtime =none                   extsz=4096   blocks=0, rtextents=0</span><br><span class="line"> data blocks changed from 7058432 to 9679872</span><br></pre></td></tr></table></figure>
+
+<p>参考：</p>
 <ul>
 <li><a target="_blank" rel="noopener" href="https://computingforgeeks.com/extending-root-filesystem-using-lvm-linux/">How to extend root filesystem using LVM in Linux</a></li>
 <li><a target="_blank" rel="noopener" href="https://computingforgeeks.com/resize-ext-and-xfs-root-partition-without-lvm/">How to resize an ext2/3/4 and XFS root partition without LVM</a></li>
 </ul>
-<h3 id="Recommended-Video-Courses-to-Learn-Linux-System-Administration">1.4.1. Recommended Video Courses to Learn Linux System Administration:</h3><ul>
-<li><a target="_blank" rel="noopener" href="https://click.linksynergy.com/deeplink?id=2sb89XJC/EQ&mid=39197&murl=https://www.udemy.com/course/linux-mastery/">Linux Mastery: Master the Linux Command Line in 11.5 Hours</a></li>
-<li><a target="_blank" rel="noopener" href="https://click.linksynergy.com/deeplink?id=2sb89XJC/EQ&mid=39197&murl=https://www.udemy.com/course/complete-linux-training-course-to-get-your-dream-it-job/">Complete Linux Training Course to Get Your Dream IT Job 2021</a></li>
-<li><a target="_blank" rel="noopener" href="https://click.linksynergy.com/deeplink?id=2sb89XJC/EQ&mid=39197&murl=https://www.udemy.com/course/learn-linux-in-5-days/">Learn Linux in 5 Days and Level Up Your Career</a></li>
-<li><a target="_blank" rel="noopener" href="https://click.linksynergy.com/deeplink?id=2sb89XJC/EQ&mid=39197&murl=https://www.udemy.com/course/linux-administration-bootcamp/">Linux Administration Bootcamp: Go from Beginner to Advanced</a></li>
-<li><a target="_blank" rel="noopener" href="https://click.linksynergy.com/deeplink?id=2sb89XJC/EQ&mid=39197&murl=https://www.udemy.com/course/linux-bash-shell-scripting-through-real-life-examples/">Complete Linux Bash Shell Scripting with Real Life Examples</a></li>
-<li><a target="_blank" rel="noopener" href="https://click.linksynergy.com/deeplink?id=2sb89XJC/EQ&mid=39197&murl=https://www.udemy.com/course/linux-shell-scripting-projects/">Linux Shell Scripting: A Project-Based Approach to Learning</a></li>
-</ul>
 <p>Other guides:</p>
 <ul>
-<li><a target="_blank" rel="noopener" href="https://computingforgeeks.com/how-to-extend-aws-ec2-instance-boot-file-system-without-rebooting/">How to extend EBS boot disk on AWS without an instance reboot</a></li>
-<li><a target="_blank" rel="noopener" href="https://computingforgeeks.com/how-to-create-disk-partitions-in-windows-using-diskpart-command/">How to create disk partitions in Windows using diskpart command</a></li>
-<li>[Working with qemu-img in Linux](</li>
+<li><p><a target="_blank" rel="noopener" href="https://computingforgeeks.com/how-to-extend-aws-ec2-instance-boot-file-system-without-rebooting/">How to extend EBS boot disk on AWS without an instance reboot</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://computingforgeeks.com/how-to-create-disk-partitions-in-windows-using-diskpart-command/">How to create disk partitions in Windows using diskpart command</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://computingforgeeks.com/working-with-qemu-img/">Working with qemu-img in Linux</a></p>
+</li>
 </ul>
 
     </div>
@@ -463,7 +518,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#LVM%E6%89%A9%E5%AE%B9%E6%A0%B9%E7%9B%AE%E5%BD%95%EF%BC%88%E4%B8%8D%E7%94%A8%E6%96%B0%E6%B7%BB%E5%8A%A0%E7%A3%81%E7%9B%98%EF%BC%89"><span class="nav-text">1. LVM扩容根目录（不用新添加磁盘）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B3%E9%97%AD-KVM-%E4%B8%8A%E7%9A%84%E8%99%9A%E6%8B%9F%E6%9C%BA"><span class="nav-text">1.1. 关闭 KVM 上的虚拟机</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%89%A9%E5%B1%95%E6%82%A8%E7%9A%84-KVM-%E6%9D%A5%E5%AE%BE%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%A3%81%E7%9B%98"><span class="nav-text">1.2. 扩展您的 KVM 来宾操作系统磁盘</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%89%A9%E5%B1%95%E6%9D%A5%E5%AE%BE-VM-%E7%A3%81%E7%9B%98"><span class="nav-text">1.3. 扩展来宾 VM 磁盘</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A2%9E%E5%8A%A0%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%88%86%E5%8C%BA"><span class="nav-text">1.4. 增加虚拟机分区</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Recommended-Video-Courses-to-Learn-Linux-System-Administration"><span class="nav-text">1.4.1. Recommended Video Courses to Learn Linux System Administration:</span></a></li></ol></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#LVM%E6%89%A9%E5%AE%B9%E6%A0%B9%E7%9B%AE%E5%BD%95%EF%BC%88%E4%B8%8D%E7%94%A8%E6%96%B0%E6%B7%BB%E5%8A%A0%E7%A3%81%E7%9B%98%EF%BC%89"><span class="nav-text">1. LVM扩容根目录（不用新添加磁盘）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B3%E9%97%AD-KVM-%E4%B8%8A%E7%9A%84%E8%99%9A%E6%8B%9F%E6%9C%BA"><span class="nav-text">1.1. 关闭 KVM 上的虚拟机</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%89%A9%E5%B1%95%E6%82%A8%E7%9A%84-KVM-%E6%9D%A5%E5%AE%BE%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%A3%81%E7%9B%98"><span class="nav-text">1.2. 扩展您的 KVM 来宾操作系统磁盘</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%89%A9%E5%B1%95%E6%9D%A5%E5%AE%BE-VM-%E7%A3%81%E7%9B%98"><span class="nav-text">1.3. 扩展来宾 VM 磁盘</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A2%9E%E5%8A%A0%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%88%86%E5%8C%BA"><span class="nav-text">1.4. 增加虚拟机分区</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85growpart%E5%91%BD%E4%BB%A4"><span class="nav-text">1.5. 安装growpart命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B0%83%E6%95%B4%E6%A0%B9%E9%80%BB%E8%BE%91%E5%8D%B7%E7%9A%84%E5%A4%A7%E5%B0%8F%E4%BB%A5%E5%8D%A0%E7%94%A8%E6%89%80%E6%9C%89%E7%A9%BA%E9%97%B4"><span class="nav-text">1.6. 调整根逻辑卷的大小以占用所有空间</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9B%B4%E6%96%B0%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%E4%B8%8A%E7%9A%84%E6%9B%B4%E6%94%B9%EF%BC%88%E5%A6%82%E6%9E%9C%E6%82%A8%E6%B2%A1%E6%9C%89%E5%9C%A8%E7%AC%AC-3-%E6%AD%A5%E4%B8%AD%E4%BD%BF%E7%94%A8-r-%E9%80%89%E9%A1%B9%EF%BC%89"><span class="nav-text">1.7. 更新文件系统上的更改（如果您没有在第 3 步中使用 -r 选项）</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -820,12 +875,12 @@ if(canvas.getContext){
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">348k</span>
+    <span title="站点总字数">353k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">5:16</span>
+    <span title="站点阅读时长">5:21</span>
 </div>
   <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">京ICP备19003190号-2 </a>
       <img src="https://cdn.jsdelivr.net/gh/heyonggs/images@master/wp/2021/beian/202110221040632.png" style="display: inline-block;"><a href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=11010502047382" rel="noopener" target="_blank">京公网安备 11010502047382号 </a>
