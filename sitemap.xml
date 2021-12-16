@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://www.kubelet.cn/p/31017.html</loc>
+    
+    <lastmod>2021-12-16</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://www.kubelet.cn/p/12102.html</loc>
     
     <lastmod>2021-12-15</lastmod>
@@ -459,6 +466,13 @@
   </url>
   
   <url>
+    <loc>https://www.kubelet.cn/tags/%E5%B7%A5%E5%85%B7/</loc>
+    <lastmod>2021-12-16</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://www.kubelet.cn/tags/%E7%BD%91%E7%BB%9C/</loc>
     <lastmod>2021-12-16</lastmod>
     <changefreq>daily</changefreq>
@@ -474,13 +488,6 @@
   
   <url>
     <loc>https://www.kubelet.cn/tags/vnstat/</loc>
-    <lastmod>2021-12-16</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.kubelet.cn/tags/%E5%B7%A5%E5%85%B7/</loc>
     <lastmod>2021-12-16</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -515,7 +522,7 @@
   </url>
   
   <url>
-    <loc>https://www.kubelet.cn/tags/Superset/</loc>
+    <loc>https://www.kubelet.cn/tags/Zabbix/</loc>
     <lastmod>2021-12-16</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -543,28 +550,7 @@
   </url>
   
   <url>
-    <loc>https://www.kubelet.cn/tags/Zabbix/</loc>
-    <lastmod>2021-12-16</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.kubelet.cn/tags/k8s/</loc>
-    <lastmod>2021-12-16</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.kubelet.cn/tags/Kubernetes/</loc>
-    <lastmod>2021-12-16</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.kubelet.cn/tags/helm/</loc>
+    <loc>https://www.kubelet.cn/tags/Superset/</loc>
     <lastmod>2021-12-16</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -592,13 +578,6 @@
   </url>
   
   <url>
-    <loc>https://www.kubelet.cn/tags/Redis/</loc>
-    <lastmod>2021-12-16</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://www.kubelet.cn/tags/LDAP/</loc>
     <lastmod>2021-12-16</lastmod>
     <changefreq>daily</changefreq>
@@ -607,6 +586,34 @@
   
   <url>
     <loc>https://www.kubelet.cn/tags/OpenLDAP/</loc>
+    <lastmod>2021-12-16</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.kubelet.cn/tags/k8s/</loc>
+    <lastmod>2021-12-16</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.kubelet.cn/tags/Kubernetes/</loc>
+    <lastmod>2021-12-16</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.kubelet.cn/tags/helm/</loc>
+    <lastmod>2021-12-16</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.kubelet.cn/tags/Redis/</loc>
     <lastmod>2021-12-16</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -642,6 +649,20 @@
   
   <url>
     <loc>https://www.kubelet.cn/tags/Next/</loc>
+    <lastmod>2021-12-16</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.kubelet.cn/tags/SSL/</loc>
+    <lastmod>2021-12-16</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.kubelet.cn/tags/curl/</loc>
     <lastmod>2021-12-16</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -692,14 +713,14 @@
   </url>
   
   <url>
-    <loc>https://www.kubelet.cn/categories/%E7%BD%91%E7%BB%9C/</loc>
+    <loc>https://www.kubelet.cn/categories/%E5%B7%A5%E5%85%B7/</loc>
     <lastmod>2021-12-16</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>https://www.kubelet.cn/categories/%E5%B7%A5%E5%85%B7/</loc>
+    <loc>https://www.kubelet.cn/categories/%E7%BD%91%E7%BB%9C/</loc>
     <lastmod>2021-12-16</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -734,7 +755,7 @@
   </url>
   
   <url>
-    <loc>https://www.kubelet.cn/categories/Superset/</loc>
+    <loc>https://www.kubelet.cn/categories/Zabbix/</loc>
     <lastmod>2021-12-16</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -755,14 +776,7 @@
   </url>
   
   <url>
-    <loc>https://www.kubelet.cn/categories/Zabbix/</loc>
-    <lastmod>2021-12-16</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.kubelet.cn/categories/helm/</loc>
+    <loc>https://www.kubelet.cn/categories/Superset/</loc>
     <lastmod>2021-12-16</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -776,14 +790,21 @@
   </url>
   
   <url>
-    <loc>https://www.kubelet.cn/categories/Kubernetes/</loc>
+    <loc>https://www.kubelet.cn/categories/LDAP/</loc>
     <lastmod>2021-12-16</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>https://www.kubelet.cn/categories/LDAP/</loc>
+    <loc>https://www.kubelet.cn/categories/helm/</loc>
+    <lastmod>2021-12-16</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.kubelet.cn/categories/Kubernetes/</loc>
     <lastmod>2021-12-16</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -812,6 +833,13 @@
   
   <url>
     <loc>https://www.kubelet.cn/categories/Hexo/</loc>
+    <lastmod>2021-12-16</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.kubelet.cn/categories/SSL/</loc>
     <lastmod>2021-12-16</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
