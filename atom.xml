@@ -227,11 +227,11 @@
     <category term="Kubernetes" scheme="https://www.kubelet.cn/categories/Kubernetes/"/>
     
     
-    <category term="容器" scheme="https://www.kubelet.cn/tags/%E5%AE%B9%E5%99%A8/"/>
-    
     <category term="k8s" scheme="https://www.kubelet.cn/tags/k8s/"/>
     
     <category term="Kubernetes" scheme="https://www.kubelet.cn/tags/Kubernetes/"/>
+    
+    <category term="容器" scheme="https://www.kubelet.cn/tags/%E5%AE%B9%E5%99%A8/"/>
     
   </entry>
   

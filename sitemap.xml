@@ -459,14 +459,14 @@
   </url>
   
   <url>
-    <loc>https://www.kubelet.cn/tags/%E5%B7%A5%E5%85%B7/</loc>
+    <loc>https://www.kubelet.cn/tags/%E7%BD%91%E7%BB%9C/</loc>
     <lastmod>2021-12-16</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>https://www.kubelet.cn/tags/%E7%BD%91%E7%BB%9C/</loc>
+    <loc>https://www.kubelet.cn/tags/FRP/</loc>
     <lastmod>2021-12-16</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -480,7 +480,7 @@
   </url>
   
   <url>
-    <loc>https://www.kubelet.cn/tags/FRP/</loc>
+    <loc>https://www.kubelet.cn/tags/%E5%B7%A5%E5%85%B7/</loc>
     <lastmod>2021-12-16</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -508,6 +508,27 @@
   </url>
   
   <url>
+    <loc>https://www.kubelet.cn/tags/SaltStack/</loc>
+    <lastmod>2021-12-16</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.kubelet.cn/tags/Superset/</loc>
+    <lastmod>2021-12-16</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.kubelet.cn/tags/SonarQube/</loc>
+    <lastmod>2021-12-16</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://www.kubelet.cn/tags/LVM/</loc>
     <lastmod>2021-12-16</lastmod>
     <changefreq>daily</changefreq>
@@ -522,56 +543,7 @@
   </url>
   
   <url>
-    <loc>https://www.kubelet.cn/tags/SonarQube/</loc>
-    <lastmod>2021-12-16</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.kubelet.cn/tags/SaltStack/</loc>
-    <lastmod>2021-12-16</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.kubelet.cn/tags/Docker/</loc>
-    <lastmod>2021-12-16</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.kubelet.cn/tags/%E5%AE%B9%E5%99%A8/</loc>
-    <lastmod>2021-12-16</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.kubelet.cn/tags/Docker-Compose/</loc>
-    <lastmod>2021-12-16</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.kubelet.cn/tags/Superset/</loc>
-    <lastmod>2021-12-16</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.kubelet.cn/tags/LDAP/</loc>
-    <lastmod>2021-12-16</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.kubelet.cn/tags/OpenLDAP/</loc>
+    <loc>https://www.kubelet.cn/tags/Zabbix/</loc>
     <lastmod>2021-12-16</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -599,6 +571,27 @@
   </url>
   
   <url>
+    <loc>https://www.kubelet.cn/tags/Docker/</loc>
+    <lastmod>2021-12-16</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.kubelet.cn/tags/%E5%AE%B9%E5%99%A8/</loc>
+    <lastmod>2021-12-16</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.kubelet.cn/tags/Docker-Compose/</loc>
+    <lastmod>2021-12-16</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://www.kubelet.cn/tags/Redis/</loc>
     <lastmod>2021-12-16</lastmod>
     <changefreq>daily</changefreq>
@@ -606,7 +599,14 @@
   </url>
   
   <url>
-    <loc>https://www.kubelet.cn/tags/Istio/</loc>
+    <loc>https://www.kubelet.cn/tags/LDAP/</loc>
+    <lastmod>2021-12-16</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.kubelet.cn/tags/OpenLDAP/</loc>
     <lastmod>2021-12-16</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -627,6 +627,13 @@
   </url>
   
   <url>
+    <loc>https://www.kubelet.cn/tags/Istio/</loc>
+    <lastmod>2021-12-16</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://www.kubelet.cn/tags/Hexo/</loc>
     <lastmod>2021-12-16</lastmod>
     <changefreq>daily</changefreq>
@@ -635,13 +642,6 @@
   
   <url>
     <loc>https://www.kubelet.cn/tags/Next/</loc>
-    <lastmod>2021-12-16</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.kubelet.cn/tags/Zabbix/</loc>
     <lastmod>2021-12-16</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -692,14 +692,14 @@
   </url>
   
   <url>
-    <loc>https://www.kubelet.cn/categories/%E5%B7%A5%E5%85%B7/</loc>
+    <loc>https://www.kubelet.cn/categories/%E7%BD%91%E7%BB%9C/</loc>
     <lastmod>2021-12-16</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>https://www.kubelet.cn/categories/%E7%BD%91%E7%BB%9C/</loc>
+    <loc>https://www.kubelet.cn/categories/%E5%B7%A5%E5%85%B7/</loc>
     <lastmod>2021-12-16</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -727,28 +727,7 @@
   </url>
   
   <url>
-    <loc>https://www.kubelet.cn/categories/LVM/</loc>
-    <lastmod>2021-12-16</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.kubelet.cn/categories/SonarQube/</loc>
-    <lastmod>2021-12-16</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://www.kubelet.cn/categories/SaltStack/</loc>
-    <lastmod>2021-12-16</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.kubelet.cn/categories/Docker/</loc>
     <lastmod>2021-12-16</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -762,7 +741,21 @@
   </url>
   
   <url>
-    <loc>https://www.kubelet.cn/categories/LDAP/</loc>
+    <loc>https://www.kubelet.cn/categories/SonarQube/</loc>
+    <lastmod>2021-12-16</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.kubelet.cn/categories/LVM/</loc>
+    <lastmod>2021-12-16</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.kubelet.cn/categories/Zabbix/</loc>
     <lastmod>2021-12-16</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -776,6 +769,13 @@
   </url>
   
   <url>
+    <loc>https://www.kubelet.cn/categories/Docker/</loc>
+    <lastmod>2021-12-16</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://www.kubelet.cn/categories/Kubernetes/</loc>
     <lastmod>2021-12-16</lastmod>
     <changefreq>daily</changefreq>
@@ -783,7 +783,7 @@
   </url>
   
   <url>
-    <loc>https://www.kubelet.cn/categories/Istio/</loc>
+    <loc>https://www.kubelet.cn/categories/LDAP/</loc>
     <lastmod>2021-12-16</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -804,14 +804,14 @@
   </url>
   
   <url>
-    <loc>https://www.kubelet.cn/categories/Hexo/</loc>
+    <loc>https://www.kubelet.cn/categories/Istio/</loc>
     <lastmod>2021-12-16</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>https://www.kubelet.cn/categories/Zabbix/</loc>
+    <loc>https://www.kubelet.cn/categories/Hexo/</loc>
     <lastmod>2021-12-16</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
