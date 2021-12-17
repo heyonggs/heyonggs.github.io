@@ -5423,7 +5423,7 @@
 <blockquote>
 <p>kubecolor项目地址：<a href="https://github.com/dty1er/kubecolor">https://github.com/dty1er/kubecolor</a></p>
 </blockquote>
-<h1 id="安装">2. 安装</h1><p>通过github下载</p>
+<h1 id="安装">2. 安装</h1><h2 id="源码编译安装">2.1. 源码编译安装</h2><p>通过github下载</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git clone https://github.com/dty1er/kubecolor.git</span><br></pre></td></tr></table></figure>
 
 <p>安装golang</p>
@@ -5444,11 +5444,18 @@
 <p>设置别名让kubectl使用kubecolor</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">echo &quot;alias kubectl=&#x27;/root/kubecolor/kubecolor&#x27;&quot; &gt;&gt; ~/.bashrc</span><br><span class="line"></span><br><span class="line"># 使配置生效</span><br><span class="line">source ~/.bashrc</span><br></pre></td></tr></table></figure>
 
+<h2 id="MAC系统">2.2. MAC系统</h2><p>如果是mac用户可以使用brew安装</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">brew install hidetatz/tap/kubecolor</span><br></pre></td></tr></table></figure>
+
+
+
 <h1 id="效果展示">3. 效果展示</h1><blockquote>
 <p>kubectl get pod -n kube-system</p>
 </blockquote>
 <p><img src="https://cdn.jsdelivr.net/gh/heyonggs/images@master/wp/2021/k8s/202112171012618.png"></p>
+<blockquote>
 <p>kubectl describe pod -n istio-system istio-egressgateway-7f4864f59c-448qp</p>
+</blockquote>
 <p><img src="https://cdn.jsdelivr.net/gh/heyonggs/images@master/wp/2021/k8s/202112171015665.png"></p>
 ]]></content>
       <categories>
