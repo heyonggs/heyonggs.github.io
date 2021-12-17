@@ -5415,4 +5415,48 @@
         <tag>curl</tag>
       </tags>
   </entry>
+  <entry>
+    <title>kubectl彩色输出之kubecolor</title>
+    <url>/p/14849.html</url>
+    <content><![CDATA[<p><escape><span id="more"></span></escape></p>
+<h1 id="kubecolor是什么？">1. kubecolor是什么？</h1><p>kubecolor 为您的<code>kubectl</code>命令输出着色，不执行任何其他操作。kubecolor 在内部调用<code>kubectl</code>command 并尝试对输出进行着色，以便你可以使用 kubecolor 作为 kubectl 的完整替代方案。</p>
+<blockquote>
+<p>kubecolor项目地址：<a href="https://github.com/dty1er/kubecolor">https://github.com/dty1er/kubecolor</a></p>
+</blockquote>
+<h1 id="安装">2. 安装</h1><p>通过github下载</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git clone https://github.com/dty1er/kubecolor.git</span><br></pre></td></tr></table></figure>
+
+<p>安装golang</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">yum install -y golang</span><br></pre></td></tr></table></figure>
+
+<p>通过go命令构建</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">cd kubecolor/</span><br><span class="line">go build -o kubecolor cmd/kubecolor/main.go</span><br></pre></td></tr></table></figure>
+
+<p>我这里遇到报错如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">go: github.com/MakeNowJust/heredoc@v1.0.0: Get &quot;https://proxy.golang.org/github.com/%21make%21now%21just/heredoc/@v/v1.0.0.mod&quot;: dial tcp 172.217.160.113:443: i/o timeout</span><br></pre></td></tr></table></figure>
+
+<p>配置go proxy</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">go env -w GOPROXY=https://goproxy.cn,direct</span><br></pre></td></tr></table></figure>
+
+<p>再次使用go命令构建</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[root@k8s-master kubecolor]# go build -o kubecolor cmd/kubecolor/main.go</span><br><span class="line">go: downloading github.com/mattn/go-colorable v0.1.8</span><br><span class="line">go: downloading github.com/mattn/go-isatty v0.0.12</span><br><span class="line">go: downloading golang.org/x/sys v0.0.0-20210110051926-789bb1bd4061</span><br></pre></td></tr></table></figure>
+
+<p>设置别名让kubectl使用kubecolor</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">echo &quot;alias kubectl=&#x27;/root/kubecolor/kubecolor&#x27;&quot; &gt;&gt; ~/.bashrc</span><br><span class="line"></span><br><span class="line"># 使配置生效</span><br><span class="line">source ~/.bashrc</span><br></pre></td></tr></table></figure>
+
+<h1 id="效果展示">3. 效果展示</h1><blockquote>
+<p>kubectl get pod -n kube-system</p>
+</blockquote>
+<p><img src="https://cdn.jsdelivr.net/gh/heyonggs/images@master/wp/2021/k8s/202112171012618.png"></p>
+<p>kubectl describe pod -n istio-system istio-egressgateway-7f4864f59c-448qp</p>
+<p><img src="https://cdn.jsdelivr.net/gh/heyonggs/images@master/wp/2021/k8s/202112171015665.png"></p>
+]]></content>
+      <categories>
+        <category>Kubernetes</category>
+      </categories>
+      <tags>
+        <tag>k8s</tag>
+        <tag>Kubernetes</tag>
+      </tags>
+  </entry>
 </search>
