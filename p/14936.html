@@ -24,17 +24,19 @@
   </script>
 
   <meta property="og:type" content="article">
-<meta property="og:title" content="Centos查看系统 CPU 个数、核心数、线程数">
-<meta property="og:url" content="https://www.kubelet.cn/p/36110.html">
+<meta property="og:title" content="docker清除不用的镜像容器等">
+<meta property="og:url" content="https://www.kubelet.cn/p/14936.html">
 <meta property="og:site_name" content="何宇泽">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2021-09-18T02:42:02.000Z">
-<meta property="article:modified_time" content="2021-12-07T03:50:57.240Z">
+<meta property="article:published_time" content="2021-12-21T07:17:36.413Z">
+<meta property="article:modified_time" content="2021-12-21T07:21:28.924Z">
 <meta property="article:author" content="何宇泽">
-<meta property="article:tag" content="System,cpu">
+<meta property="article:tag" content="Docker">
+<meta property="article:tag" content="容器">
+<meta property="article:tag" content="Docker Compose">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="https://www.kubelet.cn/p/36110.html">
+<link rel="canonical" href="https://www.kubelet.cn/p/14936.html">
 
 
 <script id="page-configurations">
@@ -47,7 +49,7 @@
   };
 </script>
 
-  <title>Centos查看系统 CPU 个数、核心数、线程数 | 何宇泽</title>
+  <title>docker清除不用的镜像容器等 | 何宇泽</title>
   
 
 
@@ -208,7 +210,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://www.kubelet.cn/p/36110.html">
+    <link itemprop="mainEntityOfPage" href="https://www.kubelet.cn/p/14936.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -221,7 +223,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          Centos查看系统 CPU 个数、核心数、线程数
+          docker清除不用的镜像容器等
         </h1>
 
         <div class="post-meta">
@@ -230,23 +232,17 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
+              
 
-              <time title="创建时间：2021-09-18 10:42:02" itemprop="dateCreated datePublished" datetime="2021-09-18T10:42:02+08:00">2021-09-18</time>
+              <time title="创建时间：2021-12-21 15:17:36 / 修改时间：15:21:28" itemprop="dateCreated datePublished" datetime="2021-12-21T15:17:36+08:00">2021-12-21</time>
             </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-12-07 11:50:57" itemprop="dateModified" datetime="2021-12-07T11:50:57+08:00">2021-12-07</time>
-              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/System-cpu/" itemprop="url" rel="index"><span itemprop="name">System,cpu</span></a>
+                  <a href="/categories/Docker/" itemprop="url" rel="index"><span itemprop="name">Docker</span></a>
                 </span>
             </span>
 
@@ -256,14 +252,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>878</span>
+              <span>2.7k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
+              <span>2 分钟</span>
             </span>
 
         </div>
@@ -276,30 +272,61 @@
 
       
         <p><escape><span id="more"></span></escape></p>
-<h1 id="Centos查看系统-CPU-个数、核心数、线程数">1. Centos查看系统 CPU 个数、核心数、线程数</h1><p>CPU的核数表示CPU可以同时执行的任务数量，在支持超线程情况下，同时执行的任务数翻倍。CPU的线程数表示CPU可以同时执行的任务数量。两者的联系分两种：CPU支持超线程技术，那么线程数＝核心数＊2；不支持超线程，线程数＝核心数。</p>
-<p>线程数和超线程技术是两个概念，线程数是实际存在的，而超线程是CPU的技术标准。</p>
-<h2 id="优缺点">1.1. 优缺点</h2><h3 id="优点">1.1.1. 优点</h3><p>1、可以同时进行多任务处理工作，软件可以享有由超线程技术带来的性能提升；</p>
-<p>2、用户同时运行两个以上软件的时候，可以充分发挥超线程技术的效率优势。</p>
-<h3 id="缺点">1.1.2. 缺点</h3><p>1、运行单线程软件时，超线程技术会降低系统性能；</p>
-<p>2、因为很多工作站软件为Windows2000操作系统进行过优化，所以使用Windows2000的工作站无法完全利用超线程技术的优势；</p>
-<p>3、当两个线程同时需要某个资源时，其中一个线程必须让出资源暂时挂起，直到这些资源空闲以后才能继续。因此，超线程的性能并不等于两个CPU的性能。</p>
-<h2 id="查看-CPU-物理个数">1.2. 查看 CPU 物理个数</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cat /proc/cpuinfo | grep &quot;physical id&quot; | sort | uniq | wc -l</span><br><span class="line">或者</span><br><span class="line">grep &#x27;physical id&#x27; /proc/cpuinfo | sort -u | wc -l</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://docs.docker.com/engine/admin/pruning/">https://docs.docker.com/engine/admin/pruning/</a></p>
+</blockquote>
+<p>对于不再使用的对象如镜像、容器、volumes以及网络 Docker采取的是被动清理(类比垃圾回收)机制：除非使用docker提供的命令手动进行清理，否则它们一般是不会被清除掉。这些没有使用的对象当然会占用额外宝贵的空间资源。Docker为不同的对象提供了各自的对象清理命令prune；另外还提供了docker system prune命令可一次性清理多个未使用对象。今天要讨论的就是这些关于对象清理的命令：prune。</p>
+<h1 id="Prune-Images">1. Prune Images</h1><blockquote>
+<p><a target="_blank" rel="noopener" href="https://docs.docker.com/engine/reference/commandline/image_prune/#filtering">https://docs.docker.com/engine/reference/commandline/image_prune/#filtering</a></p>
+</blockquote>
+<p>删除15天以前的镜像</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker image prune -a --filter <span class="string">&quot;until=<span class="subst">$(date +&#x27;%Y-%m-%dT%H:%M:%S&#x27; --date=&#x27;-15 days&#x27;)</span>&quot;</span></span><br></pre></td></tr></table></figure>
 
-<h2 id="查看-CPU-核心数量">1.3. 查看 CPU 核心数量</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cat /proc/cpuinfo | grep &quot;core id&quot; | sort | uniq | wc -l</span><br><span class="line">或者</span><br><span class="line">grep &#x27;core id&#x27; /proc/cpuinfo | sort -u | wc -l</span><br></pre></td></tr></table></figure>
+<p>删除超过24小时的镜像</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ docker image prune -a --filter <span class="string">&quot;until=24h&quot;</span></span><br></pre></td></tr></table></figure>
 
-<h2 id="查看-CPU-线程数">1.4. 查看 CPU 线程数</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cat /proc/cpuinfo | grep &quot;processor&quot; | sort | uniq | wc -l</span><br><span class="line">或者</span><br><span class="line">grep &#x27;processor&#x27; /proc/cpuinfo | sort -u | wc -l</span><br></pre></td></tr></table></figure>
+<p>清除所有没有容器引用的镜像</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker image prune -a</span><br></pre></td></tr></table></figure>
 
-<h2 id="查看-CPU-型号">1.5. 查看 CPU 型号</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cat /proc/cpuinfo | grep name | sort | uniq</span><br><span class="line">或者</span><br><span class="line">dmidecode -s processor-version</span><br></pre></td></tr></table></figure>
+<h1 id="Prune-containers">2. Prune containers</h1><blockquote>
+<p><a target="_blank" rel="noopener" href="https://docs.docker.com/engine/reference/commandline/container_prune/">https://docs.docker.com/engine/reference/commandline/container_prune/</a></p>
+</blockquote>
+<p>如果容器启动时没有指定–rm选项，容器停止时是不能够自动清除的。有时候我们敲下docker ps -a命令会惊奇的发现，天哪，居然有这么多容器，有运行着的也有停止了的。它们是哪里来的？它们到底还有没有人在关注？这种情况在一个开发环境上尤其常见。要知道，即使容器已经停掉了也会占用空间资源。好吧，让我们用 docker container prune命令来结束这些一团糟的东西吧：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker container prune</span><br></pre></td></tr></table></figure>
 
-<h2 id="查看-CPU-的详细信息：">1.6. 查看 CPU 的详细信息：</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat /proc/cpuinfo</span><br></pre></td></tr></table></figure>
+<p>和镜像清理的情况一样，也会有提示信息告诉你是否继续，默认是yes；如果提示信息烦到了你的话就加上 -f 或者 –force标志强制清除就可以了。</p>
+<p>默认情况下 docker container prune命令会清理掉所有处于 stopped状态的容器；如果不想那么残忍统统都删掉，也可以使用 –filter标志来筛选出不希望被清理掉的容器。下面是一个筛选的例子，清除掉所有停掉的容器，但24内创建的除外：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker container prune --filter <span class="string">&quot;until=24h&quot;</span></span><br></pre></td></tr></table></figure>
 
 
 
+<h1 id="prune-volumes">3. prune volumes</h1><blockquote>
+<p><a target="_blank" rel="noopener" href="https://docs.docker.com/engine/reference/commandline/volume_prune/">https://docs.docker.com/engine/reference/commandline/volume_prune/</a></p>
+</blockquote>
+<p> Volumes可被一个或多个容器使用会消耗host端的空间，但它不会自动清理，因为那样就有可能破坏掉有用的数据。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ docker volume prune</span><br><span class="line"> </span><br><span class="line">WARNING! This will remove all volumes not used by at least one container.</span><br><span class="line">Are you sure you want to <span class="built_in">continue</span>? [y/N] y</span><br></pre></td></tr></table></figure>
+
+<p>和conatiner一样，手动清理Volume时会有提示信息，增加 -f 或 –force标志可以跳过提示信息直接清理。使用过滤参数 –filter来筛选出不希望清理的无用Volume，否则默认会将所有没有使用的volumes都清理掉。下面的例子演示了除 lable=keep外的volume外都清理掉(没有引用的volume)：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ docker volume prune --filter <span class="string">&quot;label!=keep&quot;</span></span><br></pre></td></tr></table></figure>
 
 
 
+<h1 id="prune-networks">4. prune networks</h1><blockquote>
+<p><a target="_blank" rel="noopener" href="https://docs.docker.com/engine/reference/commandline/network_prune/">https://docs.docker.com/engine/reference/commandline/network_prune/</a></p>
+</blockquote>
+<p>虽然Docker networks占用的空间不多，但是它会创建iptable 规则、虚拟网桥设备以及路由表项，有洁癖的你看到这么多”僵尸”对象会不会抓狂？当然，我们还是要用清理神器：docker network prune 来清理没有再被任何容器引用的networks：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ docker network prune</span><br><span class="line"> </span><br><span class="line">WARNING! This will remove all networks not used by at least one container.</span><br><span class="line">Are you sure you want to <span class="built_in">continue</span>? [y/N] y</span><br></pre></td></tr></table></figure>
+
+<p>可以通过 -f 或者 –force标志跳过提示信息来强制执行该命令。默认情况会清除所有没有再被引用的networks，如果想要过滤一些特定的networks，可以使用 –filter来实现。下面这个例子就是通过–filter来清理没有被引用的、创建超过24小时的networks：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ docker network prune --filter <span class="string">&quot;until=24h&quot;</span></span><br></pre></td></tr></table></figure>
 
 
+
+<h1 id="prune-everything">5. prune everything</h1><p> 如题，这里要讲的就是清理everything：images ，containers，networks一次性清理操作可以通过docker system prune来搞定。在Docker 17.06.0 以及更早的版本中，这个docker system prune也会将volume一起清理掉；在Docker 17.06.1以及后期的版本中则必须要手动指定–volumes标志才能够清理掉volumes：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$ docker system prune</span><br><span class="line"> </span><br><span class="line">WARNING! This will remove:</span><br><span class="line">        - all stopped containers</span><br><span class="line">        - all networks not used by at least one container</span><br><span class="line">        - all dangling images</span><br><span class="line">        - all build cache</span><br><span class="line">Are you sure you want to <span class="built_in">continue</span>? [y/N] y</span><br></pre></td></tr></table></figure>
+
+<p> 在Docker 17.06.1或更高版本中添加 –volumes标志的情况：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">$ docker system prune --volumes</span><br><span class="line"> </span><br><span class="line">WARNING! This will remove:</span><br><span class="line">        - all stopped containers</span><br><span class="line">        - all networks not used by at least one container</span><br><span class="line">        - all volumes not used by at least one container</span><br><span class="line">        - all dangling images</span><br><span class="line">        - all build cache</span><br><span class="line">Are you sure you want to <span class="built_in">continue</span>? [y/N] y</span><br></pre></td></tr></table></figure>
 
 
 
@@ -331,7 +358,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="https://www.kubelet.cn/p/36110.html" title="Centos查看系统 CPU 个数、核心数、线程数">https://www.kubelet.cn/p/36110.html</a>
+    <a href="https://www.kubelet.cn/p/14936.html" title="docker清除不用的镜像容器等">https://www.kubelet.cn/p/14936.html</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh-CN" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
@@ -343,7 +370,9 @@
 
       <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/System-cpu/" rel="tag"><i class="fa fa-tag"></i> System,cpu</a>
+              <a href="/tags/Docker/" rel="tag"><i class="fa fa-tag"></i> Docker</a>
+              <a href="/tags/%E5%AE%B9%E5%99%A8/" rel="tag"><i class="fa fa-tag"></i> 容器</a>
+              <a href="/tags/Docker-Compose/" rel="tag"><i class="fa fa-tag"></i> Docker Compose</a>
           </div>
 
         
@@ -357,13 +386,10 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/p/23286.html" rel="prev" title="kubeadm修改证书时间为99年">
-      <i class="fa fa-chevron-left"></i> kubeadm修改证书时间为99年
+    <a href="/p/14849.html" rel="prev" title="kubectl彩色输出之kubecolor">
+      <i class="fa fa-chevron-left"></i> kubectl彩色输出之kubecolor
     </a></div>
-      <div class="post-nav-item">
-    <a href="/p/63588.html" rel="next" title="Nginx更换SSL证书">
-      Nginx更换SSL证书 <i class="fa fa-chevron-right"></i>
-    </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -427,7 +453,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Centos%E6%9F%A5%E7%9C%8B%E7%B3%BB%E7%BB%9F-CPU-%E4%B8%AA%E6%95%B0%E3%80%81%E6%A0%B8%E5%BF%83%E6%95%B0%E3%80%81%E7%BA%BF%E7%A8%8B%E6%95%B0"><span class="nav-text">1. Centos查看系统 CPU 个数、核心数、线程数</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BC%98%E7%BC%BA%E7%82%B9"><span class="nav-text">1.1. 优缺点</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BC%98%E7%82%B9"><span class="nav-text">1.1.1. 优点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BC%BA%E7%82%B9"><span class="nav-text">1.1.2. 缺点</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B-CPU-%E7%89%A9%E7%90%86%E4%B8%AA%E6%95%B0"><span class="nav-text">1.2. 查看 CPU 物理个数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B-CPU-%E6%A0%B8%E5%BF%83%E6%95%B0%E9%87%8F"><span class="nav-text">1.3. 查看 CPU 核心数量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B-CPU-%E7%BA%BF%E7%A8%8B%E6%95%B0"><span class="nav-text">1.4. 查看 CPU 线程数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B-CPU-%E5%9E%8B%E5%8F%B7"><span class="nav-text">1.5. 查看 CPU 型号</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B-CPU-%E7%9A%84%E8%AF%A6%E7%BB%86%E4%BF%A1%E6%81%AF%EF%BC%9A"><span class="nav-text">1.6. 查看 CPU 的详细信息：</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Prune-Images"><span class="nav-text">1. Prune Images</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Prune-containers"><span class="nav-text">2. Prune containers</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#prune-volumes"><span class="nav-text">3. prune volumes</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#prune-networks"><span class="nav-text">4. prune networks</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#prune-everything"><span class="nav-text">5. prune everything</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 

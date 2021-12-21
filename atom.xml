@@ -6,7 +6,7 @@
   <link href="https://www.kubelet.cn/atom.xml" rel="self"/>
   
   <link href="https://www.kubelet.cn/"/>
-  <updated>2021-12-17T04:00:51.918Z</updated>
+  <updated>2021-12-21T07:21:28.924Z</updated>
   <id>https://www.kubelet.cn/</id>
   
   <author>
@@ -15,6 +15,29 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>docker清除不用的镜像容器等</title>
+    <link href="https://www.kubelet.cn/p/14936.html"/>
+    <id>https://www.kubelet.cn/p/14936.html</id>
+    <published>2021-12-21T07:17:36.413Z</published>
+    <updated>2021-12-21T07:21:28.924Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;&lt;escape&gt;&lt;/escape&gt;&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="Docker" scheme="https://www.kubelet.cn/categories/Docker/"/>
+    
+    
+    <category term="Docker" scheme="https://www.kubelet.cn/tags/Docker/"/>
+    
+    <category term="容器" scheme="https://www.kubelet.cn/tags/%E5%AE%B9%E5%99%A8/"/>
+    
+    <category term="Docker Compose" scheme="https://www.kubelet.cn/tags/Docker-Compose/"/>
+    
+  </entry>
   
   <entry>
     <title>kubectl彩色输出之kubecolor</title>
@@ -396,25 +419,6 @@
     <category term="Kubernetes" scheme="https://www.kubelet.cn/tags/Kubernetes/"/>
     
     <category term="helm" scheme="https://www.kubelet.cn/tags/helm/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>k8s部署nacos集群</title>
-    <link href="https://www.kubelet.cn/p/20278.html"/>
-    <id>https://www.kubelet.cn/p/20278.html</id>
-    <published>2021-03-10T08:59:21.000Z</published>
-    <updated>2021-12-07T03:43:08.561Z</updated>
-    
-    
-    <summary type="html">&lt;p&gt;&lt;escape&gt;&lt;/escape&gt;&lt;/p&gt;</summary>
-    
-    
-    
-    <category term="k8s" scheme="https://www.kubelet.cn/categories/k8s/"/>
-    
-    
-    <category term="k8s" scheme="https://www.kubelet.cn/tags/k8s/"/>
     
   </entry>
   
