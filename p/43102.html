@@ -29,7 +29,7 @@
 <meta property="og:site_name" content="何宇泽">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2019-03-20T06:08:57.000Z">
-<meta property="article:modified_time" content="2021-12-22T01:43:55.452Z">
+<meta property="article:modified_time" content="2021-12-22T01:46:57.079Z">
 <meta property="article:author" content="何宇泽">
 <meta property="article:tag" content="Docker">
 <meta property="article:tag" content="容器">
@@ -239,7 +239,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-12-22 09:43:55" itemprop="dateModified" datetime="2021-12-22T09:43:55+08:00">2021-12-22</time>
+                <time title="修改时间：2021-12-22 09:46:57" itemprop="dateModified" datetime="2021-12-22T09:46:57+08:00">2021-12-22</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -277,23 +277,23 @@
 
       
         <p><escape><span id="more"></span></escape></p>
-<h1 id="Ubuntu">1. Ubuntu</h1><h2 id="1-安装／升级Docker客户端">1.1. 1. 安装／升级Docker客户端</h2><p>推荐安装1.10.0以上版本的Docker客户端，参考文档<a target="_blank" rel="noopener" href="https://yq.aliyun.com/articles/110806">docker-ce</a></p>
-<h2 id="2-配置镜像加速器">1.2. 2. 配置镜像加速器</h2><p>针对Docker客户端版本大于 1.10.0 的用户</p>
+<h1 id="Ubuntu">1. Ubuntu</h1><h2 id="安装／升级Docker客户端">1.1. 安装／升级Docker客户端</h2><p>推荐安装1.10.0以上版本的Docker客户端，参考文档<a target="_blank" rel="noopener" href="https://yq.aliyun.com/articles/110806">docker-ce</a></p>
+<h2 id="配置镜像加速器">1.2. 配置镜像加速器</h2><p>针对Docker客户端版本大于 1.10.0 的用户</p>
 <p>您可以通过修改daemon配置文件/etc/docker/daemon.json来使用加速器</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">sudo mkdir -p /etc/docker</span><br><span class="line">sudo tee /etc/docker/daemon.json &lt;&lt;-<span class="string">&#x27;EOF&#x27;</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="string">&quot;registry-mirrors&quot;</span>: [<span class="string">&quot;https://wh9z3wm8.mirror.aliyuncs.com&quot;</span>]</span><br><span class="line">&#125;</span><br><span class="line">EOF</span><br><span class="line">sudo systemctl daemon-reload</span><br><span class="line">sudo systemctl restart docker</span><br></pre></td></tr></table></figure>
 
-<h1 id="CentOS">2. CentOS</h1><h2 id="1-安装／升级Docker客户端-1">2.1. 1. 安装／升级Docker客户端</h2><p>推荐安装1.10.0以上版本的Docker客户端，参考文档<a target="_blank" rel="noopener" href="https://yq.aliyun.com/articles/110806">docker-ce</a></p>
-<h2 id="2-配置镜像加速器-1">2.2. 2. 配置镜像加速器</h2><p>针对Docker客户端版本大于 1.10.0 的用户</p>
+<h1 id="CentOS">2. CentOS</h1><h2 id="安装／升级Docker客户端-1">2.1. 安装／升级Docker客户端</h2><p>推荐安装1.10.0以上版本的Docker客户端，参考文档<a target="_blank" rel="noopener" href="https://yq.aliyun.com/articles/110806">docker-ce</a></p>
+<h2 id="配置镜像加速器-1">2.2. 配置镜像加速器</h2><p>针对Docker客户端版本大于 1.10.0 的用户</p>
 <p>您可以通过修改daemon配置文件/etc/docker/daemon.json来使用加速器</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">sudo mkdir -p /etc/docker</span><br><span class="line">sudo tee /etc/docker/daemon.json &lt;&lt;-<span class="string">&#x27;EOF&#x27;</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="string">&quot;registry-mirrors&quot;</span>: [<span class="string">&quot;https://wh9z3wm8.mirror.aliyuncs.com&quot;</span>]</span><br><span class="line">&#125;</span><br><span class="line">EOF</span><br><span class="line">sudo systemctl daemon-reload</span><br><span class="line">sudo systemctl restart docker</span><br></pre></td></tr></table></figure>
 
 
 
-<h1 id="Mac">3. Mac</h1><h2 id="1-安装／升级Docker客户端-2">3.1. 1. 安装／升级Docker客户端</h2><p>对于10.10.3以下的用户 推荐使用Docker Toolbox</p>
+<h1 id="Mac">3. Mac</h1><h2 id="安装／升级Docker客户端-2">3.1. 安装／升级Docker客户端</h2><p>对于10.10.3以下的用户 推荐使用Docker Toolbox</p>
 <p>Mac安装文件：<a target="_blank" rel="noopener" href="http://mirrors.aliyun.com/docker-toolbox/mac/docker-toolbox/">http://mirrors.aliyun.com/docker-toolbox/mac/docker-toolbox/</a></p>
 <p>对于10.10.3以上的用户 推荐使用Docker for Mac</p>
 <p>Mac安装文件：<a target="_blank" rel="noopener" href="http://mirrors.aliyun.com/docker-toolbox/mac/docker-for-mac/">http://mirrors.aliyun.com/docker-toolbox/mac/docker-for-mac/</a></p>
-<h2 id="2-配置镜像加速器-2">3.2. 2. 配置镜像加速器</h2><p>针对安装了Docker Toolbox的用户，您可以参考以下配置步骤：</p>
+<h2 id="配置镜像加速器-2">3.2. 配置镜像加速器</h2><p>针对安装了Docker Toolbox的用户，您可以参考以下配置步骤：</p>
 <p>创建一台安装有Docker环境的Linux虚拟机，指定机器名称为default，同时配置Docker加速器地址。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker-machine create --engine-registry-mirror=https://wh9z3wm8.mirror.aliyuncs.com -d virtualbox default</span><br></pre></td></tr></table></figure>
 
@@ -303,11 +303,11 @@
 <p>针对安装了Docker for Mac的用户，您可以参考以下配置步骤：</p>
 <p>在任务栏点击 Docker Desktop 应用图标 -&gt; Perferences，在左侧导航菜单选择 Docker Engine，在右侧输入栏编辑 json 文件。将</p>
 <p><a target="_blank" rel="noopener" href="https://wh9z3wm8.mirror.aliyuncs.com加到&quot;registry-mirrors&quot;的数组里,点击/">https://wh9z3wm8.mirror.aliyuncs.com加到&quot;registry-mirrors&quot;的数组里，点击</a> Apply &amp; Restart按钮，等待Docker重启并应用配置的镜像加速器。</p>
-<h1 id="Windows">4. Windows</h1><h2 id="1-安装／升级Docker客户端-3">4.1. 1. 安装／升级Docker客户端</h2><p>对于Windows 10以下的用户，推荐使用Docker Toolbox</p>
+<h1 id="Windows">4. Windows</h1><h2 id="安装／升级Docker客户端-3">4.1. 安装／升级Docker客户端</h2><p>对于Windows 10以下的用户，推荐使用Docker Toolbox</p>
 <p>Windows安装文件：<a target="_blank" rel="noopener" href="http://mirrors.aliyun.com/docker-toolbox/windows/docker-toolbox/">http://mirrors.aliyun.com/docker-toolbox/windows/docker-toolbox/</a></p>
 <p>对于Windows 10以上的用户 推荐使用Docker for Windows</p>
 <p>Windows安装文件：<a target="_blank" rel="noopener" href="http://mirrors.aliyun.com/docker-toolbox/windows/docker-for-windows/">http://mirrors.aliyun.com/docker-toolbox/windows/docker-for-windows/</a></p>
-<h2 id="2-配置镜像加速器-3">4.2. 2. 配置镜像加速器</h2><p>针对安装了Docker Toolbox的用户，您可以参考以下配置步骤：</p>
+<h2 id="配置镜像加速器-3">4.2. 配置镜像加速器</h2><p>针对安装了Docker Toolbox的用户，您可以参考以下配置步骤：</p>
 <p>创建一台安装有Docker环境的Linux虚拟机，指定机器名称为default，同时配置Docker加速器地址。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker-machine create --engine-registry-mirror=https://wh9z3wm8.mirror.aliyuncs.com -d virtualbox default</span><br></pre></td></tr></table></figure>
 
@@ -446,7 +446,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Ubuntu"><span class="nav-text">1. Ubuntu</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E5%AE%89%E8%A3%85%EF%BC%8F%E5%8D%87%E7%BA%A7Docker%E5%AE%A2%E6%88%B7%E7%AB%AF"><span class="nav-text">1.1. 1. 安装／升级Docker客户端</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E9%85%8D%E7%BD%AE%E9%95%9C%E5%83%8F%E5%8A%A0%E9%80%9F%E5%99%A8"><span class="nav-text">1.2. 2. 配置镜像加速器</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#CentOS"><span class="nav-text">2. CentOS</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E5%AE%89%E8%A3%85%EF%BC%8F%E5%8D%87%E7%BA%A7Docker%E5%AE%A2%E6%88%B7%E7%AB%AF-1"><span class="nav-text">2.1. 1. 安装／升级Docker客户端</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E9%85%8D%E7%BD%AE%E9%95%9C%E5%83%8F%E5%8A%A0%E9%80%9F%E5%99%A8-1"><span class="nav-text">2.2. 2. 配置镜像加速器</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Mac"><span class="nav-text">3. Mac</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E5%AE%89%E8%A3%85%EF%BC%8F%E5%8D%87%E7%BA%A7Docker%E5%AE%A2%E6%88%B7%E7%AB%AF-2"><span class="nav-text">3.1. 1. 安装／升级Docker客户端</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E9%85%8D%E7%BD%AE%E9%95%9C%E5%83%8F%E5%8A%A0%E9%80%9F%E5%99%A8-2"><span class="nav-text">3.2. 2. 配置镜像加速器</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Windows"><span class="nav-text">4. Windows</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E5%AE%89%E8%A3%85%EF%BC%8F%E5%8D%87%E7%BA%A7Docker%E5%AE%A2%E6%88%B7%E7%AB%AF-3"><span class="nav-text">4.1. 1. 安装／升级Docker客户端</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E9%85%8D%E7%BD%AE%E9%95%9C%E5%83%8F%E5%8A%A0%E9%80%9F%E5%99%A8-3"><span class="nav-text">4.2. 2. 配置镜像加速器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B3%A8%E6%84%8F"><span class="nav-text">4.3. 注意</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Ubuntu"><span class="nav-text">1. Ubuntu</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85%EF%BC%8F%E5%8D%87%E7%BA%A7Docker%E5%AE%A2%E6%88%B7%E7%AB%AF"><span class="nav-text">1.1. 安装／升级Docker客户端</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E9%95%9C%E5%83%8F%E5%8A%A0%E9%80%9F%E5%99%A8"><span class="nav-text">1.2. 配置镜像加速器</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#CentOS"><span class="nav-text">2. CentOS</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85%EF%BC%8F%E5%8D%87%E7%BA%A7Docker%E5%AE%A2%E6%88%B7%E7%AB%AF-1"><span class="nav-text">2.1. 安装／升级Docker客户端</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E9%95%9C%E5%83%8F%E5%8A%A0%E9%80%9F%E5%99%A8-1"><span class="nav-text">2.2. 配置镜像加速器</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Mac"><span class="nav-text">3. Mac</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85%EF%BC%8F%E5%8D%87%E7%BA%A7Docker%E5%AE%A2%E6%88%B7%E7%AB%AF-2"><span class="nav-text">3.1. 安装／升级Docker客户端</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E9%95%9C%E5%83%8F%E5%8A%A0%E9%80%9F%E5%99%A8-2"><span class="nav-text">3.2. 配置镜像加速器</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Windows"><span class="nav-text">4. Windows</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85%EF%BC%8F%E5%8D%87%E7%BA%A7Docker%E5%AE%A2%E6%88%B7%E7%AB%AF-3"><span class="nav-text">4.1. 安装／升级Docker客户端</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E9%95%9C%E5%83%8F%E5%8A%A0%E9%80%9F%E5%99%A8-3"><span class="nav-text">4.2. 配置镜像加速器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B3%A8%E6%84%8F"><span class="nav-text">4.3. 注意</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -461,7 +461,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">56</span>
+          <span class="site-state-item-count">57</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -472,7 +472,7 @@
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
-        <span class="site-state-item-count">35</span>
+        <span class="site-state-item-count">36</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -803,12 +803,12 @@ if(canvas.getContext){
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">362k</span>
+    <span title="站点总字数">364k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">5:29</span>
+    <span title="站点阅读时长">5:31</span>
 </div>
   <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">京ICP备19003190号-2 </a>
       <img src="https://cdn.jsdelivr.net/gh/heyonggs/images@master/wp/2021/beian/202110221040632.png" style="display: inline-block;"><a href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=11010502047382" rel="noopener" target="_blank">京公网安备 11010502047382号 </a>

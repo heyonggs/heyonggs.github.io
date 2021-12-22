@@ -5544,23 +5544,23 @@
     <title>Docker配置加速器</title>
     <url>/p/43102.html</url>
     <content><![CDATA[<p><escape><span id="more"></span></escape></p>
-<h1 id="Ubuntu">1. Ubuntu</h1><h2 id="1-安装／升级Docker客户端">1.1. 1. 安装／升级Docker客户端</h2><p>推荐安装1.10.0以上版本的Docker客户端，参考文档<a href="https://yq.aliyun.com/articles/110806">docker-ce</a></p>
-<h2 id="2-配置镜像加速器">1.2. 2. 配置镜像加速器</h2><p>针对Docker客户端版本大于 1.10.0 的用户</p>
+<h1 id="Ubuntu">1. Ubuntu</h1><h2 id="安装／升级Docker客户端">1.1. 安装／升级Docker客户端</h2><p>推荐安装1.10.0以上版本的Docker客户端，参考文档<a href="https://yq.aliyun.com/articles/110806">docker-ce</a></p>
+<h2 id="配置镜像加速器">1.2. 配置镜像加速器</h2><p>针对Docker客户端版本大于 1.10.0 的用户</p>
 <p>您可以通过修改daemon配置文件/etc/docker/daemon.json来使用加速器</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo mkdir -p /etc/docker</span><br><span class="line">sudo tee /etc/docker/daemon.json &lt;&lt;-<span class="string">&#x27;EOF&#x27;</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="string">&quot;registry-mirrors&quot;</span>: [<span class="string">&quot;https://wh9z3wm8.mirror.aliyuncs.com&quot;</span>]</span><br><span class="line">&#125;</span><br><span class="line">EOF</span><br><span class="line">sudo systemctl daemon-reload</span><br><span class="line">sudo systemctl restart docker</span><br></pre></td></tr></table></figure>
 
-<h1 id="CentOS">2. CentOS</h1><h2 id="1-安装／升级Docker客户端-1">2.1. 1. 安装／升级Docker客户端</h2><p>推荐安装1.10.0以上版本的Docker客户端，参考文档<a href="https://yq.aliyun.com/articles/110806">docker-ce</a></p>
-<h2 id="2-配置镜像加速器-1">2.2. 2. 配置镜像加速器</h2><p>针对Docker客户端版本大于 1.10.0 的用户</p>
+<h1 id="CentOS">2. CentOS</h1><h2 id="安装／升级Docker客户端-1">2.1. 安装／升级Docker客户端</h2><p>推荐安装1.10.0以上版本的Docker客户端，参考文档<a href="https://yq.aliyun.com/articles/110806">docker-ce</a></p>
+<h2 id="配置镜像加速器-1">2.2. 配置镜像加速器</h2><p>针对Docker客户端版本大于 1.10.0 的用户</p>
 <p>您可以通过修改daemon配置文件/etc/docker/daemon.json来使用加速器</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo mkdir -p /etc/docker</span><br><span class="line">sudo tee /etc/docker/daemon.json &lt;&lt;-<span class="string">&#x27;EOF&#x27;</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="string">&quot;registry-mirrors&quot;</span>: [<span class="string">&quot;https://wh9z3wm8.mirror.aliyuncs.com&quot;</span>]</span><br><span class="line">&#125;</span><br><span class="line">EOF</span><br><span class="line">sudo systemctl daemon-reload</span><br><span class="line">sudo systemctl restart docker</span><br></pre></td></tr></table></figure>
 
 
 
-<h1 id="Mac">3. Mac</h1><h2 id="1-安装／升级Docker客户端-2">3.1. 1. 安装／升级Docker客户端</h2><p>对于10.10.3以下的用户 推荐使用Docker Toolbox</p>
+<h1 id="Mac">3. Mac</h1><h2 id="安装／升级Docker客户端-2">3.1. 安装／升级Docker客户端</h2><p>对于10.10.3以下的用户 推荐使用Docker Toolbox</p>
 <p>Mac安装文件：<a href="http://mirrors.aliyun.com/docker-toolbox/mac/docker-toolbox/">http://mirrors.aliyun.com/docker-toolbox/mac/docker-toolbox/</a></p>
 <p>对于10.10.3以上的用户 推荐使用Docker for Mac</p>
 <p>Mac安装文件：<a href="http://mirrors.aliyun.com/docker-toolbox/mac/docker-for-mac/">http://mirrors.aliyun.com/docker-toolbox/mac/docker-for-mac/</a></p>
-<h2 id="2-配置镜像加速器-2">3.2. 2. 配置镜像加速器</h2><p>针对安装了Docker Toolbox的用户，您可以参考以下配置步骤：</p>
+<h2 id="配置镜像加速器-2">3.2. 配置镜像加速器</h2><p>针对安装了Docker Toolbox的用户，您可以参考以下配置步骤：</p>
 <p>创建一台安装有Docker环境的Linux虚拟机，指定机器名称为default，同时配置Docker加速器地址。</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">docker-machine create --engine-registry-mirror=https://wh9z3wm8.mirror.aliyuncs.com -d virtualbox default</span><br></pre></td></tr></table></figure>
 
@@ -5570,11 +5570,11 @@
 <p>针对安装了Docker for Mac的用户，您可以参考以下配置步骤：</p>
 <p>在任务栏点击 Docker Desktop 应用图标 -&gt; Perferences，在左侧导航菜单选择 Docker Engine，在右侧输入栏编辑 json 文件。将</p>
 <p><a href="https://wh9z3wm8.mirror.aliyuncs.com加到&quot;registry-mirrors&quot;的数组里,点击/">https://wh9z3wm8.mirror.aliyuncs.com加到&quot;registry-mirrors&quot;的数组里，点击</a> Apply &amp; Restart按钮，等待Docker重启并应用配置的镜像加速器。</p>
-<h1 id="Windows">4. Windows</h1><h2 id="1-安装／升级Docker客户端-3">4.1. 1. 安装／升级Docker客户端</h2><p>对于Windows 10以下的用户，推荐使用Docker Toolbox</p>
+<h1 id="Windows">4. Windows</h1><h2 id="安装／升级Docker客户端-3">4.1. 安装／升级Docker客户端</h2><p>对于Windows 10以下的用户，推荐使用Docker Toolbox</p>
 <p>Windows安装文件：<a href="http://mirrors.aliyun.com/docker-toolbox/windows/docker-toolbox/">http://mirrors.aliyun.com/docker-toolbox/windows/docker-toolbox/</a></p>
 <p>对于Windows 10以上的用户 推荐使用Docker for Windows</p>
 <p>Windows安装文件：<a href="http://mirrors.aliyun.com/docker-toolbox/windows/docker-for-windows/">http://mirrors.aliyun.com/docker-toolbox/windows/docker-for-windows/</a></p>
-<h2 id="2-配置镜像加速器-3">4.2. 2. 配置镜像加速器</h2><p>针对安装了Docker Toolbox的用户，您可以参考以下配置步骤：</p>
+<h2 id="配置镜像加速器-3">4.2. 配置镜像加速器</h2><p>针对安装了Docker Toolbox的用户，您可以参考以下配置步骤：</p>
 <p>创建一台安装有Docker环境的Linux虚拟机，指定机器名称为default，同时配置Docker加速器地址。</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">docker-machine create --engine-registry-mirror=https://wh9z3wm8.mirror.aliyuncs.com -d virtualbox default</span><br></pre></td></tr></table></figure>
 
@@ -5597,6 +5597,56 @@
       <tags>
         <tag>Docker</tag>
         <tag>容器</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Docker构建基于Alpine的NodeJS镜像</title>
+    <url>/p/14566.html</url>
+    <content><![CDATA[<p><escape><span id="more"></span></escape></p>
+<h1 id="指定版本">1. 指定版本</h1><p>查看Dockerfile</p>
+<p>cat Dockerfile</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">FROM alpine:3.10.2</span><br><span class="line">ENV NODE_VERSION 14.5.0</span><br><span class="line">MAINTAINER heyuze</span><br><span class="line"></span><br><span class="line">RUN apk add --no-cache curl gcc g++ python make linux-headers \</span><br><span class="line">    &amp;&amp; curl -fsSLO --compressed <span class="string">&quot;https://nodejs.org/dist/v<span class="variable">$NODE_VERSION</span>/node-v<span class="variable">$NODE_VERSION</span>.tar.xz&quot;</span> \</span><br><span class="line">    &amp;&amp; tar -xf <span class="string">&quot;node-v<span class="variable">$NODE_VERSION</span>.tar.xz&quot;</span> \</span><br><span class="line">    &amp;&amp; <span class="built_in">cd</span> <span class="string">&quot;node-v<span class="variable">$NODE_VERSION</span>&quot;</span> \</span><br><span class="line">    &amp;&amp; ./configure  \</span><br><span class="line">    &amp;&amp; make -j$(getconf _NPROCESSORS_ONLN) \</span><br><span class="line">    &amp;&amp; make install \</span><br><span class="line">    &amp;&amp; <span class="built_in">cd</span> .. \</span><br><span class="line">    &amp;&amp; rm -Rf <span class="string">&quot;node-v<span class="variable">$NODE_VERSION</span>&quot;</span> \</span><br><span class="line">    &amp;&amp; rm <span class="string">&quot;node-v<span class="variable">$NODE_VERSION</span>.tar.xz&quot;</span> </span><br><span class="line"></span><br><span class="line">CMD [ <span class="string">&quot;node&quot;</span> ]</span><br></pre></td></tr></table></figure>
+
+
+
+<p>使用Dockerfile构建镜像</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[root@heyuze ~]<span class="comment"># docker build -t alpine-nodejs:v14.5.0 .</span></span><br></pre></td></tr></table></figure>
+
+<p>查看构建好的镜像</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[root@heyuze ~]<span class="comment"># docker images|grep alpine-nodejs</span></span><br><span class="line">harbor.aimmcloud.cn/aimm/alpine-nodejs   v14.5.0             235175ed9068        32 seconds ago      339MB</span><br></pre></td></tr></table></figure>
+
+<p>查看node，npm，pm2版本</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[root@heyuze ~]<span class="comment"># docker run --rm alpine-nodejs:v14.5.0 node -v</span></span><br><span class="line">v14.5.0</span><br><span class="line">[root@heyuze ~]<span class="comment"># docker run --rm alpine-nodejs:v14.5.0 npm -v</span></span><br><span class="line">6.14.5</span><br><span class="line">[root@heyuze ~]<span class="comment"># docker run --rm alpine-nodejs:v14.5.0 pm2 -v</span></span><br><span class="line"></span><br><span class="line">                        -------------</span><br><span class="line"></span><br><span class="line">__/\\\\\\\\\\\\\____/\\\\____________/\\\\____/\\\\\\\\\_____</span><br><span class="line"> _\/\\\/////////\\\_\/\\\\\\________/\\\\\\__/\\\///////\\\___</span><br><span class="line">  _\/\\\_______\/\\\_\/\\\//\\\____/\\\//\\\_\///______\//\\\__</span><br><span class="line">   _\/\\\\\\\\\\\\\/__\/\\\\///\\\/\\\/_\/\\\___________/\\\/___</span><br><span class="line">    _\/\\\/////////____\/\\\__\///\\\/___\/\\\________/\\\//_____</span><br><span class="line">     _\/\\\_____________\/\\\____\///_____\/\\\_____/\\\//________</span><br><span class="line">      _\/\\\_____________\/\\\_____________\/\\\___/\\\/___________</span><br><span class="line">       _\/\\\_____________\/\\\_____________\/\\\__/\\\\\\\\\\\\\\\_</span><br><span class="line">        _\///______________\///______________\///__\///////////////__</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">                          Runtime Edition</span><br><span class="line"></span><br><span class="line">        PM2 is a Production Process Manager <span class="keyword">for</span> Node.js applications</span><br><span class="line">                     with a built-in Load Balancer.</span><br><span class="line"></span><br><span class="line">                Start and Daemonize any application:</span><br><span class="line">                $ pm2 start app.js</span><br><span class="line"></span><br><span class="line">                Load Balance 4 instances of api.js:</span><br><span class="line">                $ pm2 start api.js -i 4</span><br><span class="line"></span><br><span class="line">                Monitor <span class="keyword">in</span> production:</span><br><span class="line">                $ pm2 monitor</span><br><span class="line"></span><br><span class="line">                Make pm2 auto-boot at server restart:</span><br><span class="line">                $ pm2 startup</span><br><span class="line"></span><br><span class="line">                To go further checkout:</span><br><span class="line">                http://pm2.io/</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">                        -------------</span><br><span class="line"></span><br><span class="line">[PM2] Spawning PM2 daemon with pm2_home=/root/.pm2</span><br><span class="line">[PM2] PM2 Successfully daemonized</span><br><span class="line">4.5.6</span><br></pre></td></tr></table></figure>
+
+<p>给镜像打tag</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[root@heyuze ~]<span class="comment"># docker tag alpine-nodejs:v14.5.0 heyuze/nodejs:v14.5.0</span></span><br></pre></td></tr></table></figure>
+
+<p>将镜像push到仓库</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[root@heyuze ~]<span class="comment"># docker push heyuze/nodejs</span></span><br><span class="line">The push refers to repository [docker.io/heyuze/nodejs]</span><br><span class="line">f5e26fb32437: Pushed</span><br><span class="line">03901b4a2ea8: Pushed</span><br><span class="line">v14.5.0: digest: sha256:25022611bd19acc6cd7f4b8e357ecd55fc27f0bde494d41e272b53c4b3cb9eef size: 741</span><br></pre></td></tr></table></figure>
+
+<h1 id="使用默认版本">2. 使用默认版本</h1><p>查看Dockerfile</p>
+<p>cat Dockerfile</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">FROM alpine:latest</span><br><span class="line">MAINTAINER yuze</span><br><span class="line">RUN apk add nodejs</span><br><span class="line">RUN apk add npm</span><br><span class="line">CMD [ <span class="string">&quot;node&quot;</span> ]</span><br></pre></td></tr></table></figure>
+
+<p>使用Dockerfile构建镜像</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">root@heyuze:/data/docker<span class="comment"># docker build -t alpine-nodejs .</span></span><br></pre></td></tr></table></figure>
+
+<p>查看构建好的镜像</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">root@heyuze:/data/docker<span class="comment"># docker images</span></span><br><span class="line">REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE</span><br><span class="line">alpine-nodejs       latest              1857723a956b        2 minutes ago       62.9MB</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+]]></content>
+      <categories>
+        <category>Docker</category>
+      </categories>
+      <tags>
+        <tag>Docker</tag>
+        <tag>NodeJS</tag>
       </tags>
   </entry>
 </search>
