@@ -5649,4 +5649,143 @@
         <tag>NodeJS</tag>
       </tags>
   </entry>
+  <entry>
+    <title>AWS 调整卷大小后扩展 Linux 文件系统</title>
+    <url>/p/47386.html</url>
+    <content><![CDATA[<p><escape><span id="more"></span></escape></p>
+<p>在<a href="https://docs.aws.amazon.com/zh_cn/AWSEC2/latest/UserGuide/requesting-ebs-volume-modifications.html">增加 EBS 卷的大小后</a>，您必须使用特定于文件系统的命令来将文件系统扩展到较大大小。一旦卷进入 <code>optimizing</code> 状态，您即可调整文件系统的大小。</p>
+<p><strong>重要</strong></p>
+<p>在扩展包含有用数据的文件系统之前，最佳实践是创建卷的快照（如果您需要回滚您的更改）。有关更多信息，请参阅 <a href="https://docs.aws.amazon.com/zh_cn/AWSEC2/latest/UserGuide/ebs-creating-snapshot.html">创建 Amazon EBS 快照</a>。如果您的 Linux AMI 使用 MBR 分区方案，您的引导卷大小限制为最高 2 TiB。有关更多信息，请参阅 <a href="https://docs.aws.amazon.com/zh_cn/AWSEC2/latest/UserGuide/modify-volume-requirements.html#linux-volumes">针对 Linux 卷的要求</a>和<a href="https://docs.aws.amazon.com/zh_cn/AWSEC2/latest/UserGuide/volume_constraints.html">针对 EBS 卷的大小和配置的限制</a>。</p>
+<p>在 Linux 上扩展文件系统的过程如下：</p>
+<ol>
+<li>您的 EBS 卷可能有一个包含文件系统和数据的分区。增加卷的大小不会增加分区的大小。在调整大小后的卷上扩展文件系统之前，请检查卷是否具有必须扩展到卷的新大小的分区。</li>
+<li>可使用特定于文件系统的命令将每个文件系统调整为新的卷容量。</li>
+</ol>
+<p>有关扩展 Windows 文件系统的信息，请参阅 <em>Amazon EC2 用户指南（适用于 Windows 实例）</em> 中的<a href="https://docs.aws.amazon.com/AWSEC2/latest/WindowsGuide/recognize-expanded-volume-windows.html">调整卷大小后扩展 Windows 文件系统</a>。</p>
+<p>以下示例将引导您完成扩展 Linux 文件系统的过程。关于此处所示的文件系统和分区方案以外的其他文件系统和分区方案，请参阅相关文件系统和分区方案的文档以获取说明。</p>
+<p><strong>注意</strong></p>
+<p>如果在 Amazon EBS 卷上使用逻辑卷，则必须使用逻辑卷管理器 (LVM) 来扩展逻辑卷。有关如何执行此操作的说明，请参阅<a href="http://aws.amazon.com/premiumsupport/knowledge-center/create-lv-on-ebs-volume/">如何在整个 EBS 卷上创建 LVM 逻辑卷？</a>中的<strong>扩展逻辑卷</strong>部分。 AWS 知识中心文章。</p>
+<p><strong>示例</strong></p>
+<ul>
+<li><a href="https://docs.aws.amazon.com/zh_cn/AWSEC2/latest/UserGuide/recognize-expanded-volume-linux.html#extend-file-system-nvme">示例：扩展 NVMe EBS 卷的文件系统</a></li>
+<li><a href="https://docs.aws.amazon.com/zh_cn/AWSEC2/latest/UserGuide/recognize-expanded-volume-linux.html#extend-file-system">示例：扩展 EBS 卷的文件系统</a></li>
+</ul>
+<h1 id="示例：扩展-NVMe-EBS-卷的文件系统">1. 示例：扩展 NVMe EBS 卷的文件系统</h1><p>对于此示例，假设您有一个基于 <a href="https://docs.aws.amazon.com/zh_cn/AWSEC2/latest/UserGuide/instance-types.html#ec2-nitro-instances">Nitro 系统</a>构建的实例，例如 M5 实例。您将引导卷的大小从 8 GB 调整为 16 GB，并将一个附加卷的大小从 8 GB 调整为 30 GB。按照以下过程扩展调整大小后的卷的文件系统。</p>
+<p><strong>扩展 NVMe EBS 卷的文件系统</strong></p>
+<ol>
+<li><a href="https://docs.aws.amazon.com/zh_cn/AWSEC2/latest/UserGuide/AccessingInstances.html">连接到您的实例</a>。</li>
+<li>要验证每个卷的文件系统，请使用 <strong>df -hT</strong> 命令。</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[ec2-user ~]$ df -hT</span><br></pre></td></tr></table></figure>
+
+<p>以下是一个实例的示例输出，该实例具有带 XFS 文件系统的引导卷和带 XFS 文件系统的附加卷。命名约定 <code>/dev/nvme[0-26]n1</code> 指示卷作为 NVMe 块储存设备公开。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[ec2-user ~]$ df -hT</span><br><span class="line">Filesystem      Type  Size  Used Avail Use% Mounted on</span><br><span class="line">/dev/nvme0n1p1  xfs   8.0G  1.6G  6.5G  20% /</span><br><span class="line">/dev/nvme1n1    xfs   8.0G   33M  8.0G   1% /data</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+<p>3.要检查卷是否具有必须扩展的分区，请使用<strong>lsblk</strong>命令显示有关附加到实例的 NVMe 块储存设备的信息。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[ec2-user ~]$ lsblk</span><br><span class="line">NAME          MAJ:MIN RM SIZE RO TYPE MOUNTPOINT</span><br><span class="line">nvme1n1       259:0    0  30G  0 disk /data</span><br><span class="line">nvme0n1       259:1    0  16G  0 disk</span><br><span class="line">└─nvme0n1p1   259:2    0   8G  0 part /</span><br><span class="line">└─nvme0n1p128 259:3    0   1M  0 part</span><br></pre></td></tr></table></figure>
+
+<p>此示例输出显示以下内容：</p>
+<ul>
+<li><ul>
+<li>根卷 <code>/dev/nvme0n1</code> 具有一个分区 <code>/dev/nvme0n1p1</code>。当根卷的大小反映新大小 16 GB 时，分区的大小会反映原始大小 8 GB 并且必须先进行扩展，然后才能扩展文件系统。</li>
+<li>卷 <code>/dev/nvme1n1</code> 没有分区。卷的大小反映新大小 30 GB。</li>
+</ul>
+</li>
+</ul>
+<p>4.对于有分区的卷，例如上一步中显示的根卷，请使用 <strong>growpart</strong> 命令扩展分区。请注意，设备名称和分区编号之间有空格。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[ec2-user ~]$ sudo growpart /dev/nvme0n1 1</span><br></pre></td></tr></table></figure>
+
+<p>5.（可选）要验证分区是否反映增大后的卷大小，可再次使用 <strong>lsblk</strong> 命令。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[ec2-user ~]$ lsblk</span><br><span class="line">NAME          MAJ:MIN RM SIZE RO TYPE MOUNTPOINT</span><br><span class="line">nvme1n1       259:0    0  30G  0 disk /data</span><br><span class="line">nvme0n1       259:1    0  16G  0 disk</span><br><span class="line">└─nvme0n1p1   259:2    0  16G  0 part /</span><br><span class="line">└─nvme0n1p128 259:3    0   1M  0 part</span><br></pre></td></tr></table></figure>
+
+<p>6.要验证每个卷的文件系统的大小，可使用 <strong>df -h</strong> 命令。在此示例输出中，两个文件系统均反映 8 GB 的原始卷大小。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[ec2-user ~]$ df -h</span><br><span class="line">Filesystem       Size  Used Avail Use% Mounted on</span><br><span class="line">/dev/nvme0n1p1   8.0G  1.6G  6.5G  20% /</span><br><span class="line">/dev/nvme1n1     8.0G   33M  8.0G   1% /data</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+<p>7.要扩展每个卷上的文件系统，请对文件系统使用正确的命令，如下所示：</p>
+<ul>
+<li>[XFS 文件系统] 要扩展每个卷上的文件系统，使用 <strong>xfs_growfs</strong> 命令。在此示例中，<code>/</code> 和 <code>/data</code> 是 <strong>df -h</strong> 的输出中显示的卷挂载点。</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[ec2-user ~]$ sudo xfs_growfs -d /</span><br><span class="line">[ec2-user ~]$ sudo xfs_growfs -d /data</span><br></pre></td></tr></table></figure>
+
+<p>如果尚未安装 XFS 工具，可以按如下方式安装。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[ec2-user ~]$ sudo yum install xfsprogs</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>[ext4 文件系统] 要扩展每个卷上的文件系统，使用 <strong>resize2fs</strong> 命令。</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[ec2-user ~]$ sudo resize2fs /dev/nvme0n1p1</span><br><span class="line">[ec2-user ~]$ sudo resize2fs /dev/nvme1n1</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>[其他文件系统] 要扩展每个卷上的文件系统，请参阅文件系统的文档以获取说明。</li>
+</ul>
+<p>8.（可选）要验证每个文件系统是否反映增大后的卷大小，可再次使用 <strong>df -h</strong> 命令。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[ec2-user ~]$ df -h</span><br><span class="line">Filesystem       Size  Used Avail Use% Mounted on</span><br><span class="line">/dev/nvme0n1p1    16G  1.6G   15G  10% /</span><br><span class="line">/dev/nvme1n1      30G   33M   30G   1% /data</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+<h1 id="示例：扩展-EBS-卷的文件系统">2. 示例：扩展 EBS 卷的文件系统</h1><p>在本示例中，假设您将某个实例（例如 T2 实例）的引导卷的大小从 8 GB 调整为 16 GB，并将一个附加卷的大小从 8 GB 调整为 30 GB。按照以下过程扩展调整大小后的卷的文件系统。</p>
+<p><strong>扩展 EBS 卷的文件系统</strong></p>
+<ol>
+<li><a href="https://docs.aws.amazon.com/zh_cn/AWSEC2/latest/UserGuide/AccessingInstances.html">连接到您的实例</a>。</li>
+<li>要验证每个卷使用的文件系统，请使用 <strong>df -hT</strong> 命令。</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[ec2-user ~]$ df -hT</span><br></pre></td></tr></table></figure>
+
+<p>以下是一个实例的示例输出，该实例具有带 ext4 文件系统的引导卷和带 XFS 文件系统的附加卷。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[ec2-user ~]$ df -hT</span><br><span class="line">Filesystem      Type  Size  Used Avail Use% Mounted on</span><br><span class="line">/dev/xvda1      ext4  8.0G  1.9G  6.2G  24% /</span><br><span class="line">/dev/xvdf1      xfs   8.0G   45M  8.0G   1% /data</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+<p>3.要检查卷是否具有必须扩展的分区，请使用 <strong>lsblk</strong> 命令显示有关附加到实例的块储存设备的信息。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[ec2-user ~]$ lsblk</span><br><span class="line">NAME    MAJ:MIN RM SIZE RO TYPE MOUNTPOINT</span><br><span class="line">xvda    202:0    0  16G  0 disk</span><br><span class="line">└─xvda1 202:1    0   8G  0 part /</span><br><span class="line">xvdf    202:80   0  30G  0 disk</span><br><span class="line">└─xvdf1 202:81   0   8G  0 part /data</span><br></pre></td></tr></table></figure>
+
+<p>此示例输出显示以下内容：</p>
+<ul>
+<li>根卷 <code>/dev/xvda</code> 具有一个分区 <code>/dev/xvda1</code>。当卷的大小为 16 GB 时，分区的大小仍为 8 GB 且必须进行扩展。</li>
+<li>卷 <code>/dev/xvdf</code> 具有一个分区 <code>/dev/xvdf1</code>。当卷的大小为 30G 时，分区的大小仍为 8 GB 且必须进行扩展。</li>
+</ul>
+<p>4.对于有分区的卷，例如上一步中显示的卷，请使用 <strong>growpart</strong> 命令扩展分区。请注意，设备名称和分区编号之间有空格。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[ec2-user ~]$ sudo growpart /dev/xvda 1</span><br><span class="line">[ec2-user ~]$ sudo growpart /dev/xvdf 1</span><br></pre></td></tr></table></figure>
+
+<p>5.（可选）要验证分区是否反映增大后的卷大小，可再次使用 <strong>lsblk</strong> 命令。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[ec2-user ~]$ lsblk</span><br><span class="line">NAME    MAJ:MIN RM SIZE RO TYPE MOUNTPOINT</span><br><span class="line">xvda    202:0    0  16G  0 disk</span><br><span class="line">└─xvda1 202:1    0  16G  0 part /</span><br><span class="line">xvdf    202:80   0  30G  0 disk</span><br><span class="line">└─xvdf1 202:81   0  30G  0 part /data</span><br></pre></td></tr></table></figure>
+
+<p>6.要验证每个卷的文件系统的大小，可使用 <strong>df -h</strong> 命令。在此示例输出中，两个文件系统均反映 8 GB 的原始卷大小。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[ec2-user ~]$ df -h</span><br><span class="line">Filesystem       Size  Used Avail Use% Mounted on</span><br><span class="line">/dev/xvda1       8.0G  1.9G  6.2G  24% /</span><br><span class="line">/dev/xvdf1       8.0G   45M  8.0G   1% /data</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+<p>7.要扩展每个卷上的文件系统，请对文件系统使用正确的命令，如下所示：</p>
+<ul>
+<li>[XFS 卷] 要扩展每个卷上的文件系统，使用 <strong>xfs_growfs</strong> 命令。在此示例中，<code>/</code> 和 <code>/data</code> 是 <strong>df -h</strong> 的输出中显示的卷挂载点。</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[ec2-user ~]$ sudo xfs_growfs -d /</span><br><span class="line">[ec2-user ~]$ sudo xfs_growfs -d /data</span><br></pre></td></tr></table></figure>
+
+<p>如果尚未安装 XFS 工具，可以按如下方式安装。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[ec2-user ~]$ sudo yum install xfsprogs</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>[ext4 卷] 要扩展每个卷上的文件系统，使用 <strong>resize2fs</strong> 命令。</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[ec2-user ~]$ sudo resize2fs /dev/xvda1</span><br><span class="line">[ec2-user ~]$ sudo resize2fs /dev/xvdf1</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>[其他文件系统] 要扩展每个卷上的文件系统，请参阅文件系统的文档以获取说明。</li>
+</ul>
+<p>8.（可选）要验证每个文件系统是否反映增大后的卷大小，可再次使用 <strong>df -h</strong> 命令。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[ec2-user ~]$ df -h</span><br><span class="line">Filesystem       Size  Used Avail Use% Mounted on</span><br><span class="line">/dev/xvda1        16G  1.9G  14G  12% /</span><br><span class="line">/dev/xvdf1        30G   45M  30G   1% /data</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+<h1 id="报错">3. 报错</h1><p>1.执行xfs_growfs时报错如下：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[ec2-user ~]$ sudo xfs_growfs -d /data</span><br><span class="line">xfs_growfs: /data is not a mounted XFS filesystem</span><br></pre></td></tr></table></figure>
+
+<p>解决方法：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[ec2-user ~]$ sudo resize2fs /dev/nvme1n1p1 </span><br><span class="line">resize2fs 1.42.9 (28-Dec-2013)</span><br><span class="line">Filesystem at /dev/nvme1n1p1 is mounted on /data; on-line resizing required</span><br><span class="line">old_desc_blocks = 25, new_desc_blocks = 38</span><br><span class="line">The filesystem on /dev/nvme1n1p1 is now 78642939 blocks long.</span><br></pre></td></tr></table></figure>
+
+<p>参考：</p>
+<blockquote>
+<p><a href="https://docs.aws.amazon.com/zh_cn/AWSEC2/latest/UserGuide/recognize-expanded-volume-linux.html">https://docs.aws.amazon.com/zh_cn/AWSEC2/latest/UserGuide/recognize-expanded-volume-linux.html</a></p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>AWS</category>
+      </categories>
+      <tags>
+        <tag>磁盘</tag>
+        <tag>AWS</tag>
+      </tags>
+  </entry>
 </search>
