@@ -166,6 +166,63 @@
   </entry>
   
   <entry>
+    <title>高效golang开发</title>
+    <link href="https://www.kubelet.cn/p/60933.html"/>
+    <id>https://www.kubelet.cn/p/60933.html</id>
+    <published>2021-10-18T06:09:20.000Z</published>
+    <updated>2021-12-23T05:53:48.223Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;&lt;escape&gt;&lt;/escape&gt;&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="golang" scheme="https://www.kubelet.cn/categories/golang/"/>
+    
+    
+    <category term="golang" scheme="https://www.kubelet.cn/tags/golang/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>go语言基础</title>
+    <link href="https://www.kubelet.cn/p/25470.html"/>
+    <id>https://www.kubelet.cn/p/25470.html</id>
+    <published>2021-10-17T06:09:20.000Z</published>
+    <updated>2021-12-23T05:53:31.432Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;&lt;escape&gt;&lt;/escape&gt;&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="golang" scheme="https://www.kubelet.cn/categories/golang/"/>
+    
+    
+    <category term="golang" scheme="https://www.kubelet.cn/tags/golang/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>搭建go语言开发环境</title>
+    <link href="https://www.kubelet.cn/p/465.html"/>
+    <id>https://www.kubelet.cn/p/465.html</id>
+    <published>2021-10-16T06:09:20.000Z</published>
+    <updated>2021-12-23T05:51:13.395Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;&lt;escape&gt;&lt;/escape&gt;&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="golang" scheme="https://www.kubelet.cn/categories/golang/"/>
+    
+    
+    <category term="golang" scheme="https://www.kubelet.cn/tags/golang/"/>
+    
+  </entry>
+  
+  <entry>
     <title>升级Windows11</title>
     <link href="https://www.kubelet.cn/p/34458.html"/>
     <id>https://www.kubelet.cn/p/34458.html</id>
@@ -354,71 +411,6 @@
     
     
     <category term="System,cpu" scheme="https://www.kubelet.cn/tags/System-cpu/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>kubeadm修改证书时间为99年</title>
-    <link href="https://www.kubelet.cn/p/23286.html"/>
-    <id>https://www.kubelet.cn/p/23286.html</id>
-    <published>2021-09-10T02:27:40.000Z</published>
-    <updated>2021-12-07T03:43:31.648Z</updated>
-    
-    
-    <summary type="html">&lt;p&gt;&lt;escape&gt;&lt;/escape&gt;&lt;/p&gt;</summary>
-    
-    
-    
-    <category term="k8s" scheme="https://www.kubelet.cn/categories/k8s/"/>
-    
-    
-    <category term="k8s" scheme="https://www.kubelet.cn/tags/k8s/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>k8s中部署ingress-nginx</title>
-    <link href="https://www.kubelet.cn/p/58551.html"/>
-    <id>https://www.kubelet.cn/p/58551.html</id>
-    <published>2021-08-13T08:08:26.000Z</published>
-    <updated>2021-12-07T03:54:54.379Z</updated>
-    
-    
-    <summary type="html">&lt;p&gt;&lt;escape&gt;&lt;/escape&gt;&lt;/p&gt;</summary>
-    
-    
-    
-    <category term="k8s" scheme="https://www.kubelet.cn/categories/k8s/"/>
-    
-    
-    <category term="k8s" scheme="https://www.kubelet.cn/tags/k8s/"/>
-    
-    <category term="Kubernetes" scheme="https://www.kubelet.cn/tags/Kubernetes/"/>
-    
-    <category term="helm" scheme="https://www.kubelet.cn/tags/helm/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>helm命令大全</title>
-    <link href="https://www.kubelet.cn/p/60919.html"/>
-    <id>https://www.kubelet.cn/p/60919.html</id>
-    <published>2021-05-19T06:47:16.000Z</published>
-    <updated>2021-12-07T03:56:34.494Z</updated>
-    
-    
-    <summary type="html">&lt;p&gt;&lt;escape&gt;&lt;/escape&gt;&lt;/p&gt;</summary>
-    
-    
-    
-    <category term="helm" scheme="https://www.kubelet.cn/categories/helm/"/>
-    
-    
-    <category term="k8s" scheme="https://www.kubelet.cn/tags/k8s/"/>
-    
-    <category term="Kubernetes" scheme="https://www.kubelet.cn/tags/Kubernetes/"/>
-    
-    <category term="helm" scheme="https://www.kubelet.cn/tags/helm/"/>
     
   </entry>
   
