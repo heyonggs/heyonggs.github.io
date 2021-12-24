@@ -204,6 +204,283 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://www.kubelet.cn/p/0.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="何宇泽">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="何宇泽">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/p/0.html" class="post-title-link" itemprop="url">未命名</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-12-24 10:17:36 / 修改时间：16:45:28" itemprop="dateCreated datePublished" datetime="2021-12-24T10:17:36+08:00">2021-12-24</time>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>15k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>14 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="使用Prometheus和Grafana监控kubernetes集群">1. 使用Prometheus和Grafana监控kubernetes集群</h1><h2 id="部署kube-state-metrics">1.1. 部署kube-state-metrics</h2><p>kube-state-metrics (KSM)是一个简单的服务，它侦听Kubernetes API服务器并生成关于对象状态的度量。(参见下面度量部分中的例子。)它不关注单个Kubernetes组件的运行状况，而是关注内部各种对象(如部署、节点和pod)的运行状况。</p>
+<h3 id="下载源码包">1.1.1. 下载源码包</h3><p>对应版本选择，我这里k8s版本是1.22，因此选择v2.3.0</p>
+<table>
+<thead>
+<tr>
+<th>kube-state-metrics</th>
+<th><strong>Kubernetes 1.19</strong></th>
+<th><strong>Kubernetes 1.20</strong></th>
+<th><strong>Kubernetes 1.21</strong></th>
+<th><strong>Kubernetes 1.22</strong></th>
+<th><strong>Kubernetes 1.23</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>v1.9.8</strong></td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr>
+<td><strong>v2.1.1</strong></td>
+<td>✓</td>
+<td>✓</td>
+<td>✓</td>
+<td>-/✓</td>
+<td>-/✓</td>
+</tr>
+<tr>
+<td><strong>v2.2.4</strong></td>
+<td>✓</td>
+<td>✓</td>
+<td>✓</td>
+<td>✓</td>
+<td>✓</td>
+</tr>
+<tr>
+<td><strong>v2.3.0</strong></td>
+<td>✓</td>
+<td>✓</td>
+<td>✓</td>
+<td>✓</td>
+<td>✓</td>
+</tr>
+<tr>
+<td><strong>master</strong></td>
+<td>✓</td>
+<td>✓</td>
+<td>✓</td>
+<td>✓</td>
+<td>✓</td>
+</tr>
+</tbody></table>
+<ul>
+<li><code>✓</code> 完全支持的版本范围。</li>
+<li><code>-</code> Kubernetes集群有一些客户端库不能使用的特性(额外的API对象，废弃的API，等等)。</li>
+</ul>
+<h4 id="下载解压">1.1.1.1. 下载解压</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">wget https://github.com/kubernetes/kube-state-metrics/archive/refs/tags/v2.3.0.zip</span><br><span class="line">unzip v2.3.0.zip</span><br><span class="line">cd kube-state-metrics-2.3.0/examples/standard</span><br></pre></td></tr></table></figure>
+
+<h4 id="查看yaml文件">1.1.1.2. 查看yaml文件</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[root@harbor k8s-yaml]# ll</span><br><span class="line">total 20</span><br><span class="line">-rw-r--r-- 1 root root  418 Dec  9 15:24 cluster-role-binding.yaml</span><br><span class="line">-rw-r--r-- 1 root root 1665 Dec  9 15:24 cluster-role.yaml</span><br><span class="line">-rw-r--r-- 1 root root 1222 Dec  9 15:24 deployment.yaml</span><br><span class="line">-rw-r--r-- 1 root root  234 Dec  9 15:24 service-account.yaml</span><br><span class="line">-rw-r--r-- 1 root root  447 Dec  9 15:24 service.yaml</span><br></pre></td></tr></table></figure>
+
+<h4 id="准备镜像">1.1.1.3. 准备镜像</h4><p>因为镜像需要科学上网才可以下载，这里我做好镜像上传到dockerhub，可直接替换</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"># 拉取镜像</span><br><span class="line">[root@app1 ~]# docker pull k8s.gcr.io/kube-state-metrics/kube-state-metrics:v2.3.0</span><br><span class="line">v2.3.0: Pulling from kube-state-metrics/kube-state-metrics</span><br><span class="line">e8614d09b7be: Pull complete </span><br><span class="line">53ccb90bafd7: Pull complete </span><br><span class="line">Digest: sha256:c9137505edaef138cc23479c73e46e9a3ef7ec6225b64789a03609c973b99030</span><br><span class="line">Status: Downloaded newer image for k8s.gcr.io/kube-state-metrics/kube-state-metrics:v2.3.0</span><br><span class="line">k8s.gcr.io/kube-state-metrics/kube-state-metrics:v2.3.0</span><br><span class="line"></span><br><span class="line"># 查看</span><br><span class="line">[root@app1 ~]# docker images|grep kube-state-metrics</span><br><span class="line">k8s.gcr.io/kube-state-metrics/kube-state-metrics   v2.3.0              df2bb3f0d0cd        2 weeks ago         38.7MB</span><br><span class="line"></span><br><span class="line"># 打tag</span><br><span class="line">[root@app1 ~]# docker tag df2bb3f0d0cd heyuze/kube-state-metrics:v2.3.0</span><br><span class="line"></span><br><span class="line"># 上传dockerhub</span><br><span class="line">[root@app1 ~]# docker push heyuze/kube-state-metrics:v2.3.0</span><br><span class="line">The push refers to repository [docker.io/heyuze/kube-state-metrics]</span><br><span class="line">cb4962d0d70b: Pushed </span><br><span class="line">6d75f23be3dd: Pushed </span><br><span class="line">v2.3.0: digest: sha256:d964b5107fb31e9020db0d3e738ba4e1fc83a242638ee7e0ae78939baaedbe59 size: 739</span><br></pre></td></tr></table></figure>
+
+<p>在deployment.yaml中将镜像替换为==heyuze/kube-state-metrics:v2.3.0==即可。</p>
+<h3 id="资源配置清单">1.1.2. 资源配置清单</h3><p><strong>deployment</strong></p>
+<p>vim deployment.yaml</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line">apiVersion: apps/v1</span><br><span class="line">kind: Deployment</span><br><span class="line">metadata:</span><br><span class="line">  labels:</span><br><span class="line">    app.kubernetes.io/component: exporter</span><br><span class="line">    app.kubernetes.io/name: kube-state-metrics</span><br><span class="line">    app.kubernetes.io/version: 2.3.0</span><br><span class="line">  name: kube-state-metrics</span><br><span class="line">  namespace: kube-system</span><br><span class="line">spec:</span><br><span class="line">  replicas: 1</span><br><span class="line">  selector:</span><br><span class="line">    matchLabels:</span><br><span class="line">      app.kubernetes.io/name: kube-state-metrics</span><br><span class="line">  template:</span><br><span class="line">    metadata:</span><br><span class="line">      labels:</span><br><span class="line">        app.kubernetes.io/component: exporter</span><br><span class="line">        app.kubernetes.io/name: kube-state-metrics</span><br><span class="line">        app.kubernetes.io/version: 2.3.0</span><br><span class="line">    spec:</span><br><span class="line">      containers:</span><br><span class="line">      - image: heyuze/kube-state-metrics:v2.3.0</span><br><span class="line">        livenessProbe:</span><br><span class="line">          httpGet:</span><br><span class="line">            path: /healthz</span><br><span class="line">            port: 8080</span><br><span class="line">          initialDelaySeconds: 5</span><br><span class="line">          timeoutSeconds: 5</span><br><span class="line">        name: kube-state-metrics</span><br><span class="line">        ports:</span><br><span class="line">        - containerPort: 8080</span><br><span class="line">          name: http-metrics</span><br><span class="line">        - containerPort: 8081</span><br><span class="line">          name: telemetry</span><br><span class="line">        readinessProbe:</span><br><span class="line">          httpGet:</span><br><span class="line">            path: /</span><br><span class="line">            port: 8081</span><br><span class="line">          initialDelaySeconds: 5</span><br><span class="line">          timeoutSeconds: 5</span><br><span class="line">        securityContext:</span><br><span class="line">          runAsUser: 65534</span><br><span class="line">      nodeSelector:</span><br><span class="line">        kubernetes.io/os: linux</span><br><span class="line">      serviceAccountName: kube-state-metrics</span><br></pre></td></tr></table></figure>
+
+<p><strong>ClusterRoleBinding</strong></p>
+<p>vim cluster-role-binding.yaml</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">apiVersion: rbac.authorization.k8s.io/v1</span><br><span class="line">kind: ClusterRoleBinding</span><br><span class="line">metadata:</span><br><span class="line">  labels:</span><br><span class="line">    app.kubernetes.io/component: exporter</span><br><span class="line">    app.kubernetes.io/name: kube-state-metrics</span><br><span class="line">    app.kubernetes.io/version: 2.3.0</span><br><span class="line">  name: kube-state-metrics</span><br><span class="line">roleRef:</span><br><span class="line">  apiGroup: rbac.authorization.k8s.io</span><br><span class="line">  kind: ClusterRole</span><br><span class="line">  name: kube-state-metrics</span><br><span class="line">subjects:</span><br><span class="line">- kind: ServiceAccount</span><br><span class="line">  name: kube-state-metrics</span><br><span class="line">  namespace: kube-system</span><br></pre></td></tr></table></figure>
+
+<p><strong>ClusterRole</strong></p>
+<p>vim cluster-role.yaml </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br></pre></td><td class="code"><pre><span class="line">apiVersion: rbac.authorization.k8s.io/v1</span><br><span class="line">kind: ClusterRole</span><br><span class="line">metadata:</span><br><span class="line">  labels:</span><br><span class="line">    app.kubernetes.io/component: exporter</span><br><span class="line">    app.kubernetes.io/name: kube-state-metrics</span><br><span class="line">    app.kubernetes.io/version: 2.3.0</span><br><span class="line">  name: kube-state-metrics</span><br><span class="line">rules:</span><br><span class="line">- apiGroups:</span><br><span class="line">  - &quot;&quot;</span><br><span class="line">  resources:</span><br><span class="line">  - configmaps</span><br><span class="line">  - secrets</span><br><span class="line">  - nodes</span><br><span class="line">  - pods</span><br><span class="line">  - services</span><br><span class="line">  - resourcequotas</span><br><span class="line">  - replicationcontrollers</span><br><span class="line">  - limitranges</span><br><span class="line">  - persistentvolumeclaims</span><br><span class="line">  - persistentvolumes</span><br><span class="line">  - namespaces</span><br><span class="line">  - endpoints</span><br><span class="line">  verbs:</span><br><span class="line">  - list</span><br><span class="line">  - watch</span><br><span class="line">- apiGroups:</span><br><span class="line">  - apps</span><br><span class="line">  resources:</span><br><span class="line">  - statefulsets</span><br><span class="line">  - daemonsets</span><br><span class="line">  - deployments</span><br><span class="line">  - replicasets</span><br><span class="line">  verbs:</span><br><span class="line">  - list</span><br><span class="line">  - watch</span><br><span class="line">- apiGroups:</span><br><span class="line">  - batch</span><br><span class="line">  resources:</span><br><span class="line">  - cronjobs</span><br><span class="line">  - jobs</span><br><span class="line">  verbs:</span><br><span class="line">  - list</span><br><span class="line">  - watch</span><br><span class="line">- apiGroups:</span><br><span class="line">  - autoscaling</span><br><span class="line">  resources:</span><br><span class="line">  - horizontalpodautoscalers</span><br><span class="line">  verbs:</span><br><span class="line">  - list</span><br><span class="line">  - watch</span><br><span class="line">- apiGroups:</span><br><span class="line">  - authentication.k8s.io</span><br><span class="line">  resources:</span><br><span class="line">  - tokenreviews</span><br><span class="line">  verbs:</span><br><span class="line">  - create</span><br><span class="line">- apiGroups:</span><br><span class="line">  - authorization.k8s.io</span><br><span class="line">  resources:</span><br><span class="line">  - subjectaccessreviews</span><br><span class="line">  verbs:</span><br><span class="line">  - create</span><br><span class="line">- apiGroups:</span><br><span class="line">  - policy</span><br><span class="line">  resources:</span><br><span class="line">  - poddisruptionbudgets</span><br><span class="line">  verbs:</span><br><span class="line">  - list</span><br><span class="line">  - watch</span><br><span class="line">- apiGroups:</span><br><span class="line">  - certificates.k8s.io</span><br><span class="line">  resources:</span><br><span class="line">  - certificatesigningrequests</span><br><span class="line">  verbs:</span><br><span class="line">  - list</span><br><span class="line">  - watch</span><br><span class="line">- apiGroups:</span><br><span class="line">  - storage.k8s.io</span><br><span class="line">  resources:</span><br><span class="line">  - storageclasses</span><br><span class="line">  - volumeattachments</span><br><span class="line">  verbs:</span><br><span class="line">  - list</span><br><span class="line">  - watch</span><br><span class="line">- apiGroups:</span><br><span class="line">  - admissionregistration.k8s.io</span><br><span class="line">  resources:</span><br><span class="line">  - mutatingwebhookconfigurations</span><br><span class="line">  - validatingwebhookconfigurations</span><br><span class="line">  verbs:</span><br><span class="line">  - list</span><br><span class="line">  - watch</span><br><span class="line">- apiGroups:</span><br><span class="line">  - networking.k8s.io</span><br><span class="line">  resources:</span><br><span class="line">  - networkpolicies</span><br><span class="line">  - ingresses</span><br><span class="line">  verbs:</span><br><span class="line">  - list</span><br><span class="line">  - watch</span><br><span class="line">- apiGroups:</span><br><span class="line">  - coordination.k8s.io</span><br><span class="line">  resources:</span><br><span class="line">  - leases</span><br><span class="line">  verbs:</span><br><span class="line">  - list</span><br><span class="line">  - watch</span><br></pre></td></tr></table></figure>
+
+<p><strong>service-account</strong></p>
+<p>vim service-account.yaml </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">apiVersion: v1</span><br><span class="line">kind: ServiceAccount</span><br><span class="line">metadata:</span><br><span class="line">  labels:</span><br><span class="line">    app.kubernetes.io/component: exporter</span><br><span class="line">    app.kubernetes.io/name: kube-state-metrics</span><br><span class="line">    app.kubernetes.io/version: 2.3.0</span><br><span class="line">  name: kube-state-metrics</span><br><span class="line">  namespace: kube-system</span><br></pre></td></tr></table></figure>
+
+<p><strong>Service</strong></p>
+<p>vim service.yaml </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">apiVersion: v1</span><br><span class="line">kind: Service</span><br><span class="line">metadata:</span><br><span class="line">  labels:</span><br><span class="line">    app.kubernetes.io/component: exporter</span><br><span class="line">    app.kubernetes.io/name: kube-state-metrics</span><br><span class="line">    app.kubernetes.io/version: 2.3.0</span><br><span class="line">  name: kube-state-metrics</span><br><span class="line">  namespace: kube-system</span><br><span class="line">spec:</span><br><span class="line">  clusterIP: None</span><br><span class="line">  ports:</span><br><span class="line">  - name: http-metrics</span><br><span class="line">    port: 8080</span><br><span class="line">    targetPort: http-metrics</span><br><span class="line">  - name: telemetry</span><br><span class="line">    port: 8081</span><br><span class="line">    targetPort: telemetry</span><br><span class="line">  selector:</span><br><span class="line">    app.kubernetes.io/name: kube-state-metrics</span><br></pre></td></tr></table></figure>
+
+<h3 id="应用资源配置清单">1.1.3. 应用资源配置清单</h3><p>master机器</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[root@k8s-master ~]# kubectl apply -f ./</span><br><span class="line">clusterrolebinding.rbac.authorization.k8s.io/kube-state-metrics created</span><br><span class="line">clusterrole.rbac.authorization.k8s.io/kube-state-metrics created</span><br><span class="line">deployment.apps/kube-state-metrics created</span><br><span class="line">serviceaccount/kube-state-metrics created</span><br><span class="line">service/kube-state-metrics created</span><br></pre></td></tr></table></figure>
+
+<p>检查启动情况</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@k8s-master ~]# kubectl get pods,svc -n kube-system|grep kube-state-metrics</span><br><span class="line">kube-state-metrics-7f8f6fc7fd-qxw8z   1/1     Running   0              87s</span><br><span class="line">service/kube-state-metrics   ClusterIP   None         &lt;none&gt;        8080/TCP,8081/TCP        87s</span><br></pre></td></tr></table></figure>
+
+<p>检查是否正常</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@k8s-master ~]# curl localhost:8080/healthz</span><br><span class="line">ok</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="部署node-exporter">1.2. 部署node-exporter</h2><h3 id="准备node-exporter镜像">1.2.1. 准备node-exporter镜像</h3><p><a target="_blank" rel="noopener" href="https://hub.docker.com/r/prom/node-exporter">node-exporter官方dockerhub地址</a><br><a target="_blank" rel="noopener" href="https://github.com/prometheus/node_exporter">node-expoerer官方github地址</a></p>
+<p>拉取镜像</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[root@harbor ~]# docker pull prom/node-exporter:v1.3.1</span><br><span class="line">v1.3.1: Pulling from prom/node-exporter</span><br><span class="line">aa2a8d90b84c: Pull complete </span><br><span class="line">b45d31ee2d7f: Pull complete </span><br><span class="line">b5db1e299295: Pull complete </span><br><span class="line">Digest: sha256:f2269e73124dd0f60a7d19a2ce1264d33d08a985aed0ee6b0b89d0be470592cd</span><br><span class="line">Status: Downloaded newer image for prom/node-exporter:v1.3.1</span><br><span class="line">docker.io/prom/node-exporter:v1.3.1</span><br></pre></td></tr></table></figure>
+
+<p>查看拉取的镜像</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@harbor ~]# docker images</span><br><span class="line">REPOSITORY                                      TAG                 IMAGE ID            CREATED             SIZE</span><br><span class="line">prom/node-exporter                              v1.3.1              1dbe0e931976        2 weeks ago         20.9MB</span><br></pre></td></tr></table></figure>
+
+<p>打tag</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@harbor ~]# docker tag 1dbe0e931976 heyuze/node-exporter:v1.3.1</span><br></pre></td></tr></table></figure>
+
+<p>查看打成功的tag</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@harbor ~]# docker images</span><br><span class="line">REPOSITORY                                       TAG                 IMAGE ID            CREATED             SIZE</span><br><span class="line">heyuze/node-exporter                             v1.3.1              1dbe0e931976        2 weeks ago         20.9MB</span><br><span class="line">prom/node-exporter                               v1.3.1              1dbe0e931976        2 weeks ago         20.9MB</span><br></pre></td></tr></table></figure>
+
+<p>推送到镜像仓库</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[root@harbor ~]# docker push heyuze/node-exporter:v1.3.1</span><br><span class="line">The push refers to repository [docker.io/heyuze/node-exporter]</span><br><span class="line">5f6d9bc8e23d: Mounted from prom/node-exporter </span><br><span class="line">8d42cad20cac: Mounted from prom/node-exporter </span><br><span class="line">36b45d63da70: Mounted from prom/node-exporter </span><br><span class="line">v1.3.1: digest: sha256:d5b2a2e2bb07a4a5a7c4bd9e54641cab63e1d2627622dbde17efc04849d3d30d size: 948</span><br></pre></td></tr></table></figure>
+
+<h3 id="准备资源配置清单">1.2.2. 准备资源配置清单</h3><p>vim /data/k8s-yaml/node-exporter/node-exporter-ds.yaml</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line">kind: DaemonSet</span><br><span class="line">apiVersion: apps/v1</span><br><span class="line">metadata:</span><br><span class="line">  name: node-exporter</span><br><span class="line">  namespace: kube-system</span><br><span class="line">  labels:</span><br><span class="line">    daemon: &quot;node-exporter&quot;</span><br><span class="line">    grafanak8sapp: &quot;true&quot;</span><br><span class="line">spec:</span><br><span class="line">  selector:</span><br><span class="line">    matchLabels:</span><br><span class="line">      daemon: &quot;node-exporter&quot;</span><br><span class="line">      grafanak8sapp: &quot;true&quot;</span><br><span class="line">  template:</span><br><span class="line">    metadata:</span><br><span class="line">      name: node-exporter</span><br><span class="line">      labels:</span><br><span class="line">        daemon: &quot;node-exporter&quot;</span><br><span class="line">        grafanak8sapp: &quot;true&quot;</span><br><span class="line">    spec:</span><br><span class="line">      volumes:</span><br><span class="line">      - name: proc</span><br><span class="line">        hostPath: </span><br><span class="line">          path: /proc</span><br><span class="line">          type: &quot;&quot;</span><br><span class="line">      - name: sys</span><br><span class="line">        hostPath:</span><br><span class="line">          path: /sys</span><br><span class="line">          type: &quot;&quot;</span><br><span class="line">      imagePullSecrets:</span><br><span class="line">      - name: registry-pull-secret</span><br><span class="line">      containers:</span><br><span class="line">      - name: node-exporter</span><br><span class="line">        image: heyuze/node-exporter:v1.3.1</span><br><span class="line">        imagePullPolicy: IfNotPresent</span><br><span class="line">        args:</span><br><span class="line">        - --path.procfs=/host_proc</span><br><span class="line">        - --path.sysfs=/host_sys</span><br><span class="line">        ports:</span><br><span class="line">        - name: node-exporter</span><br><span class="line">          hostPort: 9100</span><br><span class="line">          containerPort: 9100</span><br><span class="line">          protocol: TCP</span><br><span class="line">        volumeMounts:</span><br><span class="line">        - name: sys</span><br><span class="line">          readOnly: true</span><br><span class="line">          mountPath: /host_sys</span><br><span class="line">        - name: proc</span><br><span class="line">          readOnly: true</span><br><span class="line">          mountPath: /host_proc</span><br><span class="line">      hostNetwork: true</span><br></pre></td></tr></table></figure>
+
+<h3 id="应用资源配置清单-1">1.2.3. 应用资源配置清单</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@k8s-master1 ~]# kubectl apply -f https://www.kubelet.cn/k8s-yaml/node-exporter/node-exporter-ds.yaml</span><br><span class="line">daemonset.apps/node-exporter created</span><br></pre></td></tr></table></figure>
+
+<p>检查启动情况</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@k8s-master1 ~]# kubectl get pod -n kube-system|grep node-exporter</span><br><span class="line">node-exporter-rh7fx                   1/1     Running   0               40s</span><br><span class="line">node-exporter-vgnzt                   1/1     Running   0               40s</span><br></pre></td></tr></table></figure>
+
+<p>健康监控状况</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@k8s-node1 ~]#  curl localhost:9100/metrics</span><br></pre></td></tr></table></figure>
+
+<p>只要可以获取到节点数据就表示正常</p>
+<h2 id="部署cadvisor">1.3. 部署cadvisor</h2><p> cAdvisor对Node机器上的资源及容器进行实时监控和性能数据采集，包括CPU使用情况、内存使用情况、网络吞吐量及文件系统使用情况，cAdvisor集成在Kubelet中，当kubelet启动时会自动启动cAdvisor，即一个cAdvisor仅对一台Node机器进行监控。kubelet的启动参数–cadvisor-port可以定义cAdvisor对外提供服务的端口，默认为4194。可以通过浏览器访问。</p>
+<h3 id="准备cadvisor镜像">1.3.1. 准备cadvisor镜像</h3><p><a target="_blank" rel="noopener" href="https://hub.docker.com/r/google/cadvisor">cadvisor官方dockerhub地址</a><br><a target="_blank" rel="noopener" href="https://github.com/google/cadvisor">cadvisor官方github地址</a></p>
+<p><a target="_blank" rel="noopener" href="https://gcr.io/cadvisor/cadvisor">cadvisor官方gcr地址</a></p>
+<p>由于google已经不在dockerhub更新cadvisor镜像，最新的镜像都更新到<code>gcr.io/cadvisor/cadvisor</code>，我这里下载后上传到dockerhub，修改镜像地址即可。</p>
+<p>拉取镜像</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[root@harbor harbor]# docker pull gcr.io/cadvisor/cadvisor:v0.43.0</span><br><span class="line">v0.43.0: Pulling from cadvisor/cadvisor</span><br><span class="line">e519532ddf75: Pull complete </span><br><span class="line">2e08db3b6bd0: Pull complete </span><br><span class="line">83f705f3387b: Pull complete </span><br><span class="line">7f10f7c55689: Pull complete </span><br><span class="line">3fdbcd5b103f: Pull complete </span><br><span class="line">Digest: sha256:89e6137f068ded2e9a3a012ce71260b9afc57a19305842aa1074239841a539a7</span><br><span class="line">Status: Downloaded newer image for gcr.io/cadvisor/cadvisor:v0.43.0</span><br><span class="line">gcr.io/cadvisor/cadvisor:v0.43.0</span><br></pre></td></tr></table></figure>
+
+<p>查看镜像</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@harbor harbor]# docker images</span><br><span class="line">REPOSITORY                                       TAG                 IMAGE ID            CREATED             SIZE</span><br><span class="line">gcr.io/cadvisor/cadvisor                         v0.43.0             80f16aa8c3c8        6 weeks ago         87.5MB</span><br></pre></td></tr></table></figure>
+
+<p>打tag</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@harbor harbor]# docker tag 80f16aa8c3c8 heyuze/cadvisor:v0.43.0</span><br></pre></td></tr></table></figure>
+
+<p>推送</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[root@harbor harbor]# docker push heyuze/cadvisor:v0.43.0</span><br><span class="line">The push refers to repository [docker.io/heyuze/cadvisor]</span><br><span class="line">f2485927f8bd: Pushed </span><br><span class="line">571a7fddbc78: Pushed </span><br><span class="line">f1e964b32d2a: Pushed </span><br><span class="line">41768b6793f5: Pushed </span><br><span class="line">e6688e911f15: Pushed </span><br><span class="line">v0.43.0: digest: sha256:89e6137f068ded2e9a3a012ce71260b9afc57a19305842aa1074239841a539a7 size: 1373</span><br></pre></td></tr></table></figure>
+
+<h3 id="准备资源配置清单-1">1.3.2. 准备资源配置清单</h3><p>vi /data/k8s-yaml/cadvisor/daemonset.yaml</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line">apiVersion: apps/v1</span><br><span class="line">kind: DaemonSet</span><br><span class="line">metadata:</span><br><span class="line">  name: cadvisor</span><br><span class="line">  namespace: kube-system</span><br><span class="line">  labels:</span><br><span class="line">    app: cadvisor</span><br><span class="line">spec:</span><br><span class="line">  selector:</span><br><span class="line">    matchLabels:</span><br><span class="line">      name: cadvisor</span><br><span class="line">  template:</span><br><span class="line">    metadata:</span><br><span class="line">      labels:</span><br><span class="line">        name: cadvisor</span><br><span class="line">    spec:</span><br><span class="line">      hostNetwork: true</span><br><span class="line">      tolerations:</span><br><span class="line">      - key: node-role.kubernetes.io/master</span><br><span class="line">        effect: NoSchedule</span><br><span class="line">      containers:</span><br><span class="line">      - name: cadvisor</span><br><span class="line">        image: heyuze/cadvisor:v0.43.0</span><br><span class="line">        imagePullPolicy: IfNotPresent</span><br><span class="line">        volumeMounts:</span><br><span class="line">        - name: rootfs</span><br><span class="line">          mountPath: /rootfs</span><br><span class="line">          readOnly: true</span><br><span class="line">        - name: var-run</span><br><span class="line">          mountPath: /var/run</span><br><span class="line">        - name: sys</span><br><span class="line">          mountPath: /sys</span><br><span class="line">          readOnly: true</span><br><span class="line">        - name: docker</span><br><span class="line">          mountPath: /var/lib/docker</span><br><span class="line">          readOnly: true</span><br><span class="line">        ports:</span><br><span class="line">          - name: http</span><br><span class="line">            containerPort: 4194</span><br><span class="line">            protocol: TCP</span><br><span class="line">        readinessProbe:</span><br><span class="line">          tcpSocket:</span><br><span class="line">            port: 4194</span><br><span class="line">          initialDelaySeconds: 5</span><br><span class="line">          periodSeconds: 10</span><br><span class="line">        args:</span><br><span class="line">          - --housekeeping_interval=10s</span><br><span class="line">          - --port=4194</span><br><span class="line">      terminationGracePeriodSeconds: 30</span><br><span class="line">      volumes:</span><br><span class="line">      - name: rootfs</span><br><span class="line">        hostPath:</span><br><span class="line">          path: /</span><br><span class="line">      - name: var-run</span><br><span class="line">        hostPath:</span><br><span class="line">          path: /var/run</span><br><span class="line">      - name: sys</span><br><span class="line">        hostPath:</span><br><span class="line">          path: /sys</span><br><span class="line">      - name: docker</span><br><span class="line">        hostPath:</span><br><span class="line">          path: /data/docker</span><br></pre></td></tr></table></figure>
+
+<h3 id="修改运算节点软连接">1.3.3. 修改运算节点软连接</h3><p>所有运算节点上：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[root@k8s-node1 ~]# mount -o remount,rw /sys/fs/cgroup/</span><br><span class="line">[root@k8s-node1 ~]# ln -s /sys/fs/cgroup/cpu,cpuacct /sys/fs/cgroup/cpuacct,cpu</span><br><span class="line">[root@k8s-master1 ~]# ll /sys/fs/cgroup/ | grep cpu</span><br><span class="line">lrwxrwxrwx 1 root root 11 Feb 26 13:36 cpu -&gt; cpu,cpuacct</span><br><span class="line">lrwxrwxrwx 1 root root 11 Feb 26 13:36 cpuacct -&gt; cpu,cpuacct</span><br><span class="line">lrwxrwxrwx 1 root root 27 Mar 11 12:54 cpuacct,cpu -&gt; /sys/fs/cgroup/cpu,cpuacct/</span><br><span class="line">drwxr-xr-x 5 root root  0 Feb 26 13:36 cpu,cpuacct</span><br><span class="line">drwxr-xr-x 3 root root  0 Feb 26 13:36 cpuset</span><br></pre></td></tr></table></figure>
+
+<h3 id="应用资源配置清单-2">1.3.4. 应用资源配置清单</h3><p>任意运算节点上：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@k8s-master ~]# kubectl apply -f http://www.kubelet.cn/k8s-yaml/cadvisor/daemonset.yaml</span><br><span class="line">daemonset.apps/cadvisor created</span><br></pre></td></tr></table></figure>
+
+<p>查看运行端口（node节点）</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@k8s-node1 ~]# netstat -luntp|grep 4194</span><br><span class="line">tcp6       0      0 :::4194                 :::*                    LISTEN      1634868/cadvisor    </span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="部署blackbox-exporter">1.4. 部署blackbox-exporter</h2><h3 id="准备blackbox-exporter镜像">1.4.1. 准备blackbox-exporter镜像</h3><p><a target="_blank" rel="noopener" href="https://hub.docker.com/r/prom/blackbox-exporter">blackbox-exporter官方dockerhub地址</a><br><a target="_blank" rel="noopener" href="https://github.com/prometheus/blackbox_exporter">blackbox-exporter官方github地址</a></p>
+<p>拉取镜像</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[root@harbor ~]# docker pull prom/blackbox-exporter:v0.19.0</span><br><span class="line">v0.19.0: Pulling from prom/blackbox-exporter</span><br><span class="line">aa2a8d90b84c: Pull complete </span><br><span class="line">b45d31ee2d7f: Pull complete </span><br><span class="line">1603b92f0389: Pull complete </span><br><span class="line">a8140d619b2f: Pull complete </span><br><span class="line">Digest: sha256:94de5897eef1b3c1ba7fbfebb9af366e032c0ff915a52c0066ff2e0c1bcd2e45</span><br><span class="line">Status: Downloaded newer image for prom/blackbox-exporter:v0.19.0</span><br><span class="line">docker.io/prom/blackbox-exporter:v0.19.0</span><br></pre></td></tr></table></figure>
+
+<p>查看镜像</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@harbor ~]# docker images</span><br><span class="line">REPOSITORY                                    TAG                 IMAGE ID            CREATED         SIZE</span><br><span class="line">prom/blackbox-exporter                        v0.19.0             c9e462ce1ee4        7 months ago    20.9MB</span><br></pre></td></tr></table></figure>
+
+<p>打tag</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@harbor ~]# docker tag c9e462ce1ee4 heyuze/blackbox-exporter:v0.19.0</span><br></pre></td></tr></table></figure>
+
+<p>推送</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[root@harbor ~]# docker push heyuze/blackbox-exporter:v0.19.0</span><br><span class="line">The push refers to repository [harbor.gong-hui.com/gonghui/blackbox-exporter]</span><br><span class="line">256c4aa8ebe5: Pushed </span><br><span class="line">4b6cc55de649: Pushed </span><br><span class="line">986894c42222: Pushed </span><br><span class="line">adab5d09ba79: Pushed </span><br><span class="line">v0.15.1: digest: sha256:c20445e0cc628fa4b227fe2f694c22a314beb43fd8297095b6ee6cbc67161336 size: 1155</span><br></pre></td></tr></table></figure>
+
+<h3 id="准备资源配置清单-2">1.4.2. 准备资源配置清单</h3><p><strong>ConfigMap</strong></p>
+<p>/data/k8s-yaml/blackbox-exporter/configmap.yaml</p>
+<p>[root@harbor ~]# </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">apiVersion: v1</span><br><span class="line">kind: ConfigMap</span><br><span class="line">metadata:</span><br><span class="line">  labels:</span><br><span class="line">    app: blackbox-exporter</span><br><span class="line">  name: blackbox-exporter</span><br><span class="line">  namespace: kube-system</span><br><span class="line">data:</span><br><span class="line">  blackbox.yml: |-</span><br><span class="line">    modules:</span><br><span class="line">      http_2xx:</span><br><span class="line">        prober: http</span><br><span class="line">        timeout: 2s</span><br><span class="line">        http:</span><br><span class="line">          valid_http_versions: [&quot;HTTP/1.1&quot;, &quot;HTTP/2&quot;]</span><br><span class="line">          valid_status_codes: [200,301,302]</span><br><span class="line">          method: GET</span><br><span class="line">          preferred_ip_protocol: &quot;ip4&quot;</span><br><span class="line">      tcp_connect:</span><br><span class="line">        prober: tcp</span><br><span class="line">        timeout: 2s</span><br></pre></td></tr></table></figure>
+
+<p><strong>Deployment</strong></p>
+<p>/data/k8s-yaml/blackbox-exporter/deployment.yaml</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line">kind: Deployment</span><br><span class="line">apiVersion: apps/v1</span><br><span class="line">metadata:</span><br><span class="line">  name: blackbox-exporter</span><br><span class="line">  namespace: kube-system</span><br><span class="line">  labels:</span><br><span class="line">    app: blackbox-exporter</span><br><span class="line">  annotations:</span><br><span class="line">    deployment.kubernetes.io/revision: 1</span><br><span class="line">spec:</span><br><span class="line">  replicas: 1</span><br><span class="line">  selector:</span><br><span class="line">    matchLabels:</span><br><span class="line">      app: blackbox-exporter</span><br><span class="line">  template:</span><br><span class="line">    metadata:</span><br><span class="line">      labels:</span><br><span class="line">        app: blackbox-exporter</span><br><span class="line">    spec:</span><br><span class="line">      volumes:</span><br><span class="line">      - name: config</span><br><span class="line">        configMap:</span><br><span class="line">          name: blackbox-exporter</span><br><span class="line">          defaultMode: 420</span><br><span class="line">      containers:</span><br><span class="line">      - name: blackbox-exporter</span><br><span class="line">        image: heyuze/blackbox-exporter:v0.19.0</span><br><span class="line">        imagePullPolicy: IfNotPresent</span><br><span class="line">        args:</span><br><span class="line">        - --config.file=/etc/blackbox_exporter/blackbox.yml</span><br><span class="line">        - --log.level=info</span><br><span class="line">        - --web.listen-address=:9115</span><br><span class="line">        ports:</span><br><span class="line">        - name: blackbox-port</span><br><span class="line">          containerPort: 9115</span><br><span class="line">          protocol: TCP</span><br><span class="line">        resources:</span><br><span class="line">          limits:</span><br><span class="line">            cpu: 200m</span><br><span class="line">            memory: 256Mi</span><br><span class="line">          requests:</span><br><span class="line">            cpu: 100m</span><br><span class="line">            memory: 50Mi</span><br><span class="line">        volumeMounts:</span><br><span class="line">        - name: config</span><br><span class="line">          mountPath: /etc/blackbox_exporter</span><br><span class="line">        readinessProbe:</span><br><span class="line">          tcpSocket:</span><br><span class="line">            port: 9115</span><br><span class="line">          initialDelaySeconds: 5</span><br><span class="line">          timeoutSeconds: 5</span><br><span class="line">          periodSeconds: 10</span><br><span class="line">          successThreshold: 1</span><br><span class="line">          failureThreshold: 3</span><br></pre></td></tr></table></figure>
+
+<p><strong>Service</strong></p>
+<p>/data/k8s-yaml/blackbox-exporter/service.yaml</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">kind: Service</span><br><span class="line">apiVersion: v1</span><br><span class="line">metadata:</span><br><span class="line">  name: blackbox-exporter</span><br><span class="line">  namespace: kube-system</span><br><span class="line">spec:</span><br><span class="line">  selector:</span><br><span class="line">    app: blackbox-exporter</span><br><span class="line">  ports:</span><br><span class="line">    - name: blackbox-port</span><br><span class="line">      protocol: TCP</span><br><span class="line">      port: 9115</span><br></pre></td></tr></table></figure>
+
+<p><strong>Ingress</strong></p>
+<p>/data/k8s-yaml/blackbox-exporter/ingress.yaml</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">apiVersion: extensions/v1beta1</span><br><span class="line">kind: Ingress</span><br><span class="line">metadata:</span><br><span class="line">  name: blackbox-exporter</span><br><span class="line">  namespace: kube-system</span><br><span class="line">spec:</span><br><span class="line">  rules:</span><br><span class="line"></span><br><span class="line">  - host: blackbox.kubelet.cn</span><br><span class="line">    http:</span><br><span class="line">      paths:</span><br><span class="line">      - path: /</span><br><span class="line">        backend:</span><br><span class="line">          serviceName: blackbox-exporter</span><br><span class="line">          servicePort: blackbox-port</span><br></pre></td></tr></table></figure>
+
+<h3 id="应用资源配置清单-3">1.4.3. 应用资源配置清单</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[root@k8s-master1 ~]# kubectl apply -f https://www.kubele.cn/k8s-yaml/blackbox-exporter/configmap.yaml</span><br><span class="line">configmap/blackbox-exporter created</span><br><span class="line">[root@k8s-master1 ~]# kubectl apply -f https://www.kubele.cn/k8s-yaml/blackbox-exporter/deployment.yaml</span><br><span class="line">error: unable to recognize &quot;http://k8s-yaml.gong-hui.com/blackbox-exporter/deployment.yaml&quot;: no matches for kind &quot;Deployment&quot; in version &quot;extensions/v1beta1&quot;</span><br><span class="line">[root@k8s-master1 ~]# </span><br><span class="line">[root@k8s-master1 ~]# </span><br><span class="line">[root@k8s-master1 ~]# kubectl apply -f https://www.kubele.cn/k8s-yaml/blackbox-exporter/deployment.yaml</span><br><span class="line">deployment.apps/blackbox-exporter created</span><br><span class="line">[root@k8s-master1 ~]# kubectl apply -f https://www.kubele.cn/k8s-yaml/blackbox-exporter/service.yaml</span><br><span class="line">service/blackbox-exporter created</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      
+    </div>
+
+    
+    
+    
+
+<div>
+  
+</div>
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://www.kubelet.cn/p/14936.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -817,7 +1094,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-12-07 11:55:08" itemprop="dateModified" datetime="2021-12-07T11:55:08+08:00">2021-12-07</time>
+                <time title="修改时间：2021-12-24 16:56:42" itemprop="dateModified" datetime="2021-12-24T16:56:42+08:00">2021-12-24</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -825,7 +1102,7 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/k8s/" itemprop="url" rel="index"><span itemprop="name">k8s</span></a>
+                  <a href="/categories/Kubernetes/" itemprop="url" rel="index"><span itemprop="name">Kubernetes</span></a>
                 </span>
             </span>
 
@@ -984,7 +1261,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://www.kubelet.cn/p/25470.html">
+    <link itemprop="mainEntityOfPage" href="https://www.kubelet.cn/p/60540.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -998,7 +1275,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/p/25470.html" class="post-title-link" itemprop="url">go语言基础</a>
+            <a href="/p/60540.html" class="post-title-link" itemprop="url">go语言数据类型</a>
         </h2>
 
         <div class="post-meta">
@@ -1008,14 +1285,14 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2021-10-17 14:09:20" itemprop="dateCreated datePublished" datetime="2021-10-17T14:09:20+08:00">2021-10-17</time>
+              <time title="创建时间：2021-10-18 14:09:20" itemprop="dateCreated datePublished" datetime="2021-10-18T14:09:20+08:00">2021-10-18</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-12-23 13:54:36" itemprop="dateModified" datetime="2021-12-23T13:54:36+08:00">2021-12-23</time>
+                <time title="修改时间：2021-12-23 14:00:02" itemprop="dateModified" datetime="2021-12-23T14:00:02+08:00">2021-12-23</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -1033,14 +1310,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>2.3k</span>
+              <span>0</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>2 分钟</span>
+              <span>1 分钟</span>
             </span>
 
         </div>
@@ -1055,106 +1332,7 @@
           <p><escape></escape></p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/p/25470.html#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-<div>
-  
-</div>
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://www.kubelet.cn/p/465.html">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="何宇泽">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="何宇泽">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/p/465.html" class="post-title-link" itemprop="url">搭建go语言开发环境</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-10-16 14:09:20" itemprop="dateCreated datePublished" datetime="2021-10-16T14:09:20+08:00">2021-10-16</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-12-23 13:54:36" itemprop="dateModified" datetime="2021-12-23T13:54:36+08:00">2021-12-23</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/golang/" itemprop="url" rel="index"><span itemprop="name">golang</span></a>
-                </span>
-            </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>3k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>3 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p><escape></escape></p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/p/465.html#more" rel="contents">
+              <a class="btn" href="/p/60540.html#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -1248,13 +1426,13 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">61</span>
+          <span class="site-state-item-count">63</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
-        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-count">26</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
@@ -1590,12 +1768,12 @@ if(canvas.getContext){
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">424k</span>
+    <span title="站点总字数">440k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">6:26</span>
+    <span title="站点阅读时长">6:40</span>
 </div>
   <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">京ICP备19003190号-2 </a>
       <img src="https://cdn.jsdelivr.net/gh/heyonggs/images@master/wp/2021/beian/202110221040632.png" style="display: inline-block;"><a href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=11010502047382" rel="noopener" target="_blank">京公网安备 11010502047382号 </a>
