@@ -6947,9 +6947,10 @@
       </tags>
   </entry>
   <entry>
-    <title></title>
-    <url>/p/0.html</url>
-    <content><![CDATA[<h1 id="修改hosts文件">1. 修改hosts文件</h1><p>打开网站<a href="https://www.ipaddress.com/">https://www.ipaddress.com/</a></p>
+    <title>Github访问慢的解决方法</title>
+    <url>/p/61502.html</url>
+    <content><![CDATA[<p><escape><span id="more"></span></escape></p>
+<h1 id="修改hosts文件">1. 修改hosts文件</h1><p>打开网站<a href="https://www.ipaddress.com/">https://www.ipaddress.com/</a></p>
 <p>查询 github.global.ssl.fastly.net 和 github.com 两个地址</p>
 <p>修改本地的DNS解析 修改host文件</p>
 <p>window的host文件位置</p>
@@ -6971,11 +6972,18 @@
 </blockquote>
 <p>UU 加速器是永久免费加速 GitHub 的，安装后搜索github，点击加速即可。</p>
 ]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>Linux</tag>
+      </tags>
   </entry>
   <entry>
-    <title></title>
-    <url>/p/1.html</url>
-    <content><![CDATA[<h1 id="国内DNS服务">1. 国内DNS服务</h1><h2 id="【推荐】114DNS">1.1. 【推荐】114DNS</h2><ul>
+    <title>国内常用DNS汇总</title>
+    <url>/p/18903.html</url>
+    <content><![CDATA[<p><escape><span id="more"></span></escape></p>
+<h1 id="国内DNS服务">1. 国内DNS服务</h1><h2 id="【推荐】114DNS">1.1. 【推荐】114DNS</h2><ul>
 <li>公共DNS<br>主：114.114.114.114<br>备：114.114.115.115</li>
 <li>网银安全DNS<br>主：114.114.114.119<br>备：114.114.115.119</li>
 <li>儿童保护DNS<br>主：114.114.114.110<br>备：114.114.115.110</li>
@@ -7017,5 +7025,12 @@
 <li>IPv4<br>主：4.2.2.1<br>备：4.2.2.2</li>
 </ul>
 ]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>Linux</tag>
+        <tag>DNS</tag>
+      </tags>
   </entry>
 </search>

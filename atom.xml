@@ -6,7 +6,7 @@
   <link href="https://www.kubelet.cn/atom.xml" rel="self"/>
   
   <link href="https://www.kubelet.cn/"/>
-  <updated>2021-12-28T01:32:21.404Z</updated>
+  <updated>2021-12-30T07:50:49.335Z</updated>
   <id>https://www.kubelet.cn/</id>
   
   <author>
@@ -17,54 +17,11 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
-    <title></title>
-    <link href="https://www.kubelet.cn/p/0.html"/>
-    <id>https://www.kubelet.cn/p/0.html</id>
-    <published>2021-12-27T06:05:47.667Z</published>
-    <updated>2021-12-28T01:32:21.404Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;h1 id=&quot;修改hosts文件&quot;&gt;1. 修改hosts文件&lt;/h1&gt;&lt;p&gt;打开网站&lt;a href=&quot;https://www.ipaddress.com/&quot;&gt;https://www.ipaddress.com/&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;查询</summary>
-        
-      
-    
-    
-    
-    
-  </entry>
-  
-  <entry>
-    <title></title>
-    <link href="https://www.kubelet.cn/p/1.html"/>
-    <id>https://www.kubelet.cn/p/1.html</id>
-    <published>2021-12-27T05:55:46.825Z</published>
-    <updated>2021-12-27T05:57:04.531Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;h1 id=&quot;国内DNS服务&quot;&gt;1. 国内DNS服务&lt;/h1&gt;&lt;h2 id=&quot;【推荐】114DNS&quot;&gt;1.1.</summary>
-        
-      
-    
-    
-    
-    
-  </entry>
-  
-  <entry>
     <title>使用Prometheus和Grafana监控kubernetes集群</title>
     <link href="https://www.kubelet.cn/p/42107.html"/>
     <id>https://www.kubelet.cn/p/42107.html</id>
     <published>2021-12-24T02:17:36.015Z</published>
-    <updated>2021-12-28T07:08:56.590Z</updated>
+    <updated>2021-12-30T07:50:49.335Z</updated>
     
     
     <summary type="html">&lt;p&gt;&lt;escape&gt;&lt;/escape&gt;&lt;/p&gt;</summary>
@@ -414,6 +371,50 @@
     <category term="网络" scheme="https://www.kubelet.cn/tags/%E7%BD%91%E7%BB%9C/"/>
     
     <category term="FRP" scheme="https://www.kubelet.cn/tags/FRP/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Kubernetes桌面客户端Lens</title>
+    <link href="https://www.kubelet.cn/p/27615.html"/>
+    <id>https://www.kubelet.cn/p/27615.html</id>
+    <published>2021-09-24T08:56:14.000Z</published>
+    <updated>2021-12-07T03:43:37.845Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;&lt;escape&gt;&lt;/escape&gt;&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="Kubernetes" scheme="https://www.kubelet.cn/categories/Kubernetes/"/>
+    
+    
+    <category term="容器" scheme="https://www.kubelet.cn/tags/%E5%AE%B9%E5%99%A8/"/>
+    
+    <category term="k8s" scheme="https://www.kubelet.cn/tags/k8s/"/>
+    
+    <category term="Kubernetes" scheme="https://www.kubelet.cn/tags/Kubernetes/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>kubeadm平滑升级集群</title>
+    <link href="https://www.kubelet.cn/p/23481.html"/>
+    <id>https://www.kubelet.cn/p/23481.html</id>
+    <published>2021-09-24T02:30:51.000Z</published>
+    <updated>2021-12-24T08:57:13.020Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;&lt;escape&gt;&lt;/escape&gt;&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="Kubernetes" scheme="https://www.kubelet.cn/categories/Kubernetes/"/>
+    
+    
+    <category term="k8s" scheme="https://www.kubelet.cn/tags/k8s/"/>
+    
+    <category term="Kubernetes" scheme="https://www.kubelet.cn/tags/Kubernetes/"/>
     
   </entry>
   
