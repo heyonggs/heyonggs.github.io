@@ -23,18 +23,19 @@
     var CONFIG = {"hostname":"www.kubelet.cn","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"onmobile":false,"b2t":true,"scrollpercent":true},"copycode":{"enable":true,"show_result":true,"style":"default"},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta property="og:type" content="article">
-<meta property="og:title" content="Nginx更换SSL证书">
-<meta property="og:url" content="https://www.kubelet.cn/p/63588.html">
+  <meta name="description" content="1. 国内DNS服务1.1. 【推荐】114DNS 公共DNS主：114.114.114.114备：114.114.115.115 网银安全DNS主：114.114.114.119备：114.114.115.119 儿童保护DNS主：114.114.114.110备：114.114.115.110  1.2. 【推荐】腾讯 DNSPod IPv4主：119.29.29.29备：182.254.11">
+<meta property="og:type" content="article">
+<meta property="og:title" content="何宇泽">
+<meta property="og:url" content="https://www.kubelet.cn/p/1.html">
 <meta property="og:site_name" content="何宇泽">
+<meta property="og:description" content="1. 国内DNS服务1.1. 【推荐】114DNS 公共DNS主：114.114.114.114备：114.114.115.115 网银安全DNS主：114.114.114.119备：114.114.115.119 儿童保护DNS主：114.114.114.110备：114.114.115.110  1.2. 【推荐】腾讯 DNSPod IPv4主：119.29.29.29备：182.254.11">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2021-09-18T09:40:04.000Z">
-<meta property="article:modified_time" content="2021-12-07T03:52:27.969Z">
+<meta property="article:published_time" content="2021-12-27T05:55:46.825Z">
+<meta property="article:modified_time" content="2021-12-27T05:57:04.531Z">
 <meta property="article:author" content="何宇泽">
-<meta property="article:tag" content="Nginx">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="https://www.kubelet.cn/p/63588.html">
+<link rel="canonical" href="https://www.kubelet.cn/p/1.html">
 
 
 <script id="page-configurations">
@@ -47,7 +48,7 @@
   };
 </script>
 
-  <title>Nginx更换SSL证书 | 何宇泽</title>
+  <title> | 何宇泽</title>
   
 
 
@@ -208,7 +209,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://www.kubelet.cn/p/63588.html">
+    <link itemprop="mainEntityOfPage" href="https://www.kubelet.cn/p/1.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -221,7 +222,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          Nginx更换SSL证书
+          
         </h1>
 
         <div class="post-meta">
@@ -230,24 +231,9 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
+              
 
-              <time title="创建时间：2021-09-18 17:40:04" itemprop="dateCreated datePublished" datetime="2021-09-18T17:40:04+08:00">2021-09-18</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-12-07 11:52:27" itemprop="dateModified" datetime="2021-12-07T11:52:27+08:00">2021-12-07</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Nginx/" itemprop="url" rel="index"><span itemprop="name">Nginx</span></a>
-                </span>
+              <time title="创建时间：2021-12-27 13:55:46 / 修改时间：13:57:04" itemprop="dateCreated datePublished" datetime="2021-12-27T13:55:46+08:00">2021-12-27</time>
             </span>
 
           <br>
@@ -256,7 +242,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>786</span>
+              <span>734</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -275,31 +261,47 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p><escape><span id="more"></span></escape></p>
-<p>申请SSL证书需要的CSR文件</p>
-<blockquote>
-<p><a target="_blank" rel="noopener" href="https://www.chinassl.net/ssltools/generator-csr.html">https://www.chinassl.net/ssltools/generator-csr.html</a></p>
-</blockquote>
-<p>填写相关信息生成两个文件</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">*_csr.txt</span><br><span class="line">*_key.txt</span><br></pre></td></tr></table></figure>
-
-<p>csr文件用来申请ssl证书，key文件用于nginx中使用</p>
-<p>申请证书</p>
-<blockquote>
-<p><a target="_blank" rel="noopener" href="https://cheapsslsecurity.com/">https://cheapsslsecurity.com/</a></p>
-</blockquote>
-<p>申请的证书目录如下：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">DigiCertCA.crt</span><br><span class="line">My_CA_Bundle.crt</span><br><span class="line">star_aimmcloud_com.crt</span><br><span class="line">TrustedRoot.crt</span><br></pre></td></tr></table></figure>
-
-<p>将domain_name.crt 和 DigCertCA.crt写入bundle.crt</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat your_domain_name.crt DigiCertCA.crt &gt;&gt; bundle.crt</span><br></pre></td></tr></table></figure>
-
-<p>此处应为</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat star_aimmcloud_com.crt DigiCertCA.crt &gt;&gt; bundle.crt</span><br></pre></td></tr></table></figure>
-
-<p>nginx的配置</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">server &#123;</span><br><span class="line"></span><br><span class="line">listen   443;</span><br><span class="line"></span><br><span class="line">ssl    on;</span><br><span class="line">ssl_certificate    /etc/ssl/your_domain_name.pem; (or bundle.crt)</span><br><span class="line">ssl_certificate_key    /etc/ssl/your_domain_name.key;</span><br><span class="line"></span><br><span class="line">server_name your.domain.com;</span><br><span class="line">access_log /var/log/nginx/nginx.vhost.access.log;</span><br><span class="line">error_log /var/log/nginx/nginx.vhost.error.log;</span><br><span class="line">location / &#123;</span><br><span class="line">root   /home/www/public_html/your.domain.com/public/;</span><br><span class="line">index  index.html;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
+        <h1 id="国内DNS服务">1. 国内DNS服务</h1><h2 id="【推荐】114DNS">1.1. 【推荐】114DNS</h2><ul>
+<li>公共DNS<br>主：114.114.114.114<br>备：114.114.115.115</li>
+<li>网银安全DNS<br>主：114.114.114.119<br>备：114.114.115.119</li>
+<li>儿童保护DNS<br>主：114.114.114.110<br>备：114.114.115.110</li>
+</ul>
+<h2 id="【推荐】腾讯-DNSPod">1.2. 【推荐】腾讯 DNSPod</h2><ul>
+<li>IPv4<br>主：119.29.29.29<br>备：182.254.116.116</li>
+</ul>
+<h2 id="【强烈推荐】阿里云公共DNS">1.3. 【强烈推荐】阿里云公共DNS</h2><ul>
+<li>IPv4<br>主：223.5.5.5<br>备：223.6.6.6</li>
+<li>IPv6<br>主：2400:3200::1<br>备：2400:3200:baba::1</li>
+</ul>
+<h2 id="百度公共DNS">1.4. 百度公共DNS</h2><ul>
+<li>IPv4<br>主：180.76.76.76<br>备：无</li>
+<li>IPv6<br>主：2400:da00::6666<br>备：无</li>
+</ul>
+<h2 id="CNNIC-DNS">1.5. CNNIC DNS</h2><ul>
+<li>IPv4<br>主：1.2.4.8<br>备：210.2.4.8</li>
+</ul>
+<h2 id="清华大学TUNA-DNS666">1.6. 清华大学TUNA DNS666</h2><ul>
+<li>IPv4<br>主：101.6.6.6<br>备：无</li>
+<li>IPv6<br>主：2001:da8::666<br>备：无</li>
+</ul>
+<h2 id="OneDNS">1.7. OneDNS</h2><ul>
+<li>IPv4拦截版<br>主：117.50.11.11<br>备：52.80.66.66</li>
+<li>IPv4纯净版<br>主：117.50.10.10<br>备：52.80.52.52</li>
+</ul>
+<h1 id="国外DNS服务">2. 国外DNS服务</h1><h2 id="【国外首选】Cloudflare-DNS">2.1. 【国外首选】Cloudflare DNS</h2><ul>
+<li>IPv4<br>主：1.1.1.1<br>备：1.0.0.1</li>
+<li>IPv6<br>主：2606:4700:4700::1111<br>备：2606:4700:4700::1001</li>
+</ul>
+<h2 id="【国外推荐】谷歌公共DNS">2.2. 【国外推荐】谷歌公共DNS</h2><ul>
+<li>IPv4<br>主：8.8.8.8<br>辅：8.8.4.4</li>
+<li>IPv6<br>主：2001:4860:4860::8888<br>备：2001:4860:4860::8844</li>
+</ul>
+<h2 id="【国外推荐】Cisco-OpenDNS">2.3. 【国外推荐】Cisco OpenDNS</h2><ul>
+<li>IPv4<br>主：208.67.222.222<br>辅：208.67.220.220</li>
+</ul>
+<h2 id="微软DNS">2.4. 微软DNS</h2><ul>
+<li>IPv4<br>主：4.2.2.1<br>备：4.2.2.2</li>
+</ul>
 
     </div>
 
@@ -326,7 +328,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="https://www.kubelet.cn/p/63588.html" title="Nginx更换SSL证书">https://www.kubelet.cn/p/63588.html</a>
+    <a href="https://www.kubelet.cn/p/1.html" title="">https://www.kubelet.cn/p/1.html</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh-CN" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
@@ -337,9 +339,6 @@
 
 
       <footer class="post-footer">
-          <div class="post-tags">
-              <a href="/tags/Nginx/" rel="tag"><i class="fa fa-tag"></i> Nginx</a>
-          </div>
 
         
   <div class="post-widgets">
@@ -352,12 +351,12 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/p/36110.html" rel="prev" title="Centos查看系统 CPU 个数、核心数、线程数">
-      <i class="fa fa-chevron-left"></i> Centos查看系统 CPU 个数、核心数、线程数
+    <a href="/p/42107.html" rel="prev" title="使用Prometheus和Grafana监控kubernetes集群">
+      <i class="fa fa-chevron-left"></i> 使用Prometheus和Grafana监控kubernetes集群
     </a></div>
       <div class="post-nav-item">
-    <a href="/p/23481.html" rel="next" title="kubeadm平滑升级集群">
-      kubeadm平滑升级集群 <i class="fa fa-chevron-right"></i>
+    <a href="/p/0.html" rel="next" title="">
+       <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
@@ -422,6 +421,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9B%BD%E5%86%85DNS%E6%9C%8D%E5%8A%A1"><span class="nav-text">1. 国内DNS服务</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%90%E6%8E%A8%E8%8D%90%E3%80%91114DNS"><span class="nav-text">1.1. 【推荐】114DNS</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%90%E6%8E%A8%E8%8D%90%E3%80%91%E8%85%BE%E8%AE%AF-DNSPod"><span class="nav-text">1.2. 【推荐】腾讯 DNSPod</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%90%E5%BC%BA%E7%83%88%E6%8E%A8%E8%8D%90%E3%80%91%E9%98%BF%E9%87%8C%E4%BA%91%E5%85%AC%E5%85%B1DNS"><span class="nav-text">1.3. 【强烈推荐】阿里云公共DNS</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%99%BE%E5%BA%A6%E5%85%AC%E5%85%B1DNS"><span class="nav-text">1.4. 百度公共DNS</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CNNIC-DNS"><span class="nav-text">1.5. CNNIC DNS</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B8%85%E5%8D%8E%E5%A4%A7%E5%AD%A6TUNA-DNS666"><span class="nav-text">1.6. 清华大学TUNA DNS666</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#OneDNS"><span class="nav-text">1.7. OneDNS</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9B%BD%E5%A4%96DNS%E6%9C%8D%E5%8A%A1"><span class="nav-text">2. 国外DNS服务</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%90%E5%9B%BD%E5%A4%96%E9%A6%96%E9%80%89%E3%80%91Cloudflare-DNS"><span class="nav-text">2.1. 【国外首选】Cloudflare DNS</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%90%E5%9B%BD%E5%A4%96%E6%8E%A8%E8%8D%90%E3%80%91%E8%B0%B7%E6%AD%8C%E5%85%AC%E5%85%B1DNS"><span class="nav-text">2.2. 【国外推荐】谷歌公共DNS</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%90%E5%9B%BD%E5%A4%96%E6%8E%A8%E8%8D%90%E3%80%91Cisco-OpenDNS"><span class="nav-text">2.3. 【国外推荐】Cisco OpenDNS</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BE%AE%E8%BD%AFDNS"><span class="nav-text">2.4. 微软DNS</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
