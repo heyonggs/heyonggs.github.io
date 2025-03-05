@@ -3,251 +3,347 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>学习笔记软件 - 高效记录，轻松学习</title>
+    <title>宇泽清单 - 您的智能效率管家</title>
     <style>
-        /* 全局样式 */
+        :root {
+            --primary-color: #2F80ED;
+            --secondary-color: #F2994A;
+            --text-dark: #2D3436;
+            --text-light: #636E72;
+        }
+
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif;
             margin: 0;
             padding: 0;
-            background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
-            color: #333;
-            line-height: 1.6;
+            background: linear-gradient(135deg, #F8F9FA 0%, #E9ECEF 100%);
+            color: var(--text-dark);
+            line-height: 1.8;
         }
 
-        /* 容器样式 */
+        .main-content {
+            min-height: 100vh;
+            padding-bottom: 80px;
+        }
+
         .container {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
-            padding: 20px;
+            padding: 40px 20px;
+        }
+
+        .header {
             text-align: center;
+            margin-bottom: 60px;
+            position: relative;
         }
 
-        /* 标题样式 */
-        h1 {
-            font-size: 3rem;
-            color: #2c3e50;
-            margin-bottom: 20px;
-            animation: fadeIn 2s ease-in-out;
+        .title {
+            font-size: 4rem;
+            background: linear-gradient(45deg, var(--primary-color), #2F80EDAA);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin: 20px 0;
+            letter-spacing: 2px;
+            text-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
         }
 
-        h2 {
-            font-size: 2rem;
-            color: #34495e;
-            margin-bottom: 10px;
+        .slogan {
+            font-size: 1.5rem;
+            color: var(--text-light);
+            max-width: 800px;
+            margin: 0 auto;
         }
 
-        /* 段落样式 */
-        p {
-            font-size: 1.1rem;
-            color: #555;
-            margin-bottom: 20px;
-        }
-
-        /* 按钮样式 */
-        .btn {
-            display: inline-block;
-            padding: 10px 20px;
-            font-size: 1rem;
-            color: #fff;
-            background-color: #3498db;
-            border: none;
-            border-radius: 5px;
+        .cta-button {
+            display: inline-flex;
+            align-items: center;
+            padding: 16px 40px;
+            font-size: 1.2rem;
+            color: white;
+            background: var(--primary-color);
+            border-radius: 50px;
             text-decoration: none;
-            transition: background-color 0.3s ease;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 20px -8px var(--primary-color);
+            margin: 30px 0;
         }
 
-        .btn:hover {
-            background-color: #2980b9;
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 25px -8px var(--primary-color);
         }
 
-        /* 功能列表样式 */
         .features {
-            display: flex;
-            justify-content: space-around;
-            flex-wrap: wrap;
-            margin-top: 40px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            padding: 40px 0;
         }
 
-        .feature {
-            background: #fff;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            width: 30%;
-            margin-bottom: 20px;
+        .feature-card {
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
             transition: transform 0.3s ease;
-            opacity: 0;
-            animation: slideUp 1s ease forwards;
+            position: relative;
+            overflow: hidden;
         }
 
-        .feature:nth-child(1) {
-            animation-delay: 0.5s;
-        }
-
-        .feature:nth-child(2) {
-            animation-delay: 1s;
-        }
-
-        .feature:nth-child(3) {
-            animation-delay: 1.5s;
-        }
-
-        .feature:hover {
+        .feature-card:hover {
             transform: translateY(-10px);
         }
 
-        .feature h3 {
-            font-size: 1.5rem;
-            color: #2c3e50;
-            margin-bottom: 10px;
-        }
-
-        .feature p {
-            font-size: 1rem;
-            color: #666;
-        }
-
-        /* 用户评价样式 */
-        .testimonials {
-            margin-top: 50px;
-            padding: 20px;
-            background: rgba(255, 255, 255, 0.8);
-            border-radius: 10px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-
-        .testimonial {
-            margin-bottom: 20px;
-            opacity: 0;
-            animation: fadeIn 1s ease forwards;
-        }
-
-        .testimonial:nth-child(1) {
-            animation-delay: 0.5s;
-        }
-
-        .testimonial:nth-child(2) {
-            animation-delay: 1s;
-        }
-
-        .testimonial:nth-child(3) {
-            animation-delay: 1.5s;
-        }
-
-        .testimonial p {
-            font-style: italic;
-            color: #555;
-        }
-
-        .testimonial span {
-            display: block;
-            margin-top: 10px;
-            font-weight: bold;
-            color: #3498db;
-        }
-
-        /* 备案号样式 */
-        .footer {
-            position: fixed;
-            bottom: 0;
+        .feature-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
             left: 0;
             width: 100%;
-            padding: 10px;
-            background-color: rgba(255, 255, 255, 0.9);
+            height: 4px;
+            background: var(--primary-color);
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+        }
+
+        .testimonials {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-top: 60px;
+        }
+
+        .testimonial-card {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            border-left: 5px solid var(--secondary-color);
+        }
+
+        .user-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            margin-right: 15px;
+            background: var(--primary-color);
+            display: inline-block;
+        }
+
+        .stats-section {
+            background: white;
+            padding: 50px;
+            border-radius: 20px;
+            margin: 60px 0;
             text-align: center;
-            font-size: 0.9rem;
-            color: #555;
+        }
+
+        .stat-item {
+            display: inline-block;
+            margin: 0 40px;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            font-weight: bold;
+        }
+
+        .footer {
+            position: fixed;
+            bottom: -60px;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(5px);
+            padding: 12px 0;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
+            border-top: 1px solid rgba(0, 0, 0, 0.08);
             z-index: 1000;
+            transition: bottom 0.3s ease-in-out;
         }
 
-        .footer a {
-            color: #3498db;
+        .footer.visible {
+            bottom: 0;
+        }
+
+        .beian-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .beian-icon {
+            width: 18px;
+            height: 18px;
+            color: var(--primary-color);
+            flex-shrink: 0;
+        }
+
+        .beian-content {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.9rem;
+        }
+
+        .beian-text {
+            color: #666;
+            font-weight: 300;
+        }
+
+        .beian-link {
+            color: #666;
             text-decoration: none;
-            transition: color 0.3s ease;
+            transition: all 0.2s ease;
+            position: relative;
+            padding: 2px 4px;
+            border-radius: 3px;
         }
 
-        .footer a:hover {
-            color: #2980b9;
+        .beian-link:hover {
+            color: var(--primary-color);
+            background: rgba(47, 128, 237, 0.08);
         }
 
-        /* 动画效果 */
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-            }
-            to {
-                opacity: 1;
-            }
+        .beian-link::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: -1px;
+            width: 100%;
+            height: 1px;
+            background: currentColor;
+            transform: scaleX(0);
+            transition: transform 0.2s ease;
         }
 
-        @keyframes slideUp {
-            from {
-                transform: translateY(50px);
-                opacity: 0;
-            }
-            to {
-                transform: translateY(0);
-                opacity: 1;
-            }
+        .beian-link:hover::after {
+            transform: scaleX(1);
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <!-- 标题 -->
-        <h1>学习笔记软件</h1>
-        <h2>高效记录，轻松学习</h2>
+    <div class="main-content">
+        <div class="container">
+            <div class="header">
+                <h1 class="title">宇泽清单</h1>
+                <p class="slogan">重新定义生产力的智能清单系统，助力千万用户实现高效人生</p>
+                <a href="https://yuzelist.evestudio.cn" class="cta-button" target="_blank">
+                    🚀 立即体验智能清单
+                </a>
+            </div>
 
-        <!-- 简介 -->
-        <p>
-            这是一款专为学生和职场人士设计的学习笔记软件，帮助您高效整理知识、提升学习效率。无论是课堂笔记、会议记录，还是个人灵感，都能轻松管理。
-        </p>
+            <div class="features">
+                <div class="feature-card">
+                    <div class="feature-icon">📌</div>
+                    <h3>智能任务编排</h3>
+                    <p>基于AI的任务优先级推荐，自动生成最佳执行顺序，让您始终处理最重要的事务</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <h3>多维数据洞察</h3>
+                    <p>可视化效率分析报告，追踪时间投入产出比，助您持续优化工作流程</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">👥</div>
+                    <h3>智能团队协作</h3>
+                    <p>任务自动分配+进度同步，支持200人团队协作，项目管理从未如此轻松</p>
+                </div>
+            </div>
 
-        <!-- 下载按钮 -->
-        <a href="#" class="btn">立即下载</a>
+            <div class="stats-section">
+                <div class="stat-item">
+                    <div class="stat-number">1,200,000+</div>
+                    <div>全球用户信赖</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">98.7%</div>
+                    <div>用户效率提升</div>
+                </div>
+            </div>
 
-        <!-- 功能列表 -->
-        <div class="features">
-            <div class="feature">
-                <h3>多平台同步</h3>
-                <p>支持电脑、手机、平板多设备同步，随时随地访问您的笔记。</p>
-            </div>
-            <div class="feature">
-                <h3>智能分类</h3>
-                <p>自动识别内容并分类，让您的笔记井井有条。</p>
-            </div>
-            <div class="feature">
-                <h3>云端备份</h3>
-                <p>数据自动备份至云端，永不丢失。</p>
-            </div>
-        </div>
-
-        <!-- 用户评价 -->
-        <div class="testimonials">
-            <h2>用户评价</h2>
-            <div class="testimonial">
-                <p>“这款笔记软件彻底改变了我的学习方式，分类功能太棒了！”</p>
-                <span>—— 张三，学生</span>
-            </div>
-            <div class="testimonial">
-                <p>“多平台同步让我随时随地都能查看笔记，非常方便。”</p>
-                <span>—— 李四，职场人士</span>
-            </div>
-            <div class="testimonial">
-                <p>“云端备份让我再也不用担心数据丢失，强烈推荐！”</p>
-                <span>—— 王五，自由职业者</span>
+            <div class="testimonials">
+                <div class="testimonial-card">
+                    <div style="display: flex; align-items: center;">
+                        <div class="user-avatar"></div>
+                        <div>
+                            <h4>陈宇哲</h4>
+                            <p>互联网创业者</p>
+                        </div>
+                    </div>
+                    <p>“宇泽清单的智能时间规划功能，让我们的团队效率提升了3倍不止！”</p>
+                </div>
+                <div class="testimonial-card">
+                    <div style="display: flex; align-items: center;">
+                        <div class="user-avatar"></div>
+                        <div>
+                            <h4>林诗涵</h4>
+                            <p>UX设计师</p>
+                        </div>
+                    </div>
+                    <p>“跨平台同步和设计规范管理功能，完美契合创意工作者的需求！”</p>
+                </div>
             </div>
         </div>
     </div>
 
-    <!-- 备案号 -->
     <div class="footer">
-        <p>
-            © 2025 学习笔记软件. 保留所有权利.
-            <br>
-            <a href="https://beian.miit.gov.cn" target="_blank">备案号：京ICP备19003190号-2</a>
-        </p>
+        <div class="beian-container">
+            <svg class="beian-icon" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
+            </svg>
+            <div class="beian-content">
+                <span class="beian-text">依法合规运营</span>
+                <a href="https://beian.miit.gov.cn" class="beian-link">
+                    京ICP备2024000001号-3
+                </a>
+            </div>
+        </div>
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const footer = document.querySelector('.footer');
+            let isFooterVisible = false;
+            let lastScrollPos = 0;
+
+            window.addEventListener('scroll', function() {
+                const currentScrollPos = window.scrollY;
+                const scrollHeight = document.documentElement.scrollHeight;
+                const clientHeight = document.documentElement.clientHeight;
+                
+                // 向下滚动且接近底部
+                if (currentScrollPos > lastScrollPos) {
+                    const threshold = scrollHeight - clientHeight - 200;
+                    if (currentScrollPos > threshold && !isFooterVisible) {
+                        footer.classList.add('visible');
+                        isFooterVisible = true;
+                    }
+                } 
+                // 向上滚动离开底部
+                else {
+                    const threshold = scrollHeight - clientHeight - 250;
+                    if (currentScrollPos < threshold && isFooterVisible) {
+                        footer.classList.remove('visible');
+                        isFooterVisible = false;
+                    }
+                }
+                lastScrollPos = currentScrollPos;
+            });
+        });
+    </script>
 </body>
 </html>
