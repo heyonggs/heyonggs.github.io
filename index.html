@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>404</title>
+    <style>
+      body {
+        background: #000;
+        height: 100vh;
+        overflow: hidden;
+        display: flex;
+        font-family: Anton, sans-serif;
+        justify-content: center;
+        align-items: center;
+        -webkit-perspective: 1000px;
+        perspective: 1000px;
+        position: relative; /* 添加相对定位 */
+      }
+
+      /* 其他样式保持不变 */
+
+      /* 备案号样式 */
+      .footer {
+        position: absolute;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        color: #fff;
+        font-size: 14px;
+        text-align: center;
+        z-index: 10;
+      }
+
+      .footer a {
+        color: #fff;
+        text-decoration: none;
+        transition: opacity 0.3s ease;
+      }
+
+      .footer a:hover {
+        opacity: 0.8;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="rail">
+      <div class="stamp four">4</div>
+      <div class="stamp zero">0</div>
+      <div class="stamp four">4</div>
+      <div class="stamp zero">0</div>
+      <div class="stamp four">4</div>
+      <div class="stamp zero">0</div>
+      <div class="stamp four">4</div>
+      <div class="stamp zero">0</div>
+      <div class="stamp four">4</div>
+      <div class="stamp zero">0</div>
+      <div class="stamp four">4</div>
+      <div class="stamp zero">0</div>
+      <div class="stamp four">4</div>
+      <div class="stamp zero">0</div>
+      <div class="stamp four">4</div>
+      <div class="stamp zero">0</div>
+      <div class="stamp four">4</div>
+      <div class="stamp zero">0</div>
+      <div class="stamp four">4</div>
+      <div class="stamp zero">0</div>
+    </div>
+    <div class="world">
+      <div class="forward">
+        <div class="box">
+          <div class="wall"></div>
+          <div class="wall"></div>
+          <div class="wall"></div>
+          <div class="wall"></div>
+          <div class="wall"></div>
+          <div class="wall"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 备案号 -->
+    <div class="footer">
+      <a href="https://beian.miit.gov.cn" target="_blank">备案号：京ICP备12345678号</a>
+    </div>
+  </body>
+</html>
