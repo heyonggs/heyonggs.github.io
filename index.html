@@ -1,86 +1,168 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8" />
-    <title>404</title>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>学习笔记软件 - 高效记录，轻松学习</title>
     <style>
-      body {
-        background: #000;
-        height: 100vh;
-        overflow: hidden;
-        display: flex;
-        font-family: Anton, sans-serif;
-        justify-content: center;
-        align-items: center;
-        -webkit-perspective: 1000px;
-        perspective: 1000px;
-        position: relative; /* 添加相对定位 */
-      }
+        /* 全局样式 */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+            color: #333;
+            line-height: 1.6;
+        }
 
-      /* 其他样式保持不变 */
+        /* 容器样式 */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            text-align: center;
+        }
 
-      /* 备案号样式 */
-      .footer {
-        position: absolute;
-        bottom: 20px;
-        left: 50%;
-        transform: translateX(-50%);
-        color: #fff;
-        font-size: 14px;
-        text-align: center;
-        z-index: 10;
-      }
+        /* 标题样式 */
+        h1 {
+            font-size: 3rem;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            animation: fadeIn 2s ease-in-out;
+        }
 
-      .footer a {
-        color: #fff;
-        text-decoration: none;
-        transition: opacity 0.3s ease;
-      }
+        h2 {
+            font-size: 2rem;
+            color: #34495e;
+            margin-bottom: 10px;
+        }
 
-      .footer a:hover {
-        opacity: 0.8;
-      }
+        /* 段落样式 */
+        p {
+            font-size: 1.1rem;
+            color: #555;
+            margin-bottom: 20px;
+        }
+
+        /* 按钮样式 */
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            font-size: 1rem;
+            color: #fff;
+            background-color: #3498db;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: #2980b9;
+        }
+
+        /* 功能列表样式 */
+        .features {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            margin-top: 40px;
+        }
+
+        .feature {
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            width: 30%;
+            margin-bottom: 20px;
+            transition: transform 0.3s ease;
+        }
+
+        .feature:hover {
+            transform: translateY(-10px);
+        }
+
+        .feature h3 {
+            font-size: 1.5rem;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+
+        .feature p {
+            font-size: 1rem;
+            color: #666;
+        }
+
+        /* 备案号样式 */
+        .footer {
+            margin-top: 50px;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.8);
+            text-align: center;
+            font-size: 0.9rem;
+            color: #555;
+        }
+
+        .footer a {
+            color: #3498db;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer a:hover {
+            color: #2980b9;
+        }
+
+        /* 动画效果 */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
     </style>
-  </head>
-  <body>
-    <div class="rail">
-      <div class="stamp four">4</div>
-      <div class="stamp zero">0</div>
-      <div class="stamp four">4</div>
-      <div class="stamp zero">0</div>
-      <div class="stamp four">4</div>
-      <div class="stamp zero">0</div>
-      <div class="stamp four">4</div>
-      <div class="stamp zero">0</div>
-      <div class="stamp four">4</div>
-      <div class="stamp zero">0</div>
-      <div class="stamp four">4</div>
-      <div class="stamp zero">0</div>
-      <div class="stamp four">4</div>
-      <div class="stamp zero">0</div>
-      <div class="stamp four">4</div>
-      <div class="stamp zero">0</div>
-      <div class="stamp four">4</div>
-      <div class="stamp zero">0</div>
-      <div class="stamp four">4</div>
-      <div class="stamp zero">0</div>
-    </div>
-    <div class="world">
-      <div class="forward">
-        <div class="box">
-          <div class="wall"></div>
-          <div class="wall"></div>
-          <div class="wall"></div>
-          <div class="wall"></div>
-          <div class="wall"></div>
-          <div class="wall"></div>
+</head>
+<body>
+    <div class="container">
+        <!-- 标题 -->
+        <h1>学习笔记软件</h1>
+        <h2>高效记录，轻松学习</h2>
+
+        <!-- 简介 -->
+        <p>
+            这是一款专为学生和职场人士设计的学习笔记软件，帮助您高效整理知识、提升学习效率。无论是课堂笔记、会议记录，还是个人灵感，都能轻松管理。
+        </p>
+
+        <!-- 下载按钮 -->
+        <a href="#" class="btn">立即下载</a>
+
+        <!-- 功能列表 -->
+        <div class="features">
+            <div class="feature">
+                <h3>多平台同步</h3>
+                <p>支持电脑、手机、平板多设备同步，随时随地访问您的笔记。</p>
+            </div>
+            <div class="feature">
+                <h3>智能分类</h3>
+                <p>自动识别内容并分类，让您的笔记井井有条。</p>
+            </div>
+            <div class="feature">
+                <h3>云端备份</h3>
+                <p>数据自动备份至云端，永不丢失。</p>
+            </div>
         </div>
-      </div>
     </div>
 
     <!-- 备案号 -->
     <div class="footer">
-      <a href="https://beian.miit.gov.cn" target="_blank">备案号：京ICP备12345678号</a>
+        <p>
+            © 2024 学习笔记软件. 保留所有权利.
+            <br>
+            <a href="https://beian.miit.gov.cn" target="_blank">备案号：京ICP备12345678号</a>
+        </p>
     </div>
-  </body>
+</body>
 </html>
